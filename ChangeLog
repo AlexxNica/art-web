@@ -1,8 +1,13 @@
+2004-06-23  Thomas Wood <thos@cvs.gnome.org>
+	* admin/*: Initial import into CVS
+	* includes/common.inc.php: Prevented escape_gpc_array() from mangling
+	arrays.
+
 2004-06-23  Thomas Wood <thos@gnome.org>
 
 	* includes/common.inc.php: Fixed validate_input_array_default() and
 	validate_input_array_error() using in_array instead of search_array
-	(fixes theme/bacground sorting)
+	(fixes theme/background sorting)
 
 	* themes:
 	* backgrounds:

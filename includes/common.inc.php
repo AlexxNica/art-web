@@ -498,7 +498,8 @@ function escape_gpc_array (&$array)
 {
 	if (!get_magic_quotes_gpc()) {
 		foreach ($array as $key => $value) {
-			$array[$key] = mysql_escape_string($value);
+			if (!is_array($value))
+				$array[$key] = mysql_escape_string($value);
 		}
 	}
 }
