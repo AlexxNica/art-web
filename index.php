@@ -5,12 +5,13 @@ require("session.inc.php");
 require("common.inc.php");
 include("header.inc.php");
 create_middle_box_top("news");
+$news_count_select_result = mysql_query("SELECT * FROM news WHERE status='active'");
+$news_count = mysql_num_rows($news_count_select_result);
+
 $news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 3");
-$news_count = 0;
 while($news_select_row=mysql_fetch_array($news_select_result))
 {
-	$news_count++;
-   $date = $news_select_row["date"];
+	$date = $news_select_row["date"];
    $author = $news_select_row["author"];
    $author_email = $news_select_row["author_email"];
    $title =  $news_select_row["title"];
@@ -26,7 +27,10 @@ while($news_select_row=mysql_fetch_array($news_select_result))
 }
 
 print("<p>\n");
-print("<div align=\"center\"><a href=\"old_news.php\">View Older News</a></div>\n");
+if($news_count > 3)
+{
+	print("<div align=\"center\"><a href=\"old_news.php\">View Older News</a></div>\n");
+}
 print("<p>&nbsp;\n");
 create_middle_box_bottom();
 include("footer.inc.php");
