@@ -4,6 +4,11 @@
 <head>
 <title>ART.GNOME.ORG</title>
 <link rel="stylesheet" href="main.css" type="text/css">
+<?
+require("config.inc.php");
+if($site_theme == "standard")
+{
+?>
 <script language="JavaScript">
 <!--
 if (document.images)
@@ -40,9 +45,9 @@ if (document.images)
 
 
 <?
-require("config.inc.php");
-if($site_theme == "standard")
-{
+//require("config.inc.php");
+//if($site_theme == "standard")
+//{
 	reset ($linkbar);
 	while (list($key,$val) = each($linkbar))
 	{
@@ -51,7 +56,7 @@ if($site_theme == "standard")
 		print("\timg" . $key . "off=new Image();\n");
 		print("\timg" . $key . "off.src=\"images/site/linkbar/" . $key . ".png\";\n");
 	}
-}	
+//}	
 ?>
 }
 
@@ -72,57 +77,103 @@ function imgOff(imgName)
 }
 // -->
 </script>
+<?
+}
+?>
 </head>
 <body>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <?
-print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar\"><img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\">");
+if($site_theme == "standard")
+{
+	print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar\"><img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\">");
+}
+else
+{
+	print("<tr valign=\"middle\"><td class=\"horizontal-menu-bar-lite\">");
+}
 for($count=1;$count<5;$count++)
 {
 	if($count == 1)
    {
    	if($count == $mirrorID)
       {
-      print("<img src=\"images/site/mb_mainS.png\" border=\"0\">");
+      	if($site_theme == "standard")
+         {
+         	print("<img src=\"images/site/mb_mainS.png\" border=\"0\">");
+      	}
+         else
+         {
+         	print("<span class=\"yellow-text\">Main</span>");
+         }
       }
       else
       {
-      	print("<a href=\"change_mirror.php?new_mirrorID=1\" onMouseOver=\"imgOn('imgmb_main')\" onMouseOut=\"imgOff('imgmb_main')\"><img name=\"imgmb_main\" src=\"images/site/mb_main.png\" border=\"0\"></a>");
-   	}
+      	if($site_theme == "standard")
+         {
+         	print("<a href=\"change_mirror.php?new_mirrorID=1\" onMouseOver=\"imgOn('imgmb_main')\" onMouseOut=\"imgOff('imgmb_main')\"><img name=\"imgmb_main\" src=\"images/site/mb_main.png\" border=\"0\"></a>");
+   		}
+         else
+         {
+         	print("<a href=\"change_mirror.php?new_mirrorID=1\">Main</a>");
+			}
+      }
    }
    else
    {
    	if($count == $mirrorID)
       {
-      	print("<img src=\"images/site/mb_mirror".($count-1)."S.png\" border=\"0\">");
+      	if($site_theme == "standard")
+         {
+         	print("<img src=\"images/site/mb_mirror".($count-1)."S.png\" border=\"0\">");
+      	}
+         else
+         {
+         	print("<span class=\"yellow-text\">Mirror ".$count-1."</span>");
+         }
       }
       else
       {
-      	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\" onMouseOver=\"imgOn('imgmb_mirror".($count-1)."')\" onMouseOut=\"imgOff('imgmb_mirror".($count-1)."')\"><img name=\"imgmb_mirror".($count-1)."\" src=\"images/site/mb_mirror".($count-1).".png\" border=\"0\"></a>");
-   	}
+      	if($site_theme == "standard")
+         {
+         	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\" onMouseOver=\"imgOn('imgmb_mirror".($count-1)."')\" onMouseOut=\"imgOff('imgmb_mirror".($count-1)."')\"><img name=\"imgmb_mirror".($count-1)."\" src=\"images/site/mb_mirror".($count-1).".png\" border=\"0\"></a>");
+   		}
+         else
+         {
+         	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\">Mirror ".$count-1."</a>");
+   		}
+      }
    }
    if($count != 4)
    {
-   	print("<img src=\"images/site/mb_minus.png\">");
+   	if($site_theme == "standard")
+      {
+      	print("<img src=\"images/site/mb_minus.png\">");
+   	}
+      else
+      {
+      	print("-");
+      }
    }
 }
-print("</td><td class=\"horizontal-menu-bar\" align=\"right\">");
-print("<img src=\"images/site/theme.png\">");
 if($site_theme == "standard")
 {
-	print("<img src=\"images/site/theme_standardS.png\" border=\"0\">");
+	print("</td><td class=\"horizontal-menu-bar\" align=\"right\">");
+	print("<img src=\"images/site/theme.png\">");
+   print("<img src=\"images/site/theme_standardS.png\" border=\"0\">");
    print("<img src=\"images/site/theme_minus.png\">");
    print("<a href=\"change_site_theme.php?new_site_theme=lite\" onMouseOver=\"imgOn('imgtheme_lite')\" onMouseOut=\"imgOff('imgtheme_lite')\"><img name=\"imgtheme_lite\" src=\"images/site/theme_lite.png\" border=\"0\"></a>");
-
+	print("<img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\">");
 }
 else
 {
-	print("<a href=\"change_site_theme.php?new_site_theme=standard\" onMouseOver=\"imgOn('imgtheme_standard')\" onMouseOut=\"imgOff('imgtheme_standard')\"><img name=\"imgtheme_standard\" src=\"images/site/theme_standard.png\" border=\"0\"></a>");
-	print("<img src=\"images/site/theme_minus.png\">");
-   print("<img src=\"images/site/theme_liteS.png\" border=\"0\">");
+	print("</td><td class=\"horizontal-menu-bar-lite\" align=\"right\">THEME:");
+   print("<a href=\"change_site_theme.php?new_site_theme=standard\">Standard</a> - <span class=\"yellow-text\">Lite</span>");
 }
-print("<img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\"></td></form></tr>\n");
+print("</td></tr>\n");
+
 ?>
+
 <tr class="horizontal-gradient-menu-bar"><td><img src="images/site/LOGO-Pill.png"></td><td></td><td class="align-right"><img src="images/site/LOGO-Elliptic.png"></td></tr>
 <tr><td colspan="3" class="horizontal-menu-bar"><img src="images/site/mb_pat.png" width="10" height="20"><img src="images/site/TB_art.png"><img src="images/site/mb_minus.png"><img src="images/site/TB_slogan.png"></td></tr>
 <tr><td colspan="3" class="horizontal-shadow"><img src="images/site/TB_shadow.png"></td></tr>

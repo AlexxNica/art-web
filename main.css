@@ -70,6 +70,12 @@ a.news-link:hover {
 	background-image: url("images/site/mb_pat.png");
    background-repeat: repeat-x;
 }
+
+.horizontal-menu-bar-lite {
+	background: #555566;
+	color: #a8a7b7;
+}
+
 .horizontal-gradient-menu-bar {
 	background-image: url("images/site/LB_pat.png");
    background-repeat: repeat-x;
