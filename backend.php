@@ -20,7 +20,7 @@ for($count=0;$count<$num_updates;$count++)
    	$background_select_result = mysql_query("SELECT background_name, category, author,thumbnail_filename FROM background WHERE backgroundID='$ID'");
    	list($background_name,$category,$author,$thumbnail_filename) = mysql_fetch_row($background_select_result);
       print("\t\t\t<title>$background_name</title>\n");
-      print("\t\t\t<link>" . htmlspecialchars("http://art.gnome.org/show_background.php?backgroundID=$ID&category=$category") . "</link>\n");
+      print("\t\t\t<link>" . htmlspecialchars("http://art.gnome.org/backgrounds/$category/$ID.php") . "</link>\n");
       print("\t\t\t<description>Backgrounds - $category</description>\n");
    }
    else
@@ -29,7 +29,7 @@ for($count=0;$count<$num_updates;$count++)
    	list($theme_name,$category,$author,$thumbnail_filename) = mysql_fetch_row($theme_select_result);
       $category_good = $theme_config_array["$category"]["name"];
 		print("\t\t\t<title>$theme_name</title>\n");
-      print("\t\t\t<link>" . htmlspecialchars("http://art.gnome.org/show_theme.php?themeID=$ID&category=$category") . "</link>\n");
+      print("\t\t\t<link>" . htmlspecialchars("http://art.gnome.org/themes/$category/$ID.php") . "</link>\n");
       print("\t\t\t<description>Themes - $category</description>\n");
    }
    print("\t\t</item>\n");
