@@ -121,23 +121,25 @@ function display_icons($type, $page)
 function print_background_row($backgroundID)
 {
 	global $background_config_array;
-	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename FROM background WHERE backgroundID='$backgroundID'");
-	list($background_name,$category,$author,$release_date,$thumbnail_filename) = mysql_fetch_row($background_select_result);
+	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename,download_start_timestamp,download_count FROM background WHERE backgroundID='$backgroundID'");
+	list($background_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count) = mysql_fetch_row($background_select_result);
 	$release_date = fix_sql_date($release_date,"/");
 	$link = "/backgrounds/$category/$backgroundID.php";
 	$category_name = $background_config_array["$category"]["name"];
-	print("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>$category_name<br>$author</td></tr>\n");
+	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
+	print("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>$category_name<br>$popularity Downloads per Day<br>$author</td></tr>\n");
 
 }
 
 function print_theme_row($themeID)
 {
 	global $theme_config_array;
-	$theme_select_result = mysql_query("SELECT theme_name, category, author, release_date,small_thumbnail_filename FROM theme WHERE themeID='$themeID'");
-	list($theme_name,$category,$author,$release_date,$thumbnail_filename) = mysql_fetch_row($theme_select_result);
+	$theme_select_result = mysql_query("SELECT theme_name, category, author, release_date,small_thumbnail_filename,download_start_timestamp,download_count FROM theme WHERE themeID='$themeID'");
+	list($theme_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count) = mysql_fetch_row($theme_select_result);
 	$release_date = fix_sql_date($release_date,"/");
 	$link = "/themes/$category/$themeID.php";
 	$category_name = $theme_config_array["$category"]["name"];
+	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
 	if($category == "icon")
 	{
 		$class = "thumbnail";
@@ -146,7 +148,7 @@ function print_theme_row($themeID)
 	{
 		$class = "thumbnail-border";
 	}
-	print("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></td><td><a class=\"bold-link\" href=\"$link\">$theme_name</a><br>$release_date<br>$category_name<br>$author</td></tr>\n");
+	print("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></td><td><a class=\"bold-link\" href=\"$link\">$theme_name</a><br>$release_date<br>$category_name<br>$popularity Downloads per Day<br>$author</td></tr>\n");
 }
 
 function get_latest_backgrounds($number)
@@ -326,7 +328,11 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	}
 	print("<b>Showing " . ($start+1) . " through " . $end . " of $num_backgrounds results.</b>\n");
 
-	if($sort_by == "date")
+	if($sort_by == "popularity")
+	{
+		$order_query = "ORDER by perday DESC";
+	}
+	elseif($sort_by == "date")
 	{
 		$order_query = "ORDER BY add_timestamp DESC";
 	}
@@ -343,9 +349,9 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	{
 		$category_query = "";
 	}
-	$background_select_result = mysql_query("SELECT backgroundID FROM background WHERE $category_query background_name LIKE '%$search_text%' AND parent='0' $order_query LIMIT $start, $thumbnails_per_page");
+	$background_select_result = mysql_query("SELECT backgroundID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM background WHERE $category_query background_name LIKE '%$search_text%' AND parent='0' $order_query LIMIT $start, $thumbnails_per_page");
 	print("<table>\n");
-	while(list($backgroundID)=mysql_fetch_row($background_select_result))
+	while(list($backgroundID, $perday)=mysql_fetch_row($background_select_result))
 	{
 		print_background_row($backgroundID);
 	}
@@ -369,7 +375,11 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 	}
 	print("<b>Showing " . ($start+1) . " through " . $end . " of $num_themes results.</b>\n");
 
-	if($sort_by == "date")
+	if($sort_by == "popularity")
+	{
+		$order_query = "ORDER by perday DESC";
+	}
+	elseif($sort_by == "date")
 	{
 		$order_query = "ORDER BY add_timestamp DESC";
 	}
@@ -386,7 +396,7 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 	{
 		$category_query = "";
 	}
-	$theme_select_result = mysql_query("SELECT themeID FROM theme WHERE $category_query theme_name LIKE '%$search_text%' $order_query LIMIT $start, $thumbnails_per_page");
+	$theme_select_result = mysql_query("SELECT themeID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM theme WHERE $category_query theme_name LIKE '%$search_text%' $order_query LIMIT $start, $thumbnails_per_page");
 	print("<table>\n");
 	while(list($themeID)=mysql_fetch_row($theme_select_result))
 	{

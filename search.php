@@ -54,7 +54,20 @@ if($search_text && $search_type)
 	elseif($search_type == "author")
 	{
 		unset($big_array);
-		if($sort_by == "name")
+		if($sort_by == "popularity")
+		{
+			$background_select_result = mysql_query("SELECT (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday,backgroundID FROM background WHERE author LIKE '%$search_text%' AND parent='0'");
+			while(list($popularity,$backgroundID)=mysql_fetch_row($background_select_result))
+			{
+				$big_array[] = "$popularity|background|$backgroundID";
+			}
+			$theme_select_result = mysql_query("SELECT (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday,themeID FROM theme WHERE author LIKE '%$search_text%'");
+			while(list($popularity,$themeID)=mysql_fetch_row($theme_select_result))
+			{
+				$big_array[] = "$popularity|theme|$themeID";
+			}
+		}
+		elseif($sort_by == "name")
 		{
 			$background_select_result = mysql_query("SELECT background_name,backgroundID FROM background WHERE author LIKE '%$search_text%' AND parent='0'");
 			while(list($background_name,$backgroundID)=mysql_fetch_row($background_select_result))

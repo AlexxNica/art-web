@@ -184,6 +184,6 @@ $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 
 $search_type_array = array ("background" => "Background Name", "theme" => "Theme Name", "author" => "Author Name");
 $thumbnails_per_page_array = array("12" => "12", "24" => "24", "1000" => "All");
-$sort_by_array = array("name" => "Name", "date" => "Date");
+$sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity");
 	
 ?>
