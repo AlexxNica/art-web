@@ -165,7 +165,7 @@ else
 					{
 						$first_toggle = 1;
 					}
-					print("<a href=\"/backgrounds/$back_cat/$backID.php\">$back_name</a>");
+					print("<a href=\"/backgrounds/$back_cat/$backID/\">$back_name</a>");
 
 				}
 			}
