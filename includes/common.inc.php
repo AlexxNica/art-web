@@ -118,7 +118,7 @@ function display_icons($type, $page)
       if($page > 1)
       {
       	$prev_page = $page -1;
-         print(" <a href=\"$PHP_SELF?type=$type&page=$prev_page\">[&lt;]</a>");
+         print(" <a href=\"" . $GLOBALS["PHP_SELF"] . "?type=$type&page=$prev_page\">[&lt;]</a>");
       }
 		for($count=1;$count<=$num_pages;$count++)
 		{
@@ -128,13 +128,13 @@ function display_icons($type, $page)
 			}
    	   else
    	   {
-   	   	print("<a href=\"$PHP_SELF?type=$type&page=$count\">[$count]</a> ");
+   	   	print("<a href=\"" . $GLOBALS["PHP_SELF"] . "?type=$type&page=$count\">[$count]</a> ");
    	   }
    	}
       if($page < $num_pages)
       {
       	$next_page = $page +1;
-         print(" <a href=\"$PHP_SELF?type=$type&page=$next_page\">[&gt;]</a>");
+         print(" <a href=\"" . $GLOBALS["PHP_SELF"] . "?type=$type&page=$next_page\">[&gt;]</a>");
       }
       print("</div>\n");
    }
