@@ -28,6 +28,7 @@ print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a hr
 print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a href=\"mailto:largo _AT_ windowmaker.org\">Justin \"largo\" Stressman</a></td></tr>\n");
 print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a href=\"mailto:garrett _AT_ linuxart.com\">Garrett LeSage</a></td></tr>\n");
 print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td>Ed Halley</td></tr>\n");
+print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a href=\"mailto:mdobossy _AT_ Princeton.EDU\">Mark Dobossy</a></td></tr>\n");
 print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td>Ville \"drc\" P&#228;tsi</td></tr>\n");
 print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a href=\"mailto:roman _AT_ gnome.org\">Roman \"star\" Beigelbeck</a></td></tr>\n");
 print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td>and many more...</td></tr>\n");

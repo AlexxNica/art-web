@@ -1,5 +1,9 @@
 2003-02-04  Alex Duggan  <aldug@astrolinux.com>
 
+	* icons.php:  Add Mark Dobossy to icon author credits
+
+2003-02-04  Alex Duggan  <aldug@astrolinux.com>
+
 	* includes/common.inc.php: get the number columns for icon display
 	from the database
 
