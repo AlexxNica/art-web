@@ -1,0 +1,1 @@
+php_value include_path .:/home/admin/art:/usr/local/www/art.gnome.org/includes/
