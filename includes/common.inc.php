@@ -215,7 +215,8 @@ function display_icons($type, $page)
          }
       }
       
-      $counter = 0;
+      print_r($icon_array);
+      /*
       print("<table border=\"0\">\n");
       while(list($file)=array_values($icon_array))
 		{
@@ -233,7 +234,7 @@ function display_icons($type, $page)
          print("</tr>\n");
       }
       print("</table>");
-   
+   	*/
    
    }
    else
