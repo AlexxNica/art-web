@@ -1,3 +1,13 @@
+2004-12-20  Thomas Wood  <thos@gnome.org>
+
+	* search.php: Fixed background search
+	* includes/common.inc.php: Fix icon borders
+
+	* submit_background.php:
+	* submit_theme.php:
+
+	Add link to Submission Policy page
+
 2004-12-19  Thomas Wood  <thos@gnome.org>
 
 	* backend.php:
@@ -11,6 +21,7 @@
 
 	- Fix authors search
 	- New "icon" listing view
+	- Last update date is now available on theme pages
 
 2004-12-13  Thomas Wood  <thos@gnome.org>
 

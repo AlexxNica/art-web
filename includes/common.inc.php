@@ -157,7 +157,7 @@ function print_theme_row($themeID, $view)
 		$class = "thumbnail-border";
 	}
 
-	if (($category == "metacity") or ($category == "splash_screen"))
+	if ( $category == "metacity" || $category == "splash_screen" || $category == "gtk_engines" )
 		$thumbnail = "<img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\">";
 	else
 		$thumbnail = "<a href=\"/images/thumbnails/$category/$screenshot\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></a>";

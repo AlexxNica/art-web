@@ -24,7 +24,7 @@ display_search_box(htmlspecialchars(stripslashes($search_text)), $search_type, $
 if($search_text && $search_type)
 {
 	/* background name search */
-	if ($search_type == "background")
+	if ($search_type == "background_name")
 	{
 		$background_all_select_result = mysql_query("SELECT backgroundID FROM background WHERE background_name LIKE '%$search_text%' AND parent='0' ORDER BY background_name");
 		$num_backgrounds = mysql_num_rows($background_all_select_result);

@@ -49,7 +49,7 @@ if($_POST)
 			{
 				case "new" : print("The theme &quot;$submission_name&quot; is currently pending intial review."); break;
 				case "added" : print("&quot;$submission_name&quot; has been added to the art.gnome.org database and should be available through the site."); break;
-				case "rejected" : print("The theme &quot;$submission_name&quot; has been removed from the submissions list and not been added to the site. This may happen if the theme was inappropriate to art.gnome.org, appeared to be incomplete or unfinished, or could not be retrieved from the URL provided. If you have any queries regarding this status, please contact a memeber of the art.gnome.org team, quoting the submission tracking ID."); break;
+				case "rejected" : print("The theme &quot;$submission_name&quot; has been removed from the submissions list and not been added to the site. This may happen if the theme was inappropriate to art.gnome.org, appeared to be incomplete or unfinished, or could not be retrieved from the URL provided. If you have any queries regarding this status, please contact a memeber of the art.gnome.org team, quoting the submission tracking ID. See the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">Submission Policy</a> for more information. See the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">Submission Policy</a> for more information."); break;
 				default: print("There was an error retrieving the status of the theme submission ID you requested. Please check and try again.");
 			}
 			print("</p><a href=\"" . $_SERVER["PHP_SELF"] . "\">Back to Theme Submission Page</a>");
@@ -63,6 +63,7 @@ if($_POST)
 else
 {
 	print("If you would like to submit your theme to art.gnome.org, please fill out the form below and provide a web address where we can download your theme.\n<p>\n");
+	print("To help speed up your submission, please take a look at the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">Submission Policy</a> first.");
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">");
 	print("<tr><td><b>Theme Name:</b></td><td><input type=\"text\" name=\"theme_name\" size=\"40\"></td></tr>\n");
