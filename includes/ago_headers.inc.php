@@ -32,22 +32,22 @@ function ago_header($title)
 	print("<font size=\"+1\"><a href=\"/updates.php\">Updates</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/search.php\">Search</a></font><br><br>\n");
 	print("<font size=\"+1\">Backgrounds</font><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/gnome/index.php\">GNOME</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/other/index.php\">Other</a><br><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/gnome/\">GNOME</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/other/\">Other</a><br><br>\n");
 	
 	print("<font size=\"+1\">Desktop Themes</font><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2/index.php\">Applications</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/metacity/index.php\">Window Borders</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/icon/index.php\">Icon</a><br><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2/\">Applications</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/metacity/\">Window Borders</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/icon/\">Icon</a><br><br>\n");
 	
 	print("<font size=\"+1\">Other Themes</font><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gdm_greeter/index.php\">Login Manager</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/splash_screens/index.php\">Splash Screens</a><br><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gdm_greeter/\">Login Manager</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/splash_screens/\">Splash Screens</a><br><br>\n");
 	//print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2_engines/index.php\">GTK Engines</a><br>\n");
 	//print("&nbsp;&nbsp;&nbsp;<a href=\"/legacy_themes.php\">Legacy</a><br><br>\n");
 	
-	print("<font size=\"+1\"><a href=\"/art-icons/index.php\">Icons</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/screenshots/index.php\">Screenshots</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/art-icons/\">Icons</a></font><br>\n");
+	//print("<font size=\"+1\"><a href=\"/screenshots/index.php\">Screenshots</a></font><br>\n");
 	//print("<font size=\"+1\"><a href=\"/tips.php\">Tips &amp; Tricks</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/faq.php\">FAQ</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/submit.php\">Submit</a></font><br>\n");

@@ -10,10 +10,12 @@ $num_updates = $_GET["num_updates"];
 ago_header("UPDATES");
 create_middle_box_top("updates");
 
+/*
 if (!$num_updates || $num_updates=="" || $num_updates==0)
 {
 	$num_updates = 12;
 }
+*/
 print("The $num_updates most recent additions are:");
 
 $big_array = get_updates_array($num_updates);

@@ -1,5 +1,7 @@
-<?
+<?php
+
 require("config.inc.php");
+
 function create_middle_box_top($pill)
 {
 	global $pill_array;
@@ -124,7 +126,7 @@ function print_background_row($backgroundID)
 	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename,download_start_timestamp,download_count FROM background WHERE backgroundID='$backgroundID'");
 	list($background_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count) = mysql_fetch_row($background_select_result);
 	$release_date = fix_sql_date($release_date,"/");
-	$link = "/backgrounds/$category/$backgroundID.php";
+	$link = "/backgrounds/$category/$backgroundID/";
 	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
 	print("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>$category_name<br>$popularity Downloads per Day<br>$author</td></tr>\n");
@@ -137,7 +139,7 @@ function print_theme_row($themeID)
 	$theme_select_result = mysql_query("SELECT theme_name, category, author, release_date,small_thumbnail_filename,download_start_timestamp,download_count FROM theme WHERE themeID='$themeID'");
 	list($theme_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count) = mysql_fetch_row($theme_select_result);
 	$release_date = fix_sql_date($release_date,"/");
-	$link = "/themes/$category/$themeID.php";
+	$link = "/themes/$category/$themeID/";
 	$category_name = $theme_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
 	if($category == "icon")
@@ -209,7 +211,7 @@ function ago_redirect($referrer)
 	}
 	else
 	{
-		header("Location: index.php");
+		header("Location: /index.php");
 	}
 }
 
@@ -433,6 +435,65 @@ function calculate_downloads_per_day($download_count, $start_timestamp)
 	$popularity = ($download_count / $days);
 	$popularity = sprintf("%.1f",$popularity);
 	return $popularity;
+}
+
+////////////////////////////////
+// Input Validation Functions //
+////////////////////////////////
+
+function validate_input_regexp_default ($input, $regexp, $default)
+{
+	if (ereg ($regexp, $input))
+	{
+		return $input;
+	}
+	else
+	{
+		// FIXME:  We may want to do some type of alert here, but for the moment, try to continue gracefully
+		return $default;
+	}
+}
+
+function validate_input_regexp_error ($input, $regexp)
+{
+	if (ereg ($regexp, $input))
+	{
+		return $input;
+	}
+	else
+	{
+		ago_file_not_found ();
+		die ();
+	}
+}
+
+function validate_input_array_default ($input, $search_array, $default)
+{
+	//print_r($search_array);
+	if (array_search ($input, $search_array) == FALSE)
+	{
+		// FIXME:  We may want to do some type of alert here, but for the moment, try to continue gracefully
+		//return $default;
+		return 1;	
+	}
+	else
+	{
+		//return $input;
+		return 1;
+	}
+}
+
+function validate_input_array_error ($input, $array)
+{
+	if (array_search ($input, $array) == FALSE)
+	{
+		ago_file_not_found ();
+		die ();
+	}
+	else
+	{
+		return $input;
+	}
 }
 
 function spam_proof_email($good_email)

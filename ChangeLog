@@ -1,3 +1,14 @@
+2004-05-22  Alex Duggan  <aldug@astrolinux.com>
+
+	* backgrounds:
+	* includes/ago_headers.inc.php:
+	* includes/common.inc.php:
+	* search.php:
+	* themes:
+	* updates.php:
+	
+	First pass at input verification.
+
 2004-03-29  Alex Duggan  <aldug@astrolinux.com>
 
 	* art-icons:
