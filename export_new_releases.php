@@ -4,6 +4,7 @@ require("common.inc.php");
 print("<?xml version=\"1.0\"?>\n");
 print("<upates>\n");
 $cutoff_timestamp = time() - (60*60*24*7);
+
 /* backgrounds */
 print("\t<backgrounds>\n");
 $background_select_result = mysql_query("SELECT backgroundID, background_name, category, background_description, add_timestamp FROM background WHERE add_timestamp > $cutoff_timestamp");
@@ -17,6 +18,8 @@ while(list($backgroundID,$background_name,$category,$background_description,$add
 	print("\t\t</background>\n");
 }
 print("\t</backgrounds>\n");
+
+
 /* themes */
 print("\t<themes>\n");
 $theme_select_result = mysql_query("SELECT themeID, theme_name, category, description, add_timestamp FROM theme WHERE add_timestamp > $cutoff_timestamp");
