@@ -1,3 +1,8 @@
+2002-12-26  Alex Duggan  <aldug@gnome.org>
+
+	* faq.php: include at the top of the page a list of questions with local links
+	to the question and answer below in the page
+
 2002-12-24  Alex Duggan  <aldug@gnome.org>
 
 	* includes/config.inc.php: fix icon for screenshots middle box
