@@ -74,8 +74,8 @@ a.news-link:hover {
 .horizontal-menu-bar-lite {
 	background: #555566;
 	color: #a8a7b7;
-   border-top: 5px solid #000000;
-   border-top: 5px solid #000000;
+   border-top: 2px solid #000000;
+   border-bottom: 2px solid #000000;
 }
 
 .horizontal-gradient-menu-bar {
