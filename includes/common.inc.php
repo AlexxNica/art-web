@@ -233,6 +233,7 @@ function display_icons($type, $page)
       print("</tr>\n</table>");
       
       print("<p>\n");
+      print("<div align=\"center\">\n");
       if($page > 1)
       {
       	$prev_page = $page -1;
@@ -254,6 +255,7 @@ function display_icons($type, $page)
       	$next_page = $page +1;
          print(" <a href=\"$PHP_SELF?type=$type&page=$next_page\">[&gt;]</a>");
       }
+      print("</div>\n");
    }
    else
    {
