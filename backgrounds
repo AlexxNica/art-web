@@ -47,6 +47,10 @@ elseif( array_key_exists($category,$background_config_array) && ($background_num
 	{
 		$thumbnails_per_page = 12;
 	}
+	if(!$sort_by)
+	{
+		$sort_by = "date";
+	}
 	
 	$background_select_all_result = mysql_query("SELECT * FROM background WHERE category='$category' AND status='active'AND parent='0' ORDER BY add_timestamp DESC");
 	$num_backgrounds = mysql_num_rows($background_select_all_result);

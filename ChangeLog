@@ -1,3 +1,10 @@
+2003-07-15  Alex Duggan  <aldug@astrolinux.com>
+
+	* backgrounds:
+	* themes:
+	By popular request, the background and theme listing pages
+	are now sorted by date as the default.
+
 2003-07-10  Alex Duggan  <aldug@astrolinux.com>
 
 	* includes/ago_headers.inc.php: include a favicon

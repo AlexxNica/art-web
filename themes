@@ -49,6 +49,10 @@ else if( array_key_exists($category,$theme_config_array) && ($theme_num == "" ||
 	{
 		$thumbnails_per_page = 12;
 	}
+	if(!$sort_by)
+	{
+		$sort_by = "date";
+	}
 	
 	$theme_select_all_result = mysql_query("SELECT * FROM theme WHERE category='$category' ORDER BY add_timestamp DESC");
 	$num_themes = mysql_num_rows($theme_select_all_result);
