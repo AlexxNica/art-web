@@ -27,7 +27,7 @@ print("</div>\n</div>\n");
 
 <?php
 print("<div align=\"center\">\n");
-$background_select_result = mysql_query("SELECT backgroundID,category,thumbnail_filename FROM background ORDER BY add_timestamp DESC LIMIT 1");
+$background_select_result = mysql_query("SELECT backgroundID,category,thumbnail_filename FROM background WHERE status='active' ORDER BY add_timestamp DESC LIMIT 1");
 list($backgroundID,$background_category,$thumbnail_filename) = mysql_fetch_row($background_select_result);
 print("<a href=\"show_background.php?backgroundID=$backgroundID&category=$background_category\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" border=\"0\" alt=\"thumbnail\"></a>\n");
 print("</div>\n</div>\n");
@@ -40,7 +40,7 @@ print("</div>\n</div>\n");
 
 <?php
 print("<div align=\"center\">\n");
-$theme_select_result = mysql_query("SELECT themeID,category,small_thumbnail_filename FROM theme ORDER BY add_timestamp DESC LIMIT 1");
+$theme_select_result = mysql_query("SELECT themeID,category,small_thumbnail_filename FROM theme WHERE status='active' ORDER BY add_timestamp DESC LIMIT 1");
 list($themeID,$theme_category,$thumbnail_filename) = mysql_fetch_row($theme_select_result);
 print("<a href=\"show_theme.php?themeID=$themeID&category=$theme_category\"><img src=\"/images/thumbnails/$theme_category/$thumbnail_filename\" border=\"0\" alt=\"thumbnail\"></a>\n");
 print("</div>\n</div>\n");
