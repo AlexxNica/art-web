@@ -65,7 +65,7 @@ function ago_header($title)
 	<!-- Left Column -->
 
 	<td width="182">
-	<div class="mb_lite-title"><img src="/images/site/pill-icons/art.png" alt="ART"> ART</div>
+	<div class="mb_lite-title"><img src="/images/site/pill-icons/art.png" alt=""> ART</div>
 	<div class="mb_lite-contents">
 	<?
 	global $linkbar;
@@ -105,7 +105,7 @@ function ago_footer()
 	<td width="225">
 
 	<!-- Screenshot -->
-	<div class="mb_lite-title"><img src="/images/site/pill-icons/screenshot.png" alt="SCREENSHOT"> SCREENSHOT</div>
+	<div class="mb_lite-title"><img src="/images/site/pill-icons/screenshot.png" alt=""> SCREENSHOT</div>
 	<div class="mb_lite-contents">
 
 	<?php
@@ -119,7 +119,7 @@ function ago_footer()
 	<!-- End Screenshot -->
 	<br> 
 	<!-- Background -->
-	<div class="mb_lite-title"><img src="/images/site/pill-icons/background.png" alt="BACKGROUND"> BACKGROUND</div>
+	<div class="mb_lite-title"><img src="/images/site/pill-icons/background.png" alt=""> BACKGROUND</div>
 	<div class="mb_lite-contents">
 
 	<?php
@@ -132,7 +132,7 @@ function ago_footer()
 	<!-- End Background -->
 	<br>
 	<!-- Theme -->
-	<div class="mb_lite-title"><img src="/images/site/pill-icons/theme.png" alt="THEME"> THEME</div>
+	<div class="mb_lite-title"><img src="/images/site/pill-icons/theme.png" alt=""> THEME</div>
 	<div class="mb_lite-contents">
 
 	<?php
