@@ -1,3 +1,7 @@
+2003-08-23  Alex Duggan  <aldug@astrolinux.com>
+
+	* main.css: include even IE png hack
+
 2003-08-22  Alex Duggan  <aldug@astrolinux.com>
 
 	* contact.php: Remove Roman Beigelbeck from contact list

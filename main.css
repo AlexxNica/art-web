@@ -6,8 +6,13 @@ body {
 	font-family: verdana,helvetica;
 	font-size: small;
 }
+
 td {
 	font-size: small;
+}
+
+img {
+	behavior: url("/images/site/pngbehavior.htc");
 }
 
 a {
