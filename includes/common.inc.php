@@ -166,11 +166,9 @@ function print_thumbnails_per_page_form()
 {
 	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"post\">\n");
    print("Thumbnails per page: <select name=\"thumbs_per_page\">\n");
-   for($count=0;$count<count($GLOBALS["thumbnails_per_page_array"]);$count++)
+   while(list($key,$val)=each($GLOBALS["thumbnails_per_page_array"]))
    {
-   	$temp_array = $GLOBALS["thumbnails_per_page_array"];
-      $thumbs_per_page = $temp_array[$count];
-      if($GLOBALS["thumbnails_per_page"] == $thumbs_per_page)
+   	if($GLOBALS["thumbnails_per_page"] == $val)
       {
       	$selected = " selected";
       }
@@ -178,7 +176,7 @@ function print_thumbnails_per_page_form()
       {
       	$selected = "";
       }
-      print("<option value=\"$thumbs_per_page\"$selected>$thumbs_per_page\n");
+      print("<option value=\"$val\"$selected>$key\n");
    }
    print("</select>\n");
    print("<input type=\"hidden\" name=\"change_thumbnails_per_page\" value=\"1\">\n");
