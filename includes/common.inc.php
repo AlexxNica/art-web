@@ -158,7 +158,7 @@ function get_updates_array($number)
 		$big_array[] = $add_timestamp . "|theme|". $backgroundID;
 	}
 	rsort($big_array);
-   $return_array = array_slice($big_array,0,$number)
+   $return_array = array_slice($big_array,0,$number);
 }
 function spam_proof_email($good_email)
 {
