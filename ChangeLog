@@ -1,7 +1,8 @@
 2003-06-21  Alex Duggan  <aldug@astrolinux.com>
 
+	* includes/config.inc.php:
 	* submit_theme.php:
-	* includes/config.inc.php: disable nautilus themes
+	* themes.php: disable nautilus themes 
 
 2003-06-01  Alex Duggan  <aldug@astrolinux.com>
 
