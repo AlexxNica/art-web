@@ -1,6 +1,9 @@
 <?php
 require("mysql.inc.php");
 require("common.inc.php");
+require("includes/headers.inc.php");
+
+admin_header("Add a News Item");
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
@@ -9,8 +12,6 @@ escape_gpc_array ($_POST);
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
 
-print("<html><head><title>Add a News Item</title></head><body>\n");
-print("Add News Item");   
 if($HTTP_POST_VARS)
 {
 	if($month && $day && $year && $title && $news_body)
@@ -46,6 +47,7 @@ else
    print("<input type=\"submit\" value=\"Add News Item\">\n");
    print("</form>\n");
 }
-print("</body>\n</html>\n\n");
+
+admin_footer();
 
 ?>

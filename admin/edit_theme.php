@@ -1,6 +1,9 @@
 <?php
 require("mysql.inc.php");
 require("common.inc.php");
+require("includes/headers.inc.php");
+
+admin_header("Edit a Theme");
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
@@ -8,11 +11,6 @@ escape_gpc_array ($_POST);
 // Extracts the POST variables to global variables
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
-
-print("<html>\n<head><title>Edit a Theme</title></head>\n<body>\n");
-print("<div align=\"center\">");
-print("<font size=\"+2\">Edit a Theme</font>\n<p>\n");
-print("</div>\n");
 
 // write the updated background text do the database
 if($action == "write")
@@ -123,6 +121,5 @@ else
 		print("</table>\n<p>\n");
 	}
 }
-
-print("</body>\n</html>\n");
+admin_footer();
 ?>

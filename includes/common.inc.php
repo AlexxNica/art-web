@@ -510,4 +510,24 @@ function spam_proof_email($good_email)
 	return $spam_protected_email;
 }
 
+
+function create_select_box($name,$options,$selected)
+{
+	$select = "selected";
+	print("<select name=\"$name\">\n");
+	while ( list($key,$val) = each($options) )
+	{
+		if($key == $selected)
+		{
+			print("<option value=\"$key\" $select>$val</option>\n");
+		}
+		else
+		{
+			print("<option value=\"$key\">$val</option>\n");
+		}
+	}
+	print("</select>\n");
+}
+
+
 ?>

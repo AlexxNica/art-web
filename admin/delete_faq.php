@@ -1,6 +1,7 @@
 <?php
 require("mysql.inc.php");
 require("common.inc.php");
+require("includes/headers.inc.php");
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
@@ -9,10 +10,7 @@ escape_gpc_array ($_POST);
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
 
-print("<html>\n<head><title>Delete a FAQ</title></head>\n<body>\n");
-print("<div align=\"center\">");
-print("<font size=\"+2\">Delete a FAQ</font>\n<p>\n");
-print("</div>\n");
+admin_header("Delete an FAQ");
 
 // write the updated background text do the database
 if($action == "delete")
@@ -20,7 +18,6 @@ if($action == "delete")
     /* remove from faq database */
     $faq_delete_query = "DELETE FROM faq WHERE faqID='$faqID'";
     $faq_delete_result = mysql_query($faq_delete_query);
-    
     if($faq_delete_result)
     {
         print("Sucessfully deleted FAQ.");
@@ -56,6 +53,6 @@ else
     print("</select><input type=\"submit\" value=\"Delete\">");
     print("<input type=\"hidden\" name=\"action\" value=\"confirm\">\n</form>\n");
 }
-print("</body>\n</html>\n");
+
+admin_footer();
 ?>
-    

@@ -2,6 +2,9 @@
 
 require("mysql.inc.php");
 require("common.inc.php");
+require("includes/headers.inc.php");
+
+admin_header("Add a Theme");
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
@@ -10,27 +13,7 @@ escape_gpc_array ($_POST);
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
 
-function create_select_box($name,$options,$selected)
-{
-	$select = "selected";
-	print("<select name=\"$name\">\n");
-	while ( list($key,$val) = each($options) )
-	{
-		if($key == $selected)
-		{
-			print("<option value=\"$key\" $select>$val</option>\n");
-		}
-		else
-		{
-			print("<option value=\"$key\">$val</option>\n");
-		}
-	}
-	print("</select>\n");
-}
 
-print("<html>\n<head><title>Add a Theme</title></head>\n<body>\n");
-print("<div align=\"center\">");
-print("<font size=\"+2\">Add a Theme</font>\n<p>\n");
 if($action == "add_theme")
 {
 	if($theme_name && $theme_author && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename && $download_filename )
@@ -94,5 +77,5 @@ else
 	print("<input type=\"submit\" value=\"Add Theme\">\n");
 	print("</form>\n");
 }
-print("</div>\n</body>\n</html>\n");
+admin_footer();
 ?>

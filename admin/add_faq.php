@@ -1,6 +1,7 @@
 <?php
 require("mysql.inc.php");
 require("common.inc.php");
+require("includes/headers.inc.php");
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
@@ -9,9 +10,8 @@ escape_gpc_array ($_POST);
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
 
-print("<html>\n<head><title>Add a FAQ</title></head>\n<body>\n");
-print("<div align=\"center\">");
-print("<font size=\"+2\">Add a FAQ</font>\n<p>\n");
+admin_header("Add a FAQ");
+
 if($HTTP_POST_VARS)
 {
 	if( $question && $answer )
@@ -42,5 +42,5 @@ else
    print("<p><input type=\"submit\" value=\"Add FAQ\">\n");
    print("</form>\n");
 }
-print("</div>\n</body>\n</html>\n");
+admin_footer();
 ?>
