@@ -6,7 +6,7 @@ require("ago_headers.inc.php");
 
 // superglobals stuff
 escape_gpc_array($_GET);
-$num_updates = validate_input_regexp_default($_GET["num_updates"], "/^[0-9]+$/", 12);
+$num_updates = validate_input_regexp_default($_GET["num_updates"], "^[0-9]+$", 12);
 
 ago_header("UPDATES");
 create_middle_box_top("updates");

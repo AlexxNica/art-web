@@ -1,5 +1,9 @@
 2004-10-09  Thomas Wood  <thos@gnome.org>
 
+	* updates.php: Fixed
+
+2004-10-09  Thomas Wood  <thos@gnome.org>
+
 	* index.php: Added "More..." link under "Latest Additions"
 	* submit_background.php: Users now get a submission ID
 	* updates.php: Re-added function to show more than 12 updates
