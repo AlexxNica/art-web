@@ -1,4 +1,9 @@
 2002-12-17  Alex Duggan  <aldug@gnome.org>
+	
+	* includes/common.inc.php: re-write get_updates_array() using two new
+	helper functions, function get_latest_backgrounds() and get_latest_themes()
+	
+2002-12-17  Alex Duggan  <aldug@gnome.org>
 
 	* submit_background.php: include a field for an optional screenshot url
    

@@ -144,7 +144,7 @@ function display_icons($type, $page)
    }
 }
 
-function get_updates_array($number)
+function get_latest_backgrounds($number)
 {
 	unset($big_array);
 	$background_select_result = mysql_query("SELECT backgroundID,add_timestamp FROM background ORDER BY add_timestamp DESC LIMIT $number");
@@ -152,11 +152,25 @@ function get_updates_array($number)
 	{
 		$big_array[] = $add_timestamp . "|background|". $backgroundID;
 	}
-	$theme_select_result = mysql_query("SELECT themeID,add_timestamp FROM theme ORDER BY add_timestamp DESC LIMIT $number");
+   return $big_array;
+}
+
+function get_latest_themes($number)
+{
+	unset($big_array);
+   $theme_select_result = mysql_query("SELECT themeID,add_timestamp FROM theme ORDER BY add_timestamp DESC LIMIT $number");
 	while( list($backgroundID,$add_timestamp) = mysql_fetch_row($theme_select_result) )
 	{
 		$big_array[] = $add_timestamp . "|theme|". $backgroundID;
 	}
+	return $big_array;
+}
+
+function get_updates_array($number)
+{
+	$background_array = get_latest_backgrounds($number);
+	$theme_array = get_latest_themes($number);
+	$big_array = array_merge($background_array,$theme_array);
 	rsort($big_array);
    
    if($number < count($big_array))
