@@ -30,7 +30,16 @@ if($themeID && ($category == "gdm_greeter" || $category == "gtk" || $category ==
       $description = $theme_select_row["description"];
    	$theme_download_select_result = mysql_query("SELECT name, download_name, size FROM theme_download WHERE themeID='$themeID' ORDER BY name");
       print("<table border=\"0\">\n");
-      print("<tr><td><a href=\"images/thumbnails/$category/$thumbnail_filename\"><img src=\"images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"shot2\"></a></td>\n");
+      print("<tr><td>");
+      if($category == "metacity" || $category == "sawfish" || $category == "sounds")
+      {
+      	print("<img src=\"images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"shot2\">");
+      }
+      else
+      {
+      	print("<a href=\"images/thumbnails/$category/$thumbnail_filename\"><img src=\"images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"shot2\"></a>");
+      }
+      print("</td>\n");
    	print("<td><span class=\"yellow-text\">Name:</span> $name<br>\n<span class=\"yellow-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"yellow-text\">Release Date:</span> $date<br><span class=\"yellow-text\">Download:</span><br>");
    	while(list($name,$download_name,$size)=mysql_fetch_row($theme_download_select_result))
    	{
