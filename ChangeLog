@@ -1,3 +1,7 @@
+2003-08-22  Alex Duggan  <aldug@astrolinux.com>
+
+	* contact.php: Remove Roman Beigelbeck from contact list
+
 2003-08-19  Alex Duggan  <aldug@astrolinux.com>
 
 	* includes/ago-headers.inc.php: make GNOME logo link point at

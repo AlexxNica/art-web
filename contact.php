@@ -9,7 +9,6 @@ create_middle_box_top("contact");
 
 print("The following people (in alphabetical order) are responsible for the layout and the contents:<p>\n");
 print("<table border=\"0\">\n");
-print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:roman _AT_ gnome.org\">Roman Beigelbeck</a></td></tr>\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:aldug _AT_ gnome.org\">Alex Duggan</a></td></tr>\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:ajgenius _AT_ ajgenius.us\">Andrew Johnson</a></td></tr>\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:thos _AT_ thos.me.uk\">Thomas Wood</a></td></tr>\n");
