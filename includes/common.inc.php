@@ -19,7 +19,7 @@ function create_middle_box_top($pill)
    else
    {
       print("<table border=\"0\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n");
-		print("<tr><td width=\"1\"><img src=\"images/site/ART-Pill_l.png\"></td><td width=\"$width\"><img src=\"images/site/pills/$src\"></td><td width=\"100%\" class=\"horizontal-split\"></td><td><img src=\"images/site/LBOX-top_r.png\"></td></tr>\n");
+		print("<tr><td width=\"1\"><img src=\"/images/site/ART-Pill_l.png\"></td><td width=\"$width\"><img src=\"/images/site/pills/$src\"></td><td width=\"100%\" class=\"horizontal-split\"></td><td><img src=\"/images/site/LBOX-top_r.png\"></td></tr>\n");
 		print("<tr><td width=\"1\" class=\"black-line\"></td><td colspan=\"2\" bgcolor=\"#a8a7b7\">\n");
       print("<div class=\"mb_standard-contents\">\n");
 	}
@@ -36,7 +36,7 @@ function create_middle_box_bottom()
    {
    	print("</div>\n");
       print("</td><td width=\"13\" class=\"vertical-shadow\"></td></tr>\n");
-		print("<tr><td colspan=\"3\" class=\"horizontal-bottom-shadow\"><img src=\"images/site/MBOX-shadow_l.png\"></td><td><img src=\"images/site/MBOX-shadow_r.png\"></td></tr>\n");
+		print("<tr><td colspan=\"3\" class=\"horizontal-bottom-shadow\"><img src=\"/images/site/MBOX-shadow_l.png\"></td><td><img src=\"/images/site/MBOX-shadow_r.png\"></td></tr>\n");
 		print("</table>\n</td>\n");
 	}
    print("<!-- End Center Column  -->\n");
@@ -107,7 +107,7 @@ function display_icons($type, $page)
          list($foo,$ext) = explode(".",$file);
          if(in_array($ext,$GLOBALS['valid_image_ext']))
 			{
-				print("<td><a href=\"images/icons/$type/$file\"><img src=\"images/icons/$type/$file\" border=\"0\"></a></td>");
+				print("<td><a href=\"/images/icons/$type/$file\"><img src=\"/images/icons/$type/$file\" border=\"0\"></a></td>");
 				$counter++;
          }
 		}
@@ -158,7 +158,16 @@ function get_updates_array($number)
 		$big_array[] = $add_timestamp . "|theme|". $backgroundID;
 	}
 	rsort($big_array);
-   $return_array = array_slice($big_array,0,$number);
+   
+   if($number < count($big_array))
+   {
+   	$return_array = array_slice($big_array,0,$number);
+   }
+   else
+   {
+   	$return_array = $big_array;
+   }
+   
    return $return_array;
 }
 
@@ -185,6 +194,13 @@ function print_thumbnails_per_page_form()
    print("</form>\n");
 }
 
+function fix_sql_date($sql_date,$delimiter)
+{
+	list($year,$month,$day)=explode("-",$sql_date);
+   $good_date = $month . $delimiter . $day . $delimiter . $year;
+   return $good_date;
+}
+
 function ago_redirect($referrer)
 {
 	if($referrer)
@@ -195,6 +211,12 @@ function ago_redirect($referrer)
 	{
 		header("Location: index.php");
 	}
+}
+
+function ago_file_not_found()
+{
+	print("art.gnome.org, file NOT found.");
+
 }
 
 function spam_proof_email($good_email)

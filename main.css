@@ -156,7 +156,7 @@ a.news-link:hover {
 }
 
 .list-thumb {
-	#width: 100px;
+	width: 150px;
    float: left;
    padding-top: 10px;
    padding-right: 15px; 

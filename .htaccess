@@ -1,2 +1,3 @@
 AddType application/x-httpd-php .php .html
-php_value include_path .:/home/admin/art:/usr/local/www/art.gnome.org/includes/
+php_value include_path .:./includes
+DefaultType application/x-httpd-php
