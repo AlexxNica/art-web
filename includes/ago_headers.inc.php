@@ -129,7 +129,7 @@ function ago_footer()
 	
 	<p>
 	<div id="hdr">
-      <a href="http://developer.gnome.org/"><img id="logo" src="/images/site/gnome-64.png" alt="Home" title="Back to the Gnome Developer's home page"/></a>
+      <a href="/"><img id="logo" src="/images/site/gnome-64.png" alt="Home" title="Back to the Gnome Developer's home page"/></a>
       <p class="none"></p>
       <div id="hdrNav">
 	<a href="http://www.gnome.org/">Users</a> &middot;

@@ -1,3 +1,8 @@
+2003-08-19  Alex Duggan  <aldug@astrolinux.com>
+
+	* includes/ago-headers.inc.php: make GNOME logo link point at
+	a.g.o instead of d.g.o
+
 2003-08-18  Alex Duggan  <aldug@astrolinux.com>
 
 	* main.css:
