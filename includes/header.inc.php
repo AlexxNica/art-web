@@ -140,7 +140,7 @@ for($count=1;$count<5;$count++)
    		}
          else
          {
-         	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\">Mirror ".$count-1."</a>");
+         	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\">Mirror " . $count-1 . "</a>");
    		}
       }
    }
