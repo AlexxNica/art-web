@@ -211,7 +211,7 @@ function display_icons($type, $page)
          if(in_array($ext,$GLOBALS['valid_image_ext']))
 			{
 				$icon_array[] = $file;
-				$counter ++;
+				$counter++;
          }
       }
       
