@@ -1,3 +1,17 @@
+2004-03-29  Alex Duggan  <aldug@astrolinux.com>
+
+	* art-icons:
+	* backgrounds:
+	* download:
+	* screenshots:
+	* search.php:
+	* submit_background.php:
+	* submit_theme.php:
+	* themes:
+	* updates.php:
+	
+	Update so site works with register_globals = Off
+	
 2004-03-03  Alex Duggan  <aldug@astrolinux.com>
 
 	* contacat.php: Update thos's email address.

@@ -4,10 +4,19 @@ require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
 
+// superglobal stuff
+$background_name = $_POST["background_name"];
+$category = $_POST["category"];
+$background_author = $_POST["background_author"];
+$author_email = $_POST["author_email"];
+$background_url = $_POST["background_url"];
+$background_screenshot_url = $_POST["background_screenshot_url"];
+$background_description = $_POST["background_description"];
+
 ago_header("Background Submission");
 create_middle_box_top("backgrounds");
 
-if($HTTP_POST_VARS)
+if($_POST)
 {
 	if($background_name && $category && $background_author && $author_email && $background_url && $background_description)
    {

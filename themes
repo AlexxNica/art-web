@@ -6,7 +6,12 @@ require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
 
-$request = $PATH_INFO;
+// superglobals stuff
+$request = $_SERVER["PATH_INFO"];
+$page = $_GET["page"];
+$sort_by = $_GET["sort_by"];
+$thumbnails_per_page = $_GET["thumbnails_per_page"];
+
 list($foo,$category,$theme_num) = explode("/", $request);
 
 /* print out the list of theme categories */

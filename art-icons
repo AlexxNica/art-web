@@ -6,7 +6,10 @@ require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
 
-$request = $PATH_INFO;
+// superglobals stuff
+$request = $_SERVER["PATH_INFO"];
+$page = $_GET["page"];
+
 list($foo,$category,$icon_num) = explode("/", $request);
 
 /* print out the list of theme categories */
@@ -46,7 +49,7 @@ if($category == "" || $category == "index.php")
 }
 
 /* icon preview page */
-else if( $icon_num == "index.php" )
+else if( $icon_num == "index.php" && mysql_num_rows (mysql_query ("SELECT * FROM icon WHERE name='$category'")) == 1)
 {
 	ago_header("ICONS");
 	create_middle_box_top("icons");
@@ -54,10 +57,6 @@ else if( $icon_num == "index.php" )
 	if (!$page || $page == "") 
 	{
 		$page = 1;
-	}
-	if(!$type || $type == "")
-	{
-		$type = "other";
 	}
 	display_icons ($category,$page);
 

@@ -7,6 +7,12 @@ require("ago_headers.inc.php");
 ago_header("SEARCH");
 create_middle_box_top("search");
 
+// superglobals stuff
+$search_type = $_GET["search_type"];
+$search_text = $_GET["search_text"];
+$sort_by = $_GET["sort_by"];
+$thumbnails_per_page = $_GET["thumbnails_per_page"];
+
 $search_text = urldecode($search_text);
 
 display_search_box($search_text, $search_type, $thumbnails_per_page, $sort_by);

@@ -3,7 +3,9 @@
 require("mysql.inc.php");
 require("common.inc.php");
 
-$request = $PATH_INFO;
+// superglobal stuff
+$request = $_SERVER["PATH_INFO"];
+
 list($foo,$section,$category,$download_num,$filename) = explode("/", $request);
 
 if($section == "backgrounds")

@@ -4,10 +4,18 @@ require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
 
+// superglobal stuff
+$theme_name = $_POST["theme_name"];
+$category = $_POST["category"];
+$theme_author = $_POST["theme_author"];
+$author_email = $_POST["author_email"];
+$theme_url = $_POST["theme_url"];
+$theme_description = $_POST["theme_description"];
+
 ago_header("Theme Submission");
 create_middle_box_top("themes");
 
-if($HTTP_POST_VARS)
+if($_POST)
 {
 	if($theme_name && $category && $theme_author && $author_email && $theme_url && $theme_description)
    {

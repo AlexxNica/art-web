@@ -4,8 +4,12 @@ require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
 
+// superglobals stuff
+$num_updates = $_GET["num_updates"];
+
 ago_header("UPDATES");
 create_middle_box_top("updates");
+
 if (!$num_updates || $num_updates=="" || $num_updates==0)
 {
 	$num_updates = 12;
