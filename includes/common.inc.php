@@ -88,7 +88,7 @@ function display_icons($type, $page)
          }
       }
       
-      print("<table border=\"0\">\n<tr>");
+      print("<div align=\"center\">\n<table border=\"0\">\n<tr>");
       $counter = 0;
       while(list($foo,$file)=each($icon_array))
 		{
@@ -103,7 +103,7 @@ function display_icons($type, $page)
 				$counter++;
          }
 		}
-      print("</tr>\n</table>");
+      print("</tr>\n</table>\n</div>\n");
       
       print("<p>\n");
       print("<div align=\"center\">\n");
