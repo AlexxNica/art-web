@@ -193,19 +193,19 @@ function display_icons($type, $page)
       }
       $num_pages = ceil($num_icons / $icons_per_page);
       
-      rewinddir ($d->handle);
-		$d->read();
-		$d->read();
+      rewinddir ($dir_handle->handle);
+		$dir_handle->read();
+		$dir_handle->read();
       
       $start_file = $icons_per_page * ($page - 1);
 		for ($i=0;$i<$start_file;++$i)
 		{
-			$file = $d->read ();
+			$file = $dir_handle->read ();
 		}
       
       $counter = 0;
       print("<table border=\"0\">\n");
-      while( ($file = $d->read ()) && ($i < $num_per_page) )
+      while( ($file = $dir_handle->read ()) && ($i < $num_per_page) )
 		{
 			$col = 0;
          print("<tr>\n");
