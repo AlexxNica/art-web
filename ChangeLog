@@ -1,5 +1,9 @@
 2003-01-14  Alex Duggan  <aldug@gnome.org>
 
+	* includes/common.inc.php: reall fix the problem in print_background_row
+	
+2003-01-14  Alex Duggan  <aldug@gnome.org>
+
 	* includes/footer.inc.php: make the background and theme box on the
 	right side of the site look in only active backgrounds/themes
 

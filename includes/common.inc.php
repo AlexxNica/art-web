@@ -128,7 +128,7 @@ function print_background_row($backgroundID)
 	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename FROM background WHERE backgroundID='$backgroundID'");
 	list($background_name,$category,$author,$release_date,$thumbnail_filename) = mysql_fetch_row($background_select_result);
 	$release_date = fix_sql_date($release_date,"/");
-	$category_good = $linkbar["background_" . $category]["alt"];
+	$category_good = $linkbar["backgrounds_" . $category]["alt"];
 	print("<tr><td><a href=\"show_background.php?backgroundID=$backgroundID&category=$category\"><img src=\"images/thumbnails/backgrounds/$thumbnail_filename\" border=\"0\"></td><td><a class=\"screenshot\" href=\"show_background.php?backgroundID=$backgroundID&category=$category\">$background_name</a><br>$release_date<br>BACKGROUNDS - $category_good<br>$author</td></tr>\n");
 }
 
