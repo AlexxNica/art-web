@@ -3,6 +3,7 @@
 require("mysql.inc.php");
 require("common.inc.php");
 require("includes/headers.inc.php");
+require("includes/common.inc.php");
 
 admin_header("Add a Theme");
 
@@ -27,10 +28,10 @@ if($action == "add_theme")
 		if($theme_insert_result)
 		{
 			print("Successed added theme to the database.\n<p>\nClick <a href=\"$PHP_SELF\">here</a> to add another.");	
-			if($theme_submitID) 
+			if($theme_submitID)
 			{
-				$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='added' WHERE themeID='$itheme_submitID'");
-				print("Successfully marked theme as $new_status.<p><a href=\"$PHP_SELF\">Return</a> to incoming themes list.");
+				$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='added' WHERE themeID='$theme_submitID'");
+				print("Successfully marked submitted theme as added in incoming themes list.<p><a href=\"/admin/show_submitted_themes.php\">Return</a> to incoming themes list.");
 			}
 		}
 		else

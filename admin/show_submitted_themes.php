@@ -22,7 +22,7 @@ if($mark_theme)
 else
 {
 	print("<form method=\"GET\" action=\"$PHP_SELF\">Show only ");
-	create_select_box("theme_type", Array("metacity" => "Metacity", "Icon" => "icon", "gtk2" => "GTK 2", "gdm_greeter" => "GDM Greeter", "splash_screens" => "Splash Screens"), $theme_type);
+	create_select_box("theme_type", Array("" => "All", "metacity" => "Metacity", "Icon" => "Icon", "gtk2" => "GTK 2", "gdm_greeter" => "GDM Greeter", "splash_screens" => "Splash Screens"), $theme_type);
 	print("themes <input type=\"submit\" value=\"Go\"></form>");
 	print("<a href=\"$PHP_SELF?theme_type=$theme_type\">Table</a>|<a href=\"$PHP_SELF?theme_type=$theme_type&list=urls\">URL List</a><br>");
 
