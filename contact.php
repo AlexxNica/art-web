@@ -11,7 +11,7 @@ print("The following people (in alphabetical order) are responsible for the layo
 print("<table border=\"0\">\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"bold-link\" href=\"mailto:aldug _AT_ gnome.org\">Alex Duggan</a></td></tr>\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"bold-link\" href=\"mailto:ajgenius _AT_ ajgenius.us\">Andrew Johnson</a></td></tr>\n");
-print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"bold-link\" href=\"mailto:thos _AT_ thos.me.uk\">Thomas Wood</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"bold-link\" href=\"mailto:thos _AT_ gnome.org\">Thomas Wood</a></td></tr>\n");
 print("</table>\n");
 
 print("<p>\nYou can also catch us on the channel <span class=\"bold-text\">#gnome-art</span> on <span class=\"bold-text\">irc.gimp.org</span>.\n");
