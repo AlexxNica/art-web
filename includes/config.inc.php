@@ -118,6 +118,12 @@ $linkbar = array (
       "height" => "",
       "indent" => "0",
       "alt" => "FAQ"),
+   "submit" => array(
+   	"url" => "submit.php",
+      "width" => "",
+      "height" => "",
+      "indent" => "0",
+      "alt" => "SUBMIT"),
    "contact" => array(
    	"url" => "contact.php",
       "width" => "",
@@ -247,9 +253,13 @@ $pill_array = array (
    	"image" => "Screenshots-Pill.png",
       "width" => "237",
       "height" => "62",
-      "alt" => "SCREENSHOTS")
-   
-
+      "alt" => "SCREENSHOTS"),
+	"submit" => array(
+   	"image" => "Submit-Pill.png",
+      "width" => "188",
+      "height" => "62",
+      "alt" => "SUBMIT")
+    
 );
 
 $sys_icon_type_array = array(
@@ -284,5 +294,5 @@ $sys_icon_dir = "/usr/local/www/art.gnome.org/images/icons";
 
 $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 
-$thumbnails_per_page_array = array(12,24);
+$thumbnails_per_page_array = array("12"=>12,"24"=>24,"All"=>1000);
 ?>
