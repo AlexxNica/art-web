@@ -253,18 +253,18 @@ $sys_number_images_array = array ("64","96");
 $sys_icon_type_array = array(
 	"gtk-stock" => array(
    	"realname" => "Gtk+ Stock Icons",
-      "tarball_name" => "tarball (1.2 MB)",
+      "tarball_name" => "tarball (64 kB)",
       "tarball_filename" => "gtk-stock_all.tar.gz",
       "image" => "stock_home_24.png"),
    "nautilus-emblems" => array(
     	"realname" => "Nautilus Emblems",
-      "tarball_name" => "tarball (560 kb)",
-      "tarball_filename" => "nautilus_emblems_all.tar.gz",
+      "tarball_name" => "tarball (110 kB)",
+      "tarball_filename" => "nautilus-emblems_all.tar.gz",
       "image" => "Gridlock.png"),
    "other" => array(
     	"realname" => "Other Icons",
-      "tarball_name" => "tarball (5.6 MB)",
-      "tarball_filename" => "m_all.tar.gz",
+      "tarball_name" => "tarball (3.1 MB)",
+      "tarball_filename" => "other_all.tar.gz",
       "image" => "Boot.png")
 );
       

@@ -12,7 +12,7 @@ while(list($key,$val)=each($GLOBALS["sys_icon_type_array"]))
    $icon_filename = $val["image"];
    $tarball_name = $val["tarball_name"];
    $tarball_filename =$val["tarball_filename"];
-   print("<tr><td><img src=\"images/icons/$key/$icon_filename\"></td><td><a href=\"show_icons.php?type=$key\">$realname</a> [<a href=\"$mirror_url/images/icons/$tarball_filename\">$tarball_name</a>]</td></tr>\n");
+   print("<tr><td><img src=\"images/icons/$key/$icon_filename\"></td><td><a href=\"show_icons.php?type=$key\">$realname</a> [<a href=\"$mirror_url/icons/$tarball_filename\">$tarball_name</a>]</td></tr>\n");
 }
 print("</table>\n");
 
