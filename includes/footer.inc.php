@@ -161,8 +161,7 @@ else
 </table>
 <div align="center">
 <font color="black" size="-2">
-7437 Gnomers hit this site<br>
-&copy; 2002 <a class="footer" href="http://foundation.gnome.org"><b>The GNOME Foundation</b></a>
+&copy; 2002 <a class="footer" href="copyright.php"><b>The GNOME Foundation</b></a>
 </font> 
 </div>
 <p>
