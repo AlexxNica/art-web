@@ -1,5 +1,7 @@
 <?php
 
+/* $Id$ */
+
 require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
