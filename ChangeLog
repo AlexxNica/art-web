@@ -1,3 +1,8 @@
+2004-07-11  Thomas Wood <thos@gnome.org>
+	* index.php: Fixed view_old_news and added "Latest Additions" section
+	* includes/config.inc.php: String corrections
+	* admin/show_submitted_themes.php: Import GET variables
+
 2004-06-30  Thomas Wood <thos@gnome.org>
 	* index.php: Made sure author email address of news itms where
 	made spam_proof

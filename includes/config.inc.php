@@ -94,7 +94,7 @@ $theme_config_array = array (
 		"name" => "GTK+ Engines",
 		"url" => "/themes/gtk_engines/index.php",
 		"active" => "1",
-		"description" => "GTK Engines are pieces of code that draw your theme."
+		"description" => "GTK+ Engines are pieces of code that draw your theme."
 		)
 );
 
@@ -155,7 +155,7 @@ $pill_array = array (
 		"alt" => "Themes - Other"),
 	"themes_gtk_engines" => array(
 		"icon" => "theme.png",
-		"alt" => "Themes - GTK Engines"),
+		"alt" => "Themes - GTK+ Engines"),
 	"icons" => array(
    	"icon" => "icons.png",
 		"alt" => "Icons"),

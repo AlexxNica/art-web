@@ -4,10 +4,12 @@ require("common.inc.php");
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
+escape_gpc_array ($_GET);
 
 // Extracts the POST variables to global variables
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
+extract($_GET, EXTR_SKIP);
 
 ?>
 <html>
