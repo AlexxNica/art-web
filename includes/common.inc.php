@@ -226,7 +226,7 @@ function display_icons($type, $page)
          list($foo,$ext) = explode(".",$file);
          if(in_array($ext,$GLOBALS['valid_image_ext']))
 			{
-				print("<td><img src=\"images/icons/$type/$file\"></td>");
+				print("<td><a href=\"images/icons/$type/$file\"><img src=\"images/icons/$type/$file\" border=\"0\"></a></td>");
 				$counter++;
          }
 		}
