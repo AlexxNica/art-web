@@ -203,9 +203,21 @@ function display_icons($type, $page)
 			$file = $dir_handle->read ();
 		}
       
+      unset($icon_array);
+      $counter = 0;
+      while( ($file = $dir_handle->read ()) && ($counter < $icons_per_page) )
+		{
+		   list($foo,$ext) = explode(".",$file);
+         if(in_array($ext,$GLOBALS['valid_image_ext']))
+			{
+				$icon_array[] = $file;
+				$counter ++;
+         }
+      }
+      
       $counter = 0;
       print("<table border=\"0\">\n");
-      while( ($file = $dir_handle->read ()) && ($counter < $icons_per_page) )
+      while(list($file)=array_values($icon_array))
 		{
 			$col = 0;
          print("<tr>\n");
@@ -221,7 +233,8 @@ function display_icons($type, $page)
          print("</tr>\n");
       }
       print("</table>");
-      
+   
+   
    }
    else
    {
