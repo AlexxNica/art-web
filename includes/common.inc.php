@@ -128,7 +128,7 @@ function print_background_row($backgroundID)
 	$link = "/backgrounds/$category/$backgroundID/";
 	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
-	print("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>$category_name<br>$popularity Downloads per Day<br>$author</td></tr>\n");
+	print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>Background - $category_name<br>$popularity Downloads per Day<br>$author</td></tr>\n"));
 
 }
 
@@ -149,7 +149,7 @@ function print_theme_row($themeID)
 	{
 		$class = "thumbnail-border";
 	}
-	print("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></td><td><a class=\"bold-link\" href=\"$link\">$theme_name</a><br>$release_date<br>$category_name<br>$popularity Downloads per Day<br>$author</td></tr>\n");
+	print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></td><td><a class=\"bold-link\" href=\"$link\">$theme_name</a><br>$release_date<br>$category_name<br>$popularity Downloads per Day<br>$author</td></tr>\n"));
 }
 
 function get_latest_backgrounds($number)

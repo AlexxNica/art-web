@@ -1,3 +1,11 @@
+2004-12-01  Thomas Wood  <thos@gnome.org>
+
+	* admin/add_theme.php: File chooser now uses global theme dir variable
+	* includes/config.inc.php: Theme dir variable fixed
+	* backend.php: Prettier items, using print_theme_row and print_background_row
+	* includes/common.inc.php: Ensure output of print_theme_row and
+	print_background_row is utf-8
+
 2004-11-22  Alex Duggan  <aldug@astrolinux.com>
 
 	* admin/add_background.php:

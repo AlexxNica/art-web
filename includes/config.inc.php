@@ -199,7 +199,7 @@ $pill_array = array (
 
 $mirror_url = "http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org";
 
-$sys_theme_dir = "/usr/local/www/art-web/content/themes";
+$sys_theme_dir = "/ftp/pub/gnome/teams/art.gnome.org/themes";
 
 $sys_icon_dir = "/usr/local/www/art-web/images/icons";
 
