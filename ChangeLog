@@ -1,5 +1,10 @@
 2003-04-10  Alex Duggan  <aldug@astrolinux.com>
 
+	* submit.php: remove extranious period.
+	* themes.php: remove link to metathemes.
+
+2003-04-10  Alex Duggan  <aldug@astrolinux.com>
+
 	* links.php: Fix typo in Dekar's name
 
 2003-04-10  Alex Duggan  <aldug@astrolinux.com>
