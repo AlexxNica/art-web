@@ -161,7 +161,7 @@ function ago_footer()
 	</table>
 	<div align="center">
 	<font color="black" size="-2">
-	Copyright &copy; 2002 - 2003<br><a class="footer" href="copyright.php"><b>The art.gnome.org team</b></a>
+	Copyright &copy; 2002 - 2003<br><a class="footer" href="/copyright.php"><b>The art.gnome.org team</b></a>
 	</font> 
 	</div>
 	<p>
