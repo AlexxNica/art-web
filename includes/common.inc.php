@@ -172,7 +172,7 @@ function show_icons_alex ($type, $page, $num_per_page)
 function display_icons($type, $page)
 {
 	$icons_per_page = 64;
-   if(is_dir($sys_icon_dir . "/$type"))
+   if(is_dir($GLOBALS['sys_icon_dir'] . "/$type"))
    {
    	$dir_handle = dir($GLOBALS['sys_icon_dir'] . "/$type");
       
