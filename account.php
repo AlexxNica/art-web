@@ -42,11 +42,20 @@ elseif (array_key_exists('logout', $_POST))
 }
 elseif (array_key_exists('change_profile', $_POST))
 {
-	$new_pass = addslashes($_POST['password']);
-	$info = htmlspecialchars($_POST['info'], ENT_QUOTES);
-	$realname = addslashes($_POST['realname']);
-	$email = addslashes($_POST['email']);
-	$homepage = addslashes($_POST['homepage']);
+	if (get_magic_quotes_runtime() == 1)
+	{
+		$_POST['password'] = stripslashes ($_POST['password']);
+		$_POST['info'] = stripslashes ($_POST['info']);
+		$_POST['realname'] = stripslashes ($_POST['realname']);
+		$_POST['email'] = stripslashes ($_POST['email']);
+		$_POST['homepage'] = stripslashes ($_POST['homepage']);
+	}
+
+	$new_pass = mysql_real_escape_string ($_POST['password']);
+	$info = mysql_real_escape_string ($_POST['info']);
+	$realname = mysql_real_escape_string ($_POST['realname']);
+	$email = mysql_real_escape_string ($_POST['email']);
+	$homepage = mysql_real_escape_string ($_POST['homepage']);
 
 	$pass_sql = "";
 	if ($new_pass != "")
@@ -69,10 +78,19 @@ elseif (array_key_exists('change_profile', $_POST))
 }
 elseif (array_key_exists("register", $_POST))
 {
-	$username = addslashes($_POST['username']);
-	$realname = addslashes($_POST['realname']);
-	$email = addslashes($_POST['email']);
+	if (get_magic_quotes_runtime() == 1)
+	{
+		$_POST['password'] = stripslashes ($_POST['password']);
+		$_POST['username'] = stripslashes ($_POST['username']);
+		$_POST['realname'] = stripslashes ($_POST['realname']);
+		$_POST['email'] = stripslashes ($_POST['email']);
+	}
+
+	$username = mysql_real_escape_string ($_POST['username']);
+	$realname = mysql_real_escape_string ($_POST['realname']);
+	$email = mysql_real_escape_string ($_POST['email']);
 	$password = md5($_POST['password']);
+
 	if ($username && $realname && $email && $password)
 	{
 		$new_user_result = mysql_query("INSERT INTO user (username,realname,password) VALUES ('$username','$realname','$password')");
@@ -83,7 +101,7 @@ elseif (array_key_exists("register", $_POST))
 		}
 		else
 		{
-			print("<p>New user ($username) created.</p>");
+			print("<p class=\"info\">New user ($username) created. You may now login with this username and your password.</p>");
 			print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Back</a></p>");
 		}
 	}
@@ -98,6 +116,10 @@ elseif (array_key_exists('username', $_SESSION))
 	print("<ul><li><a href=\"/users/{$_SESSION['userID']}/\">Public Profile Page</a></li></ul>");
 	$query_result = mysql_query("SELECT realname,email,homepage,info FROM user WHERE userID = '{$_SESSION['userID']}'");
 	list($realname,$email,$homepage,$info) = mysql_fetch_row($query_result);
+	$realname = htmlspecialchars ($realname, ENT_QUOTES);
+	$email = htmlspecialchars ($email, ENT_QUOTES);
+	$homepage = htmlspecialchars ($homepage, ENT_QUOTES);
+	$info = htmlspecialchars ($info, ENT_QUOTES);
 	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"POST\" />");
 	print("<table>");
 	print("<tr><th>Password</th><td><input value=\"\" type=\"password\" name=\"password\" /> (leave blank to remain unchanged)</td></tr>");

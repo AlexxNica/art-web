@@ -13,7 +13,10 @@ $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page
 $view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
 list($foo, $unvalidated_category, $unvalidated_themeID) = explode("/", $_SERVER["PATH_INFO"]);
 $vote = validate_input_regexp_default ($_POST["vote"], "^[1-5]$", -1);
-$comment = $_POST["comment"]; // This is validated later
+if  (get_magic_quotes_runtime() == 1)
+	$comment = stripslashes($_POST["comment"]); // This is validated later
+else
+	$comment = $_POST["comment"];
 $commentID = validate_input_regexp_default ($_POST["commentID"], "^[0-9]+$", -1);
 $report = $_POST["report"];
 

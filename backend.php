@@ -27,7 +27,7 @@ for($count=0;$count<$num_updates;$count++)
 		print("\t\t\t<pubDate>" . date("r", $timestamp) . "</pubDate>");
 		print("\t\t\t<description><![CDATA[");
 		print("<table>");
-		print_background_row($ID, "list");
+		print_background_row($ID, "compact");
 		print("</table>");
 		print("]]></description>\n");
 	}
@@ -42,7 +42,7 @@ for($count=0;$count<$num_updates;$count++)
 		print("\t\t\t<pubDate>" . date("r", $timestamp) . "</pubDate>");
 		print("\t\t\t<description><![CDATA[");
 		print("<table>");
-		print_theme_row($ID, "list");
+		print_theme_row($ID, "compact");
 		print("</table>");
 		print("]]></description>\n");
 	}

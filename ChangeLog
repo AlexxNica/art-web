@@ -1,3 +1,17 @@
+2005-03-23  Thomas Wood  <thos@gnome.org>
+
+	* account.php:
+	* backend.php:
+	* backgrounds:
+	* includes/common.inc.php:
+	* themes:
+
+	 - Fixes for magic quotes issues
+	 - New "compact" list view that excludes all changeable content (prevents RSS
+	 readers from showing old items as new)
+
+	* default.css: Fix bug 171289 (Text contrast too low)
+
 2005-03-22  Thomas Wood  <thos@gnome.org>
 
 	* index.html: Removed

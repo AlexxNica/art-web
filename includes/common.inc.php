@@ -225,8 +225,8 @@ function add_comment($artID, $type, $comment)
 		{
 			return ("<p class=\"warning\">Comments must be more than 10 letters long!</p>");
 		}
-		$comment = mysql_real_escape_string(htmlspecialchars($comment, ENT_QUOTES)); // make sure it is safe for html and mysql
-		$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . mysql_real_escape_string($comment) . "')");
+		$comment = mysql_real_escape_string($comment); // make sure it is safe for html and mysql
+		$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
 		if ($comment_result === False)
 		{
 			return ("<p class=\"error\">There was an error adding your comment.</p>");
@@ -253,7 +253,11 @@ function print_background_row($backgroundID, $view)
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
 	$thumbnail = "{$site_url}images/thumbnails/backgrounds/$thumbnail_filename";
 	
-	if ($vote_count < 5) 
+	if ($view == "compact")
+	{
+		$vote = "";
+	}
+	elseif ($vote_count < 5)
 	{
 		$vote = "<div class=\"rating_text\">5 votes required</div>\n";
 	}
@@ -294,7 +298,11 @@ function print_theme_row($themeID, $view)
 
 	$thumbnail = "{$site_url}images/thumbnails/$category/$thumbnail_filename";
 
-	if ($vote_count < 5) 
+	if ($view == "compact")
+	{
+		$vote = "";
+	}
+	elseif ($vote_count < 5)
 	{
 		$vote = "<div class=\"rating_text\">5 votes required</div>\n";
 	}
@@ -609,7 +617,7 @@ function rating_bar($rating)
 function parse_comment($comment)
 {
 	$comment = htmlspecialchars($comment);
-	$comment = str_replace("\n", "<br/>", $comment);
+	$comment = str_replace("\r\n", "<br/>", $comment);
 	$comment = ereg_replace(":-\)|:\)", "<img src=\"/images/site/emoticons/stock_smiley-1.png\" alt=\":)\" />", $comment);
 	$comment = ereg_replace(";\)|;-\)", "<img src=\"/images/site/emoticons/stock_smiley-3.png\" alt=\":)\" />", $comment);
 	$comment = ereg_replace(":-P|:-p|:P|:p", "<img src=\"/images/site/emoticons/stock_smiley-10.png\" alt=\":-P\" />", $comment);
