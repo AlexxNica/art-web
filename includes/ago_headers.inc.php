@@ -68,29 +68,34 @@ function ago_header($title)
 	<div class="mb_lite-title"><img src="/images/site/pill-icons/art.png" alt=""> ART</div>
 	<div class="mb_lite-contents">
 	<?
-	global $linkbar;
-	reset($linkbar);
-	while(list($key,$val)=each($linkbar))
+	print("<font size=\"+1\"><a href=\"/index.php\">NEWS</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/updates.php\">UPDATES</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/search.php\">SEARCH</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/backgrounds/index.php\">BACKGROUNDS</a></font><br>\n");
+	while(list($key,$val) = each($GLOBALS["background_config_array"]))
 	{
-   	$url = $val["url"];
-   	$alt = $val["alt"];
-   	$active = $val["active"];
-		$indent = $val["indent"];
-   	if($active == 1)
+		$name = $val["name"];
+		$url = $val["url"];
+		print("&nbsp;&nbsp;&nbsp;<a href=\"$url\">$name</a><br>\n");
+	}
+	print("<font size=\"+1\"><a href=\"/themes/index.php\">THEMES</a></font><br>\n");
+	while(list($key,$val) = each($GLOBALS["theme_config_array"]))
+	{
+		$active = $val["active"];
+		if($active)
 		{
-			if($indent)
-   		{
-      		$a_head = "&nbsp;&nbsp;&nbsp;";
-      		$a_foot = "";
-   		}
-   		else
-   		{
-      		$a_head = "<font size=\"+1\">";
-      		$a_foot = "</font>";
-   		}
-   		print("$a_head<a href=\"$url\">$alt</a>$a_foot<br>\n");
+			$name = $val["name"];
+			$url = $val["url"];
+			print("&nbsp;&nbsp;&nbsp;<a href=\"$url\">$name</a><br>\n");
 		}
 	}
+	print("<font size=\"+1\"><a href=\"/art-icons/index.php\">ICONS</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/tips.php\">TIPS & TRICKS</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/faq.php\">FAQ</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/submit.php\">SUBMIT</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/contact.php\">CONTACT</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/links.php\">LINKS</a></font><br>\n");
+	
 	?>
 	</div>
 	<img src="/images/site/pixel.png" width="182" height="1" alt=" ">
@@ -115,8 +120,8 @@ function ago_footer()
 	print("<div align=\"center\">\n");
 	$screenshot_select_result = mysql_query("SELECT screenshotID, thumbnail_filename FROM screenshot ORDER BY date DESC LIMIT 1");
 	list($screenshotID,$thumbnail_filename) = mysql_fetch_row($screenshot_select_result);
-	print("<a href=\"show_screenshot.php?screenshotID=$screenshotID\"><img src=\"/images/thumbnails/screenshots/$thumbnail_filename\" border=\"0\" alt=\" \"></a>\n");
-	print("<br><a href=\"screenshot_list.php\">More ...</a>");
+	print("<a href=\"/screenshots/$screenshotID.php\"><img src=\"/images/thumbnails/screenshots/$thumbnail_filename\" border=\"0\" alt=\" \"></a>\n");
+	print("<br><a href=\"/screenshots/index.php\">More ...</a>");
 	print("</div>\n</div>\n");
 	?>
 	<!-- End Screenshot -->
@@ -129,7 +134,7 @@ function ago_footer()
 	print("<div align=\"center\">\n");
 	$background_select_result = mysql_query("SELECT backgroundID,category,thumbnail_filename FROM background WHERE status='active' ORDER BY add_timestamp DESC LIMIT 1");
 	list($backgroundID,$background_category,$thumbnail_filename) = mysql_fetch_row($background_select_result);
-	print("<a href=\"show_background.php?backgroundID=$backgroundID&category=$background_category\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" border=\"0\" alt=\"thumbnail\"></a>\n");
+	print("<a href=\"/backgrounds/$background_category/$backgroundID.php\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" border=\"0\" alt=\"thumbnail\"></a>\n");
 	print("</div>\n</div>\n");
 	?>
 	<!-- End Background -->
@@ -142,7 +147,7 @@ function ago_footer()
 	print("<div align=\"center\">\n");
 	$theme_select_result = mysql_query("SELECT themeID,category,small_thumbnail_filename FROM theme WHERE status='active' ORDER BY add_timestamp DESC LIMIT 1");
 	list($themeID,$theme_category,$thumbnail_filename) = mysql_fetch_row($theme_select_result);
-	print("<a href=\"show_theme.php?themeID=$themeID&category=$theme_category\"><img src=\"/images/thumbnails/$theme_category/$thumbnail_filename\" border=\"0\" alt=\"thumbnail\"></a>\n");
+	print("<a href=\"/themes/$theme_category/$themeID.php\"><img src=\"/images/thumbnails/$theme_category/$thumbnail_filename\" border=\"0\" alt=\"thumbnail\"></a>\n");
 	print("</div>\n</div>\n");
 	?>
 	<!-- End Theme -->
