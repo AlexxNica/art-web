@@ -1,0 +1,149 @@
+<?php
+
+/* $Id$ */
+
+require("mysql.inc.php");
+require("common.inc.php");
+require("ago_headers.inc.php");
+
+$request = $PATH_INFO;
+list($foo,$category,$theme_num) = explode("/", $request);
+
+/* print out the list of theme categories */
+if($category == "" || $category == "index.php")
+{
+	ago_header("THEMES");
+	create_middle_box_top("themes");
+	
+	print("<p>\n<table border=\"0\" cellpadding=\"4\">");
+	reset($theme_config_array);
+	while(list($key,$val)=each($theme_config_array))
+	{
+		$active = $val["active"];
+		if($active)
+		{
+			$name = $val["name"];
+			$url = $val["url"];
+			$description = $val["description"];
+			print("<tr><td valign=\"top\"><img src=\"/images/site/circle.png\"></td><td><a class=\"screenshot\" href=\"$url\">$name</a> - $description</td></tr>\n");
+		}
+	}
+	print("</table>\n");
+	
+   create_middle_box_bottom();
+   ago_footer();
+}
+
+/* print out theme preview page */
+else if( array_key_exists($category,$theme_config_array) && ($theme_num == "" || $theme_num == "index.php") )
+{
+	ago_header("THEMES - " . strtoupper($category));
+	$temp = "themes_" . $category;
+   create_middle_box_top($temp);
+	
+	print("<div align=\"center\">\n");
+	if(!$page)
+	{
+		$page = 1;
+	}
+	if(!$thumbnails_per_page || $thumbnails_per_page == 0 || $thumbnails_per_page == "")
+	{
+		$thumbnails_per_page = 12;
+	}
+	
+	$theme_select_all_result = mysql_query("SELECT * FROM theme WHERE category='$category' ORDER BY add_timestamp DESC");
+	$num_themes = mysql_num_rows($theme_select_all_result);
+	if($num_themes == 0)
+   {
+   	print("No themes have been added to this section yet.");
+   }
+   else
+   {
+	   print_thumbnails_per_page_form($thumbnails_per_page, $sort_by);
+	   print("<p>");
+		list($page, $num_pages) = theme_search_result("", "theme", $category, $thumbnails_per_page, $sort_by, $page, $num_themes);
+		
+		/* Page Navigation System */    
+		if($page > 1)
+      {
+      	$prev_page = $page -1;
+         print(" <a href=\"$PHP_SELF?page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&lt;]</a>");
+      }
+		for($count=1;$count<=$num_pages;$count++)
+		{
+			if($count == $page)
+   	   {
+   	   	print("<span class=\"yellow-text\">[$count]</span> ");
+			}
+   	   else
+   	   {
+   	   	print("<a href=\"$PHP_SELF?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[$count]</a> ");
+   	   }
+   	}
+      if($page < $num_pages)
+      {
+      	$next_page = $page +1;
+         print(" <a href=\"$PHP_SELF?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
+      }
+		print("<p>\n");
+	}
+   print("</div>\n");
+   create_middle_box_bottom();
+	ago_footer();
+}
+
+/* print out the individual theme page */
+else if( array_key_exists($category,$theme_config_array) && $theme_num != "")
+{
+	$themeID = ereg_replace(".php","",$theme_num);
+	
+	$theme_select_result = mysql_query("SELECT * FROM theme WHERE themeID='$themeID'");
+	if(mysql_num_rows($theme_select_result)==0)
+	{
+   	ago_file_not_found();
+	}
+	else
+   {
+   	ago_header("THEMES - " . strtoupper($category));
+		$temp = "themes_" . $category;
+		create_middle_box_top($temp);
+		
+		$theme_select_row = mysql_fetch_array($theme_select_result);
+   	$small_thumbnail_filename = $theme_select_row["small_thumbnail_filename"];
+   	$thumbnail_filename = $theme_select_row["thumbnail_filename"];
+   	$name = $theme_select_row["theme_name"];
+   	$author = $theme_select_row["author"];
+   	$author_email = $theme_select_row["author_email"];
+   	$author_email = spam_proof_email($author_email);
+      $date = $theme_select_row["release_date"];
+   	list($year,$month,$day)=explode("-",$date);
+      $date = $month . "/" . $day . "/" . $year;
+      $description = $theme_select_row["description"];
+   	$theme_download_select_result = mysql_query("SELECT name, download_name, size FROM theme_download WHERE themeID='$themeID' ORDER BY name");
+      print("<table border=\"0\">\n");
+      print("<tr><td>");
+      if($category == "metacity" || $category == "sawfish" || $category == "sounds")
+      {
+      	print("<img src=\"/images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"shot2\">");
+      }
+      else
+      {
+      	print("<a href=\"/images/thumbnails/$category/$thumbnail_filename\"><img src=\"/images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"shot2\"></a>");
+      }
+      print("</td>\n");
+   	print("<td><span class=\"yellow-text\">Name:</span> $name<br>\n<span class=\"yellow-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"yellow-text\">Release Date:</span> $date<br><span class=\"yellow-text\">Download:</span><br>");
+   	while(list($name,$download_name,$size)=mysql_fetch_row($theme_download_select_result))
+   	{
+   		print("&nbsp;&nbsp;&nbsp;<a href=\"$mirror_url/themes/$category/$download_name\">$name ($size)</a>\n");
+   	}
+   	print("</td></tr></table>\n<p>\n");
+   	print("<span class=\"yellow-text\">Info:</span> $description");
+		create_middle_box_bottom();
+		ago_footer();
+	}
+}
+else
+{
+	ago_file_not_found();
+}
+?>

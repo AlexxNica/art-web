@@ -3,122 +3,93 @@
 /* $Id$ */
 /* site configuration for art.gnome.org */
 
-$linkbar = array (
-	"news" => array(
-		"url" => "index.php",
+/* backgrounds */
+
+$background_config_array = array (
+	"gnome" => array (
+		"name" => "GNOME",
+		"url" => "/backgrounds/gnome/index.php",
 		"active" => "1",
-		"indent" => "0",
-		"alt" => "NEWS"),
-	"updates" => array(
-		"url" => "updates.php",
+		"description" => "The GNOME project has built a complete, free and easy-to-use desktop environment for the user, as well as a powerful application framework for the software developer"
+		),
+	"other" => array (
+		"name" => "Other",
+		"url" => "/backgrounds/other/index.php",
 		"active" => "1",
-		"indent" => "0",
-		"alt" => "UPDATES"),
-	"backgrounds" => array(
-		"url" => "backgrounds.php",
+		"description" => "Backgrounds featuring other GNOME based companies such as Ximian, Codefactory, RedHat, etc."
+		)		
+
+);
+
+/* themes */
+
+$theme_config_array = array (
+	"gdm_greeter" => array (
+		"name" => "GDM Greeter",
+		"url" => "/themes/gdm_greeter/index.php",
 		"active" => "1",
-		"indent" => "0",
-		"alt" => "BACKGROUNDS"),
-	"backgrounds_gnome" => array(
-		"url" => "background_list.php?category=gnome",
+		"description" => "GDM Greeter themes change the appearance of the GNOME 2.0 login screen."
+		),
+	"gtk" => array (
+		"name" => "GTK+ 1.0",
+		"url" => "/themes/gtk/index.php",
 		"active" => "1",
-		"indent" => "1",
-		"alt" => "GNOME"),
-	"backgrounds_other" => array(
-		"url" => "background_list.php?category=other",
+		"description" => "GTK+ 1.2 themes alter the appearance of the GTK+ 1.2 widgets. In the GNOME desktop, this means the appearance of all your GNOME applications."
+		),
+	"gtk2" => array (
+		"name" => "GTK+ 2.0",
+		"url" => "/themes/gtk2/index.php",
 		"active" => "1",
-		"indent" => "1",
-		"alt" => "Other"),
-	"themes" => array(
-		"url" => "themes.php",
+		"description" => "GTK+ 2.0 themes control the appearance of your GNOME 2.0 programs."
+		),
+	"icon" => array (
+		"name" => "Icon",
+		"url" => "/themes/icon/index.php",
 		"active" => "1",
-		"indent" => "0",
-		"alt" => "THEMES"),
-	"themes_gdm_greeter" => array(
-		"url" => "theme_list.php?category=gdm_greeter",
+		"description" => "GNOME 2.2.x system icon themes change the themes in nautilus, file-roller, etc.."
+		),
+	"metacity" => array (
+		"name" => "Metacity",
+		"url" => "/themes/metacity/index.php",
 		"active" => "1",
-		"indent" => "1",
-		"alt" => "GDM Greeter"),
-	"themes_gtk" => array(
-		"url" => "theme_list.php?category=gtk",
-		"active" => "1",
-		"indent" => "1",
-		"alt" => "GTK+ 1.2"),
-	"themes_gtk2" => array(
-		"url" => "theme_list.php?category=gtk2",
-		"active" => "1",
-		"indent" => "1",
-		"alt" => "GTK+ 2.0"),
-	"themes_icon" => array(
-		"url" => "theme_list.php?category=icon",
-		"active" => "1",
-		"indent" => "1",
-		"alt" => "Icon"),
-	"themes_metacity" => array(
-		"url" => "theme_list.php?category=metacity",
-		"active" => "1",
-		"indent" => "1",
-		"alt" => "Metacity"),
-	"themes_metatheme" => array(
-		"url" => "theme_list.php?category=metatheme",
+		"description" => "Metacity is the default window manager for GNOME 2.2.x and beyond."
+		),
+	"metatheme" => array (
+		"name" => "Metatheme",
+		"url" => "/themes/metatheme/index.php",
 		"active" => "0",
-		"indent" => "1",
-		"alt" => "Metatheme"),
-	"themes_nautilus" => array(
-		"url" => "theme_list.php?category=nautilus",
+		"description" => ""
+		),
+	"nautilus" => array (
+		"name" => "Nautilus",
+		"url" => "/themes/nautilus/index.php",
 		"active" => "0",
-		"indent" => "1",
-		"alt" => "Nautilus"),
-	"themes_sawfish" => array(
-		"url" => "theme_list.php?category=sawfish",
+		"description" => ""
+		),
+	"sawfish" => array (
+		"name" => "Sawfish",
+		"url" => "/themes/sawfish/index.php",
 		"active" => "1",
-		"indent" => "1",
-		"alt" => "Sawfish"),
-	"themes_sounds" => array(
-		"url" => "theme_list.php?category=sounds",
+		"description" => "Sawfish was the default window manager in GNOME 1.4.x and GNOME 2.0.x"
+		),
+	"sounds" => array (
+		"name" => "Sounds",
+		"url" => "/themes/sounds/index.php",
 		"active" => "1",
-		"indent" => "1",
-		"alt" => "Sounds"),
-	"themes_splash_screens" => array(
-		"url" => "theme_list.php?category=splash_screens",
+		"description" => "Collection of sounds to compliment the GNOME desktop"
+		),
+	"splash_screens" => array (
+		"name" => "Splash Screens",
+		"url" => "/themes/splash_screens/index.php",
 		"active" => "1",
-		"indent" => "1",
-		"alt" => "Splash Screens"),
-	"themes_other" => array(
-		"url" => "theme_list.php?category=other",
+		"description" => "Splash Screens are what you first see when you log into GNOME."
+		),
+	"other" => array (
+		"name" => "Other ...",
+		"url" => "/themes/other/index.php",
 		"active" => "1",
-		"indent" => "1",
-		"alt" => "Other..."),
-	"icons" => array(
-		"url" => "icons.php",
-		"active" => "1",
-		"indent" => "0",
-		"alt" => "ICONS"),
-	"tips" => array(
-		"url" => "tips.php",
-		"active" => "1",
-		"indent" => "0",
-		"alt" => "TIPS &amp; TRICKS"),
-	"faq" => array(
-		"url" => "faq.php",
-		"active" => "1",
-		"indent" => "0",
-		"alt" => "FAQ"),
-	"submit" => array(
-		"url" => "submit.php",
-		"active" => "1",
-		"indent" => "0",
-		"alt" => "SUBMIT"),
-	"contact" => array(
-		"url" => "contact.php",
-		"active" => "1",
-		"indent" => "0",
-		"alt" => "CONTACT"),
-	"links" => array(
-		"url" => "links.php",
-		"active" => "1",
-		"indent" => "0",
-		"alt" => "LINKS")
+		"description" => "Other themes."
+		)
 );
 
 $pill_array = array (
@@ -128,6 +99,9 @@ $pill_array = array (
 	"updates" => array(
    	"icon" => "updates.png",
 		"alt" => "UPDATES"),
+	"search" => array(
+   	"icon" => "search.png",
+		"alt" => "Search"),
 	"backgrounds" => array(
    	"icon" => "background.png",
 		"alt" => "BACKGROUNDS"),
@@ -199,9 +173,15 @@ $pill_array = array (
 		"alt" => "SUBMIT")
 );
 
+$mirror_url = "http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org";
+
 $sys_icon_dir = "/usr/local/www/art.gnome.org/images/icons";
+//$sys_icon_dir = "/home/aldug/www/art-web/images/icons";
 
 $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 
-$thumbnails_per_page_array = array("12"=>12,"24"=>24,"All"=>1000);
+$search_type_array = array ("background" => "Background Name", "theme" => "Theme Name", "author" => "Author Name");
+$thumbnails_per_page_array = array("12" => "12", "24" => "24", "1000" => "All");
+$sort_by_array = array("name" => "Name", "date" => "Date");
+	
 ?>

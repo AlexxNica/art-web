@@ -27,8 +27,8 @@ for($count=0;$count<$num_updates;$count++)
    {
    	$theme_select_result = mysql_query("SELECT theme_name, category, author, small_thumbnail_filename FROM theme WHERE themeID='$ID'");
    	list($theme_name,$category,$author,$thumbnail_filename) = mysql_fetch_row($theme_select_result);
-      $category_good = $linkbar["themes_" . $category]["alt"];
-      print("\t\t\t<title>$theme_name</title>\n");
+      $category_good = $theme_config_array["$category"]["name"];
+		print("\t\t\t<title>$theme_name</title>\n");
       print("\t\t\t<link>" . htmlspecialchars("http://art.gnome.org/show_theme.php?themeID=$ID&category=$category") . "</link>\n");
       print("\t\t\t<description>Themes - $category</description>\n");
    }

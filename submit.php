@@ -1,9 +1,7 @@
 <?php
 
 require("mysql.inc.php");
-require("session.inc.php");
 require("common.inc.php");
-require("change_site_prefs.php");
 require("ago_headers.inc.php");
 
 ago_header("SUBMIT");

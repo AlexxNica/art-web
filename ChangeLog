@@ -1,3 +1,46 @@
+2003-07-08  Alex Duggan  <aldug@astrolinux.com>
+
+	* art-icons:
+	* backgrounds:
+	* screenshots:
+	* search.php:
+	* themes:
+	New php scripts to use nicer urls and allow for sorting.
+	Example - http://art.gnome.org/backgrounds/gnome/34.php 
+	
+	* search.php:
+	* includes/config.inc.php:
+	* includes/common.inc.php:
+	Impliment a search feature
+	
+	* contact.php:
+	* copyright.php:
+	* faq.php:
+	* index.php:
+	* links.php:
+	* old_news.php:
+	* show_tip:
+	* submit.php:
+	* submit_background.php:
+	* submit_theme.php:
+	* tips.php:
+	* updates.php:
+	Don't require session.inc.php and change_site_prefs.inc.php.
+	
+	* background_list.php:
+	* backgrounds.php:
+	* icons.php:
+	* screenshot_list.php:
+	* show_background.php:
+	* show_icons.php:
+	* show_screenshot.php:
+	* show_theme.php:
+	* theme_list.php:
+	* themes.php:
+	* includes/change_site_prefs.php:
+	* includes/session.inc.php:
+	Remove from cvs as these files are no longer used by the current site.
+
 2003-06-30  Alex Duggan  <aldug@astrolinux.com>
 
 	* contact.php: update thos's email address,
