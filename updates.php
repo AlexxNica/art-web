@@ -9,12 +9,12 @@ create_middle_box_top("updates");
 
 print("The 12 most recent additions are:");
 unset($big_array);
-$background_select_result = mysql_query("SELECT backgroundID,add_timestamp FROM background ORDER BY add_timestamp DESC LIMIT 10");
+$background_select_result = mysql_query("SELECT backgroundID,add_timestamp FROM background ORDER BY add_timestamp DESC LIMIT 12");
 while( list($backgroundID,$add_timestamp) = mysql_fetch_row($background_select_result) )
 {
 	$big_array[] = $add_timestamp . "|background|". $backgroundID;
 }
-$theme_select_result = mysql_query("SELECT themeID,add_timestamp FROM theme ORDER BY add_timestamp DESC LIMIT 10");
+$theme_select_result = mysql_query("SELECT themeID,add_timestamp FROM theme ORDER BY add_timestamp DESC LIMIT 12");
 while( list($backgroundID,$add_timestamp) = mysql_fetch_row($theme_select_result) )
 {
 	$big_array[] = $add_timestamp . "|theme|". $backgroundID;
