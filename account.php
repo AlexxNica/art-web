@@ -120,7 +120,7 @@ elseif (array_key_exists('username', $_SESSION))
 	$email = htmlspecialchars ($email, ENT_QUOTES);
 	$homepage = htmlspecialchars ($homepage, ENT_QUOTES);
 	$info = htmlspecialchars ($info, ENT_QUOTES);
-	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"POST\" />");
+	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\" />");
 	print("<table>");
 	print("<tr><th>Password</th><td><input value=\"\" type=\"password\" name=\"password\" /> (leave blank to remain unchanged)</td></tr>");
 	print("<tr><th>Name</th><td><input value=\"$realname\" name=\"realname\" /></td></tr>");
@@ -130,7 +130,7 @@ elseif (array_key_exists('username', $_SESSION))
 	print("</table>");
 	print("<br /><input type=\"submit\" value=\"Change\" name=\"change_profile\" /></td></tr>");
 	print("</form>");
-	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"POST\" />");
+	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\" />");
 	print("<input type=\"submit\" value=\"Logout\" name=\"logout\" />");
 	print("</form>");
 
@@ -184,7 +184,7 @@ else
 
 	create_title("Please log in","Log in to access your account");
 	print("<p>");
-	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"POST\">");
+	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">");
 	print("<table>");
 	print("<tr><td>Username:</td><td><input name=\"username\" /></td></tr>");
 	print("<tr><td>Password:</td><td><input name=\"password\" type=\"password\" /></td></tr>");
@@ -194,7 +194,7 @@ else
 	print("</p>");
 
 	create_title("Register","Register as a new user for art.gnome.org");
-	print("<form method=\"POST\" action=\"{$_SERVER['PHP_SELF']}\">");
+	print("<form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">");
 	print("<table>");
 	print("<tr><td>Username:</td><td><input name=\"username\" /></td></tr>");
 	print("<tr><td>Password:</td><td><input name=\"password\" type=\"password\" /></td></tr>");

@@ -108,7 +108,7 @@ function print_detailed_view($description, $type, $release_date, $add_timestamp,
 
 	print("</table>\n");
 
-	print("<center><img src=\"$thumbnail_url\" vspace=\"2\" class=\"large_thumbnail\" alt=\"thumbnail\" /></center>");
+	print("<div align=\"center\"><img src=\"$thumbnail_url\" vspace=\"2\" class=\"large_thumbnail\" alt=\"thumbnail\" /></div>");
 }
 
 function print_item_row($name, $thumbnail, $category, $author, $date, $link, $vars, $vote)
@@ -118,7 +118,7 @@ function print_item_row($name, $thumbnail, $category, $author, $date, $link, $va
 	else
 		$var_image = "";
 
-	print(utf8_encode("<table class=\"theme_row\"><tr valign=\"top\"><td class=\"theme_row_col1\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"$class\" />$vote</td><td><a href=\"$link\" class=\"h2\"><b>$name</b></a><br/><span class=\"subtitle\">$category<br/>$date<br/>$author<br/>$var_image</span></td></tr></table>"));
+	print(utf8_encode("<table class=\"theme_row\"><tr valign=\"top\"><td class=\"theme_row_col1\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"$class\" />$vote</td><td><a href=\"$link\" class=\"h2\"><strong>$name</strong></a><br/><span class=\"subtitle\">$category<br/>$date<br/>$author<br/>$var_image</span></td></tr></table>"));
 }
 
 function print_comments($artID, $type)
@@ -168,13 +168,13 @@ function print_comments($artID, $type)
 			else
 			{
 				print("<form name=\"report\" action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-				print("<input type=\"hidden\" name=\"commentID\" value=\"" . $commentID . "\">\n");
-				print("<input type=\"submit\" name=\"report\" value=\"Report\" class=\"link_button\">");
+				print("<input type=\"hidden\" name=\"commentID\" value=\"" . $commentID . "\" />\n");
+				print("<input type=\"submit\" name=\"report\" value=\"Report\" class=\"link_button\" />");
 				print("</form>\n");
 			}
 			
 			print("</td></tr></table>");
-			print("<tr><td class=\"comment\">" . parse_comment($user_comment) . "</td></tr>");
+			print("<tr><td class=\"comment\">" . html_parse_text($user_comment) . "</td></tr>");
 			print("</table><br/>\n");
 		}
 
@@ -209,7 +209,7 @@ function print_comment_form($comment)
 		}
 		
 		print("<a name=\"comment\"/>\n");
-		print("<br/><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"POST\">\n");
+		print("<br/><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\">\n");
 		
 		print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br/><br/>\n");
 		print("<input type=\"submit\" name=\"send\" value=\"Send\" />\n");
@@ -461,7 +461,7 @@ function display_search_box($search_text, $search_type, $thumbnails_per_page, $s
 	print_select_box("search_type", $search_type_array, $search_type);
 	print("</td></tr>\n");
 	
-	print("<tr><td>For The Text:</td><td><input type=\"text\" name=\"search_text\" value=\"$search_text\"></td></tr>\n");
+	print("<tr><td>For The Text:</td><td><input type=\"text\" name=\"search_text\" value=\"$search_text\"/></td></tr>\n");
 	
 	print("<tr><td>Sort By:</td><td>");
 	print_select_box("sort_by", $sort_by_array, $sort_by);
@@ -473,7 +473,7 @@ function display_search_box($search_text, $search_type, $thumbnails_per_page, $s
 	
 	print("</table>\n");
 	
-	print("<input type=\"submit\" value=\"Search\">\n");
+	print("<input type=\"submit\" value=\"Search\"/>\n");
 	print("</form>\n");
 }
 
@@ -492,7 +492,7 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	{
 		$end = $num_backgrounds;
 	}
-	print("<b>Showing " . ($start+1) . " through " . $end . " of $num_backgrounds results.</b><br />\n");
+	print("<strong>Showing " . ($start+1) . " through " . $end . " of $num_backgrounds results.</strong><br />\n");
 
 	if($sort_by == "popularity")
 	{
@@ -541,7 +541,7 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 	{
 		$end = $num_themes;
 	}
-	print("<b>Showing " . ($start+1) . " through " . $end . " of $num_themes results.</b><br />\n");
+	print("<strong>Showing " . ($start+1) . " through " . $end . " of $num_themes results.</strong><br />\n");
 
 	if($sort_by == "popularity")
 	{
@@ -614,7 +614,7 @@ function rating_bar($rating)
 	return $bar;
 }
 
-function parse_comment($comment)
+function html_parse_text($comment)
 {
 	$comment = htmlspecialchars($comment);
 	$comment = str_replace("\r\n", "<br/>", $comment);

@@ -71,37 +71,37 @@ else
 
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
-	print("<tr><td><b>Background Name:</b></td><td><input type=\"text\" name=\"background_name\" size=\"40\"></td></tr>\n");
-	print("<tr><td><b>Category</b></td><td><select name=\"category\"><option value=\"\">Choose<option value=\"gnome\">GNOME<option value=\"other\">Other</select></td></tr>\n");
-	print("<tr><td><b>Variation of:</b></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>\n");
+	print("<tr><td><strong>Background Name:</strong></td><td><input type=\"text\" name=\"background_name\" size=\"40\"></td></tr>\n");
+	print("<tr><td><strong>Category</strong></td><td><select name=\"category\"><option value=\"\">Choose<option value=\"gnome\">GNOME<option value=\"other\">Other</select></td></tr>\n");
+	print("<tr><td><strong>Variation of:</strong></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>\n");
 	$background_select_result = mysql_query("SELECT backgroundID, background_name FROM incoming_background WHERE userID = {$_SESSION['userID']} AND parentID=0");
 	while(list($backID,$back_name)=mysql_fetch_row($background_select_result))
 	{
 		print("<option value=\"$backID\">$back_name</option>");
 	}
-	print("<tr><td><b>Version</b></td><td><input type=\"text\" name=\"version\" size=\"40\"></td></tr>\n");
-	print("<tr><td><b>License</b></td><td>");print_select_box("license", $license_config_array, ""); print("</td></tr>\n");
-	print("<tr><td><b>Background Author:</b></td><td><input type=\"hidden\" name=\"userID\" value=\"{$_SESSION['userID']}\">{$_SESSION['realname']}</td></tr>\n");
-	print("<tr><td><b>Description:</b></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap></textarea></td></tr>\n");
+	print("<tr><td><strong>Version</strong></td><td><input type=\"text\" name=\"version\" size=\"40\"></td></tr>\n");
+	print("<tr><td><strong>License</strong></td><td>");print_select_box("license", $license_config_array, ""); print("</td></tr>\n");
+	print("<tr><td><strong>Background Author:</strong></td><td><input type=\"hidden\" name=\"userID\" value=\"{$_SESSION['userID']}\">{$_SESSION['realname']}</td></tr>\n");
+	print("<tr><td><strong>Description:</strong></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap></textarea></td></tr>\n");
 	print("</table>\n<p>\n");
 	print("<p class=\"info\">Tick the box next to each background type you wish to submit</p>");
 	print("<table border=\"0\">\n");
-	print("<tr><td><b>X</b></td><td><b>Type/Resolution</b></td><td><b>URL</b></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1024x768]\"></td><td>JPG - 1024x768</td><td><input type=\"text\" name=\"backgrounds[jpg|1024x768]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1280x1024]\"></td><td>JPG - 1280x1024</td><td><input type=\"text\" name=\"backgrounds[jpg|1280x1024]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1400x1050]\"></td><td>JPG - 1400x1050</td><td><input type=\"text\" name=\"backgrounds[jpg|1400x1050]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1600x1200]\"></td><td>JPG - 1600x1200</td><td><input type=\"text\" name=\"backgrounds[jpg|1600x1200]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1920x1200]\"></td><td>JPG - 1920x1200</td><td><input type=\"text\" name=\"backgrounds[jpg|1920x1200]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1680x1050]\"></td><td>JPG - 1680x1050</td><td><input type=\"text\" name=\"backgrounds[jpg|1680x1050]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1024x768]\"></td><td>PNG - 1024x768</td><td><input type=\"text\" name=\"backgrounds[png|1024x768]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1280x1024]\"></td><td>PNG - 1280x1024</td><td><input type=\"text\" name=\"backgrounds[png|1280x1024]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1400x1050]\"></td><td>PNG - 1400x1050</td><td><input type=\"text\" name=\"backgrounds[png|1400x1050]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1600x1200]\"></td><td>PNG - 1600x1200</td><td><input type=\"text\" name=\"backgrounds[png|1600x1200]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1920x1200]\"></td><td>PNG - 1920x1200</td><td><input type=\"text\" name=\"backgrounds[png|1920x1200]\"></td></tr>\n");
-	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1680x1050]\"></td><td>PNG - 1680x1050</td><td><input type=\"text\" name=\"backgrounds[png|1680x1050]\"></td></tr>\n");
+	print("<tr><td><strong>X</strong></td><td><strong>Type/Resolution</strong></td><td><strong>URL</strong></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1024x768]\" /></td><td>JPG - 1024x768</td><td><input type=\"text\" name=\"backgrounds[jpg|1024x768]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1280x1024]\" /></td><td>JPG - 1280x1024</td><td><input type=\"text\" name=\"backgrounds[jpg|1280x1024]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1400x1050]\" /></td><td>JPG - 1400x1050</td><td><input type=\"text\" name=\"backgrounds[jpg|1400x1050]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1600x1200]\" /></td><td>JPG - 1600x1200</td><td><input type=\"text\" name=\"backgrounds[jpg|1600x1200]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1920x1200]\" /></td><td>JPG - 1920x1200</td><td><input type=\"text\" name=\"backgrounds[jpg|1920x1200]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1680x1050]\" /></td><td>JPG - 1680x1050</td><td><input type=\"text\" name=\"backgrounds[jpg|1680x1050]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1024x768]\" /></td><td>PNG - 1024x768</td><td><input type=\"text\" name=\"backgrounds[png|1024x768]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1280x1024]\" /></td><td>PNG - 1280x1024</td><td><input type=\"text\" name=\"backgrounds[png|1280x1024]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1400x1050]\" /></td><td>PNG - 1400x1050</td><td><input type=\"text\" name=\"backgrounds[png|1400x1050]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1600x1200]\" /></td><td>PNG - 1600x1200</td><td><input type=\"text\" name=\"backgrounds[png|1600x1200]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1920x1200]\" /></td><td>PNG - 1920x1200</td><td><input type=\"text\" name=\"backgrounds[png|1920x1200]\" /></td></tr>\n");
+	print("<tr><td><input type=\"checkbox\" name=\"background_toggles[png|1680x1050]\" /></td><td>PNG - 1680x1050</td><td><input type=\"text\" name=\"backgrounds[png|1680x1050]\" /></td></tr>\n");
 	print("</table>\n");
 
-	print("<input type=\"submit\" value=\"Submit Background\" name=\"submit\">\n");
+	print("<input type=\"submit\" value=\"Submit Background\" name=\"submit\" />\n");
 	print("</form>");
 }
 

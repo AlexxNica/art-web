@@ -25,8 +25,8 @@ if ($unvalidated_category == "")
 {
 	ago_header("Desktop Themes");
 	create_title("Themes", "Desktop Themes");
-	
-	print("<p>\n<table border=\"0\" cellpadding=\"4\">");
+
+	print("<ul>");
 	reset($theme_config_array);
 	while(list($key,$val)=each($theme_config_array))
 	{
@@ -36,10 +36,10 @@ if ($unvalidated_category == "")
 			$name = $val["name"];
 			$url = $val["url"];
 			$description = $val["description"];
-			print("<tr><td valign=\"top\"><img src=\"/images/site/circle.png\"></td><td><a class=\"bold-link\" href=\"$url\">$name</a> - $description</td></tr>\n");
+			print("<li><a class=\"bold-link\" href=\"$url\">$name</a> - $description</li>\n");
 		}
 	}
-	print("</table>\n");
+	print("</ul>\n");
 
 	ago_footer();
 }
@@ -74,7 +74,7 @@ else
 			for($count=1;$count<=$num_pages;$count++)
 			{
 				if($count == $page)
-					print(" <b>$count</b> ");
+					print(" <strong>$count</strong> ");
 				else
 					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">$count</a>");
 			}

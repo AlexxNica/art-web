@@ -12,7 +12,7 @@ create_title("Search", "Search for themes and backgrounds");
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
 $search_type = validate_input_array_default($_GET["search_type"], array("background_name", "theme_name", "author"), "");
 $search_text = mysql_real_escape_string(urldecode($_GET["search_text"]));
-$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity"),$valid_sort_by_array ,"date");
+$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity","rating"),$valid_sort_by_array ,"date");
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
 
 display_search_box(htmlspecialchars(stripslashes($search_text)), $search_type, $thumbnails_per_page, $sort_by);
@@ -71,7 +71,7 @@ if($search_text && $search_type)
 	if($page > 1)
 	{
 		$prev_page = $page -1;
-		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&lt;]</a>");
+		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page\">[&lt;]</a>");
 	}
 	for($count=1;$count<=$num_pages;$count++)
 	{
@@ -81,13 +81,13 @@ if($search_text && $search_type)
 		}
 		else
 		{
-			print("<a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[$count]</a> ");
+			print("<a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page\">[$count]</a> ");
 		}
 	}
 	if($page < $num_pages)
 	{
 		$next_page = $page +1;
-		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
+		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
 	}
 	print("</div>\n");
 }

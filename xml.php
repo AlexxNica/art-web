@@ -36,15 +36,26 @@ function list_backgrounds($parent, $category)
 	{
 		$background_id = $row['backgroundID'];
 		$background_name = $row['background_name'];
+		$background_description = $row['background_description'];
 		$background_category = $row['category'];
-		$user_realname = $row['realname'];
+		$background_license = $row['license'];
+		$background_vote_sum = $row['vote_sum'];
+		$background_vote_count = $row['vote_count'];
+		$background_release_date = $row['release_date'];
+		$background_download_start_timestamp = $row['download_start_timestamp'];
+		$background_download_count = $row['download_count'];
+	
+		$username = $row['username'];
 		
 		$thumbnail = $row['thumbnail_filename'];
 
-		print("\t<background>\n");
-		print("\t\t<background_name>" . htmlspecialchars($background_name) . "</background_name>\n");
+		print("\t<background release_date=\"$background_release_date\" vote_sum=\"$background_vote_sum\" vote_count=\"$background_vote_count\" download_start_timestamp=\"$background_download_start_timestamp\" download_count=\"$background_download_count\">\n");
+		print("\t\t<name>" . htmlspecialchars($background_name) . "</name>\n");
+		print("\t\t<description>" . htmlspecialchars($background_description) . "</description>\n");
 		print("\t\t<category>" . htmlspecialchars($background_category) . "</category>\n");
-		print("\t\t<author>" . htmlspecialchars($user_realname) . "</author>\n");
+		print("\t\t<author>" . htmlspecialchars($username) . "</author>\n");
+		print("\t\t<license>" . htmlspecialchars($background_license) . "</license>\n");
+
 		print("\t\t<thumbnail>http://art.gnome.org/images/thumbnails/backgrounds/$thumbnail</thumbnail>\n");
 
 		foreach ($row as $key => $val)
@@ -82,16 +93,25 @@ function list_themes($parent, $category)
 	{
 		$theme_id = $row['themeID'];
 		$theme_name = $row['theme_name'];
+		$theme_description = $row['description'];
 		$theme_category = $row['category'];
-		$user_realname = $row['realname'];
+		$username = $row['username'];
+		$theme_license = $row['license'];
+		$theme_vote_sum = $row['vote_sum'];
+		$theme_vote_count = $row['vote_count'];
+		$theme_download_start_timestamp = $row['download_start_timestamp'];
+		$theme_download_count = $row['download_count'];
+		$theme_release_date = $row['release_date'];
 		
 		$thumbnail = $row['thumbnail_filename'];
 		$small_thumbnail = $row['small_thumbnail_filename'];
 
-		print("\t<theme>\n");
-		print("\t\t<theme_name>" . htmlspecialchars($theme_name) . "</theme_name>\n");
+		print("\t<theme release_date=\"$theme_release_date\" vote_sum=\"$theme_vote_sum\" vote_count=\"$theme_vote_count\" download_start_timestamp=\"$theme_download_start_timestamp\" download_count=\"$theme_download_count\">\n");
+		print("\t\t<name>" . htmlspecialchars($theme_name) . "</name>\n");
+		print("\t\t<description>" . htmlspecialchars($theme_description) . "</description>\n");
 		print("\t\t<category>" . htmlspecialchars($category) . "</category>\n");
-		print("\t\t<author>" . htmlspecialchars($realname) . "</author>\n");
+		print("\t\t<author>" . htmlspecialchars($username) . "</author>\n");
+		print("\t\t<license>" . htmlspecialchars($theme_license) . "</license>\n");
 		print("\t\t<thumbnail>http://art.gnome.org/images/thumbnails/{$theme_category}/{$thumbnail}</thumbnail>\n");
 		print("\t\t<small_thumbnail>http://art.gnome.org/images/thumbnails/{$theme_category}/{$small_thumbnail}</small_thumbnail>\n");
 		print("\t\t<url>http://art.gnome.org/download/themes/{$theme_category}/{$theme_id}/{$row['download_filename']}</url>\n");

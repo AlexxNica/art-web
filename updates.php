@@ -16,7 +16,6 @@ ago_header("Updates");
 create_title("Updates", "The $num_updates most recent additions to art.gnome.org");
 
 $big_array = get_updates_array($num_updates);
-print("<p>\n<table>\n");
 for($count=0;$count<count($big_array);$count++)
 {
 	list($add_timestamp,$type,$ID) = explode("|",$big_array[$count]);
@@ -29,11 +28,10 @@ for($count=0;$count<count($big_array);$count++)
 		print_theme_row($ID, "list");
 	}
 }
-print("</table>\n");
 
-print("<p><div align=\"center\">Number of updates to display: <form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"get\">");
-print("<input type=\"text\" name=\"num_updates\" value=\"$num_updates\" size=\"3\"> ");
-print("<input type=\"submit\" value=\"Show\"></form></div>\n");
+print("<div align=\"center\"><form action=\"{$_SERVER["PHP_SELF"]}\" method=\"get\">");
+print("Number of updates to display: <input type=\"text\" name=\"num_updates\" value=\"$num_updates\" size=\"3\" /> ");
+print("<input type=\"submit\" value=\"Show\" /></form></div>\n");
 
 ago_footer();
 ?>

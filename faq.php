@@ -17,18 +17,21 @@ else
 	/* print out a list of questions */
 	print("<ol>\n");
 	while(list($faqID,$question,$answer)=mysql_fetch_row($faq_select_result))
-   {
-   	print("<li><a href=\"" . $_SERVER["PHP_SELF"] . "#$faqID\">$question</a>\n");
-   }
-	print("</ol>\n<p>\n<ol>\n");
-	
-   /* print out a list of questions and answers */
+	{
+		$question = html_parse_text($question);
+		print("<li><a href=\"{$_SERVER["PHP_SELF"]}#$faqID\">$question</a></li>\n");
+	}
+	print("</ol>\n<hr /><br />\n<ol>\n");
+
+	/* print out a list of questions and answers */
 	$faq_select_result = mysql_query("SELECT faqID,question,answer FROM faq ORDER by faqID");
 	while(list($faqID,$question,$answer)=mysql_fetch_row($faq_select_result))
-   {
-   	print("<li><a name=\"$faqID\"></a><span class=\"bold-text\">$question</span>\n<p>$answer\n\n");
-   }
-   print("</ol>\n");
+	{
+		$question = html_parse_text($question);
+		$answer = html_parse_text($answer);
+		print("<li><a name=\"$faqID\"></a><span class=\"bold-text\">$question</span>\n<p>$answer</p></li>\n\n");
+	}
+	print("</ol>\n");
 }
 
 ago_footer();

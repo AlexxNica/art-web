@@ -2,7 +2,7 @@
 require("mysql.inc.php");
 require("common.inc.php");
 print("<?xml version=\"1.0\"?>\n");
-print("<upates>\n");
+print("<updates>\n");
 $cutoff_timestamp = time() - (60*60*24*7);
 
 /* backgrounds */

@@ -42,7 +42,7 @@ else
 		print ("<p>$info</p>");
 		print("<table>");
 		print("<tr><td><img src=\"/images/site/stock_mail.png\" alt=\"e-mail\" /></td>");
-		print("<td><a href=\"mailto:$email\">$email</a></td</tr>");
+		print("<td><a href=\"mailto:$email\">$email</a></td></tr>");
 		print("<tr><td><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /></td>");
 		print("<td><a href=\"$homepage\">$homepage</a></td></tr>");
 		print("</table>");
@@ -61,6 +61,7 @@ else
 			while (list ($backgroundID) = mysql_fetch_row ($author_background_result))
 				print_background_row($backgroundID, "list");
 		}
+		ago_footer();
 	}
 	else
 	{

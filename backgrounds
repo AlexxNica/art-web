@@ -26,16 +26,16 @@ if ($unvalidated_category == "")
 	ago_header("Backgrounds");
 	create_title("backgrounds", "Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.");
 	
-	print("<p>\n<table border=\"0\" cellpadding=\"4\">");
+	print("<ul>");
 	reset($background_config_array);
 	while(list($key,$val)=each($background_config_array))
 	{
 		$name = $val["name"];
 		$url = $val["url"];
 		$description = $val["description"];
-		print("<tr><td valign=\"top\"><img src=\"/images/site/circle.png\"></td><td><a class=\"bold-link\" href=\"$url\">$name</a> - $description</td></tr>\n");
+		print("<li><a class=\"bold-link\" href=\"$url\">$name</a> - $description</li>\n");
 	}
-	print("</table>\n");
+	print("</ul>\n");
 	
 	ago_footer();
 }
@@ -65,7 +65,7 @@ else
 			if($page > 1)
 			{
 				$prev_page = $page -1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">&lt;</a>");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&lt;</a>");
 			}
 			for($count=1;$count<=$num_pages;$count++)
 			{
@@ -75,13 +75,13 @@ else
 				}
 				else
 				{
-					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">$count</a>");
+					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=&amp;sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">$count</a>");
 				}
 			}
 			if($page < $num_pages)
 			{
 				$next_page = $page +1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">&gt;</a>");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&gt;</a>");
 			}
 			print("</div>\n");
 		}

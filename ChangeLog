@@ -1,3 +1,23 @@
+2005-04-05  Thomas Wood  <thos@gnome.org>
+
+	* account.php:
+	* admin/edit_faq.php:
+	* backgrounds:
+	* contact.php:
+	* export_new_releases.php:
+	* faq.php:
+	* includes/common.inc.php:
+	* search.php:
+	* submit_background.php:
+	* submit_theme.php:
+	* themes:
+	* updates.php:
+	* users:
+
+	XHTML compliance updates
+
+	* xml.php: Updated by Michael Gebhart
+
 2005-04-03  Thomas Wood  <thos@gnome.org>
 
 	* account.php: Applied patch from bug 171939

@@ -9,6 +9,7 @@ escape_gpc_array ($_POST);
 // Extracts the POST variables to global variables
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
+extract($_GET, EXTR_SKIP);
 
 admin_header("Edit an FAQ Entry");
 
@@ -69,6 +70,8 @@ else
 		print("<ol>\n");
 		while(list($faqID,$question,$answer)=mysql_fetch_row($faq_select_result))
 		{
+			$question = html_parse_text($question);
+			$answer = html_parse_text($answer);
 			print("<li><span class=\"yellow-text\">$question [<a href=\"" . $_SERVER["PHP_SELF"] . "?action=edit&faqID=$faqID\">Edit</a>]</span>\n<p>$answer\n\n");
 		}
 		print("</ol>\n");
