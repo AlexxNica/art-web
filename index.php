@@ -33,7 +33,7 @@ while($news_select_row=mysql_fetch_array($news_select_result))
 print("<p>\n");
 if($news_count > 3)
 {
-	print("<div align=\"center\"><a href=\"old_news.php\">View Older News</a></div>\n");
+	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"old_news.php\">View Older News</a></div>\n");
 }
 print("<p>&nbsp;\n");
 
