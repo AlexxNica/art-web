@@ -1,3 +1,8 @@
+2003-01-15  Alex Duggan  <aldug@gnome.org>
+
+	* includes/common.inc.php: change alt text for pill-icons to ""
+	Fixes #103541
+
 2003-01-14  Alex Duggan  <aldug@gnome.org>
 	
 	* includes/ago_headers.inc.php:

@@ -9,7 +9,7 @@ function create_middle_box_top($pill)
    $icon = $attributes["icon"];
 	print("<!-- Center Column -->\n");
 	print("<td width=\"100%\">\n");
-  	print("<div class=\"mb_lite-title\"><img src=\"/images/site/pill-icons/$icon\" alt=\"$alt\"> $alt</div>\n");
+  	print("<div class=\"mb_lite-title\"><img src=\"/images/site/pill-icons/$icon\" alt=\"\"> $alt</div>\n");
   	print("<div class=\"mb_lite-contents\">\n");
 }
 
