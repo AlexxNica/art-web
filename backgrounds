@@ -164,7 +164,8 @@ elseif( array_key_exists($category,$background_config_array) && $background_num 
          	{
             	$first_toggle = 1;
          	}
-         	print("<a href=\"$PHP_SELF?backgroundID=$backID&category=$back_cat\">$back_name</a>");
+         	print("<a href=\"/backgrounds/$back_cat/$backID.php\">$back_name</a>");
+				
       	}
    	}
 	create_middle_box_bottom();
