@@ -33,7 +33,7 @@ print("<div align=\"center\">");
 print("<font size=\"+2\">Add a Theme</font>\n<p>\n");
 if($action == "add_theme")
 {
-	if($theme_name && $theme_author && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename && (count($download_toggles)>0) )
+	if($theme_name && $theme_author && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename && $download_filename )
 	{
 		$date = $year . "-" . $month . "-" . $day;
 		$timestamp = time();
@@ -55,7 +55,7 @@ if($action == "add_theme")
 		}
 	}
 	else
-  	{
+	{
 		print("Error, all of the form fields are not filled in.");
 	}
 }

@@ -1,3 +1,6 @@
+2004-09-17  Thomas Wood <thos@gnome.org>
+	* admin/add_theme.php: Minor fix
+
 2004-09-16  Thomas Wood <thos@gnome.org>
 	* Added support for "Desktop Themes"
 
