@@ -13,7 +13,6 @@ print("The following people (in alphabetical order) are responsible for the layo
 print("<table border=\"0\">\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:roman _AT_ gnome.org\">Roman Beigelbeck</a></td></tr>\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:aldug _AT_ gnome.org\">Alex Duggan</a></td></tr>\n");
-print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:drfickle _AT_ k-lug.org\">Steve Fox</a></td></tr>\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:thomas _AT_ sunshineinabag.co.uk\">Thomas Wood</a></td></tr>\n");
 print("</table>\n");
 
