@@ -184,7 +184,7 @@ if($site_theme == "standard")
 }
 else
 {
-	print("<tr valign=\"middle\"><td colspan=\"3\" class=\"horizontal-menu-bar-lite\"><span class=\"yellow-text\">ART.GNOME.ORG</span> - Enhance your GNOME desktop!</td></tr>\n");	
+	print("<tr valign=\"middle\"><td colspan=\"3\" class=\"horizontal-menu-bar-lite\">&nbsp;&nbsp;<span class=\"yellow-text\">ART.GNOME.ORG</span>&nbsp;&nbsp;-&nbsp;&nbsp;Enhance your GNOME desktop!</td></tr>\n");	
 }
 ?>
 </table>
