@@ -25,7 +25,7 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
 	   $num_pages = ceil($num_themes/$num_per_page);
 		$start = (($page - 1) * $num_per_page);
 		$theme_select_result = mysql_query("SELECT * FROM theme WHERE category='$category' ORDER BY add_timestamp DESC LIMIT $start, $num_per_page");
-		print("<table width=\"100%\">\n<tr><td>");
+		print("<table width=\"100%\" border=\"2\">\n<tr valign=\"top\"><td>");
       while($theme_select_row = mysql_fetch_array($theme_select_result))
 		{
 			$themeID = $theme_select_row["themeID"];

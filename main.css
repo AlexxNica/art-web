@@ -156,9 +156,12 @@ a.news-link:hover {
 }
 
 .list-thumb {
-	width: 85px;
-   float: left;
-   margin: 10px;
+	width: 100px;
+   #float: left;
+   padding-top: 10px;
+   padding-right: 15px; 
+   padding-bottom: 10px; 
+   padding-left: 15px;
    text-align: center;
 }
 
