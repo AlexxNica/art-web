@@ -5,9 +5,9 @@ require("includes/headers.inc.php");
 
 admin_header("Add a News Item");
 
-$month = validate_input_regexp_default ($_POST["month"], "^[0-9]+$", "")
-$day = validate_input_regexp_default ($_POST["day"], "^[0-9+]$", "")
-$year  = validate_input_regexp_default ($_POST["year"], "^[0-9]+$", "")
+$month = validate_input_regexp_default ($_POST["month"], "^[0-9]+$", "");
+$day = validate_input_regexp_default ($_POST["day"], "^[0-9+]$", "");
+$year  = validate_input_regexp_default ($_POST["year"], "^[0-9]+$", "");
 
 $title = mysql_real_escape_string($_POST["title"]);
 $news_body = mysql_real_escape_string($_POST["news_body"]);

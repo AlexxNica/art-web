@@ -19,22 +19,22 @@ for($count=0;$count<$num_updates;$count++)
 	list($add_timestamp,$type,$ID) = explode("|",$updates_array[$count]);
 	if($type == "background")
 	{
-		$background_select_result = mysql_query("SELECT background_name, category, author, add_timestamp FROM background WHERE backgroundID='$ID'");
-		list($background_name,$category,$author,$timestamp) = mysql_fetch_row($background_select_result);
+		$background_select_result = mysql_query("SELECT background_name, category, add_timestamp FROM background WHERE backgroundID='$ID'");
+		list($background_name,$category,$timestamp) = mysql_fetch_row($background_select_result);
 		print("\t\t\t<title>$background_name</title>\n");
 		print("\t\t\t<link>" . htmlspecialchars($site_url . "backgrounds/$category/$ID/") . "</link>\n");
 		print("\t\t\t<guid>" . htmlspecialchars($site_url . "backgrounds/$category/$ID/") . " </guid>");
 		print("\t\t\t<pubDate>" . date("r", $timestamp) . "</pubDate>");
 		print("\t\t\t<description><![CDATA[");
 		print("<table>");
-		print_background_row($ID);
+		print_background_row($ID, "list");
 		print("</table>");
 		print("]]></description>\n");
 	}
 	else
 	{
-		$theme_select_result = mysql_query("SELECT theme_name, category, author, add_timestamp FROM theme WHERE themeID='$ID'");
-		list($theme_name,$category,$author,$timestamp) = mysql_fetch_row($theme_select_result);
+		$theme_select_result = mysql_query("SELECT theme_name, category, add_timestamp FROM theme WHERE themeID='$ID'");
+		list($theme_name,$category,$timestamp) = mysql_fetch_row($theme_select_result);
 		$category_good = $theme_config_array["$category"]["name"];
 		print("\t\t\t<title>$theme_name</title>\n");
 		print("\t\t\t<link>" . htmlspecialchars($site_url . "themes/$category/$ID/") . "</link>\n");
@@ -42,7 +42,7 @@ for($count=0;$count<$num_updates;$count++)
 		print("\t\t\t<pubDate>" . date("r", $timestamp) . "</pubDate>");
 		print("\t\t\t<description><![CDATA[");
 		print("<table>");
-		print_theme_row($ID);
+		print_theme_row($ID, "list");
 		print("</table>");
 		print("]]></description>\n");
 	}
