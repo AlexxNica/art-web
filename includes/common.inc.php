@@ -469,23 +469,20 @@ function validate_input_regexp_error ($input, $regexp)
 
 function validate_input_array_default ($input, $search_array, $default)
 {
-	//print_r($search_array);
-	if (array_search ($input, $search_array) == FALSE)
+	// FIXME: For some reason array_search doesn't look at the first element in the array
+	if (in_array ($input, $search_array) == TRUE)
 	{
-		// FIXME:  We may want to do some type of alert here, but for the moment, try to continue gracefully
-		//return $default;
-		return 1;	
+		return $input;
 	}
 	else
 	{
-		//return $input;
-		return 1;
+		return $default;
 	}
 }
 
 function validate_input_array_error ($input, $array)
 {
-	if (array_search ($input, $array) == FALSE)
+	if (in_array ($input, $array) == FALSE)
 	{
 		ago_file_not_found ();
 		die ();

@@ -1,3 +1,14 @@
+2004-06-23  Thomas Wood <thos@gnome.org>
+
+	* includes/common.inc.php: Fixed validate_input_array_default() and
+	validate_input_array_error() using in_array instead of search_array
+	(fixes theme/bacground sorting)
+
+	* themes:
+	* backgrounds:
+
+	Removed redundant code
+
 2004-06-21  Thomas Wood <thos@gnome.org>
 
 	* updates.php: Fixed number of updates to display at 12
@@ -13,7 +24,8 @@
 	* submit_background.php:
 	* submit_theme.php:
 
-	Added escape_gpc_array() to ensure special characters are escaped in gpc variables
+	Added escape_gpc_array() to ensure special characters are escaped in
+	gpc variables
 
 2004-05-22  Alex Duggan  <aldug@astrolinux.com>
 

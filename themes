@@ -8,7 +8,6 @@ require("ago_headers.inc.php");
 
 // superglobals stuff
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
-$valid_sort_by_array = array ("name","date","popularity");
 $sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity"), "date");
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
 list($foo, $unvalidated_category, $unvalidated_themeID) = explode("/", $_SERVER["PATH_INFO"]);
