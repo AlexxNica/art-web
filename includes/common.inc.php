@@ -144,6 +144,22 @@ function display_icons($type, $page)
    }
 }
 
+function get_updates_array($number)
+{
+	unset($big_array);
+	$background_select_result = mysql_query("SELECT backgroundID,add_timestamp FROM background ORDER BY add_timestamp DESC LIMIT $number");
+	while( list($backgroundID,$add_timestamp) = mysql_fetch_row($background_select_result) )
+	{
+		$big_array[] = $add_timestamp . "|background|". $backgroundID;
+	}
+	$theme_select_result = mysql_query("SELECT themeID,add_timestamp FROM theme ORDER BY add_timestamp DESC LIMIT $number");
+	while( list($backgroundID,$add_timestamp) = mysql_fetch_row($theme_select_result) )
+	{
+		$big_array[] = $add_timestamp . "|theme|". $backgroundID;
+	}
+	rsort($big_array);
+   $return_array = array_slice($big_array,0,$number)
+}
 function spam_proof_email($good_email)
 {
 	$spam_protected_email = ereg_replace("@"," _AT_ ",$good_email);

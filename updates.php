@@ -23,7 +23,7 @@ while( list($backgroundID,$add_timestamp) = mysql_fetch_row($theme_select_result
 rsort($big_array);
 //print_r($big_array);
 */
-$big_array = get_updates_array($num_updates)
+$big_array = get_updates_array($num_updates);
 print("<p>\n<table>\n");
 for($count=0;$count<$num_updates;$count++)
 {
