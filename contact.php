@@ -8,10 +8,10 @@ include("header.inc.php");
 create_middle_box_top("contact");
 print("The following people (in alphabetical order) are responsible for the layout and the contents:<p>\n");
 print("<table border=\"0\">\n");
-print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:roman_n0spam@gnome.org\">Roman Beigelbeck</a></td></tr>\n");
-print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:aldug_n0spam@gnome.org\">Alex Duggan</a></td></tr>\n");
-print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:drfickle_n0spam@k-lug.org\">Steve Fox</a></td></tr>\n");
-print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:thomas_n0spam@sunshineinabag.co.uk\">Thomas Wood</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:roman _AT_ gnome.org\">Roman Beigelbeck</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:aldug _AT_ gnome.org\">Alex Duggan</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:drfickle _AT_ k-lug.org\">Steve Fox</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a class=\"screenshot\" href=\"mailto:thomas _AT_ sunshineinabag.co.uk\">Thomas Wood</a></td></tr>\n");
 print("</table>\n");
 
 print("<p>\nYou can also catch us on the channel <span class=\"yellow-text\">#gnome-art</span> on <span class=\"yellow-text\">irc.gimp.org</span>.\n");
