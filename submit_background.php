@@ -30,7 +30,9 @@ if($_POST)
 		$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
 		if(mysql_affected_rows()==1)
 		{
-			print("Thank you, your background will be considered for inclusion in art.gnome.org");
+			print("Thank you, your background will be considered for inclusion in art.gnome.org.<br />");
+			$id = mysql_insert_id();
+			print("Your background submission tracking ID is $id. Use this to track the status of your submission and in any queries regarding your submission status.");
 		}
 		else
 		{

@@ -36,8 +36,8 @@ if (!isset($view_old_news))
 			print("<a href=\"/themes/$category/$ID/\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"thumbnail-border\" style=\"margin: 0.2em;\"></a>&nbsp;&nbsp;");
 		}
 	}
-	
-	print("</div></td></tr>\n");
+
+	print("</div><a href=\"/updates.php\">More...</a></td></tr>\n");
 	print("</table>\n");
 	print("<hr style=\"border: none; border-top: dashed gray 1px; margin-bottom: 1em;\">");
 }
