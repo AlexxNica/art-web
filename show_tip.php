@@ -2,6 +2,7 @@
 require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
+require("change_site_prefs.php");
 if($tipID)
 {
 	include("header.inc.php");
@@ -24,6 +25,6 @@ if($tipID)
 }
 else
 {
-	header("Location: index.html");
+	header("Location: tips.php");
 }
 ?>

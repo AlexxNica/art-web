@@ -163,7 +163,7 @@ if($site_theme == "slick")
 {
 	print("</td><td class=\"horizontal-menu-bar\" align=\"right\">");
 	print("<img src=\"images/site/theme.png\" alt=\"Theme\">");
-   print("<a href=\"change_site_theme.php?new_site_theme=lite\" onMouseOver=\"imgOn('imgtheme_lite')\" onMouseOut=\"imgOff('imgtheme_lite')\"><img name=\"imgtheme_lite\" src=\"images/site/theme_lite.png\" border=\"0\" alt=\"Lite\"></a>");
+   print("<a href=\"$PHP_SELF?change_site_theme=1&new_site_theme=lite\" onMouseOver=\"imgOn('imgtheme_lite')\" onMouseOut=\"imgOff('imgtheme_lite')\"><img name=\"imgtheme_lite\" src=\"images/site/theme_lite.png\" border=\"0\" alt=\"Lite\"></a>");
 	print("<img src=\"images/site/theme_minus.png\" alt=\"-\">");
    print("<img src=\"images/site/theme_slickS.png\" border=\"0\" alt=\"Slick\">");
    print("<img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\" alt=\" \">");
@@ -171,7 +171,7 @@ if($site_theme == "slick")
 else
 {
 	print("</td><td class=\"horizontal-menu-bar-lite\" align=\"right\"><b>THEME:</b> ");
-   print("<span class=\"yellow-text\">Lite</span> - <b><a href=\"change_site_theme.php?new_site_theme=slick\">Slick</a></b>&nbsp;&nbsp;&nbsp;");
+   print("<span class=\"yellow-text\">Lite</span> - <b><a href=\"$PHP_SELF?change_site_theme=1&new_site_theme=slick\">Slick</a></b>&nbsp;&nbsp;&nbsp;");
 }
 print("</td></tr>\n");
 

@@ -161,6 +161,44 @@ function get_updates_array($number)
    $return_array = array_slice($big_array,0,$number);
    return $return_array;
 }
+
+function print_thumbnails_per_page_form()
+{
+	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"post\">\n");
+   print("Thumbnails per page: <select name=\"thumbs_per_page\">\n");
+   for($count=0;$count<count($GLOBALS["thumbnails_per_page_array"]);$count++)
+   {
+   	$temp_array = $GLOBALS["thumbnails_per_page_array"];
+      $thumbs_per_page = $temp_array[$count];
+      if($GLOBALS["thumbnails_per_page"] == $thumbs_per_page)
+      {
+      	$selected = " selected";
+      }
+      else
+      {
+      	$selected = "";
+      }
+      print("<option value=\"$thumbs_per_page\"$selected>$thumbs_per_page\n");
+   }
+   print("</select>\n");
+   print("<input type=\"hidden\" name=\"change_thumbnails_per_page\" value=\"1\">\n");
+   print("<input type=\"hidden\" name=\"referrer\" value=\"".$GLOBALS["REQUEST_URI"]."\">\n");
+   print("<input type=\"submit\" value=\"Change\">\n");
+   print("</form>\n");
+}
+
+function ago_redirect($referrer)
+{
+	if($referrer)
+	{
+		header("Location: $referrer");
+	}
+	else
+	{
+		header("Location: index.php");
+	}
+}
+
 function spam_proof_email($good_email)
 {
 	$spam_protected_email = ereg_replace("@"," _AT_ ",$good_email);

@@ -2,7 +2,9 @@
 require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
+require("change_site_prefs.php");
 include("header.inc.php");
+
 create_middle_box_top("backgrounds");
 
 print("Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.");

@@ -3,13 +3,14 @@
 require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
+require("change_site_prefs.php");
+
 if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $category == "metacity" || $category == "metatheme" || $category == "nautilus" || $category == "sawfish" || $category == "sounds" || $category == "splash_screens" || $category == "other")
 {	
    include("header.inc.php");
 	$temp = "themes_" . $category;
    create_middle_box_top($temp);
 	print("<div align=\"center\">\n");
-	$num_per_page = 12;
 	if(!$page)
 	{
 		$page = 1;
@@ -22,10 +23,15 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
    }
    else
    {
-	   $num_pages = ceil($num_themes/$num_per_page);
-		$start = (($page - 1) * $num_per_page);
-		$theme_select_result = mysql_query("SELECT * FROM theme WHERE category='$category' ORDER BY add_timestamp DESC LIMIT $start, $num_per_page");
-		print("<table width=\"100%\" border=\"2\">\n<tr valign=\"top\"><td>");
+	   $num_pages = ceil($num_themes/$thumbnails_per_page);
+      if($page > $num_pages)
+      {
+      	$page = $num_pages;
+      }
+		$start = (($page - 1) * $thumbnails_per_page);
+		$theme_select_result = mysql_query("SELECT * FROM theme WHERE category='$category' ORDER BY add_timestamp DESC LIMIT $start, $thumbnails_per_page");
+		print_thumbnails_per_page_form();
+      print("<p>\n");
       while($theme_select_row = mysql_fetch_array($theme_select_result))
 		{
 			$themeID = $theme_select_row["themeID"];
@@ -35,7 +41,6 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
 		   //print("<div class=\"list-thumb\"><a href=\"show_theme.php?themeID=$themeID&category=$category\" title=\"$theme_name\"><img src=\"images/thumbnails/$category/$thumbnail_filename\" border=\"0\" alt=\"$theme_name\"></a><br>$theme_name</div>\n");
 		
       }
-   	print("</td></tr></table>\n");
    	print("<p>\n");
       if($page > 1)
       {
@@ -77,6 +82,6 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
 }
 else
 {
-	header("Location: index.html");
+	header("Location: themes.php");
 }
 ?>

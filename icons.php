@@ -3,7 +3,9 @@
 require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
+require("change_site_prefs.php");
 include("header.inc.php");
+
 create_middle_box_top("icons");
 print("<table>\n");
 while(list($key,$val)=each($GLOBALS["sys_icon_type_array"]))

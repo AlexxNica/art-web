@@ -18,5 +18,10 @@ if(!session_is_registered("site_theme"))
 	session_register("site_theme");
    $site_theme = "lite";
 }
+if(!session_is_registered("thumbnails_per_page"))
+{
+	session_register("thumbnails_per_page");
+   $thumbnails_per_page = 12;
+}
 
 ?>

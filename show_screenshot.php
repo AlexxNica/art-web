@@ -3,12 +3,14 @@
 require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
+require("change_site_prefs.php");
+
 if($screenshotID && $screenshotID != "")
 {
 	$screenshot_select_result = mysql_query("SELECT image_filename,description FROM screenshot WHERE screenshotID='$screenshotID'");
    if(mysql_num_rows($screenshot_select_result) == 0)
    {
-   	header("Location: index.html");
+   	header("Location: index.php");
    }
    else
    {

@@ -3,13 +3,13 @@
 require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
+require("change_site_prefs.php");
 if($category == "gnome" || $category == "other")
 {
 	include("header.inc.php");
 	$temp = "backgrounds_" . $category;
    create_middle_box_top($temp);
 	print("<div align=\"center\">\n");
-	$num_per_page = 12;
 	if(!$page)
 	{
 		$page = 1;
@@ -22,10 +22,16 @@ if($category == "gnome" || $category == "other")
    }
    else
    {
-	   $num_pages = ceil($num_backgrounds/$num_per_page);
-		$start = (($page - 1) * $num_per_page);
-		$background_select_result = mysql_query("SELECT * FROM background WHERE category='$category' AND parent='0' ORDER BY add_timestamp DESC LIMIT $start, $num_per_page");
-		while($background_select_row = mysql_fetch_array($background_select_result))
+	   $num_pages = ceil($num_backgrounds/$thumbnails_per_page);
+		if($page > $num_pages)
+      {
+      	$page = $num_pages;
+      }
+		$start = (($page - 1) * $thumbnails_per_page);
+		$background_select_result = mysql_query("SELECT * FROM background WHERE category='$category' AND parent='0' ORDER BY add_timestamp DESC LIMIT $start, $thumbnails_per_page");
+		print_thumbnails_per_page_form();
+      print("<p>\n");
+      while($background_select_row = mysql_fetch_array($background_select_result))
 		{
 			$backgroundID = $background_select_row["backgroundID"];
 		   $thumbnail_filename = $background_select_row["thumbnail_filename"];
@@ -66,32 +72,6 @@ if($category == "gnome" || $category == "other")
       print("<input type=\"hidden\" name=\"category\" value=\"$category\">\n");
       print("<input type=\"submit\" value=\"Go\">\n");
       print("</form>");
-      
-      /*
-      print("<p>\n<span class=\"yellow-text\">Page</span> ");
-		if($page > 1)
-      {
-      	$prev_page = $page -1;
-         print(" <a href=\"$PHP_SELF?category=$category&page=$prev_page\">&lt;</a>");
-      }
-   
-      for($count=1;$count<=$num_pages;$count++)
-		{
-			if($count == $page)
-   	   {
-   	   	print("<span class=\"yellow-text\">$count</span> ");
-			}
-   	   else
-   	   {
-   	   	print("<a href=\"$PHP_SELF?category=$category&page=$count\">$count</a> ");
-   	   }
-   	}
-      if($page < $num_pages)
-      {
-      	$next_page = $page +1;
-         print(" <a href=\"$PHP_SELF?category=$category&page=$next_page\">&gt;</a>");
-      }
-      */
    }
    print("</div>\n");
    create_middle_box_bottom();
@@ -99,6 +79,6 @@ if($category == "gnome" || $category == "other")
 }
 else
 {
-	header("Location: index.html");
+	header("Location: backgrounds.php");
 }
 ?>

@@ -5,7 +5,9 @@
 require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
+require("change_site_prefs.php");
 include("header.inc.php");
+
 create_middle_box_top("news");
 $news_count_select_result = mysql_query("SELECT * FROM news WHERE status='active'");
 $news_count = mysql_num_rows($news_count_select_result);
