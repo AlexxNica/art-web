@@ -1,5 +1,9 @@
 2003-04-10  Alex Duggan  <aldug@astrolinux.com>
 
+	* links.php: Fix typo in Dekar's name
+
+2003-04-10  Alex Duggan  <aldug@astrolinux.com>
+
 	* includes/ago_headers.inc.php:
 	* includes/config.inc.php:  Add a field in linkbar array to that
 	links can be turned off.  Turn off metatheme link.

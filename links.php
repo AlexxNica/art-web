@@ -29,7 +29,7 @@ print("<tr><td><img src=\"images/site/dude-icon.png\"></td><td><font size=\"+1\"
 print("<tr><td>&nbsp;</td><td>");
 print("<table border=\"0\">\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://www.astrolinux.com\">Aldug's Homepage</a></td></tr>\n");
-print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://www.whitecape.org\">Dekars's Homepage</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://www.whitecape.org\">Dekar's Homepage</a></td></tr>\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://www.hadess.net\">Hadess's Homepage</a></td></tr>\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://jimmac.musichall.cz\">Jimmac's Homepage</a></td></tr>\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://www.linuxart.com\">Garrett's Homepage</a></td></tr>\n");
