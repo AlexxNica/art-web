@@ -1,3 +1,8 @@
+2004-10-09  Thomas Wood  <thos@gnome.org>
+
+	* submit_background.php, submit_theme.php: Added end user submission
+	tracking
+
 2004-10-05  Thomas Wood <thos@gnome.org>
 	* backend.php: Fixed bug 150330 (incorrect mime type) and also fixed the
 	feed so it now validates as a proper RSS feed.
