@@ -205,7 +205,7 @@ function display_icons($type, $page)
       
       $counter = 0;
       print("<table border=\"0\">\n");
-      while( ($file = $dir_handle->read ()) && ($i < $num_per_page) )
+      while( ($file = $dir_handle->read ()) && ($counter < $icons_per_page) )
 		{
 			$col = 0;
          print("<tr>\n");
@@ -215,7 +215,8 @@ function display_icons($type, $page)
          	if(in_array($ext,$GLOBALS['valid_image_ext']))
 				{
 					print("<td><img src=\"images/icons/$type/$file\"></td>");
-				}
+					$counter++;
+            }
 			}
          print("</tr>\n");
       }
