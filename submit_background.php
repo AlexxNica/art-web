@@ -15,7 +15,7 @@ if($HTTP_POST_VARS)
    	$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
       if(mysql_affected_rows()==1)
       {
-      	print("Thank you, you background will be considered for inclusion in art.gnome.org");
+      	print("Thank you, your background will be considered for inclusion in art.gnome.org");
       }
       else
       {
@@ -26,6 +26,7 @@ if($HTTP_POST_VARS)
    {
    	print("Error, you must fill out all of the previous form fields, please go back and try again.");
    }
+	print("<p>\n");
 }
 else
 {
