@@ -1,5 +1,12 @@
 2003-07-24  Alex Duggan  <aldug@astrolinux.com>
 
+	* search.php:
+	* includes/common.inc.php:
+	Fix the "Showing 1 through ..." line to include the correct
+	end limit.
+
+2003-07-24  Alex Duggan  <aldug@astrolinux.com>
+
 	* backgrounds: fix links in variation section to use new style links.
 
 2003-07-21  Alex Duggan  <aldug@astrolinux.com>

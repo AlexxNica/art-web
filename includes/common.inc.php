@@ -311,7 +311,7 @@ function background_search_result($search_text, $search_type, $category, $thumbn
    	$page = $num_pages;
    }
 	$start = (($page - 1) * $thumbnails_per_page);
-	$end = $start + $thumbnails_per_page
+	$end = $start + $thumbnails_per_page;
 	if($end > $num_backgrounds)
 	{
 		$end = $num_backgrounds;
@@ -354,7 +354,7 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
    	$page = $num_pages;
    }
 	$start = (($page - 1) * $thumbnails_per_page);
-	$end = $start + $thumbnails_per_page
+	$end = $start + $thumbnails_per_page;
 	if($end > $num_themes)
 	{
 		$end = $num_themes;

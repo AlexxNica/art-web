@@ -107,7 +107,7 @@ if($search_text && $search_type)
 				$end = $num_results;
 			}
 			
-			print("<b>Showing " . ($start+1) . " through " . ($start + $thumbnails_per_page) . " of $num_results results.</b>\n");
+			print("<b>Showing " . ($start+1) . " through " . $end . " of $num_results results.</b>\n");
 			print("<table border=\"0\">\n");
 			for($loop=$start;$loop<$end;$loop++)
 			{
