@@ -5,133 +5,133 @@
 
 $linkbar = array (
 	"news" => array(
-   	"url" => "/index.php",
+   	"url" => "index.php",
       "width" => "",
       "height" =>"",
       "indent" => "0",
       "alt" => "NEWS"),
 	"updates" => array(
-   	"url" => "/updates.php",
+   	"url" => "updates.php",
       "width" => "",
       "height" =>"",
       "indent" => "0",
       "alt" => "UPDATES"),
 	"backgrounds" => array(
-   	"url" => "/backgrounds/",
+   	"url" => "backgrounds.php",
       "width" => "",
       "height" => "",
       "indent" => "0",
       "alt" => "BACKGROUNDS"),
    "backgrounds_gnome" => array(
-   	"url" => "/backgrounds/gnome/",
+   	"url" => "background_list.php?category=gnome",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "GNOME"),
    "backgrounds_other" => array(
-   	"url" => "/backgrounds/other/",
+   	"url" => "background_list.php?category=other",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "Other"),
    "themes" => array(
-   	"url" => "/themes/",
+   	"url" => "themes.php",
       "width" => "",
       "height" => "",
       "indent" => "0",
       "alt" => "THEMES"),
    "themes_gdm_greeter" => array(
-   	"url" => "/themes/gdm_greeter/",
+   	"url" => "theme_list.php?category=gdm_greeter",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "GDM Greeter"),
    "themes_gtk" => array(
-   	"url" => "/themes/gtk/",
+   	"url" => "theme_list.php?category=gtk",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "GTK+ 1.2"),
    "themes_gtk2" => array(
-   	"url" => "/themes/gtk2/",
+   	"url" => "theme_list.php?category=gtk2",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "GTK+ 2.0"),
    "themes_metacity" => array(
-   	"url" => "/themes/metacity/",
+   	"url" => "theme_list.php?category=metacity",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "Metacity"),
    "themes_metatheme" => array(
-   	"url" => "/themes/metatheme/",
+   	"url" => "theme_list.php?category=metatheme",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "Metatheme"),
    "themes_nautilus" => array(
-   	"url" => "/themes/nautilus/",
+   	"url" => "theme_list.php?category=nautilus",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "Nautilus"),
    "themes_sawfish" => array(
-   	"url" => "/themes/sawfish/",
+   	"url" => "theme_list.php?category=sawfish",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "Sawfish"),
    "themes_sounds" => array(
-   	"url" => "/themes/sounds/",
+   	"url" => "theme_list.php?category=sounds",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "Sounds"),
    "themes_splash_screens" => array(
-   	"url" => "/themes/splash_screens/",
+   	"url" => "theme_list.php?category=splash_screens",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "Splash Screens"),
    "themes_other" => array(
-   	"url" => "/themes/other/",
+   	"url" => "theme_list.php?category=other",
       "width" => "",
       "height" => "",
       "indent" => "1",
       "alt" => "Other..."),
    "icons" => array(
-   	"url" => "/icons.php",
+   	"url" => "icons.php",
       "width" => "",
       "height" => "",
       "indent" => "0",
       "alt" => "ICONS"),
    "tips" => array(
-   	"url" => "/tips.php",
+   	"url" => "tips.php",
       "width" => "",
       "height" => "",
       "indent" => "0",
       "alt" => "TIPS &amp; TRICKS"),
    "faq" => array(
-   	"url" => "/faq.php",
+   	"url" => "faq.php",
       "width" => "",
       "height" => "",
       "indent" => "0",
       "alt" => "FAQ"),
    "submit" => array(
-   	"url" => "/submit.php",
+   	"url" => "submit.php",
       "width" => "",
       "height" => "",
       "indent" => "0",
       "alt" => "SUBMIT"),
    "contact" => array(
-   	"url" => "/contact.php",
+   	"url" => "contact.php",
       "width" => "",
       "height" => "",
       "indent" => "0",
       "alt" => "CONTACT"),
 	"links" => array(
-   	"url" => "/links.php",
+   	"url" => "links.php",
       "width" => "",
       "height" => "",
       "indent" => "0",
@@ -261,36 +261,6 @@ $pill_array = array (
       "alt" => "SUBMIT")
     
 );
-/*
-
-$sys_icon_type_array = array(
-	"gtk-stock" => array(
-   	"realname" => "Gtk+ Stock Icons",
-      "tarball_name" => "tarball (64 kB)",
-      "tarball_filename" => "gtk-stock_all.tar.gz",
-      "image" => "stock_home_24.png"),
-   "nautilus-emblems" => array(
-    	"realname" => "Nautilus Emblems",
-      "tarball_name" => "tarball (110 kB)",
-      "tarball_filename" => "nautilus-emblems_all.tar.gz",
-      "image" => "Gridlock.png"),
-   "gnome-people" => array(
-    	"realname" => "GNOME People",
-      "tarball_name" => "tarball (160 kB)",
-      "tarball_filename" => "gnome-people_all.tar.gz",
-      "image" => "Tigert.png"),
-   "other" => array(
-    	"realname" => "Misc. Icons",
-      "tarball_name" => "tarball (3.2 MB)",
-      "tarball_filename" => "other_all.tar.gz",
-      "image" => "Boot.png"),
-   "large" => array(
-    	"realname" => "Larger Icons",
-      "tarball_name" => "tarball (1.2 MB)",
-      "tarball_filename" => "large_all.tar.gz",
-      "image" => "Elysium.png"),
-);
-*/
 
 $sys_icon_dir = "/usr/local/www/art.gnome.org/images/icons";
 
