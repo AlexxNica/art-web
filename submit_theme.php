@@ -5,6 +5,7 @@ require("session.inc.php");
 require("common.inc.php");
 include("header.inc.php");
 create_middle_box_top("themes");
+print("If you would like to submit your theme to art.gnome.org, please fill out the form below and provide a web address where we can download your theme.\n<p>\n");
 
 print("<form action=\"$PHP_SELF\" method=\"post\">\n");
 print("<table border=\"0\">");

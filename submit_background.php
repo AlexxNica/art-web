@@ -6,6 +6,7 @@ require("common.inc.php");
 include("header.inc.php");
 create_middle_box_top("backgrounds");
 
+print("If you would like to submit your background to art.gnome.org, please fill out the form below and provide a web address where we can download your background.\n<p>\n");
 print("<form action=\"$PHP_SELF\" method=\"post\">\n");
 print("<table border=\"0\">\n");
 print("<tr><td><b>Background Name:</b></td><td><input type=\"text\" name=\"background_name\" size=\"40\"></td></tr>\n");
