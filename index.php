@@ -26,7 +26,7 @@ while($news_select_row=mysql_fetch_array($news_select_result))
 }
 
 print("<p>\n");
-print("<div align=\"center\"><a href=\"old_news.html\">View Older News</a></div>\n");
+print("<div align=\"center\"><a href=\"old_news.php\">View Older News</a></div>\n");
 print("<p>&nbsp;\n");
 create_middle_box_bottom();
 include("footer.inc.php");
