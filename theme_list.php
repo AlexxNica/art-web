@@ -15,7 +15,7 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
 	{
 		$page = 1;
 	}
-	$theme_select_all_result = mysql_query("SELECT * FROM theme WHERE category='$category' ORDER BY add_timestamp DESC");
+	$theme_select_all_result = mysql_query("SELECT * FROM theme WHERE category='$category' AND status='active' ORDER BY add_timestamp DESC");
 	$num_themes = mysql_num_rows($theme_select_all_result);
 	if($num_themes == 0)
    {
@@ -29,7 +29,7 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
       	$page = $num_pages;
       }
 		$start = (($page - 1) * $thumbnails_per_page);
-		$theme_select_result = mysql_query("SELECT * FROM theme WHERE category='$category' ORDER BY add_timestamp DESC LIMIT $start, $thumbnails_per_page");
+		$theme_select_result = mysql_query("SELECT * FROM theme WHERE category='$category' AND status='active' ORDER BY add_timestamp DESC LIMIT $start, $thumbnails_per_page");
 		print_thumbnails_per_page_form();
       print("<p>\n");
       while($theme_select_row = mysql_fetch_array($theme_select_result))
@@ -66,7 +66,7 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
       print("<br>\n");
       print("<form action=\"show_theme.php\" method=\"get\">\n");
       print("<select name=\"themeID\">\n");
-      $theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE category='$category' ORDER BY theme_name");
+      $theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE category='$category' AND status='active' ORDER BY theme_name");
 		while(list($themeID,$theme_name) = mysql_fetch_row($theme_select_result))
       {
       	print("<option value=\"$themeID\">$theme_name</option>\n");

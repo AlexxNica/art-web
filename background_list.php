@@ -14,7 +14,7 @@ if($category == "gnome" || $category == "other")
 	{
 		$page = 1;
 	}
-	$background_select_all_result = mysql_query("SELECT * FROM background WHERE category='$category' AND parent='0' ORDER BY add_timestamp DESC");
+	$background_select_all_result = mysql_query("SELECT * FROM background WHERE category='$category' AND status='active'AND parent='0' ORDER BY add_timestamp DESC");
 	$num_backgrounds = mysql_num_rows($background_select_all_result);
 	if($num_backgrounds == 0)
    {
@@ -28,7 +28,7 @@ if($category == "gnome" || $category == "other")
       	$page = $num_pages;
       }
 		$start = (($page - 1) * $thumbnails_per_page);
-		$background_select_result = mysql_query("SELECT * FROM background WHERE category='$category' AND parent='0' ORDER BY add_timestamp DESC LIMIT $start, $thumbnails_per_page");
+		$background_select_result = mysql_query("SELECT * FROM background WHERE category='$category' AND parent='0' AND status='active' ORDER BY add_timestamp DESC LIMIT $start, $thumbnails_per_page");
 		print_thumbnails_per_page_form();
       print("<p>\n");
       while($background_select_row = mysql_fetch_array($background_select_result))
@@ -63,7 +63,7 @@ if($category == "gnome" || $category == "other")
       print("<br>\n");
       print("<form action=\"show_background.php\" method=\"get\">\n");
       print("<select name=\"backgroundID\">\n");
-      $background_select_result = mysql_query("SELECT backgroundID, background_name FROM background WHERE category='$category' AND parent='0' ORDER BY background_name");
+      $background_select_result = mysql_query("SELECT backgroundID, background_name FROM background WHERE category='$category' AND parent='0' AND status='active' ORDER BY background_name");
 		while(list($backgroundID,$background_name) = mysql_fetch_row($background_select_result))
       {
       	print("<option value=\"$backgroundID\">$background_name</option>\n");

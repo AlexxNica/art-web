@@ -127,7 +127,8 @@ function print_background_row($backgroundID)
 	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename FROM background WHERE backgroundID='$backgroundID'");
 	list($background_name,$category,$author,$release_date,$thumbnail_filename) = mysql_fetch_row($background_select_result);
 	$release_date = fix_sql_date($release_date,"/");
-	print("<tr><td><a href=\"show_background.php?backgroundID=$backgroundID&category=$category\"><img src=\"images/thumbnails/backgrounds/$thumbnail_filename\" border=\"0\"></td><td><a class=\"screenshot\" href=\"show_background.php?backgroundID=$backgroundID&category=$category\">$background_name</a><br>$release_date<br>BACKGROUNDS - GNOME<br>$author</td></tr>\n");
+	$category_good = $linkbar["background_" . $category]["alt"];
+	print("<tr><td><a href=\"show_background.php?backgroundID=$backgroundID&category=$category\"><img src=\"images/thumbnails/backgrounds/$thumbnail_filename\" border=\"0\"></td><td><a class=\"screenshot\" href=\"show_background.php?backgroundID=$backgroundID&category=$category\">$background_name</a><br>$release_date<br>BACKGROUNDS - $category_good<br>$author</td></tr>\n");
 }
 
 function print_theme_row($themeID)
@@ -143,7 +144,7 @@ function print_theme_row($themeID)
 function get_latest_backgrounds($number)
 {
 	unset($big_array);
-	$background_select_result = mysql_query("SELECT backgroundID,add_timestamp FROM background ORDER BY add_timestamp DESC LIMIT $number");
+	$background_select_result = mysql_query("SELECT backgroundID,add_timestamp FROM background WHERE status='active' ORDER BY add_timestamp DESC LIMIT $number");
 	while( list($backgroundID,$add_timestamp) = mysql_fetch_row($background_select_result) )
 	{
 		$big_array[] = $add_timestamp . "|background|". $backgroundID;
@@ -154,7 +155,7 @@ function get_latest_backgrounds($number)
 function get_latest_themes($number)
 {
 	unset($big_array);
-   $theme_select_result = mysql_query("SELECT themeID,add_timestamp FROM theme ORDER BY add_timestamp DESC LIMIT $number");
+   $theme_select_result = mysql_query("SELECT themeID,add_timestamp FROM theme WHERE status='active' ORDER BY add_timestamp DESC LIMIT $number");
 	while( list($backgroundID,$add_timestamp) = mysql_fetch_row($theme_select_result) )
 	{
 		$big_array[] = $add_timestamp . "|theme|". $backgroundID;

@@ -1,3 +1,11 @@
+2003-01-14  Alex Duggan  <aldug@gnome.org>
+	
+	* background_list.php:
+	* theme_list.php:
+	* includes/common.inc.php:
+	Select only themes that have a status='active', fix a mistake
+	in print_background_row() that always prints BACKGROUNDS - GNOME
+	
 2002-12-26  Alex Duggan  <aldug@gnome.org>
 
 	* faq.php: include at the top of the page a list of questions with local links
