@@ -1,5 +1,9 @@
 2005-03-22  Thomas Wood  <thos@gnome.org>
 
+	* index.html: Removed
+
+2005-03-22  Thomas Wood  <thos@gnome.org>
+
 	* admin/add_news_item.php: Fixed
 	* art-icons: Removed
 
