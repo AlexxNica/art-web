@@ -1,3 +1,10 @@
+2003-07-25  Alex Duggan  <aldug@astrolinux.com>
+
+	* themes:
+	* includes/common.inc.php:
+	* includes/config.inc.php: Get the filesizes for the themes by doing a stat()
+	on the file and not from the db.
+
 2003-07-24  Alex Duggan  <aldug@astrolinux.com>
 
 	* search.php:

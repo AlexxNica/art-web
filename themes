@@ -140,7 +140,7 @@ else if( array_key_exists($category,$theme_config_array) && $theme_num != "")
    		// get the filesize from the server
 			$file_path = $sys_theme_dir . "/$category/$download_name";
 			$filesize = get_filesize_string($file_path);
-			print("&nbsp;&nbsp;&nbsp;<a href=\"$mirror_url/themes/$category/$download_name\">$name ($file_size)</a>\n");
+			print("&nbsp;&nbsp;&nbsp;<a href=\"$mirror_url/themes/$category/$download_name\">$name ($filesize)</a>\n");
    	}
    	print("</td></tr></table>\n<p>\n");
    	print("<span class=\"yellow-text\">Info:</span> $description");

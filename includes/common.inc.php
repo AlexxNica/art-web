@@ -388,6 +388,24 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 	return array($page, $num_pages);
 }
 
+function get_filesize_string($file_path)
+{
+	if(file_exists($file_path))
+	{
+		$return_array = stat($file_path);
+		$bytes = $return_array["size"];
+
+		if($bytes > (1024*1024))
+		{
+			$return_string = sprintf("%.1f",round(($bytes / (1024*1024)),1)) . " mb";
+		}
+		else
+		{
+			$return_string = sprintf("%.1f",round(($bytes / 1024),1)) . " kb";
+		}
+		return $return_string;
+	}
+}
 
 function spam_proof_email($good_email)
 {
