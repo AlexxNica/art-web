@@ -1,3 +1,7 @@
+2003-06-01  Alex Duggan  <aldug@astrolinux.com>
+
+	* submit_theme.php: remove metatheme option
+
 2003-04-10  Alex Duggan  <aldug@astrolinux.com>
 
 	* TODO: Initial import
