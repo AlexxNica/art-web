@@ -1,3 +1,11 @@
+2003-09-23  Alex Duggan  <aldug@astrolinux.com>
+
+	* backgrounds:
+	* download:
+	* themes:
+	Use a link which contains the theme/background filename so when you save it
+	from a context menu, you get the right filename.  Partially fixes Bug #123059
+	
 2003-09-21  Alex Duggan  <aldug@astrolinux.com>
 
 	* copyright.php:  s/contact.html/contact.php/
