@@ -124,6 +124,7 @@ function display_icons($type, $page)
 
 function print_background_row($backgroundID)
 {
+	global $linkbar;
 	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename FROM background WHERE backgroundID='$backgroundID'");
 	list($background_name,$category,$author,$release_date,$thumbnail_filename) = mysql_fetch_row($background_select_result);
 	$release_date = fix_sql_date($release_date,"/");
