@@ -88,9 +88,9 @@ function ago_footer()
 			<a href="http://www.gnome.org/about/">About GNOME</a> &middot;
 			<a href="http://www.gnome.org/start/stable/">Download</a> &middot;
 			<a href="http://www.gnome.org/">Users</a> &middot;
+			<a href=""><b>Art &amp; Themes</b></a> &middot;
 			<a href="http://developer.gnome.org/">Developers</a> &middot;
 			<a href="http://foundation.gnome.org/">Foundation</a> &middot;
-			<a href=""><b>Art &amp; Themes</b></a> &middot;
 			<a href="http://www.gnome.org/contact/">Contact</a>
 		</div>
 	</div>

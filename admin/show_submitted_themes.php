@@ -75,7 +75,8 @@ else
 			print("<td><a href=\"mailto:$author_email\">$author</a></td>");
 			print("<td><a href=\"$theme_url\">Download</td>");
 			print("<td>$theme_description</td>");
-			print("<td><form action=\"add_theme.php\" method=\"post\"><input type=\"hidden\" name=\"theme_submitID\" value=\"$themeID\"><input type=\"hidden\" name=\"theme_name\" value=\"$theme_name\"><input type=\"hidden\" name=\"theme_category\" value=\"$category\"><input type=\"hidden\" name=\"theme_author\" value=\"$author\"><input type=\"hidden\" name=\"author_email\" value=\"$author_email\"><input type=\"hidden\" name=\"description\" value=\"$theme_description\"><input type=\"submit\" value=\"Add\"></form>");
+			print("<td><form action=\"add_theme.php\" method=\"post\"><input type=\"hidden\" name=\"theme_submitID\" value=\"$themeID\"><input type=\"hidden\" name=\"theme_name\" value=\"$theme_name\"><input type=\"hidden\" name=\"theme_category\" value=\"$category\"><input type=\"hidden\" name=\"theme_author\" value=\"$author\"><input type=\"hidden\" name=\"author_email\" value=\"$author_email\"><input type=\"hidden\" name=\"description\" value=\"$theme_description\"><input type=\"submit\" value=\"Add\"></form><hr>");
+			print("<form action=\"$PHP_SELF\" method=\"post\"><input type=\"submit\" value=\"Added\"><input type=\"hidden\" name=\"new_status\" value=\"added\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"></form>\n");
 			print("<form action=\"$PHP_SELF\" method=\"post\"><input type=\"submit\" value=\"Reject\"><input type=\"hidden\" name=\"new_status\" value=\"rejected\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"></form></td></tr>\n");
 
 			$alt = 2 - $alt + 1;

@@ -2,9 +2,9 @@
 
 include "includes/headers.inc.php";
 
-admin_header();
+admin_header("ART.GNOME.ORG Administration");
 
-print("test");
+print("Choose an option from the left");
 
 admin_footer();
 
