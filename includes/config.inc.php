@@ -205,8 +205,9 @@ $sys_icon_dir = "/usr/local/www/art-web/images/icons";
 
 $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 
-$search_type_array = array ("background" => "Background Name", "theme" => "Theme Name", "author" => "Author Name");
-$thumbnails_per_page_array = array("12" => "12", "24" => "24", "1000" => "All");
+$search_type_array = array ("background_name" => "Background Name", "theme_name" => "Theme Name", "author" => "Author Name");
+$thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "1000" => "All");
 $sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity");
+$view_array = array("icons" => "Icon", "list" => "List");
 
 ?>

@@ -10,6 +10,7 @@ require("ago_headers.inc.php");
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
 $sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity"), "date");
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
+$view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
 list($foo, $unvalidated_category, $unvalidated_themeID) = explode("/", $_SERVER["PATH_INFO"]);
 
 /* print out the list of theme categories */
@@ -55,28 +56,28 @@ else
 		}
 		else
 		{
-			print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Themes");
+			print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Themes", $view);
 			print("<p>");
-			list($page, $num_pages) = theme_search_result("", "theme", $category, $thumbnails_per_page, $sort_by, $page, $num_themes);
+			list($page, $num_pages) = theme_search_result("", "theme_name", $category, $thumbnails_per_page, $sort_by, $page, $num_themes, $view);
 
 			/* Page Navigation System */
 			print("<div align=\"center\">\n");
 			if($page > 1)
 			{
 				$prev_page = $page -1;
-				print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&lt;]</a>");
+				print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">[&lt;]</a>");
 			}
 			for($count=1;$count<=$num_pages;$count++)
 			{
 				if($count == $page)
 					print("<span class=\"bold-text\">[$count]</span> ");
 				else
-					print("<a href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[$count]</a> ");
+					print("<a href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">[$count]</a> ");
 			}
 			if($page < $num_pages)
 			{
 				$next_page = $page +1;
-				print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
+				print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">[&gt;]</a>");
 			}
 			print("</div>\n<p>\n");
 		}
@@ -108,12 +109,13 @@ else
 			$author_email = $theme_select_row["author_email"];
 			$author_email = spam_proof_email($author_email);
 			$date = $theme_select_row["release_date"];
-			list($year,$month,$day)=explode("-",$date);
-			$date = $month . "/" . $day . "/" . $year;
+//			list($year,$month,$day)=explode("-",$date);
+//			$date = $month . "/" . $day . "/" . $year;
 			$description = $theme_select_row["description"];
 			$download_start_timestamp = $theme_select_row["download_start_timestamp"];
 			$download_count = $theme_select_row["download_count"];
 			$download_filename = $theme_select_row["download_filename"];
+			$timestamp = $theme_select_row["add_timestamp"];
 
 			print("<table border=\"0\">\n");
 			print("<tr><td>");
@@ -130,7 +132,8 @@ else
 				print("<a href=\"/images/thumbnails/$category/$thumbnail_filename\"><img src=\"/images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"thumbnail-border-padding\"></a>");
 			}
 			print("</td>\n");
-			print("<td><span class=\"bold-text\">Name:</span> $name<br>\n<span class=\"bold-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"bold-text\">Release Date:</span> $date<br>\n");
+			print("<td><span class=\"bold-text\">Name:</span> $name<br />\n<span class=\"bold-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"bold-text\">Release Date:</span> $date<br />\n");
+			print("<span class=\"bold-text\">Last Updated: </span>" . date("Y-m-d", $timestamp) . "<br />\n");
 			$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
 			print("<span class=\"bold-text\">Popularity:</span> $downloads_per_day Downloads per Day<br>\n");
 			print("<span class=\"bold-text\">Download:</span><br>");

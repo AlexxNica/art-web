@@ -46,9 +46,9 @@ if (!isset($view_old_news))
 	$featured_select_result = mysql_query("SELECT * FROM featured ORDER BY date DESC LIMIT 1");
 	$featured_select_row = mysql_fetch_array($featured_select_result);
 	if ($featured_select_row["type"] == "background")
-		print_background_row($featured_select_row["id"]);
+		print_background_row($featured_select_row["id"], "list");
 	else
-		print_theme_row($featured_select_row["id"]);
+		print_theme_row($featured_select_row["id"], "list");
 
 	print("</table>");
 

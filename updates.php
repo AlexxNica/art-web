@@ -27,11 +27,11 @@ for($count=0;$count<count($big_array);$count++)
 	list($add_timestamp,$type,$ID) = explode("|",$big_array[$count]);
 	if($type == "background")
    {
-   	print_background_row($ID);
+   	print_background_row($ID, "list");
 	}
    else
    {
-   	print_theme_row($ID);
+   	print_theme_row($ID, "list");
 	}
 }
 print("</table>\n");

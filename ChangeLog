@@ -1,3 +1,17 @@
+2004-12-19  Thomas Wood  <thos@gnome.org>
+
+	* backend.php:
+	* backgrounds:
+	* includes/common.inc.php:
+	* includes/config.inc.php:
+	* index.php:
+	* search.php:
+	* themes:
+	* updates.php:
+
+	- Fix authors search
+	- New "icon" listing view
+
 2004-12-13  Thomas Wood  <thos@gnome.org>
 
 	* backend.php: Set pubDate on items

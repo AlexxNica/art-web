@@ -119,7 +119,7 @@ function display_icons($type, $page)
 	}
 }
 
-function print_background_row($backgroundID)
+function print_background_row($backgroundID, $view)
 {
 	global $background_config_array;
 	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename,download_start_timestamp,download_count FROM background WHERE backgroundID='$backgroundID'");
@@ -128,11 +128,18 @@ function print_background_row($backgroundID)
 	$link = "/backgrounds/$category/$backgroundID/";
 	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
-	print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>Background - $category_name<br>$author</td></tr>\n"));
+	if ($view == "icons")
+	{
+		print("<a href=\"$link\"><img class=\"thumbnail-border\" style=\"margin:0.5em\" src=\"/images/thumbnails/backgrounds/$thumbnail_filename\"></a>");
+	}
+	else
+	{
+		print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>Background - $category_name<br>$author</td></tr>\n"));
+	}
 
 }
 
-function print_theme_row($themeID)
+function print_theme_row($themeID, $view)
 {
 	global $theme_config_array;
 	$theme_select_result = mysql_query("SELECT theme_name, category, author, release_date,small_thumbnail_filename,thumbnail_filename,download_filename FROM theme WHERE themeID='$themeID'");
@@ -140,7 +147,8 @@ function print_theme_row($themeID)
 	$release_date = fix_sql_date($release_date);
 	$link = "/themes/$category/$themeID/";
 	$category_name = $theme_config_array["$category"]["name"];
-	if($category == "icon")
+	
+	if( ($category == "icon") or ($category == "metacity") )
 	{
 		$class = "thumbnail";
 	}
@@ -154,7 +162,14 @@ function print_theme_row($themeID)
 	else
 		$thumbnail = "<a href=\"/images/thumbnails/$category/$screenshot\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></a>";
 
-	print(utf8_encode("<tr><td>$thumbnail</td><td><a class=\"bold-link\" href=\"$link\">$theme_name</a><br>$release_date<br>$category_name<br>$author</td></tr>\n"));
+	if ($view == "icons")
+	{
+		print("<a href=\"$link\"><img style=\"margin:0.5em;\" src=\"/images/thumbnails/$category/$thumbnail_filename\" alt=\"\" class=\"$class\" /></a>");
+	}
+	else
+	{
+		print(utf8_encode("<tr><td>$thumbnail</td><td><a class=\"bold-link\" href=\"$link\">$theme_name</a><br>$release_date<br>$category_name<br>$author</td></tr>\n"));
+	}
 }
 
 function get_latest_backgrounds($number)
@@ -225,10 +240,7 @@ function ago_file_not_found()
 	create_middle_box_top("");
 	print("404 - File not Found.");
 	create_middle_box_bottom();
-	
 	ago_footer();
-	
-
 }
 
 function print_select_box($name,$array,$selected)
@@ -248,9 +260,9 @@ function print_select_box($name,$array,$selected)
 	print("</select>\n");
 }
 
-function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results_text)
+function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results_text, $view)
 {
-	global $thumbnails_per_page_array, $sort_by_array;
+	global $thumbnails_per_page_array, $sort_by_array, $view_array;
 	
 	if($thumbnails_per_page == "")
 	{
@@ -260,22 +272,26 @@ function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results
 	{
 		$sort_by = "name";
 	}
-	
+
 	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"get\">");
 	print("<table border=\"0\">\n");
-	
+
 	print("<tr><td>Sort By:</td><td>");
 	print_select_box("sort_by", $sort_by_array, $sort_by);
 	print("</td></tr>\n");
-	
+
 	print("<tr><td>$results_text:</td><td>");
 	print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page);
 	print("</td></tr>\n");
-	
+
+	print("<tr><td>View:</td><td>");
+	print_select_box("view", $view_array, $view);
+	print("</td></tr>\n");
+
 	print("</table>\n");
-	
+
 	print("<input type=\"submit\" value=\"Change\">\n");
-	print("</form>\n");	
+	print("</form>\n");
 }
 
 function display_search_box($search_text, $search_type, $thumbnails_per_page, $sort_by)
@@ -284,7 +300,7 @@ function display_search_box($search_text, $search_type, $thumbnails_per_page, $s
 		
 	if($search_type == "")
 	{
-		$search_type = "background";
+		$search_type = "theme_name";
 	}
 	if($thumbnails_per_page == "")
 	{
@@ -318,7 +334,7 @@ function display_search_box($search_text, $search_type, $thumbnails_per_page, $s
 	print("</form>\n");
 }
 
-function background_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds)
+function background_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view)
 {
 	$num_pages = ceil($num_backgrounds/$thumbnails_per_page);
 
@@ -332,7 +348,7 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	{
 		$end = $num_backgrounds;
 	}
-	print("<b>Showing " . ($start+1) . " through " . $end . " of $num_backgrounds results.</b>\n");
+	print("<b>Showing " . ($start+1) . " through " . $end . " of $num_backgrounds results.</b><br />\n");
 
 	if($sort_by == "popularity")
 	{
@@ -355,17 +371,17 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	{
 		$category_query = "";
 	}
-	$background_select_result = mysql_query("SELECT backgroundID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM background WHERE $category_query background_name LIKE '%$search_text%' AND parent='0' $order_query LIMIT $start, $thumbnails_per_page");
+	$background_select_result = mysql_query("SELECT backgroundID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM background WHERE $category_query $search_type LIKE '%$search_text%' AND parent='0' $order_query LIMIT $start, $thumbnails_per_page");
 	print("<table>\n");
 	while(list($backgroundID, $perday)=mysql_fetch_row($background_select_result))
 	{
-		print_background_row($backgroundID);
+		print_background_row($backgroundID, $view);
 	}
 	print("</table>");
 	return array($page, $num_pages);
 }
 
-function theme_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_themes)
+function theme_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_themes, $view)
 {
 	$num_pages = ceil($num_themes/$thumbnails_per_page);
 
@@ -379,7 +395,7 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 	{
 		$end = $num_themes;
 	}
-	print("<b>Showing " . ($start+1) . " through " . $end . " of $num_themes results.</b>\n");
+	print("<b>Showing " . ($start+1) . " through " . $end . " of $num_themes results.</b><br />\n");
 
 	if($sort_by == "popularity")
 	{
@@ -402,11 +418,11 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 	{
 		$category_query = "";
 	}
-	$theme_select_result = mysql_query("SELECT themeID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM theme WHERE $category_query theme_name LIKE '%$search_text%' $order_query LIMIT $start, $thumbnails_per_page");
+	$theme_select_result = mysql_query("SELECT themeID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM theme WHERE $category_query $search_type LIKE '%$search_text%' $order_query LIMIT $start, $thumbnails_per_page");
 	print("<table>\n");
 	while(list($themeID)=mysql_fetch_row($theme_select_result))
 	{
-		print_theme_row($themeID);
+		print_theme_row($themeID, $view);
 	}
 	print("</table>");
 	return array($page, $num_pages);

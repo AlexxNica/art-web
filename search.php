@@ -30,7 +30,7 @@ if($search_text && $search_type)
 		$num_backgrounds = mysql_num_rows($background_all_select_result);
 		if($num_backgrounds > 0)
 		{
-			list($page, $num_pages) = background_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_backgrounds);
+			list($page, $num_pages) = background_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_backgrounds, "list");
 		}
 		else
 		{
@@ -38,47 +38,65 @@ if($search_text && $search_type)
 		}
 	}
 	/* theme name search */
-	elseif ($search_type == "theme")
+	elseif ($search_type == "theme_name")
 	{
 		$theme_all_select_result = mysql_query("SELECT themeID FROM theme WHERE theme_name LIKE '%$search_text%' ORDER BY theme_name");
 		$num_themes = mysql_num_rows($theme_all_select_result);
 		if($num_themes > 0)
 		{
-			list($page, $num_pages) = theme_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_themes);
+			list($page, $num_pages) = theme_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_themes, "list");
 		}
 		else
 		{
 			print("<p>No results matched your search, please try again.");
 		}
 	}
-	
+	/* Author name search */
+	elseif ($search_type == "author")
+	{
+		$theme_all_select_result = mysql_query("SELECT author FROM theme WHERE author LIKE '%$search_text%' ORDER BY author");
+		$background_all_select_result = mysql_query("SELECT backgroundID FROM background WHERE background_name LIKE '%$search_text%' AND parent='0' ORDER BY background_name");
+		$num_themes = mysql_num_rows($theme_all_select_result);
+		$num_backgrounds = mysql_num_rows($background_all_select_result);
+		$num_authors = $num_themes + $num_backgrounds;
+		if($num_authors > 0)
+		{
+			if ($num_themes > 0)
+				list($page, $num_pages) = theme_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_authors, "list");
+			if ($num_backgrounds > 0)
+				list($page, $num_pages) = background_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_backgrounds, "list");
+		}
+		else
+		{
+			print("<p>No results matched your search, please try again.");
+		}
+	}
 	/* Page Navigation System */
 	print("<p>\n<div align=\"center\">");
 	$search_text = urlencode($search_text);
 	print("<p>\n");
 	if($page > 1)
 	{
-   	$prev_page = $page -1;
-   	print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&lt;]</a>");
+		$prev_page = $page -1;
+		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&lt;]</a>");
 	}
 	for($count=1;$count<=$num_pages;$count++)
 	{
 		if($count == $page)
-   	{
-   		print("<span class=\"bold-text\">[$count]</span> ");
+		{
+			print("<span class=\"bold-text\">[$count]</span> ");
 		}
-   	else
-   	{
-   		print("<a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[$count]</a> ");
-   	}
+		else
+		{
+			print("<a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[$count]</a> ");
+		}
 	}
 	if($page < $num_pages)
 	{
-   	$next_page = $page +1;
-   	print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
+		$next_page = $page +1;
+		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
 	}
 	print("</div>\n");
-	print ($sort_by);
 }
 else
 {
