@@ -4,7 +4,9 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
-include("header.inc.php");
+require("ago_headers.inc.php");
+
+ago_header("Tips &amp; Tricks");
 create_middle_box_top("tips");
 
 $tip_select_result = mysql_query("SELECT tipID,type,title,tip_url FROM tip");
@@ -32,5 +34,5 @@ else
 
 print("<p>\n");
 create_middle_box_bottom();
-include("footer.inc.php");
+ago_footer();
 ?>

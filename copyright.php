@@ -3,8 +3,9 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
-include("header.inc.php");
+require("ago_headers.inc.php");
 
+ago_header("Copyright Notice");
 create_middle_box_top("copyright");
 ?>
 <font size="+1">Site Design</font>
@@ -22,5 +23,5 @@ All material submitted for consideration to be included on this site is presumed
 If you suspect any material on art.gnome.org infringes on someone else's copyright, please <a href="contact.html">let us know</a> and we will try to rectify the situation as soon as possible.
 <?
 create_middle_box_bottom();
-include("footer.inc.php");
+ago_footer();
 ?>

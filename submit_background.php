@@ -4,7 +4,9 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
-include("header.inc.php");
+require("ago_headers.inc.php");
+
+ago_header("Background Submission");
 create_middle_box_top("backgrounds");
 
 if($HTTP_POST_VARS)
@@ -46,7 +48,8 @@ else
 	print("<input type=\"submit\" value=\"Submit Background\">\n");
 	print("</form>");
 }
+
 create_middle_box_bottom();
-include("footer.inc.php");
+ago_footer();
 
 ?>

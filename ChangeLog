@@ -1,4 +1,38 @@
 2003-01-14  Alex Duggan  <aldug@gnome.org>
+	
+	* includes/ago_headers.inc.php:
+	New file to contain two functions for setting the page header and footer
+	
+	* includes/header.inc.php:
+	* includes/footer.inc.php:
+	Remove these files from cvs as page header and footers are now in seperate
+	functions in includes/ago_headers.inc.php
+	
+	* background_list.php:
+	* backgrounds.php:
+	* contact.php:
+	* copyright.php:
+	* faq.php:
+	* icons.php:
+	* index.php:
+	* links.php:
+	* old_news.php:
+	* screenshot_list.php:
+	* show_background.php:
+	* show_icons.php:
+	* show_theme.php:
+	* show_tip.php:
+	* submit.php:
+	* submit_background.php:
+	* submit_theme.php:
+	* theme_list.php:
+	* themes.php:
+	* tips.php:
+	* updates.php:
+	Update to new new ago_header() and ago_footer() functions in 
+	includes/ago_headers.inc.php
+
+2003-01-14  Alex Duggan  <aldug@gnome.org>
 
 	* includes/common.inc.php: reall fix the problem in print_background_row
 	

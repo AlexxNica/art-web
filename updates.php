@@ -4,8 +4,9 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
-include("header.inc.php");
+require("ago_headers.inc.php");
 
+ago_header("UPDATES");
 create_middle_box_top("updates");
 if (!$num_updates || $num_updates=="" || $num_updates==0)
 {
@@ -32,5 +33,5 @@ print("<p><div align=\"center\">Number of updates to display: <form action=\"$PH
 print("<input type=\"text\" name=\"num_updates\" value=\"$num_updates\" size=\"3\"> ");
 print("<input type=\"submit\" value=\"Show\"></form></div>\n");
 create_middle_box_bottom();
-include("footer.inc.php");
+ago_footer();
 ?>

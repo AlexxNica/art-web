@@ -4,11 +4,14 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
+require("ago_headers.inc.php");
+
 if($category == "gnome" || $category == "other")
 {
-	include("header.inc.php");
+	ago_header("BACKGROUNDS - " . strtoupper($category));
 	$temp = "backgrounds_" . $category;
    create_middle_box_top($temp);
+	
 	print("<div align=\"center\">\n");
 	if(!$page)
 	{
@@ -74,8 +77,9 @@ if($category == "gnome" || $category == "other")
       print("</form>");
    }
    print("</div>\n");
-   create_middle_box_bottom();
-	include("footer.inc.php");
+   
+	create_middle_box_bottom();
+	ago_footer();
 }
 else
 {

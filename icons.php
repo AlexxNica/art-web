@@ -4,8 +4,9 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
-include("header.inc.php");
+require("ago_headers.inc.php");
 
+ago_header("ICONS");
 create_middle_box_top("icons");
 print("<table>\n");
 $icon_select_result = mysql_query("SELECT * FROM icon");
@@ -33,5 +34,6 @@ print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td>and m
 print("</table>\n");
 
 create_middle_box_bottom();
-include("footer.inc.php");
+ago_footer();
+
 ?>

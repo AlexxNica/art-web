@@ -4,10 +4,11 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
+require("ago_headers.inc.php");
 
 if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $category == "metacity" || $category == "metatheme" || $category == "nautilus" || $category == "sawfish" || $category == "sounds" || $category == "splash_screens" || $category == "other")
 {	
-   include("header.inc.php");
+   ago_header("THEMES - " . strtoupper($category));
 	$temp = "themes_" . $category;
    create_middle_box_top($temp);
 	print("<div align=\"center\">\n");
@@ -78,7 +79,7 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
    }
    print("</div>\n");
    create_middle_box_bottom();
-	include("footer.inc.php");
+	ago_footer();
 }
 else
 {

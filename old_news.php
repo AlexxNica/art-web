@@ -4,8 +4,9 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
-include("header.inc.php");
+require("ago_headers.inc.php");
 
+ago_header("GNOME artwork &amp; themes");
 create_middle_box_top("news");
 
 $news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 3,20");
@@ -28,6 +29,8 @@ while($news_select_row=mysql_fetch_array($news_select_result))
 }
 
 print("<p>\n");
+
 create_middle_box_bottom();
-include("footer.inc.php");
+ago_footer();
+
 ?>

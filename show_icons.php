@@ -4,8 +4,9 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
-include("header.inc.php");
+require("ago_headers.inc.php");
 
+ago_header("ICONS");
 create_middle_box_top("icons");
 
 if (!$page || $page == "") 
@@ -19,5 +20,5 @@ if(!$type || $type == "")
 display_icons ($type,$page);
 
 create_middle_box_bottom();
-include("footer.inc.php");
+ago_footer();
 ?>

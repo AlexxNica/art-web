@@ -6,9 +6,11 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 require("change_site_prefs.php");
-include("header.inc.php");
+require("ago_headers.inc.php");
 
+ago_header("GNOME artwork &amp; themes");
 create_middle_box_top("news");
+
 $news_count_select_result = mysql_query("SELECT * FROM news WHERE status='active'");
 $news_count = mysql_num_rows($news_count_select_result);
 
@@ -36,6 +38,8 @@ if($news_count > 3)
 	print("<div align=\"center\"><a href=\"old_news.php\">View Older News</a></div>\n");
 }
 print("<p>&nbsp;\n");
+
 create_middle_box_bottom();
-include("footer.inc.php");
+ago_footer();
+
 ?>
