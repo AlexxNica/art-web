@@ -228,7 +228,13 @@ $pill_array = array (
    	"image" => "LINKS-Pill.png",
       "width" => "154",
       "height" => "62",
-      "alt" => "LINKS")
+      "alt" => "LINKS"),
+	"copyright" => array(
+   	"image" => "Copyright-Pill.png",
+      "width" => "248",
+      "height" => "62",
+      "alt" => "COPYRIGHT")
+
 );
 
 // Location of the base page on http

@@ -3,7 +3,7 @@ require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
 include("header.inc.php");
-create_middle_box_top("backgrounds");
+create_middle_box_top("copyright");
 ?>
 <font size="+2">Site Design</font>
 <p>
