@@ -159,6 +159,7 @@ function get_updates_array($number)
 	}
 	rsort($big_array);
    $return_array = array_slice($big_array,0,$number);
+   return $return_array;
 }
 function spam_proof_email($good_email)
 {
