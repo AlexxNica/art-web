@@ -147,13 +147,15 @@ elseif (array_key_exists('username', $_SESSION))
 	}
 	else
 	{
-		print("<table width=\"320px\"><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
+		print("<table><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
 		while (list($themeID,$theme_name,$category,$status) = mysql_fetch_row($submissions_select_result) )
 		{
 			if ($status == "new")
 				$status = "pending";
+			elseif ($status == "rejected")
+				$status = "Removed from the submissions list. Please read the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidlines</a> to find the possible reasons.";
 
-			print ("<tr><td>$theme_name</td><td>$category</td><td>$status</td>");
+			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$theme_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td>");
 			if ($status == "added")
 				print ("<td><form action=\"/submit_theme.php\" method=\"post\"><input type=\"hidden\" name=\"update\" value=\"$themeID\" /><input type=\"submit\" value=\"Update\"/></form></td>");
 			print ("</tr>");
@@ -169,12 +171,14 @@ elseif (array_key_exists('username', $_SESSION))
 	}
 	else
 	{
-		print("<table width=\"320px\"><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
+		print("<table><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
 		while (list($backgroundID,$background_name,$category,$status) = mysql_fetch_row($submissions_select_result) )
 		{
 			if ($status == "new")
 				$status = "pending";
-			print ("<tr><td>$background_name</td><td>$category</td><td>$status</td></tr>");
+			elseif ($status == "rejected")
+				$status = "Removed from the submissions list. Please read the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidlines</a> to find the possible reasons.";
+			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$background_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td>");
 		}
 		print("</table>");
 	}

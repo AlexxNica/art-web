@@ -21,7 +21,7 @@ if($mark_theme)
 		$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='$new_status' WHERE themeID='$mark_theme'");
 		print("<p class=\"info\">Successfully marked theme $mark_theme as $new_status.</p>");
 	}
-	print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Click here</a> to return to incoming backgrounds list.");
+	print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Click here</a> to return to incoming themes list.");
 }
 else
 {

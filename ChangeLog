@@ -1,5 +1,12 @@
 2005-04-06  Thomas Wood  <thos@gnome.org>
 
+	* account.php: Link to submissions guidelines if artwork is rejected
+	* admin/show_submitted_themes.php: Fix typo
+	* default.css: Fix thumbnail spacing
+	* includes/common.inc.php: Fix resolution listing
+
+2005-04-06  Thomas Wood  <thos@gnome.org>
+
 	* default.css: Darker border on input elements, added border to thumbnails
 	* includes/common.inc.php: Fixed bug 171936, added
 	validate_submit_url() function

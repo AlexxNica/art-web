@@ -46,7 +46,7 @@ body {
 
 img.thumbnail {
 	border: 1px #a2a2a2 solid;
-	margin-bottom: 2em;
+/*	margin-bottom: 2em;*/
 	margin-right: 1em;
 	text-align:middle;
 }

@@ -249,7 +249,7 @@ function print_background_row($backgroundID, $view)
 
 	list($background_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count,$vote_sum,$vote_count) = mysql_fetch_row($background_select_result);
 	while (list($background_res) = mysql_fetch_row($background_res_result))
-		$extra[0] = "$background_res ";
+		$extra[0] = "{$extra[0]} $background_res";
 
 	$release_date = fix_sql_date($release_date);
 	$link = "{$site_url}backgrounds/$category/$backgroundID/";
