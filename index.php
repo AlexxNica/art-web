@@ -43,7 +43,7 @@ if (!isset($view_old_news))
 
 	create_middle_box_top("featured");
 	print("<table border=\"0\">");
-	print_background_row(287);
+	print_theme_row(710);
 	print("</table>");
 
 	create_middle_box_bottom();

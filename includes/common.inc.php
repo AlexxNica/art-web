@@ -529,4 +529,23 @@ function create_select_box($name,$options,$selected)
 }
 
 
+function file_chooser($var_name, $dir)
+{
+// Open a known directory, and proceed to read its contents
+	if (is_dir($dir))
+	{
+		if ($dh = opendir($dir))
+		{
+			print("<select name=$var_name>");
+			while (($file = readdir($dh)) !== false)
+			{
+				if (($file != ".") and ($file != ".."))
+					echo "<option>$file</option>";
+			}
+			print("</select>");
+			closedir($dh);
+		}
+	}
+}
+
 ?>

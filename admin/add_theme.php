@@ -13,7 +13,6 @@ escape_gpc_array ($_POST);
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
 
-
 if($action == "add_theme")
 {
 	if($theme_name && $theme_author && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename && $download_filename )
@@ -69,9 +68,22 @@ else
 	print("<tr><td><b>Author Email:</b></td><td><input type=\"text\" name=\"author_email\" size=\"40\" value=\"$author_email\"></td></tr>\n");
 	print("<tr><td><b>Release Date:</b></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
 	print("<tr><td><b>Description:</b></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
-	print("<tr><td><b>Thumbnail Filename:</b></td><td><input type=\"text\" name=\"thumbnail_filename\" size=\"40\"></td></tr>\n");
-	print("<tr><td><b>Small Thumbnail Filename:</b></td><td><input type=\"text\" name=\"small_thumbnail_filename\" size=\"40\"></td></tr>\n");
-	print("<tr><td><b>Download Filename:</b></td><td><input type=\"text\" name=\"download_filename\"></td></tr>\n");
+
+	print("<tr><td><b>Thumbnail Filename:</b></td><td>");
+	if (isset($theme_category)) file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/");
+	else print("<input type=\"text\" name=\"thumbnail_filename\" size=\"40\">");
+	print("</td></tr>\n");
+
+	print("<tr><td><b>Small Thumbnail Filename:</b></td><td>");
+	if (isset($theme_category)) file_chooser("small_thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/");
+	else print("<input type=\"text\" name=\"small_thumbnail_filename\" size=\"40\">");
+	print("</td></tr>\n");
+
+	print("<tr><td><b>Download Filename:</b></td><td>"); 
+	if (isset($theme_category)) file_chooser("download_filename", "/ftp/pub/gnome/teams/art.gnome.org/themes/$theme_category/"); 
+	else print("<input type=\"text\" name=\"download_filename\" size=\"40\">");
+	print("</td></tr>\n");
+	
 	print("</table>\n");
 	
 	print("<input type=\"hidden\" name=\"action\" value=\"add_theme\"><input type=\"hidden\" name=\"theme_submitID\" value=\"$theme_submitID\">\n");
