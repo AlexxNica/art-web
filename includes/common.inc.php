@@ -407,6 +407,16 @@ function get_filesize_string($file_path)
 	}
 }
 
+function calculate_downloads_per_day($download_count, $start_timestamp)
+{
+	$now = time();
+	$difference = $now - $start_timestamp;
+	$days = $difference / (60*60*24);
+	$popularity = ($download_count / $days);
+	$popularity = sprintf("%.1f",$popularity);
+	return $popularity;
+}
+
 function spam_proof_email($good_email)
 {
 	$spam_protected_email = ereg_replace("@"," _AT_ ",$good_email);

@@ -122,7 +122,9 @@ else if( array_key_exists($category,$theme_config_array) && $theme_num != "")
    	list($year,$month,$day)=explode("-",$date);
       $date = $month . "/" . $day . "/" . $year;
       $description = $theme_select_row["description"];
-   	$theme_download_select_result = mysql_query("SELECT name, download_name FROM theme_download WHERE themeID='$themeID' ORDER BY name");
+   	$download_start_timestamp = $theme_select_row["download_start_timestamp"];
+		$download_count = $theme_select_row["download_count"];
+		$theme_download_select_result = mysql_query("SELECT theme_downloadID, name, download_name FROM theme_download WHERE themeID='$themeID' ORDER BY name");
       print("<table border=\"0\">\n");
       print("<tr><td>");
       if($category == "metacity" || $category == "sawfish" || $category == "sounds")
@@ -134,14 +136,19 @@ else if( array_key_exists($category,$theme_config_array) && $theme_num != "")
       	print("<a href=\"/images/thumbnails/$category/$thumbnail_filename\"><img src=\"/images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"shot2\"></a>");
       }
       print("</td>\n");
-   	print("<td><span class=\"yellow-text\">Name:</span> $name<br>\n<span class=\"yellow-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"yellow-text\">Release Date:</span> $date<br><span class=\"yellow-text\">Download:</span><br>");
-   	while(list($name,$download_name)=mysql_fetch_row($theme_download_select_result))
+   	print("<td><span class=\"yellow-text\">Name:</span> $name<br>\n<span class=\"yellow-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"yellow-text\">Release Date:</span> $date<br>\n");
+		$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
+		print("<span class=\"yellow-text\">Popularity:</span> $downloads_per_day Downloads per Day<br>\n");
+		print("<span class=\"yellow-text\">Download:</span><br>");
+   	while(list($theme_downloadID, $name,$download_name)=mysql_fetch_row($theme_download_select_result))
    	{
    		// get the filesize from the server
 			$file_path = $sys_theme_dir . "/$category/$download_name";
 			$filesize = get_filesize_string($file_path);
-			print("&nbsp;&nbsp;&nbsp;<a href=\"$mirror_url/themes/$category/$download_name\">$name ($filesize)</a>\n");
-   	}
+			//print("&nbsp;&nbsp;&nbsp;<a href=\"$mirror_url/themes/$category/$download_name\">$name ($filesize)</a>\n");
+   		print("&nbsp;&nbsp;&nbsp;<a href=\"/download/themes/$category/$theme_downloadID.php\">$name ($filesize)</a>\n");
+   		
+		}
    	print("</td></tr></table>\n<p>\n");
    	print("<span class=\"yellow-text\">Info:</span> $description");
 		create_middle_box_bottom();

@@ -1,0 +1,33 @@
+<?php
+
+require("mysql.inc.php");
+require("common.inc.php");
+
+$request = $PATH_INFO;
+list($foo,$section,$category,$download_num) = explode("/", $request);
+
+if($section == "backgrounds")
+{
+	$background_resolutionID = ereg_replace(".php","",$download_num);
+	$background_resolution_select_result = mysql_query("SELECT backgroundID, filename FROM background_resolution WHERE background_resolutionID='$background_resolutionID'");
+	list($backgroundID, $filename) = mysql_fetch_row($background_resolution_select_result);
+	$background_update_result = mysql_query("UPDATE background SET download_count=download_count+1 WHERE backgroundID='$backgroundID'");
+	
+	header("Location: $mirror_url/backgrounds/$filename");
+	exit();
+}
+else if($section == "themes")
+{
+	$theme_downloadID = ereg_replace(".php","",$download_num);
+	$theme_download_select_result = mysql_query("SELECT themeID, download_name FROM theme_download WHERE theme_downloadID='$theme_downloadID'");
+	list($themeID, $download_name) = mysql_fetch_row($theme_download_select_result);
+	$theme_update_result = mysql_query("UPDATE theme SET download_count=download_count+1 WHERE themeID='$themeID'");
+	
+	header("Location: $mirror_url/themes/$category/$download_name");
+	exit();
+}
+else
+{
+	header("Location: /index.php");
+	exit();
+}

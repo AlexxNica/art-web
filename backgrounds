@@ -121,12 +121,17 @@ elseif( array_key_exists($category,$background_config_array) && $background_num 
    	$release_date = $month . "/" . $day . "/" . $year;
    	$background_description = $background_select_row["background_description"];
    	$screenshot_description = $background_select_row["screenshot_description"];
-   	$background_resolution_select_result = mysql_query("SELECT type, resolution, filename FROM background_resolution WHERE backgroundID='$backgroundID' ORDER BY type,resolution");
+   	$download_start_timestamp = $background_select_row["download_start_timestamp"];
+		$download_count = $background_select_row["download_count"];
+		$background_resolution_select_result = mysql_query("SELECT background_resolutionID, type, resolution, filename FROM background_resolution WHERE backgroundID='$backgroundID' ORDER BY type,resolution");
    	print("<table border=\"0\">\n<tr><td valign=\"top\">");
    	print("<img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"shot2\">\n");
    	print("</td><td>\n");
-   	print("<span class=\"yellow-text\">Name:</span> $name<br>\n<span class=\"yellow-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"yellow-text\">Release Date:</span> $release_date<br><span class=\"yellow-text\">Resolutions:</span>");
-   	while(list($type,$resolution,$filename)=mysql_fetch_row($background_resolution_select_result))
+   	print("<span class=\"yellow-text\">Name:</span> $name<br>\n<span class=\"yellow-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"yellow-text\">Release Date:</span> $release_date<br>\n");
+		$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
+		print("<span class=\"yellow-text\">Popularity:</span> $downloads_per_day Downloads per Day<br>\n");
+		print("<span class=\"yellow-text\">Resolutions:</span>");
+   	while(list($background_resolutionID,$type,$resolution,$filename)=mysql_fetch_row($background_resolution_select_result))
    	{
       	if($current_type != $type)
       	{
@@ -137,8 +142,10 @@ elseif( array_key_exists($category,$background_config_array) && $background_num 
       	{
       		print(" ;\n");
       	}
-      	print("<a href=\"$mirror_url/backgrounds/$filename\">" . $type . "-" . $resolution . "</a>\n");
-   	}
+      	//print("<a href=\"$mirror_url/backgrounds/$filename\">" . $type . "-" . $resolution . "</a>\n");
+   		print("<a href=\"/download/backgrounds/$category/$background_resolutionID.php\">" . $type . "-" . $resolution . "</a>\n");
+   		
+		}
    	print("<br>\n");
    	if($screenshot_filename != "")
    	{

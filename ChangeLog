@@ -1,3 +1,12 @@
+2003-08-31  Alex Duggan  <aldug@astrolinux.com>
+
+	* backgrounds:
+	* download:
+	* themes:
+	* includes/common.inc.php: Add a background/theme download wrapper script 
+	and display a downloads per day field on the background and theme information
+	pages.
+
 2003-08-30  Alex Duggan  <aldug@astrolinux.com>
 
 	* new_layout.css: add a new header image.
