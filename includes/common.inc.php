@@ -149,7 +149,7 @@ function print_background_row($backgroundID)
 	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename FROM background WHERE backgroundID='$backgroundID'");
 	list($background_name,$category,$author,$release_date,$thumbnail_filename) = mysql_fetch_row($background_select_result);
 	$release_date = fix_sql_date($release_date,"/");
-	print("<tr><td><a href=\"show_background.php?backgroundID=$ID&category=$category\"><img src=\"images/thumbnails/backgrounds/$thumbnail_filename\" border=\"0\"></td><td><a class=\"screenshot\" href=\"show_background.php?backgroundID=$ID&category=$category\">$background_name</a><br>$release_date<br>BACKGROUNDS - GNOME<br>$author</td></tr>\n");
+	print("<tr><td><a href=\"show_background.php?backgroundID=$backgroundID&category=$category\"><img src=\"images/thumbnails/backgrounds/$thumbnail_filename\" border=\"0\"></td><td><a class=\"screenshot\" href=\"show_background.php?backgroundID=$backgroundID&category=$category\">$background_name</a><br>$release_date<br>BACKGROUNDS - GNOME<br>$author</td></tr>\n");
 }
 
 function print_theme_row($themeID)
@@ -159,7 +159,7 @@ function print_theme_row($themeID)
 	list($theme_name,$category,$author,$release_date,$thumbnail_filename) = mysql_fetch_row($theme_select_result);
 	$release_date = fix_sql_date($release_date,"/");
 	$category_good = $linkbar["themes_" . $category]["alt"];
-	print("<tr><td><a href=\"show_theme.php?themeID=$ID&category=$category\"><img src=\"images/thumbnails/$category/$thumbnail_filename\" border=\"0\"></a></td><td><a class=\"screenshot\" href=\"show_theme.php?themeID=$ID&category=$category\">$theme_name</a><br>$release_date<br>THEMES - $category_good<br>$author</td></tr>\n");
+	print("<tr><td><a href=\"show_theme.php?themeID=$themeID&category=$category\"><img src=\"images/thumbnails/$category/$thumbnail_filename\" border=\"0\"></a></td><td><a class=\"screenshot\" href=\"show_theme.php?themeID=$themeID&category=$category\">$theme_name</a><br>$release_date<br>THEMES - $category_good<br>$author</td></tr>\n");
 }
 
 function get_latest_backgrounds($number)
