@@ -24,7 +24,7 @@ if($category == "" || $category == "index.php")
 		$name = $val["name"];
 		$url = $val["url"];
 		$description = $val["description"];
-		print("<tr><td valign=\"top\"><img src=\"/images/site/circle.png\"></td><td><a class=\"screenshot\" href=\"$url\">$name</a> - $description</td></tr>\n");
+		print("<tr><td valign=\"top\"><img src=\"/images/site/circle.png\"></td><td><a class=\"bold-link\" href=\"$url\">$name</a> - $description</td></tr>\n");
 	}
 	print("</table>\n");
 	
@@ -75,7 +75,7 @@ elseif( array_key_exists($category,$background_config_array) && ($background_num
 		{
 			if($count == $page)
    	   {
-   	   	print("<span class=\"yellow-text\">[$count]</span> ");
+   	   	print("<span class=\"bold-text\">[$count]</span> ");
 			}
    	   else
    	   {
@@ -125,12 +125,12 @@ elseif( array_key_exists($category,$background_config_array) && $background_num 
 		$download_count = $background_select_row["download_count"];
 		$background_resolution_select_result = mysql_query("SELECT background_resolutionID, type, resolution, filename FROM background_resolution WHERE backgroundID='$backgroundID' ORDER BY type,resolution");
    	print("<table border=\"0\">\n<tr><td valign=\"top\">");
-   	print("<img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"shot2\">\n");
+   	print("<img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border-padding\">\n");
    	print("</td><td>\n");
-   	print("<span class=\"yellow-text\">Name:</span> $name<br>\n<span class=\"yellow-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"yellow-text\">Release Date:</span> $release_date<br>\n");
+   	print("<span class=\"bold-text\">Name:</span> $name<br>\n<span class=\"bold-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"bold-text\">Release Date:</span> $release_date<br>\n");
 		$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
-		print("<span class=\"yellow-text\">Popularity:</span> $downloads_per_day Downloads per Day<br>\n");
-		print("<span class=\"yellow-text\">Resolutions:</span>");
+		print("<span class=\"bold-text\">Popularity:</span> $downloads_per_day Downloads per Day<br>\n");
+		print("<span class=\"bold-text\">Resolutions:</span>");
    	while(list($background_resolutionID,$type,$resolution,$filename)=mysql_fetch_row($background_resolution_select_result))
    	{
       	if($current_type != $type)
@@ -149,18 +149,18 @@ elseif( array_key_exists($category,$background_config_array) && $background_num 
    	print("<br>\n");
    	if($screenshot_filename != "")
    	{
-   		print("<a href=\"/images/screenshots/$screenshot_filename\" class=\"screenshot\">Screenshot</a><p>\n");
+   		print("<a href=\"/images/screenshots/$screenshot_filename\" class=\"bold-link\">Screenshot</a><p>\n");
    	}
    	print("</td></tr></table>\n");
-   	print("<p>\n<span class=\"yellow-text\">Info (Picture):</span> $background_description\n");
+   	print("<p>\n<span class=\"bold-text\">Info (Picture):</span> $background_description\n");
    	if($screenshot_description != "")
    	{
-   		print("<p>\n<span class=\"yellow-text\">Info (Screenshot):</span> $screenshot_description\n");
+   		print("<p>\n<span class=\"bold-text\">Info (Screenshot):</span> $screenshot_description\n");
    	}
    	$back_select_result = mysql_query("SELECT backgroundID,background_name,category FROM background WHERE parent='$backgroundID'");
    	if(mysql_num_rows($back_select_result)>0)
    	{
-      	print("<p>\n<span class=\"yellow-text\">Variations:</span> ");
+      	print("<p>\n<span class=\"bold-text\">Variations:</span> ");
       	while(list($backID,$back_name,$back_cat)=mysql_fetch_row($back_select_result))
       	{
          	if($first_toggle)

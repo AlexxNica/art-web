@@ -143,7 +143,7 @@ if($search_text && $search_type)
 	{
 		if($count == $page)
    	{
-   		print("<span class=\"yellow-text\">[$count]</span> ");
+   		print("<span class=\"bold-text\">[$count]</span> ");
 		}
    	else
    	{

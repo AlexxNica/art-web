@@ -31,16 +31,16 @@ function ago_header($title)
 	print("<font size=\"+1\"><a href=\"/index.php\">News</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/updates.php\">Updates</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/search.php\">Search</a></font><br><br>\n");
-	print("<font size=\"+1\"><span class=\"purple-text\">Backgrounds</span></font><br>\n");
+	print("<font size=\"+1\">Backgrounds</font><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/gnome/index.php\">GNOME</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/other/index.php\">Other</a><br><br>\n");
 	
-	print("<font size=\"+1\"><span class=\"purple-text\">Desktop Themes</span></font><br>\n");
+	print("<font size=\"+1\">Desktop Themes</font><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2/index.php\">Applications</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/metacity/index.php\">Window Borders</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/icon/index.php\">Icon</a><br><br>\n");
 	
-	print("<font size=\"+1\"><span class=\"purple-text\">Other Themes</span></font><br>\n");
+	print("<font size=\"+1\">Other Themes</font><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gdm_greeter/index.php\">Login Manager</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/splash_screens/index.php\">Splash Screens</a><br><br>\n");
 	//print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2_engines/index.php\">GTK Engines</a><br>\n");
@@ -75,7 +75,7 @@ function ago_footer()
 	<p>
 	<div align="center">
 	<font color="black" size="-2">
-	Copyright &copy; 2002 - 2003<br><a class="footer" href="/copyright.php"><b>The art.gnome.org team</b></a>
+	Copyright &copy; 2002 - 2003<br><a href="/copyright.php"><b>The art.gnome.org team</b></a>
 	</font> 
 	</div>
 	

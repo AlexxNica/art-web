@@ -8,7 +8,7 @@ ago_header("LINKS");
 create_middle_box_top("links");
 
 print("<table border=\"0\">\n");
-print("<tr><td><img src=\"images/site/gnome-icon.png\"></td><td><font size=\"+1\" class=\"yellow-text\">GNOME Links</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/gnome-icon.png\"></td><td><font size=\"+1\" class=\"bold-text\">GNOME Links</a></td></tr>\n");
 print("<tr><td>&nbsp;</td><td>");
 print("<table border=\"0\">\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://www.gnome.org\">GNOME Project Homepage</a></td></tr>\n");
@@ -23,7 +23,7 @@ print("</td></tr>\n");
 print("</table>\n<p>\n");
 
 print("<table border=\"0\">\n");
-print("<tr><td><img src=\"images/site/dude-icon.png\"></td><td><font size=\"+1\" class=\"yellow-text\">GNOME Dudes</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/dude-icon.png\"></td><td><font size=\"+1\" class=\"bold-text\">GNOME Dudes</a></td></tr>\n");
 print("<tr><td>&nbsp;</td><td>");
 print("<table border=\"0\">\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://www.astrolinux.com\">Aldug's Homepage</a></td></tr>\n");
@@ -37,7 +37,7 @@ print("</td></tr>\n");
 print("</table>\n<p>\n");
 
 print("<table border=\"0\">\n");
-print("<tr><td><img src=\"images/site/art-icon.png\"></td><td><font size=\"+1\" class=\"yellow-text\">Theme Links</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/art-icon.png\"></td><td><font size=\"+1\" class=\"bold-text\">Theme Links</a></td></tr>\n");
 print("<tr><td>&nbsp;</td><td>");
 print("<table border=\"0\">\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://www.themedepot.org\">Theme Depot</a></td></tr>\n");
@@ -51,7 +51,7 @@ print("</td></tr>\n");
 print("</table>\n<p>\n");
 
 print("<table border=\"0\">\n");
-print("<tr><td><img src=\"images/site/www-icon.png\"></td><td><font size=\"+1\" class=\"yellow-text\">Other Links</a></td></tr>\n");
+print("<tr><td><img src=\"images/site/www-icon.png\"></td><td><font size=\"+1\" class=\"bold-text\">Other Links</a></td></tr>\n");
 print("<tr><td>&nbsp;</td><td>");
 print("<table border=\"0\">\n");
 print("<tr><td><img src=\"images/site/circle.png\"></td><td>&nbsp;<a href=\"http://www.gimp.org/\">The Gimp</a></td></tr>\n");

@@ -23,8 +23,8 @@ while($news_select_row=mysql_fetch_array($news_select_result))
    list($year,$month,$day) = explode("-",$date);
    $date = $month . "/" . $day . "/" . $year;
 	print("<table border=\"0\">\n");
-   print("<tr><td><img src=\"images/site/News-Item.png\" alt=\"news-item\"></td><td><span class=\"yellow-text\"><font size=\"+1\">$title</font></span></td></tr>\n");
-   print("<tr><td>&nbsp;</td><td><font size=\"-1\"><span class=\"dark-violet-text\">$date - </span><a href=\"mailto:$author_email\">$author</a></font></td></tr>\n");
+   print("<tr><td><img src=\"images/site/News-Item.png\" alt=\"news-item\"></td><td><span class=\"bold-text\"><font size=\"+1\">$title</font></span></td></tr>\n");
+   print("<tr><td>&nbsp;</td><td><font size=\"-1\">$date - <a href=\"mailto:$author_email\">$author</a></font></td></tr>\n");
    print("<tr><td>&nbsp;</td><td><div class=\"news-body\">$body</div></td></tr>\n");
    print("</table>\n");
    print("<p>&nbsp;<p>\n");

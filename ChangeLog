@@ -1,5 +1,24 @@
 2003-09-03  Alex Duggan  <aldug@astrolinux.com>
 
+	* backgrounds:
+	* contact.php:
+	* faq.php:
+	* index.php:
+	* links.php:
+	* main.css:
+	* old_news.php:
+	* screenshots:
+	* search.php:
+	* submit.php:
+	* themes:
+	* includes/ago_headers.inc.php:
+	* includes/common.inc.php:  Major CSS updates/cleanups
+
+	* show_tip.php:
+	* tips.php: Removed from cvs
+
+2003-09-03  Alex Duggan  <aldug@astrolinux.com>
+
 	* index.php:
 	* main.css:
 	* old_news.php:

@@ -36,7 +36,7 @@ if($screenshot_num == "" || $screenshot_num == "index.php")
 		{
 			$screenshotID = $screenshot_select_row["screenshotID"];
 			$thumbnail_filename = $screenshot_select_row["thumbnail_filename"];
-			print("<a href=\"/screenshots/$screenshotID.php\"><img src=\"/images/thumbnails/screenshots/$thumbnail_filename\" class=\"shot2\" border=\"0\"></a>\n");
+			print("<a href=\"/screenshots/$screenshotID.php\"><img src=\"/images/thumbnails/screenshots/$thumbnail_filename\" class=\"thumbnail-border-padding\" border=\"0\"></a>\n");
 		}
 
    	print("<p>\n");
@@ -51,7 +51,7 @@ if($screenshot_num == "" || $screenshot_num == "index.php")
 		{
 			if($count == $page)
    		{
-   	   	print("<span class=\"yellow-text\">[$count]</span> ");
+   	   	print("<span class=\"bold-text\">[$count]</span> ");
 			}
    		else
    		{

@@ -26,7 +26,7 @@ else
 	$faq_select_result = mysql_query("SELECT faqID,question,answer FROM faq ORDER by faqID");
 	while(list($faqID,$question,$answer)=mysql_fetch_row($faq_select_result))
    {
-   	print("<li><a name=\"$faqID\"></a><span class=\"yellow-text\">$question</span>\n<p>$answer\n\n");
+   	print("<li><a name=\"$faqID\"></a><span class=\"bold-text\">$question</span>\n<p>$answer\n\n");
    }
    print("</ol>\n");
 }

@@ -1,3 +1,4 @@
+/* Base Tags */
 body {
 	padding: 0px;
 	margin: 0px;
@@ -11,55 +12,18 @@ td {
 	font-size: small;
 }
 
-img {
-	behavior: url("/images/site/pngbehavior.htc");
-}
-
-img.thumbnail {
-	border: 1px solid #000000;
-}
-
-a {
-	color: #555566;
-   text-decoration: underline;
-}
-
+/* Links */
 a:hover {
-	color: red;
-   text-decoration: none;
+	color: #555566;
+	text-decoration: none;
 }
 
-a.screenshot {
+a.bold-link {
 	font-weight: bold;
 }
 
-a.screenshot:hover {
-	text-decoration: underline;
-}
-
-a.footer {
-	color: #555566;
-   text-decoration: none;
-}
-
-a.footer:hover {
-	color: #555566;
-   text-decoration: underline;
-}
-
-.purple-text {
-	color: #555566;
-}
-
-.shot {
-	padding-top: 10px;
-   padding-right: 15px; 
-   padding-bottom: 10px; 
-   padding-left: 15px;
-}
-.shot2 {
-	margin: 10px 15px 20px 15px;
-	border: 1px solid #000000;
+a.bold-link:hover {
+	font-weight: bold;
 }
 
 .align-right {
@@ -70,48 +34,43 @@ a.footer:hover {
 	text-align: justify;
 }
 
-.horizontal-menu-bar-lite {
-	background: #555566;
-	color: #a8a7b7;
-   border-top: 1px solid #000000;
-   border-bottom: 1px solid #000000;
+/* Thumbnails */
+img.thumbnail {
+	border: 0px;
 }
 
-.horizontal-gradient-menu-bar {
-	background-image: url("images/site/LB_pat.png");
-   background-repeat: repeat-x;
+img.thumbnail-border {
+	border: 1px solid #000000;
 }
 
-.black-line {
-	background-image: url("images/site/pixel_bl.png");
-   background-repeat: repeat-y;
+img.thumbnail-border-padding {
+	margin: 10px 15px 20px 15px;
+	border: 1px solid #000000;
 }
 
-.vertical-shadow {
-	background-image: url("images/site/LBOX-shadow_v.png");
-   background-repeat: repeat-y;
+img.thumbnail-padding {
+	margin: 10px 15px 20px 15px;
 }
 
-.yellow-text {
-	/* color: #ffff00; */
-   font-weight: bold;
+a {
+	color: black;
+	text-decoration: underline;
 }
-.dark-violet-text {
+
+/* Text Colors */
+.purple-text {
 	color: #555566;
+}
+
+.bold-text {
+	font-weight: bold;
 }
 
 .black-text {
 	color: #000000;
 }
-.mb-standard-contents
-{
-	padding-top: 5px;
-   padding-right: 5px; 
-   padding-bottom: 5px; 
-   padding-left: 5px;
-   font-size: small;
-}
 
+/* News Items */
 .news-item {
 	border-bottom: 1px dashed #ffffff;
 }
@@ -120,6 +79,7 @@ a.footer:hover {
 	font-size: small;
 }
 
+/* Middle Boxes */
 .mb-lite-title {
 	color: #ffffff;
    font-size: large;
@@ -135,21 +95,10 @@ a.footer:hover {
 }
 
 .mb-lite-contents {
-
 	border-top: 0px solid #000000;
    border-left: 1px solid #000000;
 	border-right: 1px solid #000000;
 	border-bottom: 1px solid #000000;
    padding: 5px;
    font-size: small;
-}
-
-.list-thumb {
-	width: 150px;
-   float: left;
-   padding-top: 10px;
-   padding-right: 15px; 
-   padding-bottom: 10px; 
-   padding-left: 15px;
-   text-align: center;
 }
