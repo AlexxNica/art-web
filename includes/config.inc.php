@@ -238,7 +238,7 @@ $pill_array = array (
 );
 
 // Location of the base page on http
-$sys_http_root = "http://www.gnome.org:12346";
+$sys_http_root = "http://art.gnome.org";
 //$sys_http_root = "http://art.gnome.org/icons";
 
 // Location of base page on localhost

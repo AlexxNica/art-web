@@ -135,7 +135,7 @@ function show_icons_alex ($type, $page, $num_per_page)
 		while (($i < $cols) && ($cur_file < $num_per_page))
 		{
 			print "\t<td><a href=\"".$GLOBALS['sys_http_icon_root']."/$type/".$d_ary[$cur_file]."\">";
-			print "<img src=\"".$GLOBALS['mirror_url']."/$type/".$d_ary[$cur_file]."\" border=\"0\" alt=\"".$d_ary[$cur_file]."\">";
+			print "<img src=\"".$GLOBALS['sys_http_icon_root']."/$type/".$d_ary[$cur_file]."\" border=\"0\" alt=\"".$d_ary[$cur_file]."\">";
 			print "</a></td>\n";
 			
 			++$i;
