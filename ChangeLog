@@ -1,3 +1,7 @@
+2004-06-21  Thomas Wood <thos@gnome.org>
+
+	* updates.php: Fixed number of updates to display at 12
+
 2004-06-20  Thomas Wood  <thos@gnome.org>
 
 	* AUTHORS: Updated details
