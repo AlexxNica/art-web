@@ -215,7 +215,7 @@ function display_icons($type, $page)
          }
       }
       
-      print("<table border=\"1\">\n<tr>");
+      print("<table border=\"0\">\n<tr>");
       $counter = 0;
       while(list($foo,$file)=each($icon_array))
 		{
@@ -231,6 +231,29 @@ function display_icons($type, $page)
          }
 		}
       print("</tr>\n</table>");
+      
+      print("<p>\n");
+      if($page > 1)
+      {
+      	$prev_page = $page -1;
+         print(" <a href=\"$PHP_SELF?type=$type&page=$prev_page\">[&lt;]</a>");
+      }
+		for($count=1;$count<=$num_pages;$count++)
+		{
+			if($count == $page)
+   	   {
+   	   	print("<span class=\"yellow-text\">[$count]</span> ");
+			}
+   	   else
+   	   {
+   	   	print("<a href=\"$PHP_SELF?type=$type&page=$count\">[$count]</a> ");
+   	   }
+   	}
+      if($page < $num_pages)
+      {
+      	$next_page = $page +1;
+         print(" <a href=\"$PHP_SELF?type=$type&page=$next_page\">[&gt;]</a>");
+      }
    }
    else
    {
