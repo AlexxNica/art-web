@@ -1,3 +1,8 @@
+2002-11-26  Alex Duggan  <aldug@gnome.org>
+
+	* submit_theme.php: when adding to db, make default status 'new'
+   * submit_background.php: when adding to db, make default status 'new'
+
 2002-11-22  Alex Duggan  <aldug@gnome.org>
 	
 	* includes/common.inc.php: added sql date function, and 404 function

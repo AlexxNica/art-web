@@ -11,8 +11,8 @@ if($HTTP_POST_VARS)
 {
 	if($background_name && $category && $background_author && $author_email && $background_url && $background_description)
    {
-   	$incoming_background_insert_query  = "INSERT INTO incoming_background(backgroundID,background_name,category,author,author_email,background_url,background_description) ";
-   	$incoming_background_insert_query .= "VALUES('','$background_name','$category','$background_author','$author_email','$background_url','$background_description')";
+   	$incoming_background_insert_query  = "INSERT INTO incoming_background(backgroundID,status,background_name,category,author,author_email,background_url,background_description) ";
+   	$incoming_background_insert_query .= "VALUES('','new','$background_name','$category','$background_author','$author_email','$background_url','$background_description')";
    	$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
       if(mysql_affected_rows()==1)
       {

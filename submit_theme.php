@@ -11,8 +11,8 @@ if($HTTP_POST_VARS)
 {
 	if($theme_name && $category && $theme_author && $author_email && $theme_url && $theme_description)
    {
-   	$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,theme_name,category,author,author_email,theme_url,theme_description) ";
-   	$incoming_theme_insert_query .= "VALUES('','$theme_name','$category','$theme_author','$author_email','$theme_url','$theme_description')";
+   	$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,status,theme_name,category,author,author_email,theme_url,theme_description) ";
+   	$incoming_theme_insert_query .= "VALUES('','new','$theme_name','$category','$theme_author','$author_email','$theme_url','$theme_description')";
    	$incoming_theme_insert_result = mysql_query("$incoming_theme_insert_query");
       if(mysql_affected_rows()==1)
       {
