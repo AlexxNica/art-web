@@ -1,5 +1,10 @@
 2005-03-21  Thomas Wood  <thos@gnome.org>
 
+	* includes/config.inc.php: Fix
+	* index.html: Temporary "Back Soon" page
+
+2005-03-21  Thomas Wood  <thos@gnome.org>
+
 	* account.php:
 	* admin/add_background.php:
 	* admin/add_faq.php:

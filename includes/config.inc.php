@@ -209,7 +209,7 @@ $license_config_array = array (
 		"pub-dom" => "Public Domain");
 
 $mirror_url = "http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org";
-$site_url = "http://art.thos.me.uk/";
+$site_url = "http://art.gnome.org/";
 
 $sys_theme_dir = "/ftp/pub/gnome/teams/art.gnome.org/themes";
 
