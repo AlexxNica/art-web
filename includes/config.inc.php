@@ -66,7 +66,7 @@ $linkbar = array (
 		"alt" => "Metatheme"),
 	"themes_nautilus" => array(
 		"url" => "theme_list.php?category=nautilus",
-		"active" => "1",
+		"active" => "0",
 		"indent" => "1",
 		"alt" => "Nautilus"),
 	"themes_sawfish" => array(
