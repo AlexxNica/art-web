@@ -5,6 +5,10 @@ require("common.inc.php");
 require("ago_headers.inc.php");
 
 // superglobal stuff
+
+// ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
+escape_gpc_array ($_POST);
+
 $theme_name = $_POST["theme_name"];
 $category = $_POST["category"];
 $theme_author = $_POST["theme_author"];

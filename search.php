@@ -8,6 +8,10 @@ ago_header("SEARCH");
 create_middle_box_top("search");
 
 // superglobals stuff
+
+// ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
+escape_gpc_array ($_GET);
+
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
 $search_type = $_GET["search_type"];
 $search_text = $_GET["search_text"];
@@ -16,7 +20,7 @@ $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page
 
 $search_text = urldecode($search_text);
 
-display_search_box($search_text, $search_type, $thumbnails_per_page, $sort_by);
+display_search_box(htmlspecialchars(stripslashes($search_text)), $search_type, $thumbnails_per_page, $sort_by);
 if($search_text && $search_type)
 {
 	/* background name search */

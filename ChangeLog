@@ -1,3 +1,16 @@
+2004-06-20  Thomas Wood  <thos@gnome.org>
+
+	* AUTHORS: Updated details
+	* MAINTAINERS: New maintainer
+	* screenshots: Removed from CVS
+	* phpinfo: Removed from CVS
+	* includes/common.inc.php:
+	* search.php:
+	* submit_background.php:
+	* submit_theme.php:
+
+	Added escape_gpc_array() to ensure special characters are escaped in gpc variables
+
 2004-05-22  Alex Duggan  <aldug@astrolinux.com>
 
 	* backgrounds:

@@ -496,6 +496,16 @@ function validate_input_array_error ($input, $array)
 	}
 }
 
+/* escape_gpc_array() - ensures special characters are escaped in gpc variables */
+function escape_gpc_array (&$array)
+{
+	if (!get_magic_quotes_gpc()) {
+		foreach ($array as $key => $value) {
+			$array[$key] = mysql_escape_string($value);
+		}
+	}
+}
+
 function spam_proof_email($good_email)
 {
 	$spam_protected_email = ereg_replace("@"," _AT_ ",$good_email);
