@@ -1,4 +1,7 @@
-2004-06-23  Thomas Wood <thos@cvs.gnome.org>
+2004-06-23  Thomas Wood <thos@gnome.org>
+	* admin/delete_faq.php: Initial commit
+
+2004-06-23  Thomas Wood <thos@gnome.org>
 	* admin/*: Initial import into CVS
 	* includes/common.inc.php: Prevented escape_gpc_array() from mangling
 	arrays.
