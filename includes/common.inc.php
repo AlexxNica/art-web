@@ -125,7 +125,7 @@ function print_background_row($backgroundID)
 	global $background_config_array;
 	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename,download_start_timestamp,download_count FROM background WHERE backgroundID='$backgroundID'");
 	list($background_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count) = mysql_fetch_row($background_select_result);
-	$release_date = fix_sql_date($release_date,"/");
+	$release_date = fix_sql_date($release_date);
 	$link = "/backgrounds/$category/$backgroundID/";
 	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
@@ -138,7 +138,7 @@ function print_theme_row($themeID)
 	global $theme_config_array;
 	$theme_select_result = mysql_query("SELECT theme_name, category, author, release_date,small_thumbnail_filename,download_start_timestamp,download_count FROM theme WHERE themeID='$themeID'");
 	list($theme_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count) = mysql_fetch_row($theme_select_result);
-	$release_date = fix_sql_date($release_date,"/");
+	$release_date = fix_sql_date($release_date);
 	$link = "/themes/$category/$themeID/";
 	$category_name = $theme_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
@@ -196,11 +196,11 @@ function get_updates_array($number)
 
 
 
-function fix_sql_date($sql_date,$delimiter)
+function fix_sql_date($sql_date)
 {
 	list($year,$month,$day)=explode("-",$sql_date);
-   $good_date = $month . $delimiter . $day . $delimiter . $year;
-   return $good_date;
+	$good_date = $year . "-" . $month . "-" . $day;
+	return $good_date;
 }
 
 function ago_redirect($referrer)

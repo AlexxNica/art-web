@@ -1,3 +1,14 @@
+2004-06-27  Thomas Wood <thos@gnome.org>
+	* includes/ago_header.inc.php: Changed "Art & Themes" navigation link
+	to bold rather than "Users"
+	* backend.php: Description field in rss items now include a thumbnail
+	* index.php:
+	* updates.php:
+	* includes/common.inc.php:
+
+	Dates now use international date format
+
+
 2004-06-26  Thomas Wood <thos@gnome.org>
 	* contact.php: Removed aldug, added sub_pop
 	* backend.php: Fixed bug 144912 (broken links in RSS feed)

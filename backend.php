@@ -1,14 +1,14 @@
 <?php
 require("mysql.inc.php");
 require("common.inc.php");
-print("<?xml version=\"1.0\"?>\n");
+print("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
 print("<rss version=\"2.0\" xmlns=\"http://backend.userland.com/rss2\">\n");
 print("\t<channel>\n");
 print("\t<title>art.gnome.org releases</title>\n");
 print("\t<link>http://art.gnome.org/</link>\n");
 print("\t<description>A list of recent backgrounds and themes released on art.gnome.org</description>\n");
-print("\t<webMaster>thos@gnome.org</webMaster>\n");
-   
+print("\t<webMaster>thos _AT_ gnome.org</webMaster>\n");
+
 $num_updates = 12;
 $updates_array = get_updates_array($num_updates);
 for($count=0;$count<$num_updates;$count++)
@@ -21,7 +21,7 @@ for($count=0;$count<$num_updates;$count++)
    	list($background_name,$category,$author,$thumbnail_filename) = mysql_fetch_row($background_select_result);
       print("\t\t\t<title>$background_name</title>\n");
       print("\t\t\t<link>" . htmlspecialchars("http://art.gnome.org/backgrounds/$category/$ID/") . "</link>\n");
-      print("\t\t\t<description>Backgrounds - $category</description>\n");
+      print("\t\t\t<description><![CDATA[<img src=\"http://art.gnome.org/images/thumbnails/backgrounds/$thumbnail_filename\">Backgrounds - $category]]></description>\n");
    }
    else
    {
@@ -30,7 +30,7 @@ for($count=0;$count<$num_updates;$count++)
       $category_good = $theme_config_array["$category"]["name"];
 		print("\t\t\t<title>$theme_name</title>\n");
       print("\t\t\t<link>" . htmlspecialchars("http://art.gnome.org/themes/$category/$ID/") . "</link>\n");
-      print("\t\t\t<description>Themes - $category</description>\n");
+      print("\t\t\t<description><![CDATA[<img src=\"http://art.gnome.org/images/thumbnails/$category/$thumbnail_filename\">Themes - $category]]></description>\n");
    }
    print("\t\t</item>\n");
 }
