@@ -1,4 +1,10 @@
-2002-12-17  Alex Duggan  <aldug@gnome.org>
+2002-12-21  Alex Duggan  <aldug@gnome.org>
+
+	* includes/common.inc.php: two new functions to diplay background and theme updates,
+	print_background_row(), print_theme_row()
+	* updates.php: now use print_background_row() and print_theme_row()
+	
+2002-12-21  Alex Duggan  <aldug@gnome.org>
 	
 	* includes/common.inc.php: re-write get_updates_array() using two new
 	helper functions, function get_latest_backgrounds() and get_latest_themes()
