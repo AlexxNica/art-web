@@ -21,13 +21,7 @@ if($action == "delete")
    $theme_delete_query = "DELETE FROM theme WHERE themeID='$themeID'";
    //print("$theme_delete_query\n");
    $theme_delete_result = mysql_query($theme_delete_query);
-   
-   /* remove from theme_download database */
-   $theme_download_delete_query = "DELETE FROM theme_download WHERE themeID='$themeID'";
-   //print("$theme_download_delete_query\n");
-   $theme_download_delete_result = mysql_query($theme_download_delete_query);
-   
-   if($theme_delete_result && $theme_download_delete_result)
+   if($theme_delete_result)
    {
    	print("Successfully deleted theme.");
    }

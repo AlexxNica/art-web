@@ -5,119 +5,119 @@ require("config.inc.php");
 function create_middle_box_top($pill)
 {
 	global $pill_array;
-   global $site_theme;
-   $attributes = $pill_array[$pill];
-   $alt = $attributes["alt"];
-   $icon = $attributes["icon"];
+	global $site_theme;
+	$attributes = $pill_array[$pill];
+	$alt = $attributes["alt"];
+	$icon = $attributes["icon"];
 	print("<!-- Center Column -->\n");
 	print("<td width=\"100%\">\n");
-  	print("<div class=\"mb-lite-title\"><img src=\"/images/site/pill-icons/$icon\" alt=\"\"> $alt</div>\n");
-  	print("<div class=\"mb-lite-contents\">\n");
+	print("<div class=\"mb-lite-title\"><img src=\"/images/site/pill-icons/$icon\" alt=\"\"> $alt</div>\n");
+	print("<div class=\"mb-lite-contents\">\n");
 }
 
 function create_middle_box_bottom()
 {
 	global $site_theme;
-   print("</div>\n");
-   print("<!-- End Center Column  -->\n");
+	print("</div>\n");
+	print("<!-- End Center Column  -->\n");
 }
 
 function display_icons($type, $page)
 {
 	$icons_per_page = 64;
-   /* get the number of columns from the database */
+	/* get the number of columns from the database */
 	$icon_select_result = mysql_query("SELECT num_columns FROM icon WHERE name='$type'");
 	list($num_columns) = mysql_fetch_row($icon_select_result);
 	if(is_dir($GLOBALS['sys_icon_dir'] . "/$type"))
 	{
-   	$dir_handle = dir($GLOBALS['sys_icon_dir'] . "/$type");
-      
-      //skip . and ..
-      $dir_handle->read();
-      $dir_handle->read();
-      
-      $num_icons = 0;
-      
-      // get the total number of icons
-      while($file = $dir_handle->read())
-      {
-      	list($foo,$ext) = explode(".",$file);
-         if(in_array($ext,$GLOBALS['valid_image_ext']))
-         {
-         	$num_icons ++;
-         }
-      }
-      $num_pages = ceil($num_icons / $icons_per_page);
-      
-      rewinddir ($dir_handle->handle);
+		$dir_handle = dir($GLOBALS['sys_icon_dir'] . "/$type");
+
+		//skip . and ..
 		$dir_handle->read();
 		$dir_handle->read();
-      
-      $start_file = $icons_per_page * ($page - 1);
+
+		$num_icons = 0;
+
+		// get the total number of icons
+		while($file = $dir_handle->read())
+		{
+			list($foo,$ext) = explode(".",$file);
+		   if(in_array($ext,$GLOBALS['valid_image_ext']))
+		   {
+		   	$num_icons ++;
+		   }
+		}
+		$num_pages = ceil($num_icons / $icons_per_page);
+
+		rewinddir ($dir_handle->handle);
+		$dir_handle->read();
+		$dir_handle->read();
+
+		$start_file = $icons_per_page * ($page - 1);
 		for ($i=0;$i<$start_file;++$i)
 		{
 			$file = $dir_handle->read ();
 		}
-      
-      unset($icon_array);
-      $counter = 0;
-      while( ($file = $dir_handle->read ()) && ($counter < $icons_per_page) )
+
+		unset($icon_array);
+		$counter = 0;
+		while( ($file = $dir_handle->read ()) && ($counter < $icons_per_page) )
 		{
-		   list($foo,$ext) = explode(".",$file);
-         if(in_array($ext,$GLOBALS['valid_image_ext']))
+			list($foo,$ext) = explode(".",$file);
+			if(in_array($ext,$GLOBALS['valid_image_ext']))
 			{
 				$icon_array[] = $file;
 				$counter++;
-         }
-      }
-      
-      print("<div align=\"center\">\n<table border=\"0\">\n<tr>");
-      $counter = 0;
-      while(list($foo,$file)=each($icon_array))
+			}
+		}
+
+		print("<div align=\"center\">\n<table border=\"0\">\n<tr>");
+		$counter = 0;
+		while(list($foo,$file)=each($icon_array))
 		{
 			if($counter > 0 && (($counter % $num_columns) == 0))
-         {
-         	print("</tr>\n<tr>");
-         }
-         list($foo,$ext) = explode(".",$file);
-         if(in_array($ext,$GLOBALS['valid_image_ext']))
+		   {
+		   	print("</tr>\n<tr>");
+		   }
+		   list($foo,$ext) = explode(".",$file);
+		   if(in_array($ext,$GLOBALS['valid_image_ext']))
 			{
 				print("<td><a href=\"/images/icons/$type/$file\"><img src=\"/images/icons/$type/$file\" border=\"0\"></a></td>");
 				$counter++;
-         }
+		   }
 		}
-      print("</tr>\n</table>\n</div>\n");
-      
-      print("<p>\n");
-      print("<div align=\"center\">\n");
-      /* Page Navigation System */
+		print("</tr>\n</table>\n</div>\n");
+		
+		print("<p>\n");
+		print("<div align=\"center\">\n");
+		/* Page Navigation System */
 		if($page > 1)
-      {
-      	$prev_page = $page -1;
-         print(" <a href=\"" . $GLOBALS["PHP_SELF"] . "?&page=$prev_page\">[&lt;]</a>");
-      }
+		{
+			$prev_page = $page -1;
+		   print(" <a href=\"" . $GLOBALS["PHP_SELF"] . "?&page=$prev_page\">[&lt;]</a>");
+		}
 		for($count=1;$count<=$num_pages;$count++)
 		{
 			if($count == $page)
-   	   {
-   	   	print("<span class=\"bold-text\">[$count]</span> ");
+			{
+				print("<span class=\"bold-text\">[$count]</span> ");
 			}
-   	   else
-   	   {
-   	   	print("<a href=\"" . $GLOBALS["PHP_SELF"] . "?page=$count\">[$count]</a> ");
-   	   }
-   	}
-      if($page < $num_pages)
-      {
-      	$next_page = $page +1;
-         print(" <a href=\"" . $GLOBALS["PHP_SELF"] . "?page=$next_page\">[&gt;]</a>");
-      }
-      print("</div>\n");
-   }
-   else
-   {
-   	print("Invalid Directory\n<p>\n");
-   }
+			else
+			{
+				print("<a href=\"" . $GLOBALS["PHP_SELF"] . "?page=$count\">[$count]</a> ");
+			}
+		}
+		if($page < $num_pages)
+		{
+			$next_page = $page +1;
+		   print(" <a href=\"" . $GLOBALS["PHP_SELF"] . "?page=$next_page\">[&gt;]</a>");
+		}
+		print("</div>\n");
+	}
+	else
+	{
+		print("Invalid Directory\n<p>\n");
+	}
 }
 
 function print_background_row($backgroundID)
@@ -161,13 +161,13 @@ function get_latest_backgrounds($number)
 	{
 		$big_array[] = $add_timestamp . "|background|". $backgroundID;
 	}
-   return $big_array;
+	return $big_array;
 }
 
 function get_latest_themes($number)
 {
 	unset($big_array);
-   $theme_select_result = mysql_query("SELECT themeID,add_timestamp FROM theme WHERE status='active' ORDER BY add_timestamp DESC LIMIT $number");
+	$theme_select_result = mysql_query("SELECT themeID,add_timestamp FROM theme WHERE status='active' ORDER BY add_timestamp DESC LIMIT $number");
 	while( list($backgroundID,$add_timestamp) = mysql_fetch_row($theme_select_result) )
 	{
 		$big_array[] = $add_timestamp . "|theme|". $backgroundID;
@@ -181,17 +181,17 @@ function get_updates_array($number)
 	$theme_array = get_latest_themes($number);
 	$big_array = array_merge($background_array,$theme_array);
 	rsort($big_array);
-   
-   if($number < count($big_array))
-   {
-   	$return_array = array_slice($big_array,0,$number);
-   }
-   else
-   {
-   	$return_array = $big_array;
-   }
-   
-   return $return_array;
+	
+	if($number < count($big_array))
+	{
+		$return_array = array_slice($big_array,0,$number);
+	}
+	else
+	{
+		$return_array = $big_array;
+	}
+	
+	return $return_array;
 }
 
 
@@ -319,9 +319,9 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	$num_pages = ceil($num_backgrounds/$thumbnails_per_page);
 
 	if($page > $num_pages)
-   {
-   	$page = $num_pages;
-   }
+	{
+		$page = $num_pages;
+	}
 	$start = (($page - 1) * $thumbnails_per_page);
 	$end = $start + $thumbnails_per_page;
 	if($end > $num_backgrounds)
@@ -366,9 +366,9 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 	$num_pages = ceil($num_themes/$thumbnails_per_page);
 
 	if($page > $num_pages)
-   {
-   	$page = $num_pages;
-   }
+	{
+		$page = $num_pages;
+	}
 	$start = (($page - 1) * $thumbnails_per_page);
 	$end = $start + $thumbnails_per_page;
 	if($end > $num_themes)
@@ -507,7 +507,7 @@ function escape_gpc_array (&$array)
 function spam_proof_email($good_email)
 {
 	$spam_protected_email = ereg_replace("@"," _AT_ ",$good_email);
-   return $spam_protected_email;
+	return $spam_protected_email;
 }
 
 ?>

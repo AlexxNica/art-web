@@ -1,3 +1,6 @@
+2004-09-16  Thomas Wood <thos@gnome.org>
+	* Formatting cleanups and database restructure
+
 2004-09-14  Curtis Hovey  <sinzui@cox.net>
 
 	* admin/incoming_urls.php:

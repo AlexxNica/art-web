@@ -35,7 +35,7 @@ function ago_header($title)
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/gnome/\">GNOME</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/other/\">Other</a><br><br>\n");
 	
-	print("<font size=\"+1\">Desktop Themes</font><br>\n");
+	print("<font size=\"+1\"><a href=\"/themes/\">Desktop Themes</a></font><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2/\">Applications</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/metacity/\">Window Borders</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/icon/\">Icon</a><br><br>\n");
