@@ -23,16 +23,11 @@ function create_middle_box_bottom()
 function display_icons($type, $page)
 {
 	$icons_per_page = 64;
-   if($type == "large")
-   {
-   	$num_columns = 4;
-   }
-   else
-   {
-   	$num_columns = 8;
-   }
-   if(is_dir($GLOBALS['sys_icon_dir'] . "/$type"))
-   {
+   /* get the number of columns from the database */
+	$icon_select_result = mysql_query("SELECT num_columns FROM icon WHERE name='$type'");
+	list($num_columns) = mysql_fetch_row($icon_select_result);
+	if(is_dir($GLOBALS['sys_icon_dir'] . "/$type"))
+	{
    	$dir_handle = dir($GLOBALS['sys_icon_dir'] . "/$type");
       
       //skip . and ..
