@@ -90,7 +90,7 @@ if($site_theme == "standard")
 }
 else
 {
-	print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar-lite\">");
+	print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar-lite\">&nbsp;&nbsp;&nbsp;");
 }
 for($count=1;$count<5;$count++)
 {
@@ -152,7 +152,7 @@ for($count=1;$count<5;$count++)
    	}
       else
       {
-      	print("-");
+      	print("- ");
       }
    }
 }
