@@ -1,13 +1,14 @@
 <?php
 require("mysql.inc.php");
 require("common.inc.php");
+header("Content-type: application/rss+xml");
 print("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
-print("<rss version=\"2.0\" xmlns=\"http://backend.userland.com/rss2\">\n");
+print("<rss version=\"2.0\">\n");
 print("\t<channel>\n");
 print("\t<title>art.gnome.org releases</title>\n");
 print("\t<link>http://art.gnome.org/</link>\n");
 print("\t<description>A list of recent backgrounds and themes released on art.gnome.org</description>\n");
-print("\t<webMaster>thos _AT_ gnome.org</webMaster>\n");
+print("\t<webMaster>thos@nospam.gnome.org</webMaster>\n");
 
 $num_updates = 12;
 $updates_array = get_updates_array($num_updates);

@@ -1,3 +1,7 @@
+2004-10-05  Thomas Wood <thos@gnome.org>
+	* backend.php: Fixed bug 150330 (incorrect mime type) and also fixed the
+	feed so it now validates as a proper RSS feed.
+
 2004-09-23  Thomas Wood <thos@gnome.org>
 	* Admin site enhancements
 
