@@ -1,4 +1,9 @@
-2004-06-23  Thomas Wood <thos@gnome.org>
+2004-06-26  Thomas Wood <thos@gnome.org>
+	* contact.php: Removed aldug, added sub_pop
+	* backend.php: Fixed bug 144912 (broken links in RSS feed)
+	* admin/index.html: Added link to delete_faq.php
+
+2004-06-25  Thomas Wood <thos@gnome.org>
 	* admin/delete_faq.php: Initial commit
 
 2004-06-23  Thomas Wood <thos@gnome.org>
