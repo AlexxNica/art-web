@@ -22,15 +22,14 @@ if($mark_theme)
 else
 {
 	print("<form method=\"GET\" action=\"" . $_SERVER["PHP_SELF"] . "\">Show only ");
-	create_select_box("theme_type", Array("" => "All", "metacity" => "Metacity", "Icon" => "Icon", "gtk2" => "GTK 2", "gdm_greeter" => "GDM Greeter", "splash_screens" => "Splash Screens"), $theme_type);
+	create_select_box("theme_type", Array("" => "All", "metacity" => "Metacity", "Icon" => "Icon", "gtk2" => "GTK 2", "gdm_greeter" => "GDM Greeter", "splash_screens" => "Splash Screens", "desktop" => "Desktop"), $theme_type);
 	print("themes <input type=\"submit\" value=\"Go\"></form>");
-	print("<a href=\"" . $_SERVER["PHP_SELF"] . "?theme_type=$theme_type\">Table</a>|<a href=\"$PHP_SELF?theme_type=$theme_type&list=urls\">URL List</a><br>");
+//	print("<a href=\"" . $_SERVER["PHP_SELF"] . "?theme_type=$theme_type\">Table</a>|<a href=\"$PHP_SELF?theme_type=$theme_type&list=urls\">URL List</a><br>");
 
 
 	if($theme_type)
 	{
 		$query = "SELECT * FROM incoming_theme WHERE status='new' AND category='$theme_type'";
-		print("Showing only $theme_type themes<br>");
 	}
 	else
 	{
@@ -55,7 +54,7 @@ else
 		}
 		print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\">");
 		print("<tr><th>ID");
-		if (!isset($theme_type)) print("<th>Category");
+		if ($theme_type == "") print("<th>Category");
 		print("<th>Theme Name<th>Author<th>Download<th>Description<th>Action</tr>\n");
 
 		$alt = 1;
@@ -70,14 +69,15 @@ else
 			$theme_url = $incoming_theme_select_row["theme_url"];
 			$theme_description = $incoming_theme_select_row["theme_description"];
 			print("<tr $colour><td>$themeID</td>");
-			if (!isset($theme_type)) print("<td>$category</td>");
+			if ($theme_type == "") print("<td>$category</td>");
 			print("<td>$theme_name</td>");
 			print("<td><a href=\"mailto:$author_email\">$author</a></td>");
 			print("<td><a href=\"$theme_url\">Download</td>");
 			print("<td>$theme_description</td>");
 			print("<td><form action=\"add_theme.php\" method=\"post\"><input type=\"hidden\" name=\"theme_submitID\" value=\"$themeID\"><input type=\"hidden\" name=\"theme_name\" value=\"$theme_name\"><input type=\"hidden\" name=\"theme_category\" value=\"$category\"><input type=\"hidden\" name=\"theme_author\" value=\"$author\"><input type=\"hidden\" name=\"author_email\" value=\"$author_email\"><input type=\"hidden\" name=\"description\" value=\"$theme_description\"><input type=\"submit\" value=\"Add\"></form><hr>");
+			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"><input type=\"submit\" value=\"Rejected\"><input type=\"hidden\" name=\"new_status\" value=\"rejected\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"></form>\n");
 			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"><input type=\"submit\" value=\"Added\"><input type=\"hidden\" name=\"new_status\" value=\"added\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"></form>\n");
-			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"><input type=\"submit\" value=\"Reject\"><input type=\"hidden\" name=\"new_status\" value=\"rejected\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"></form></td></tr>\n");
+			print("</td></tr>");
 
 			$alt = 2 - $alt + 1;
 		}

@@ -46,7 +46,7 @@ if($add_background)
 		}
 		else
 		{	
-			print("There were database errors adding background into database.  Contact Alex.");
+			print("There were database errors adding background into database.");
 		}
 	}
 	else
@@ -74,8 +74,6 @@ else
 	print("<tr><td><b>Release Date:</b></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
 	print("<tr><td><b>Background Description:</b></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap>$background_description</textarea></td></tr>\n");
 	print("<tr><td><b>Thumbnail Filename:</b></td><td>");file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/backgrounds");print("</td></tr>\n");
-	print("<tr><td><b>Screenshot Filename:</b></td><td><input type=\"text\" name=\"screenshot_filename\" size=\"40\"></td></tr>\n");
-	print("<tr><td><b>Screenshot Description:</b></td><td><textarea name=\"screenshot_description\" cols=\"40\" rows=\"5\" wrap></textarea></td></tr>\n");
 	print("</table>\n<p>\n");
 	
 	print("<table border=\"0\">\n");

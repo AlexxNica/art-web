@@ -121,31 +121,31 @@ function display_icons($type, $page)
 
 function print_background_row($backgroundID, $view)
 {
-	global $background_config_array;
+	global $background_config_array, $site_url;
 	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename,download_start_timestamp,download_count FROM background WHERE backgroundID='$backgroundID'");
 	list($background_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count) = mysql_fetch_row($background_select_result);
 	$release_date = fix_sql_date($release_date);
-	$link = "/backgrounds/$category/$backgroundID/";
+	$link = "{$site_url}backgrounds/$category/$backgroundID/";
 	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
 	if ($view == "icons")
 	{
-		print("<a href=\"$link\"><img class=\"thumbnail-border\" style=\"margin:0.5em\" src=\"/images/thumbnails/backgrounds/$thumbnail_filename\"></a>");
+		print("<a href=\"$link\"><img class=\"thumbnail-border\" style=\"margin:0.5em\" src=\"{$site_url}images/thumbnails/backgrounds/$thumbnail_filename\"></a>");
 	}
 	else
 	{
-		print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>Background - $category_name<br>$author</td></tr>\n"));
+		print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"{$site_url}images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>Background - $category_name<br>$author</td></tr>\n"));
 	}
 
 }
 
 function print_theme_row($themeID, $view)
 {
-	global $theme_config_array;
+	global $theme_config_array, $site_url;
 	$theme_select_result = mysql_query("SELECT theme_name, category, author, release_date,small_thumbnail_filename,thumbnail_filename,download_filename FROM theme WHERE themeID='$themeID'");
 	list($theme_name,$category,$author,$release_date,$thumbnail_filename,$screenshot,$download) = mysql_fetch_row($theme_select_result);
 	$release_date = fix_sql_date($release_date);
-	$link = "/themes/$category/$themeID/";
+	$link = "{$site_url}themes/$category/$themeID/";
 	$category_name = $theme_config_array["$category"]["name"];
 	
 	if( ($category == "icon") or ($category == "metacity") )
@@ -158,13 +158,13 @@ function print_theme_row($themeID, $view)
 	}
 
 	if ( $category == "metacity" || $category == "splash_screens" || $category == "gtk_engines" )
-		$thumbnail = "<img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\">";
+		$thumbnail = "<img src=\"{$site_url}images/thumbnails/$category/$thumbnail_filename\" class=\"$class\">";
 	else
-		$thumbnail = "<a href=\"/images/thumbnails/$category/$screenshot\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></a>";
+		$thumbnail = "<a href=\"{$site_url}images/thumbnails/$category/$screenshot\"><img src=\"{$site_url}images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></a>";
 
 	if ($view == "icons")
 	{
-		print("<a href=\"$link\"><img style=\"margin:0.5em;\" src=\"/images/thumbnails/$category/$thumbnail_filename\" alt=\"\" class=\"$class\" /></a>");
+		print("<a href=\"$link\"><img style=\"margin:0.5em;\" src=\"{$site_url}images/thumbnails/$category/$thumbnail_filename\" alt=\"\" class=\"$class\" /></a>");
 	}
 	else
 	{

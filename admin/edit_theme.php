@@ -11,6 +11,7 @@ escape_gpc_array ($_POST);
 // Extracts the POST variables to global variables
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
+extract($_GET, EXTR_SKIP);
 
 // write the updated background text do the database
 if($action == "write")
@@ -94,32 +95,38 @@ elseif($action == "edit")
 		print("</form>");
  	}
 }
-else
+elseif (isset($category))
 {
-	$theme_categories = array("gdm_greeter","gtk","gtk2","icon","metacity","metatheme","nautilus","sawfish","sounds","splash_screens","other");
-	for($count=0;$count<count($theme_categories);$count++)
-	{
-		$category = $theme_categories[$count];
-		$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE category='$category' ORDER by theme_name");
-		print("<table border=\"0\">\n");
-		print("<tr><td>$category</td>");
+		$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE category='$category' $user_sql ORDER BY themeID");
+		print("<b>$category</b><br />");
 		if(mysql_num_rows($theme_select_result)==0)
 		{
-			print("<td colspan=\"2\">None</td></tr>\n");
+			print("None\n");
 		}
 		else
 		{
-			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-			 print("<td><select name=\"themeID\" size=\"5\">\n");
-			 while(list($themeID,$theme_name) = mysql_fetch_row($theme_select_result))
-			 {
-			 	print("<option value=\"$themeID\">$theme_name\n");
-			 }
-			 print("</select></td><td><input type=\"submit\" value=\"Edit\"></td></tr>");
-			 print("<input type=\"hidden\" name=\"action\" value=\"edit\">\n</form>\n");
+			print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
+			print("<select name=\"themeID\" size=\"24\">\n");
+			while(list($themeID,$theme_name) = mysql_fetch_row($theme_select_result))
+			{
+				print("<option value=\"$themeID\">$themeID: $theme_name\n");
+			}
+			print("</select><br /><input type=\"submit\" value=\"Edit\">");
+			print("<input type=\"hidden\" name=\"action\" value=\"edit\"></form>\n");
 		}
 		print("</table>\n<p>\n");
+}
+else
+{
+	$theme_categories = array("gdm_greeter","gtk","gtk2","icon","metacity","metatheme","nautilus","sawfish","sounds","splash_screens","other");
+	print("<b>Category</b>");
+	print("<ul>");
+	for($count=0;$count<count($theme_categories);$count++)
+	{
+		$category = $theme_categories[$count];
+		print("<li><a href=\"{$_SERVER['PHP_SELF']}?category=$category\">$category</a></li>");
 	}
+	print("</ul>");
 }
 admin_footer();
 ?>
