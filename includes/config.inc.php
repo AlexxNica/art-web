@@ -273,7 +273,7 @@ $sys_icon_type_array = array(
 $sys_valid_images_array = array ("png","xpm","gif","jpg","jpeg","tiff");
 
 // Which dir to look in for images
-$sys_icon_dir = "images/icons";
+//$sys_icon_dir = "images/icons";
 
 // Location of icons via http
 $sys_http_icon_root = $sys_http_root."/".$sys_icon_dir;
