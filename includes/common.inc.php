@@ -216,10 +216,10 @@ function display_icons($type, $page)
       }
       
       print("<table border=\"1\">\n<tr>");
-      $counter = 1;
+      $counter = 0;
       while(list($foo,$file)=each($icon_array))
 		{
-			if($counter > 1 && (($counter % 8) == 0))
+			if($counter > 0 && (($counter % 8) == 0))
          {
          	print("</tr>\n<tr>");
          }
