@@ -59,7 +59,7 @@ if($search_text && $search_type)
 	if($page > 1)
 	{
    	$prev_page = $page -1;
-   	print(" <a href=\"$PHP_SELF?search_type=$search_type&search_text=$search_text&page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&lt;]</a>");
+   	print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&lt;]</a>");
 	}
 	for($count=1;$count<=$num_pages;$count++)
 	{
@@ -69,13 +69,13 @@ if($search_text && $search_type)
 		}
    	else
    	{
-   		print("<a href=\"$PHP_SELF?search_type=$search_type&search_text=$search_text&page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[$count]</a> ");
+   		print("<a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[$count]</a> ");
    	}
 	}
 	if($page < $num_pages)
 	{
    	$next_page = $page +1;
-   	print(" <a href=\"$PHP_SELF?search_type=$search_type&search_text=$search_text&page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
+   	print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&search_text=$search_text&page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
 	}
 	print("</div>\n");
 	print ($sort_by);

@@ -21,7 +21,7 @@ if($action == "write")
       if(mysql_affected_rows() == 1)
       {
       	print("Successfully updated FAQ in database.");
-         print("<p>\n<a href=\"$PHP_SELF\">Click Here</a> to edit another.");
+         print("<p>\n<a href=\"" . $_SERVER["PHP_SELF"] . "\">Click Here</a> to edit another.");
    	}
       else
       {
@@ -46,7 +46,7 @@ elseif($action == "edit")
    	list($question,$answer) = mysql_fetch_row($faq_select_result);
       $question = htmlspecialchars($question);
       $answer = htmlspecialchars($answer);
-      print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+      print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
    	print("<p>Question:<br>\n");
    	print("<textarea name=\"question\" cols=\"60\" rows=\"6\">$question</textarea>\n");
    	print("<p>Answer:<br>\n");
@@ -69,7 +69,7 @@ else
 		print("<ol>\n");
 	   while(list($faqID,$question,$answer)=mysql_fetch_row($faq_select_result))
 	   {
-	   	print("<li><span class=\"yellow-text\">$question [<a href=\"$PHP_SELF?action=edit&faqID=$faqID\">Edit</a>]</span>\n<p>$answer\n\n");
+	   	print("<li><span class=\"yellow-text\">$question [<a href=\"" . $_SERVER["PHP_SELF"] . "?action=edit&faqID=$faqID\">Edit</a>]</span>\n<p>$answer\n\n");
 	   }
 	   print("</ol>\n");
 	}

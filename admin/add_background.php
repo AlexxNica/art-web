@@ -37,7 +37,7 @@ if($add_background)
 		}
 		if($background_insert_result && $background_resolution_insert_result)
 		{
-			print("Successed added background to the database.\n<p>\nClick <a href=\"$PHP_SELF\">here</a> to add another.");
+			print("Successed added background to the database.\n<p>\nClick <a href=\"" . $_SERVER["PHP_SELF"] . "\">here</a> to add another.");
 			if ($submitID)
 				print("<form action=\"show_submitted_backgrounds.php\" method=\"post\"><input type=\"hidden\" name=\"mark_background\" value=\"$submitID\"><input type=\"hidden\" name=\"new_status\" value=\"added\"><input type=\"submit\" value=\"Mark as added\"></form>");
 		}
@@ -55,7 +55,7 @@ else
 {
 	$date = date("m/d/Y");
 	list($month,$day,$year) = explode("/",$date);
-	print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
 	print("<tr><td><b>Background Name:</b></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\"></td></tr>\n");
 	print("<tr><td><b>Category</b></td><td><select name=\"category\" value=\"$category\"><option value=\"gnome\">GNOME<option value=\"other\">Other</select></td></tr>\n");

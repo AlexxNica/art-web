@@ -28,7 +28,7 @@ if($action == "write")
 		$theme_update_result = mysql_query($theme_update_query);
 
 		print("Successfully edited theme text in database.");
-		print("<p>\n<a href=\"$PHP_SELF\">Click Here</a> to edit another.");
+		print("<p>\n<a href=\"" . $_SERVER["PHP_SELF"] . "\">Click Here</a> to edit another.");
 			}
 	else
 	{
@@ -59,7 +59,7 @@ elseif($action == "edit")
 	
 		
 		list($year,$month,$day) = explode("-",$release_date);
-		print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 		print("<table border=\"0\">\n");
 		print("<tr><td><b>Theme Name:</b></td><td><input type=\"text\" name=\"theme_name\" size=\"40\" value=\"$theme_name\"></td></tr>\n");
 		print("<tr><td><b>Theme Category:</b></td><td><select name=\"theme_category\">\n");
@@ -109,7 +109,7 @@ else
 		}
 		else
 		{
-			print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 			 print("<td><select name=\"themeID\" size=\"5\">\n");
 			 while(list($themeID,$theme_name) = mysql_fetch_row($theme_select_result))
 			 {

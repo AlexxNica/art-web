@@ -25,7 +25,7 @@ if($action == "add_theme")
 		$themeID = mysql_insert_id();
 		if($theme_insert_result)
 		{
-			print("Successed added theme to the database.\n<p>\nClick <a href=\"$PHP_SELF\">here</a> to add another.");	
+			print("Successed added theme to the database.\n<p>\nClick <a href=\"" . $_SERVER["PHP_SELF"] . "\">here</a> to add another.");	
 			if($theme_submitID)
 			{
 				$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='added' WHERE themeID='$theme_submitID'");
@@ -58,7 +58,7 @@ else
 	);
 	$date = date("m/d/Y");
 	list($month,$day,$year) = explode("/",$date);
-	print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
 	print("<tr><td><b>Theme Name:</b></td><td><input type=\"text\" name=\"theme_name\" size=\"40\" value=\"$theme_name\"></td></tr>\n");
 	print("<tr><td><b>Category</b></td><td>");

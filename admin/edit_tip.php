@@ -14,7 +14,7 @@ if($action == "write")
       if(mysql_affected_rows() == 1)
       {
       	print("Successfully updated Tip in database.");
-         print("<p>\n<a href=\"$PHP_SELF\">Click Here</a> to edit another.");
+         print("<p>\n<a href=\"" . $_SERVER["PHP_SELF"] . "\">Click Here</a> to edit another.");
    	}
       else
       {
@@ -39,7 +39,7 @@ elseif($action == "edit")
    	list($title,$body) = mysql_fetch_row($tip_select_result);
       $title = htmlspecialchars($title);
       $body = htmlspecialchars($body);
-      print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+      print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
    	print("<p>Title:<br>\n");
    	print("<input type=\"text\" name=\"title\" value=\"$title\" size=\"50\">\n");
    	print("<p>Body Text:<br>\n");
@@ -62,7 +62,7 @@ else
 		print("<ol>\n");
 	   while(list($tipID,$title)=mysql_fetch_row($tip_select_result))
 	   {
-	   	print("<li>$title [<a href=\"$PHP_SELF?action=edit&tipID=$tipID\">Edit</a>]\n\n\n");
+	   	print("<li>$title [<a href=\"" . $_SERVER["PHP_SELF"] . "?action=edit&tipID=$tipID\">Edit</a>]\n\n\n");
 	   }
 	   print("</ol>\n");
 	}

@@ -20,7 +20,7 @@ if($HTTP_POST_VARS)
       if($faq_insert_result)
       {	
       	print("Successfully added FAQ to database.");
-         print("<p><a href=\"$PHP_SELF\">Click Here</a> to add another.");
+         print("<p><a href=\"" . $_SERVER["PHP_SELF"] . "\">Click Here</a> to add another.");
       }
       else
       {
@@ -34,7 +34,7 @@ if($HTTP_POST_VARS)
 }
 else
 {
-	print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
    print("<p>Question:<br>\n");
    print("<textarea name=\"question\" cols=\"60\" rows=\"6\"></textarea>\n");
    print("<p>Answer:<br>\n");

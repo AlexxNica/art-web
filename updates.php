@@ -36,7 +36,7 @@ for($count=0;$count<count($big_array);$count++)
 }
 print("</table>\n");
 
-print("<p><div align=\"center\">Number of updates to display: <form action=\"$PHP_SELF\" method=\"get\">");
+print("<p><div align=\"center\">Number of updates to display: <form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"get\">");
 print("<input type=\"text\" name=\"num_updates\" value=\"$num_updates\" size=\"3\"> ");
 print("<input type=\"submit\" value=\"Show\"></form></div>\n");
 

@@ -52,7 +52,7 @@ if($_POST)
 				case "rejected" : print("The theme &quot;$submission_name&quot; has been removed from the submissions list and not been added to the site. This may happen if the theme was inappropriate to art.gnome.org, appeared to be incomplete or unfinished, or could not be retrieved from the URL provided. If you have any queries regarding this status, please contact a memeber of the art.gnome.org team, quoting the submission tracking ID."); break;
 				default: print("There was an error retrieving the status of the theme submission ID you requested. Please check and try again.");
 			}
-			print("</p><a href=\"$PHP_SELF\">Back to Theme Submission Page</a>");
+			print("</p><a href=\"" . $_SERVER["PHP_SELF"] . "\">Back to Theme Submission Page</a>");
 		}
 		else
 		{
@@ -63,7 +63,7 @@ if($_POST)
 else
 {
 	print("If you would like to submit your theme to art.gnome.org, please fill out the form below and provide a web address where we can download your theme.\n<p>\n");
-	print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">");
 	print("<tr><td><b>Theme Name:</b></td><td><input type=\"text\" name=\"theme_name\" size=\"40\"></td></tr>\n");
 	print("<tr><td><b>Category</b></td><td><select name=\"category\"><option value=\"\">Choose<option value=\"desktop\">Desktop Theme<option value=\"gtk2\">Applications (gtk+)<option value=\"icon\">Icon<option value=\"gdm_greeter\">Login Manager (gdm)<option value=\"splash_screens\">Splash Screens<option value=\"metacity\">Window Borders (metacity)</select></td></tr>\n");
@@ -76,7 +76,7 @@ else
 	print("</form>\n");
 
 	print("<hr /><b>Submission tracking</b>");
-	print("<p><form action=\"$PHP_SELF\" method=\"post\">");
+	print("<p><form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">");
 	print("Submission ID: <input name=\"submission_id\" />");
 	print("<input type=\"submit\" value=\"Get Status\" /></form></p>");
 }

@@ -18,7 +18,7 @@ else
 	print("<ol>\n");
 	while(list($faqID,$question,$answer)=mysql_fetch_row($faq_select_result))
    {
-   	print("<li><a href=\"$PHP_SELF#$faqID\">$question</a>\n");
+   	print("<li><a href=\"" . $_SERVER["PHP_SELF"] . "#$faqID\">$question</a>\n");
    }
 	print("</ol>\n<p>\n<ol>\n");
 	

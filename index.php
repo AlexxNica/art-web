@@ -82,11 +82,11 @@ while($news_select_row=mysql_fetch_array($news_select_result))
 print("<p>\n");
 if($view_old_news == 1)
 {
-	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"$PHP_SELF\">View Recent News</a></div>\n");
+	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"" . $_SERVER["PHP_SELF"] . "\">View Recent News</a></div>\n");
 }
 else
 {
-	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"$PHP_SELF?view_old_news=1\">View Older News</a></div>\n");
+	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"" . $_SERVER["PHP_SELF"] . "?view_old_news=1\">View Older News</a></div>\n");
 }
 print("<p>&nbsp;\n");
 

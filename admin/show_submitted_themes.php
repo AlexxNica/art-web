@@ -17,14 +17,14 @@ admin_header("Submitted Themes");
 if($mark_theme)
 {
 	$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='$new_status' WHERE themeID='$mark_theme'");
-	print("Successfully marked theme as $new_status.<p><a href=\"$PHP_SELF\">Return</a> to incoming themes list.");
+	print("Successfully marked theme as $new_status.<p><a href=\"" . $_SERVER["PHP_SELF"] . "\">Return</a> to incoming themes list.");
 }
 else
 {
-	print("<form method=\"GET\" action=\"$PHP_SELF\">Show only ");
+	print("<form method=\"GET\" action=\"" . $_SERVER["PHP_SELF"] . "\">Show only ");
 	create_select_box("theme_type", Array("" => "All", "metacity" => "Metacity", "Icon" => "Icon", "gtk2" => "GTK 2", "gdm_greeter" => "GDM Greeter", "splash_screens" => "Splash Screens"), $theme_type);
 	print("themes <input type=\"submit\" value=\"Go\"></form>");
-	print("<a href=\"$PHP_SELF?theme_type=$theme_type\">Table</a>|<a href=\"$PHP_SELF?theme_type=$theme_type&list=urls\">URL List</a><br>");
+	print("<a href=\"" . $_SERVER["PHP_SELF"] . "?theme_type=$theme_type\">Table</a>|<a href=\"$PHP_SELF?theme_type=$theme_type&list=urls\">URL List</a><br>");
 
 
 	if($theme_type)
@@ -76,8 +76,8 @@ else
 			print("<td><a href=\"$theme_url\">Download</td>");
 			print("<td>$theme_description</td>");
 			print("<td><form action=\"add_theme.php\" method=\"post\"><input type=\"hidden\" name=\"theme_submitID\" value=\"$themeID\"><input type=\"hidden\" name=\"theme_name\" value=\"$theme_name\"><input type=\"hidden\" name=\"theme_category\" value=\"$category\"><input type=\"hidden\" name=\"theme_author\" value=\"$author\"><input type=\"hidden\" name=\"author_email\" value=\"$author_email\"><input type=\"hidden\" name=\"description\" value=\"$theme_description\"><input type=\"submit\" value=\"Add\"></form><hr>");
-			print("<form action=\"$PHP_SELF\" method=\"post\"><input type=\"submit\" value=\"Added\"><input type=\"hidden\" name=\"new_status\" value=\"added\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"></form>\n");
-			print("<form action=\"$PHP_SELF\" method=\"post\"><input type=\"submit\" value=\"Reject\"><input type=\"hidden\" name=\"new_status\" value=\"rejected\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"></form></td></tr>\n");
+			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"><input type=\"submit\" value=\"Added\"><input type=\"hidden\" name=\"new_status\" value=\"added\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"></form>\n");
+			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"><input type=\"submit\" value=\"Reject\"><input type=\"hidden\" name=\"new_status\" value=\"rejected\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"></form></td></tr>\n");
 
 			$alt = 2 - $alt + 1;
 		}

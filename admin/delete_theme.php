@@ -27,7 +27,7 @@ if($action == "delete")
    {
    	print("Error deleting theme.");
    }
-   print("Click <a href=\"$PHP_SELF\">here</a> to return");
+   print("Click <a href=\"" . $_SERVER["PHP_SELF"] . "\">here</a> to return");
    
 
 }
@@ -38,7 +38,7 @@ elseif($action == "confirm")
    list($theme_name) = mysql_fetch_row($theme_select_result);
    print("Are you sure you want to delete $theme_name (themeID: $themeID) from the database?");
    print("<p>\n");
-   print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+   print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
    print("<input type=\"submit\" value=\"Continue\">\n");
    print("<input type=\"hidden\" name=\"themeID\" value=\"$themeID\">\n");
    print("<input type=\"hidden\" name=\"action\" value=\"delete\">\n");
@@ -59,7 +59,7 @@ else
       }
       else
       {
-      	print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+      	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
          print("<td><select name=\"themeID\" size=\"5\">\n");
          while(list($themeID,$theme_name) = mysql_fetch_row($theme_select_result))
          {

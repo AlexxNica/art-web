@@ -25,7 +25,7 @@ if($action == "write")
       if(mysql_affected_rows() == 1)
       {
       	print("Successfully edited background text in database.");
-         print("<p>\n<a href=\"$PHP_SELF\">Click Here</a> to edit another.");
+         print("<p>\n<a href=\"" . $_SERVER["PHP_SELF"] . "\">Click Here</a> to edit another.");
       }
       else
       {
@@ -58,7 +58,7 @@ elseif($action == "edit")
       $screenshot_description = htmlspecialchars($screenshot_description);
       
       list($year,$month,$day) = explode("-",$release_date);
-      print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+      print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
    	print("<table border=\"0\">\n");
    	print("<tr><td><b>Background Name:</b></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\"></td></tr>\n");
    	print("<tr><td><b>Background Author:</b></td><td><input type=\"text\" name=\"author\" size=\"40\" value=\"$author\"></td></tr>\n");
@@ -88,7 +88,7 @@ else
       }
       else
       {
-      	print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+      	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
          print("<table border=\"0\">\n");
          print("<tr><td>$category</td><td><select name=\"backgroundID\" size=\"10\">\n");
          while(list($backgroundID,$background_name) = mysql_fetch_row($background_select_result))

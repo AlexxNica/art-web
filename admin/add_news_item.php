@@ -36,7 +36,7 @@ else
 	// get today's month, day and year
    $todays_date = date("m-d-Y");
    list($todays_month,$todays_day,$todays_year) = explode("-",$todays_date);
-   print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+   print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
    print("<table border=\"0\">\n");
    print("<tr><td>Date:</td><td><input type=\"text\" name=\"month\" size=\"2\" maxlength=\"2\" value=\"$todays_month\">/<input type=\"text\" name=\"day\" size=\"2\" maxlength=\"2\" value=\"$todays_day\">/<input type=\"text\" name=\"year\" size=\"4\" maxlength=\"4\" value=\"$todays_year\"></td></tr>\n");
 	print("<tr><td>Author:</td><td><input type=\"text\" name=\"author\" size=\"30\"></td></tr>\n");

@@ -26,7 +26,7 @@ if($action == "delete")
     {
         print("Error deleting FAQ.");
     }
-    print("Click <a href=\"$PHP_SELF\">here</a> to return");
+    print("Click <a href=\"" . $_SERVER["PHP_SELF"] . "\">here</a> to return");
 }
 // display the confirmation window
 elseif($action == "confirm")
@@ -35,7 +35,7 @@ elseif($action == "confirm")
     list($question) = mysql_fetch_row($faq_select_result);
     print("Are you sure you want to delete \"$question\" (faqID: $faqID) from the database?");
     print("<p>\n");
-    print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+    print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
     print("<input type=\"submit\" value=\"Continue\">\n");
     print("<input type=\"hidden\" name=\"faqID\" value=\"$faqID\">\n");
     print("<input type=\"hidden\" name=\"action\" value=\"delete\">\n");
@@ -44,7 +44,7 @@ elseif($action == "confirm")
 else
 {
     $faq_select_result = mysql_query("SELECT faqID,question FROM faq ORDER by faqID");
-    print("<form action=\"$PHP_SELF\" method=\"post\">\n");
+    print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
     print("<select name=\"faqID\" size=\"5\">\n");
     while(list($faqID,$question) = mysql_fetch_row($faq_select_result))
     {

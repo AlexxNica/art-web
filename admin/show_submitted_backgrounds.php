@@ -15,7 +15,7 @@ admin_header("Submitted Backgrounds");
 if($mark_background)
 {
 	$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='$new_status' WHERE backgroundID='$mark_background'");
-	print("Successfully marked background as $new_status.<p><a href=\"$PHP_SELF\">Click here</a> to return to incoming backgrounds list.");
+	print("Successfully marked background as $new_status.<p><a href=\"" . $_SERVER["PHP_SELF"] . "\">Click here</a> to return to incoming backgrounds list.");
 }
 else
 {
@@ -59,7 +59,7 @@ else
 			print("<input type=\"hidden\" name=\"background_description\" value=\"$background_description\">");
 			print("<input type=\"hidden\" name=\"backgroundID\" value=\"$backgroundID\">");
 			print("</form>");
-			print("<form action=\"$PHP_SELF\" method=\"post\"><hidden name=\"new_status\" value=\"rejected\"><input type=\"submit\" value=\"Reject\"><input type=\"hidden\" name=\"mark_background\" value=\"$backgroundID\"></td>");
+			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"><hidden name=\"new_status\" value=\"rejected\"><input type=\"submit\" value=\"Reject\"><input type=\"hidden\" name=\"mark_background\" value=\"$backgroundID\"></td>");
 			print("</form></td></tr>\n");
 
 			$alt = 2 - $alt + 1;
