@@ -9,10 +9,14 @@ require("ago_headers.inc.php");
 ago_header("GNOME artwork &amp; themes");
 create_middle_box_top("news");
 
-$news_count_select_result = mysql_query("SELECT * FROM news WHERE status='active'");
-$news_count = mysql_num_rows($news_count_select_result);
-
-$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 3");
+if($view_old_news == 1)
+{
+	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 3,20");
+}
+else
+{
+	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 3");
+}
 while($news_select_row=mysql_fetch_array($news_select_result))
 {
 	$date = $news_select_row["date"];
@@ -31,9 +35,13 @@ while($news_select_row=mysql_fetch_array($news_select_result))
 }
 
 print("<p>\n");
-if($news_count > 3)
+if($view_old_news == 1)
 {
-	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"old_news.php\">View Older News</a></div>\n");
+	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"$PHP_SELF\">View Recent News</a></div>\n");
+}
+else
+{
+	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"$PHP_SELF?view_old_news=1\">View Older News</a></div>\n");
 }
 print("<p>&nbsp;\n");
 
