@@ -52,6 +52,7 @@ function ago_header($title)
 	print("<font size=\"+1\"><a href=\"/faq.php\">FAQ</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/submit.php\">Submit</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/contact.php\">Contact</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"http://gnomesupport.org/forums/index.php?c=6\">Forums</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/links.php\">Links</a></font><br>\n");
 	
 	?>
@@ -85,26 +86,14 @@ function ago_footer()
       <p class="none"></p>
       <div id="hdrNav">
 			<a href="http://www.gnome.org/about/">About GNOME</a> &middot;
-			<a href="http://www.gnome.org/start/2.4/">Download</a> &middot;
-			<!--<a href="http://www.gnome.org/start/"><i>Get Involved!</i></a> &middot;-->
-			<a href="http://www.gnome.org/">Users<a> &middot;
+			<a href="http://www.gnome.org/start/stable/">Download</a> &middot;
+			<a href="http://www.gnome.org/">Users</a> &middot;
 			<a href="http://developer.gnome.org/">Developers</a> &middot;
 			<a href="http://foundation.gnome.org/">Foundation</a> &middot;
 			<a href=""><b>Art &amp; Themes</b></a> &middot;
 			<a href="http://www.gnome.org/contact/">Contact</a>
 		</div>
-    </div>
-
-    <!--
-	 <div id="copyright">
-	Last modified 2003/04/25 16:57:34<br />
-      Copyright &copy; 2003, <a href="http://www.gnome.org/">The GNOME Project</a>.<br />
-
-      <a href="http://validator.w3.org/check/referer">Optimised</a>
-      for <a href="http://www.w3.org/">standards</a>.
-      Hosted by <a href="http://www.redhat.com/">Red Hat</a>.
-    </div>
-	 -->
+	</div>
 	</body>
 	</html>
 <?

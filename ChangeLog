@@ -1,3 +1,13 @@
+2004-08-17  Thomas Wood <thos@gnome.org>
+	* themes: Disabled large screenshots for splash screens and GTK
+	Engines
+	* contact.php: Added mailing list information
+	* includes/ago_headers.inc.php:
+	Corrected "Download" link (bug 150280), and "Users" link close tag
+	Added "Forums" link to side-bar
+	* admin/add_theme.php: Corrected a typo
+
+
 2004-07-11  Thomas Wood <thos@gnome.org>
 	* index.php: Fixed view_old_news and added "Latest Additions" section
 	* includes/config.inc.php: String corrections

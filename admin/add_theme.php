@@ -54,7 +54,7 @@ if($action == "add_theme")
       	print("Successed added theme to the database.\n<p>\nClick <a href=\"$PHP_SELF\">here</a> to add another.");	
 	if($theme_submitID) 
 		{
-        		print("<form action=\"show_submitted_themes.php\"><input type=\"hidden\" name=\"mark_theme\" value=$theme_submitID><input type=\"hidden\" name=\"new_status\" value=\"added\"><input type=\"submit\" value=\"Mark as Added\"></form>");
+        		print("<form action=\"show_submitted_themes.php\" method=\"post\"><input type=\"hidden\" name=\"mark_theme\" value=$theme_submitID><input type=\"hidden\" name=\"new_status\" value=\"added\"><input type=\"submit\" value=\"Mark as Added\"></form>");
 		}
       }
       else

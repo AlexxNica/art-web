@@ -120,7 +120,7 @@ else
 			$theme_download_select_result = mysql_query("SELECT theme_downloadID, name, download_name FROM theme_download WHERE themeID='$themeID' ORDER BY name");
       	print("<table border=\"0\">\n");
       	print("<tr><td>");
-      	if($category == "metacity")
+      	if($category == "metacity" || $category == "splash_screens" || $category == "gtk_engines")
       	{
       		print("<img src=\"/images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"thumbnail-border-padding\">");
       	}
