@@ -23,7 +23,7 @@ extract($_GET, EXTR_SKIP);
 </head>
 
 <body>
-<?
+<?php
 
 if($mark_theme)
 {

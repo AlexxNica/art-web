@@ -19,7 +19,7 @@ All material submitted for consideration to be included on this site is presumed
 <font size="+1">Copyright disputes</font>
 <p>
 If you suspect any material on art.gnome.org infringes on someone else's copyright, please <a href="contact.php">let us know</a> and we will try to rectify the situation as soon as possible.
-<?
+<?php
 create_middle_box_bottom();
 ago_footer();
 ?>

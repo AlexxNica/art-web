@@ -8,7 +8,7 @@ function ago_header($title)
 	<html>
 	<head>
 	<title>
-	<?
+	<?php
 	print("$title");
 	?> - art.gnome.org</title>
 	<link rel="icon" type="image/png" href="/images/site/gnome-16.png">
@@ -27,7 +27,7 @@ function ago_header($title)
 	<td width="182">
 	<div class="mb-lite-title"><img src="/images/site/pill-icons/art.png" alt=""> ART</div>
 	<div class="mb-lite-contents">
-	<?
+	<?php
 	print("<font size=\"+1\"><a href=\"/index.php\">News</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/updates.php\">Updates</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/search.php\">Search</a></font><br><br>\n");
@@ -61,7 +61,7 @@ function ago_header($title)
 	</td>
 	<td><img src="/images/site/pixel.png" width="10" alt=" "></td>
 	<!-- End Left Column -->
-<?
+<?php
 }
 
 function ago_footer()
@@ -96,6 +96,6 @@ function ago_footer()
 	</div>
 	</body>
 	</html>
-<?
+<?php
 }
 ?>

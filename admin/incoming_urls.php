@@ -1,4 +1,4 @@
-<?
+<?php
 print ("<html><body>");
 require("mysql.inc.php");
 

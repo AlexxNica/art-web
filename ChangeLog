@@ -1,3 +1,12 @@
+2004-09-14  Curtis Hovey  <sinzui@cox.net>
+
+	* admin/incoming_urls.php:
+	* admin/show_submitted_themes.php:
+	* copyright.php:
+	* includes/ago_headers.inc.php:
+
+	Removed short tags.
+
 2004-08-17  Thomas Wood <thos@gnome.org>
 	* themes: Disabled large screenshots for splash screens and GTK
 	Engines
