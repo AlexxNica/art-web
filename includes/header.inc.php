@@ -86,7 +86,7 @@ function imgOff(imgName)
 <?
 if($site_theme == "slick")
 {
-	print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar\"><img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\">");
+	print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar\"><img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\" alt=\" \">");
 }
 else
 {
@@ -102,7 +102,7 @@ for($count=1;$count<5;$count++)
       {
       	if($site_theme == "slick")
          {
-         	print("<img src=\"images/site/mb_mainS.png\" border=\"0\">");
+         	print("<img src=\"images/site/mb_mainS.png\" border=\"0\" alt=\"Main\">");
       	}
          else
          {
@@ -113,7 +113,7 @@ for($count=1;$count<5;$count++)
       {
       	if($site_theme == "slick")
          {
-         	print("<a href=\"change_mirror.php?new_mirrorID=1\" onMouseOver=\"imgOn('imgmb_main')\" onMouseOut=\"imgOff('imgmb_main')\"><img name=\"imgmb_main\" src=\"images/site/mb_main.png\" border=\"0\"></a>");
+         	print("<a href=\"change_mirror.php?new_mirrorID=1\" onMouseOver=\"imgOn('imgmb_main')\" onMouseOut=\"imgOff('imgmb_main')\"><img name=\"imgmb_main\" src=\"images/site/mb_main.png\" border=\"0\" alt=\"Main\"></a>");
    		}
          else
          {
@@ -127,7 +127,7 @@ for($count=1;$count<5;$count++)
       {
       	if($site_theme == "slick")
          {
-         	print("<img src=\"images/site/mb_mirror".($count-1)."S.png\" border=\"0\">");
+         	print("<img src=\"images/site/mb_mirror".($count-1)."S.png\" border=\"0\" alt=\"Mirror ". ($count-1) ."\">");
       	}
          else
          {
@@ -138,7 +138,7 @@ for($count=1;$count<5;$count++)
       {
       	if($site_theme == "slick")
          {
-         	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\" onMouseOver=\"imgOn('imgmb_mirror".($count-1)."')\" onMouseOut=\"imgOff('imgmb_mirror".($count-1)."')\"><img name=\"imgmb_mirror".($count-1)."\" src=\"images/site/mb_mirror".($count-1).".png\" border=\"0\"></a>");
+         	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\" onMouseOver=\"imgOn('imgmb_mirror".($count-1)."')\" onMouseOut=\"imgOff('imgmb_mirror".($count-1)."')\"><img name=\"imgmb_mirror".($count-1)."\" src=\"images/site/mb_mirror".($count-1).".png\" border=\"0\" alt=\"Mirror ".($count-1)."\"></a>");
    		}
          else
          {
@@ -150,7 +150,7 @@ for($count=1;$count<5;$count++)
    {
    	if($site_theme == "slick")
       {
-      	print("<img src=\"images/site/mb_minus.png\">");
+      	print("<img src=\"images/site/mb_minus.png\" alt=\"-\">");
    	}
       else
       {
@@ -162,11 +162,11 @@ for($count=1;$count<5;$count++)
 if($site_theme == "slick")
 {
 	print("</td><td class=\"horizontal-menu-bar\" align=\"right\">");
-	print("<img src=\"images/site/theme.png\">");
-   print("<a href=\"change_site_theme.php?new_site_theme=lite\" onMouseOver=\"imgOn('imgtheme_lite')\" onMouseOut=\"imgOff('imgtheme_lite')\"><img name=\"imgtheme_lite\" src=\"images/site/theme_lite.png\" border=\"0\"></a>");
-	print("<img src=\"images/site/theme_minus.png\">");
-   print("<img src=\"images/site/theme_slickS.png\" border=\"0\">");
-   print("<img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\">");
+	print("<img src=\"images/site/theme.png\" alt=\"Theme\">");
+   print("<a href=\"change_site_theme.php?new_site_theme=lite\" onMouseOver=\"imgOn('imgtheme_lite')\" onMouseOut=\"imgOff('imgtheme_lite')\"><img name=\"imgtheme_lite\" src=\"images/site/theme_lite.png\" border=\"0\" alt=\"Lite\"></a>");
+	print("<img src=\"images/site/theme_minus.png\" alt=\"-\">");
+   print("<img src=\"images/site/theme_slickS.png\" border=\"0\" alt=\"Slick\">");
+   print("<img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\" alt=\" \">");
 }
 else
 {
@@ -177,13 +177,13 @@ print("</td></tr>\n");
 
 ?>
 
-<tr class="horizontal-gradient-menu-bar"><td><img src="images/site/LOGO-Pill.png"></td><td></td><td class="align-right"><a href="http://www.gnome.org/"><img border="0" src="images/site/LOGO-Elliptic.png"></a></td></tr>
+<tr class="horizontal-gradient-menu-bar"><td><img src="images/site/LOGO-Pill.png" alt="GNOME"></td><td></td><td class="align-right"><a href="http://www.gnome.org/"><img border="0" src="images/site/LOGO-Elliptic.png" alt="GNOME Foot"></a></td></tr>
 
 <?
 if($site_theme == "slick")
 {
-	print("<tr><td colspan=\"3\" class=\"horizontal-menu-bar\"><img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\"><img src=\"images/site/TB_art.png\"><img src=\"images/site/mb_minus.png\"><img src=\"images/site/TB_slogan.png\"></td></tr>\n");
-	print("<tr><td colspan=\"3\" class=\"horizontal-shadow\"><img src=\"images/site/TB_shadow.png\"></td></tr>\n");
+	print("<tr><td colspan=\"3\" class=\"horizontal-menu-bar\"><img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\" alt=\" \"><img src=\"images/site/TB_art.png\" alt=\"art.gnome.org\"><img src=\"images/site/mb_minus.png\" alt=\"-\"><img src=\"images/site/TB_slogan.png\" alt=\"Enhance your GNOME desktop!\"></td></tr>\n");
+	print("<tr><td colspan=\"3\" class=\"horizontal-shadow\"><img src=\"images/site/TB_shadow.png\" alt=\" \"></td></tr>\n");
 }
 else
 {
@@ -195,7 +195,7 @@ else
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 <tr valign="top">
 <td>
-<img src="images/site/pixel.png" width="20" height="1">
+<img src="images/site/pixel.png" width="20" height="1" alt=" ">
 </td>
 <!-- Left Column -->
 <?
@@ -230,9 +230,9 @@ if($site_theme == "lite")
    }
    ?>
    </div>
-	<img src="images/site/pixel.png" width="182" height="1">
+	<img src="images/site/pixel.png" width="182" height="1" alt=" ">
    </td>
-   <td><img src="images/site/pixel.png" width="10"></td>
+   <td><img src="images/site/pixel.png" width="10" alt=" "></td>
 <?
 }
 else
@@ -241,7 +241,7 @@ else
 <td width="182">
 
 <table border="0" width="182" cellpadding="0" cellspacing="0">
-<tr><td width="1"><img src="images/site/ART-Pill_l.png"></td><td width="135"><img src="images/site/ART-Pill_r.png"></td><td width="33" class="horizontal-split"></td><td><img src="images/site/LBOX-top_r.png"></td></tr>
+<tr><td width="1"><img src="images/site/ART-Pill_l.png" alt=" "></td><td width="135"><img src="images/site/ART-Pill_r.png" alt=""></td><td width="33" class="horizontal-split"></td><td><img src="images/site/LBOX-top_r.png" alt=""></td></tr>
 <tr><td width="1" class="black-line"></td><td colspan="2" bgcolor="#a8a7b7">
 
 <!-- Start Link Bar -->
@@ -259,7 +259,7 @@ while(list($key,$val)=each($linkbar))
 <!-- End Link Bar -->
 
 </td><td width="13" class="vertical-shadow"></td></tr>
-<tr><td colspan="4"><img src="images/site/LBOX-Shadow.png" width="182"></td></tr>
+<tr><td colspan="4"><img src="images/site/LBOX-Shadow.png" width="182" alt=" "></td></tr>
 </table>
 
 </td>
