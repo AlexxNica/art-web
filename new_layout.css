@@ -32,11 +32,7 @@
 
 	text-align: right;
 
-	/*
-	background-image: url("images/site/temp-header.png");
-   background-repeat: repeat-x;
-	background: url("/images/hdr-hills01.png") no-repeat;
-	*/
+	background: url("/images/site/art-header.png") no-repeat;
 	background-color: #555566;
 	border-bottom: 1px solid #666666;
 	font-family: sans-serif;

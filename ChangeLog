@@ -1,3 +1,7 @@
+2003-08-30  Alex Duggan  <aldug@astrolinux.com>
+
+	* new_layout.css: add a new header image.
+
 2003-08-23  Alex Duggan  <aldug@astrolinux.com>
 
 	* main.css: include even IE png hack
