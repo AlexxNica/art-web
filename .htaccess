@@ -1,3 +1,5 @@
 AddType application/x-httpd-php .php .html
 php_value include_path .:./includes
-DefaultType application/x-httpd-php
+<Files phpinfo>
+	DefaultType application/x-httpd-php
+</Files>
