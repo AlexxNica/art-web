@@ -312,7 +312,8 @@ function background_search_result($search_text, $search_type, $category, $thumbn
    }
 	$start = (($page - 1) * $thumbnails_per_page);
 
-	print("<b>$num_backgrounds results found, showing " . ($start+1) . " to " . ($start + $thumbnails_per_page) . "</b>\n");
+	//print("<b>$num_backgrounds results found, showing " . ($start+1) . " to " . ($start + $thumbnails_per_page) . "</b>\n");
+	print("<b>Showing " . ($start+1) . " through " . ($start + $thumbnails_per_page) . " of $num_backgrounds results.</b>\n");
 
 	if($sort_by == "date")
 	{
@@ -351,7 +352,7 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
    }
 	$start = (($page - 1) * $thumbnails_per_page);
 
-	print("<b>$num_themes results found, showing " . ($start+1) . " to " . ($start + $thumbnails_per_page) . "</b>\n");
+	print("<b>Showing " . ($start+1) . " through " . ($start + $thumbnails_per_page) . " of $num_themes results.</b>\n");
 
 	if($sort_by == "date")
 	{

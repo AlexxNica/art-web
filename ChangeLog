@@ -1,5 +1,11 @@
 2003-07-09  Alex Duggan  <aldug@astrolinux.com>
 
+	* search.php:
+	* includes/common.inc.php:
+	small string change in search results sentence.
+
+2003-07-09  Alex Duggan  <aldug@astrolinux.com>
+
 	* backgrounds:
 	* themes:
 	Left justify background and theme lists.
