@@ -232,7 +232,7 @@ function print_select_box($name,$array,$selected)
 	print("</select>\n");
 }
 
-function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by)
+function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results_text)
 {
 	global $thumbnails_per_page_array, $sort_by_array;
 	
@@ -252,7 +252,7 @@ function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by)
 	print_select_box("sort_by", $sort_by_array, $sort_by);
 	print("</td></tr>\n");
 	
-	print("<tr><td>Thumbnails Per Page:</td><td>");
+	print("<tr><td>$results_text:</td><td>");
 	print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page);
 	print("</td></tr>\n");
 	
@@ -351,7 +351,7 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
    }
 	$start = (($page - 1) * $thumbnails_per_page);
 
-	print("$num_themes results found, showing " . ($start+1) . " to " . ($start + $thumbnails_per_page));
+	print("<b>$num_themes results found, showing " . ($start+1) . " to " . ($start + $thumbnails_per_page) . "</b>\n");
 
 	if($sort_by == "date")
 	{

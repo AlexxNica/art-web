@@ -41,7 +41,6 @@ else if( array_key_exists($category,$theme_config_array) && ($theme_num == "" ||
 	$temp = "themes_" . $category;
    create_middle_box_top($temp);
 	
-	print("<div align=\"center\">\n");
 	if(!$page)
 	{
 		$page = 1;
@@ -59,11 +58,12 @@ else if( array_key_exists($category,$theme_config_array) && ($theme_num == "" ||
    }
    else
    {
-	   print_thumbnails_per_page_form($thumbnails_per_page, $sort_by);
+	   print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Themes");
 	   print("<p>");
 		list($page, $num_pages) = theme_search_result("", "theme", $category, $thumbnails_per_page, $sort_by, $page, $num_themes);
 		
 		/* Page Navigation System */    
+		print("<div align=\"center\">\n");
 		if($page > 1)
       {
       	$prev_page = $page -1;
@@ -85,9 +85,8 @@ else if( array_key_exists($category,$theme_config_array) && ($theme_num == "" ||
       	$next_page = $page +1;
          print(" <a href=\"$PHP_SELF?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
       }
-		print("<p>\n");
+		print("</div>\n<p>\n");
 	}
-   print("</div>\n");
    create_middle_box_bottom();
 	ago_footer();
 }

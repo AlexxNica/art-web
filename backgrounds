@@ -39,7 +39,6 @@ elseif( array_key_exists($category,$background_config_array) && ($background_num
 	$temp = "backgrounds_" . $category;
    create_middle_box_top($temp);
 	
-	print("<div align=\"center\">\n");
 	if(!$page)
 	{
 		$page = 1;
@@ -57,10 +56,11 @@ elseif( array_key_exists($category,$background_config_array) && ($background_num
    }
    else
    {
-		print_thumbnails_per_page_form($thumbnails_per_page, $sort_by);
+		print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Backgrounds");
 	   print("<p>");
 		list($page, $num_pages) = background_search_result("", "background", $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds);
 		
+		print("<div align=\"center\">\n");
 		/* Page Navigation System */
 		if($page > 1)
       {
@@ -83,9 +83,8 @@ elseif( array_key_exists($category,$background_config_array) && ($background_num
       	$next_page = $page +1;
          print(" <a href=\"$PHP_SELF?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
       }
-      print("<p>\n");
+      print("</div><p>\n");
 	}
-   print("</div>\n");
    
 	create_middle_box_bottom();
 	ago_footer();

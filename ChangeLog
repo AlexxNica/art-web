@@ -1,5 +1,14 @@
 2003-07-09  Alex Duggan  <aldug@astrolinux.com>
 
+	* backgrounds:
+	* themes:
+	Left justify background and theme lists.
+	
+	* common.inc.php: minor API changes to print_thumbnails_per_page_form(),
+	add bold text to search results sentence for backgrounds.
+	
+2003-07-09  Alex Duggan  <aldug@astrolinux.com>
+
 	* backend.php: use the new link format.
 
 2003-07-08  Alex Duggan  <aldug@astrolinux.com>
