@@ -1,3 +1,7 @@
+2003-11-02  Alex Duggan  <aldug@astrolinux.com>
+
+	* includes/ago_headers.inc.php: Use new top links
+
 2003-09-23  Alex Duggan  <aldug@astrolinux.com>
 
 	* backgrounds:

@@ -84,16 +84,15 @@ function ago_footer()
       <a href="/"><img id="logo" src="/images/site/gnome-64.png" alt="Home" title="Back to the Gnome Developer's home page"/></a>
       <p class="none"></p>
       <div id="hdrNav">
-	<a href="http://www.gnome.org/">Users</a> &middot;
-	<a href="http://developer.gnome.org/">Developers</a> &middot;
-	<a href="http://cvs.gnome.org/lxr/">LXR</a> &middot;
-	<a href="http://cvs.gnome.org/bonsai/">Bonsai</a> &middot;
-	<a href="http://ftp.gnome.org/pub/GNOME/MIRRORS.html">FTP</a> &middot;
-	<a href="http://bugzilla.gnome.org/">Bugzilla</a> &middot;
-	<a href="http://www.gnome.org/softwaremap/">Software Map</a> &middot;
-	<a href="/"><b>Art &amp; Themes</b></a> &middot;
-	<a href="mailto:webmaster@gnome.org">Contact</a>
-      </div>
+			<a href="http://www.gnome.org/about/">About GNOME</a> &middot;
+			<a href="http://www.gnome.org/start/2.4/">Download</a> &middot;
+			<!--<a href="http://www.gnome.org/start/"><i>Get Involved!</i></a> &middot;-->
+			<a href="http://www.gnome.org/"><b>Users</b></a> &middot;
+			<a href="http://developer.gnome.org/">Developers</a> &middot;
+			<a href="http://foundation.gnome.org/">Foundation</a> &middot;
+			<a href="">Art &amp; Themes</a> &middot;
+			<a href="http://www.gnome.org/contact/">Contact</a>
+		</div>
     </div>
 
     <!--
