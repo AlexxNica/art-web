@@ -129,7 +129,7 @@ for($count=1;$count<5;$count++)
       	}
          else
          {
-         	print("<span class=\"yellow-text\">Mirror ".$count-1."</span>");
+         	print("<span class=\"yellow-text\">Mirror " . $count-1 . "</span>");
          }
       }
       else
