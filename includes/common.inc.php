@@ -215,10 +215,8 @@ function display_icons($type, $page)
          }
       }
       
-      print_r($icon_array);
-      /*
       print("<table border=\"0\">\n");
-      while(list($file)=array_values($icon_array))
+      while(list($foo,$file)=each($icon_array))
 		{
 			$col = 0;
          print("<tr>\n");
@@ -228,14 +226,12 @@ function display_icons($type, $page)
          	if(in_array($ext,$GLOBALS['valid_image_ext']))
 				{
 					print("<td><img src=\"images/icons/$type/$file\"></td>");
-					$counter++;
+					$col++;
             }
 			}
          print("</tr>\n");
       }
       print("</table>");
-   	*/
-   
    }
    else
    {
