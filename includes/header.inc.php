@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="main.css" type="text/css">
 <?
 require("config.inc.php");
-if($site_theme == "standard")
+if($site_theme == "slick")
 {
 ?>
 <script language="JavaScript">
@@ -33,10 +33,10 @@ if (document.images)
 	imgmb_mirror3off=new Image();
 	imgmb_mirror3off.src="images/site/mb_mirror3.png";
    
-   imgtheme_standardon=new Image();
-	imgtheme_standardon.src="images/site/theme_standardH.png";
-	imgtheme_standardoff=new Image();
-	imgtheme_standardoff.src="images/site/theme_standard.png";
+   imgtheme_slickon=new Image();
+	imgtheme_slickon.src="images/site/theme_slickH.png";
+	imgtheme_slickoff=new Image();
+	imgtheme_slickoff.src="images/site/theme_slick.png";
    
    imgtheme_liteon=new Image();
 	imgtheme_liteon.src="images/site/theme_liteH.png";
@@ -46,7 +46,7 @@ if (document.images)
 
 <?
 //require("config.inc.php");
-//if($site_theme == "standard")
+//if($site_theme == "slick")
 //{
 	reset ($linkbar);
 	while (list($key,$val) = each($linkbar))
@@ -84,7 +84,7 @@ function imgOff(imgName)
 <body>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <?
-if($site_theme == "standard")
+if($site_theme == "slick")
 {
 	print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar\"><img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\">");
 }
@@ -99,7 +99,7 @@ for($count=1;$count<5;$count++)
    {
    	if($count == $mirrorID)
       {
-      	if($site_theme == "standard")
+      	if($site_theme == "slick")
          {
          	print("<img src=\"images/site/mb_mainS.png\" border=\"0\">");
       	}
@@ -110,7 +110,7 @@ for($count=1;$count<5;$count++)
       }
       else
       {
-      	if($site_theme == "standard")
+      	if($site_theme == "slick")
          {
          	print("<a href=\"change_mirror.php?new_mirrorID=1\" onMouseOver=\"imgOn('imgmb_main')\" onMouseOut=\"imgOff('imgmb_main')\"><img name=\"imgmb_main\" src=\"images/site/mb_main.png\" border=\"0\"></a>");
    		}
@@ -124,7 +124,7 @@ for($count=1;$count<5;$count++)
    {
    	if($count == $mirrorID)
       {
-      	if($site_theme == "standard")
+      	if($site_theme == "slick")
          {
          	print("<img src=\"images/site/mb_mirror".($count-1)."S.png\" border=\"0\">");
       	}
@@ -135,7 +135,7 @@ for($count=1;$count<5;$count++)
       }
       else
       {
-      	if($site_theme == "standard")
+      	if($site_theme == "slick")
          {
          	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\" onMouseOver=\"imgOn('imgmb_mirror".($count-1)."')\" onMouseOut=\"imgOff('imgmb_mirror".($count-1)."')\"><img name=\"imgmb_mirror".($count-1)."\" src=\"images/site/mb_mirror".($count-1).".png\" border=\"0\"></a>");
    		}
@@ -147,7 +147,7 @@ for($count=1;$count<5;$count++)
    }
    if($count != 4)
    {
-   	if($site_theme == "standard")
+   	if($site_theme == "slick")
       {
       	print("<img src=\"images/site/mb_minus.png\">");
    	}
@@ -158,19 +158,19 @@ for($count=1;$count<5;$count++)
    }
 }
 */
-if($site_theme == "standard")
+if($site_theme == "slick")
 {
 	print("</td><td class=\"horizontal-menu-bar\" align=\"right\">");
 	print("<img src=\"images/site/theme.png\">");
-   print("<img src=\"images/site/theme_standardS.png\" border=\"0\">");
-   print("<img src=\"images/site/theme_minus.png\">");
    print("<a href=\"change_site_theme.php?new_site_theme=lite\" onMouseOver=\"imgOn('imgtheme_lite')\" onMouseOut=\"imgOff('imgtheme_lite')\"><img name=\"imgtheme_lite\" src=\"images/site/theme_lite.png\" border=\"0\"></a>");
-	print("<img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\">");
+	print("<img src=\"images/site/theme_minus.png\">");
+   print("<img src=\"images/site/theme_slickS.png\" border=\"0\">");
+   print("<img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\">");
 }
 else
 {
 	print("</td><td class=\"horizontal-menu-bar-lite\" align=\"right\"><b>THEME:</b> ");
-   print("<b><a href=\"change_site_theme.php?new_site_theme=standard\">Standard</a></b> - <span class=\"yellow-text\">Lite</span>&nbsp;&nbsp;&nbsp;");
+   print("<span class=\"yellow-text\">Lite</span> - <b><a href=\"change_site_theme.php?new_site_theme=slick\">Slick</a></b>&nbsp;&nbsp;&nbsp;");
 }
 print("</td></tr>\n");
 
@@ -179,7 +179,7 @@ print("</td></tr>\n");
 <tr class="horizontal-gradient-menu-bar"><td><img src="images/site/LOGO-Pill.png"></td><td></td><td class="align-right"><img src="images/site/LOGO-Elliptic.png"></td></tr>
 
 <?
-if($site_theme == "standard")
+if($site_theme == "slick")
 {
 	print("<tr><td colspan=\"3\" class=\"horizontal-menu-bar\"><img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\"><img src=\"images/site/TB_art.png\"><img src=\"images/site/mb_minus.png\"><img src=\"images/site/TB_slogan.png\"></td></tr>\n");
 	print("<tr><td colspan=\"3\" class=\"horizontal-shadow\"><img src=\"images/site/TB_shadow.png\"></td></tr>\n");

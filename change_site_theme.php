@@ -5,7 +5,7 @@ require("common.inc.php");
 
 if($new_site_theme)
 {
-	if($new_site_theme == "standard" || $new_site_theme == "lite")
+	if($new_site_theme == "slick" || $new_site_theme == "lite")
    {
    	$site_theme = $new_site_theme;
       if($HTTP_REFERER)
