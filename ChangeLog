@@ -1,5 +1,9 @@
 2003-07-08  Alex Duggan  <aldug@astrolinux.com>
 
+	* includes/common.inc.php: s/BACKGROUNDS/THEMES/
+
+2003-07-08  Alex Duggan  <aldug@astrolinux.com>
+
 	* art-icons:
 	* backgrounds:
 	* screenshots:

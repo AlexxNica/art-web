@@ -138,7 +138,7 @@ function print_theme_row($themeID)
 	$release_date = fix_sql_date($release_date,"/");
 	$link = "/themes/$category/$themeID.php";
 	$category_name = $theme_config_array["$category"]["name"];
-	print("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" border=\"0\"></td><td><a class=\"screenshot\" href=\"$link\">$theme_name</a><br>$release_date<br>BACKGROUNDS - $category_name<br>$author</td></tr>\n");
+	print("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" border=\"0\"></td><td><a class=\"screenshot\" href=\"$link\">$theme_name</a><br>$release_date<br>THEMES - $category_name<br>$author</td></tr>\n");
 }
 
 function get_latest_backgrounds($number)
