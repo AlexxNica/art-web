@@ -5,17 +5,23 @@ require("common.inc.php");
 require("ago_headers.inc.php");
 
 // superglobal stuff
+if (!get_magic_quotes_gpc())
+{
+	$theme_name = mysql_real_escape_string($_POST["theme_name"]);
+	$theme_author = mysql_real_escape_string($_POST["theme_author"]);
+	$theme_url = mysql_real_escape_string($_POST["theme_url"]);
+	$theme_description = mysql_real_escape_string($_POST["theme_description"]);
+} else
+{
+	$theme_name = $_POST["theme_name"];
+	$theme_author = $_POST["theme_author"];
+	$theme_url = $_POST["theme_url"];
+	$theme_description = $_POST["theme_description"];
+}
 
-$theme_name = mysql_real_escape_string($_POST["theme_name"]);
-//$category = validate_input_array_default($_POST["category"], $theme_config_array, "");
-$category = mysql_real_escape_string($_POST["category"]);
+$category = validate_input_array_default($_POST["category"], array_keys($theme_config_array), "");
+$license = validate_input_array_default($_POST["license"], array_keys($license_config_array), "");
 $version = validate_input_regexp_default($_POST["version"], "^[0-9]+$", "0");
-//$license = validate_input_regexp_default($_POST["license"], $license_config_array, "");
-$license = mysql_real_escape_string($_POST["license"]);
-$theme_author = mysql_real_escape_string($_POST["theme_author"]);
-$theme_url = mysql_real_escape_string($_POST["theme_url"]);
-$theme_description = mysql_real_escape_string($_POST["theme_description"]);
-
 $update = validate_input_regexp_default($_POST["update"], "^[0-9]+$", "");
 
 ago_header("Theme Submission");
@@ -28,9 +34,14 @@ if (!array_key_exists('username', $_SESSION))
 	die();
 }
 
-if($theme_name)
+if($_POST['submit'])
 {
-	if($theme_name && $category && $theme_url && $theme_description && $license)
+	if (!validate_submit_url($theme_url))
+	{
+		print("<p class=\"error\">Error, &quot;$theme_url&quot; is not a valid submission url.<br/>");
+		print("URLs must start with http or ftp, and end in .png, .jpg, .tar.gz, .tar.bz2 or .tgz.</p>");
+	}
+	elseif($theme_name && $category && $theme_url && $theme_description && $license)
 	{
 		$date = date("Y-m-d");
 		$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,userID,status,date,theme_name,version,license,parentID,category,theme_url,theme_description,updateID) ";
@@ -43,6 +54,8 @@ if($theme_name)
 			print("<li><a href=\"{$_SERVER['PHP_SELF']}\">Submit another theme</a></li>");
 			print("<li><a href=\"/account.php\">Back to account page</a></li>");
 			print("</ul>");
+			ago_footer();
+			die();
 		}
 		else
 		{
@@ -52,23 +65,23 @@ if($theme_name)
 	}
 	else
 	{
-		print("<p class=\"error\">Error, you must fill out all of the previous form fields, please go back and try again.</p>");
+		print("<p class=\"error\">Error, you must fill out all of the form fields.</p>");
 	}
 }
 else
 {
 	print("<p>If you would like to submit your theme to art.gnome.org, please fill out the form below and provide a web address where we can download your theme.\n</p>\n");
 	print("<p class=\"info\">To help speed up your submission, please take a look at the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">Submission Policy</a> first.</p>");
-	
+}
 	if ($update)
 	{
 		$theme_select_result = mysql_query("SELECT theme_name,category,license,version,theme_description,parentID FROM incoming_theme WHERE themeID=$update AND userID={$_SESSION['userID']}");
-		list($name,$category,$license,$version,$description,$parentID) = mysql_fetch_row($theme_select_result);
+		extract(mysql_fetch_array($theme_select_result));
 	}
 	
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">");
-	print("<tr><td><strong>Theme Name:</strong></td><td><input type=\"text\" name=\"theme_name\" value=\"$name\" size=\"40\"></td></tr>\n");
+	print("<tr><td><strong>Theme Name:</strong></td><td><input type=\"text\" name=\"theme_name\" value=\"$theme_name\" size=\"40\"></td></tr>\n");
 	print("<tr><td><strong>Category</strong></td><td>"); print_select_box("category", Array(""=>"Choose", "desktop"=>"Desktop Theme", "gtk2"=>"Applications (gtk+)", "icon"=>"Icon", "gdm_greeter" => "Login Manager (gdm)", "splash_screens"=>"Splash Screens","metacity"=>"Window Borders (metacity)"), $category); print("</td></tr>\n");
 	print("<tr><td><strong>Variation of:</strong></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>\n");
 	$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE userID = {$_SESSION['userID']}");
@@ -80,14 +93,14 @@ else
 	print("<tr><td><strong>License</strong></td><td>");print_select_box("license", $license_config_array, $license); print("</td></tr>\n");
 	print("<tr><td><strong>Version</strong></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
 	print("<tr><td><strong>Theme Author:</strong></td><td><input type=\"hidden\" name=\"userID\" value=\"{$_SESSION['userID']}\" />{$_SESSION['realname']}</td></tr>\n");
-	print("<tr><td><strong>URL of Theme:</strong></td><td><input type=\"text\" name=\"theme_url\" size=\"40\"></td></tr>\n");
-	print("<tr><td><strong>Description:</strong></td><td><textarea name=\"theme_description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
+	print("<tr><td><strong>URL of Theme:</strong></td><td><input type=\"text\" name=\"theme_url\" size=\"40\" value=\"$theme_url\" /></td></tr>\n");
+	print("<tr><td><strong>Description:</strong></td><td><textarea name=\"theme_description\" cols=\"40\" rows=\"5\" wrap>$theme_description</textarea></td></tr>\n");
 	print("</table>\n<p>\n");
 	print("<input type=\"hidden\" name=\"update\" value=\"$update\"/>");
-	print("<input type=\"submit\" value=\"Submit Theme\">\n");
+	print("<input type=\"submit\" name=\"submit\" value=\"Submit Theme\">\n");
 	print("</form>\n");
 
-}
+
 
 ago_footer();
 

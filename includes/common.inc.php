@@ -78,7 +78,7 @@ function print_detailed_view($description, $type, $release_date, $add_timestamp,
 	print("<tr><th>Version</th><td>$version</td></tr>");
 	print("<tr><th>License</th><td>{$license_config_array[$license]}</td></tr>");
 	$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
-	print("<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day</td></tr>");
+	print("<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day ($download_count downloads in total)</td></tr>");
 
 	print("<tr><th>Rating</th><td>");
 	print("<div class=\"rating_text\" style=\"float:left\">");
@@ -111,14 +111,19 @@ function print_detailed_view($description, $type, $release_date, $add_timestamp,
 	print("<div align=\"center\"><img src=\"$thumbnail_url\" vspace=\"2\" class=\"large_thumbnail\" alt=\"thumbnail\" /></div>");
 }
 
-function print_item_row($name, $thumbnail, $category, $author, $date, $link, $vars, $vote)
+function print_item_row($name, $thumbnail, $category, $author, $date, $link, $vars, $vote, $extra)
 {
 	if ($vars)
 		$var_image = "<img src=\"/images/site/stock_color.png\" alt=\"Variations Available\" />";
 	else
 		$var_image = "";
 
-	print(utf8_encode("<table class=\"theme_row\"><tr valign=\"top\"><td class=\"theme_row_col1\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"$class\" />$vote</td><td><a href=\"$link\" class=\"h2\"><strong>$name</strong></a><br/><span class=\"subtitle\">$category<br/>$date<br/>$author<br/>$var_image</span></td></tr></table>"));
+	print(utf8_encode("<table class=\"theme_row\"><tr valign=\"top\">"));
+	print(utf8_encode("<td class=\"theme_row_col1\"><a href=\"$link\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"Thumbnail\" class=\"thumbnail\" /></a>$vote</td>"));
+	print(utf8_encode("<td><a href=\"$link\" class=\"h2\"><strong>$name</strong></a><br/><span class=\"subtitle\">$category<br/>$date<br/>$author<br/>$var_image"));
+	foreach ($extra as $val)
+		print(utf8_encode($val));
+	print("</span></td></tr></table>");
 }
 
 function print_comments($artID, $type)
@@ -133,7 +138,7 @@ function print_comments($artID, $type)
 		//Only one Comment
 		$msg = "comment";
 	}
-	else 
+	else
 	{
 		//More than one comment
 		$msg = "comments";
@@ -225,7 +230,7 @@ function add_comment($artID, $type, $comment)
 		{
 			return ("<p class=\"warning\">Comments must be more than 10 letters long!</p>");
 		}
-		$comment = mysql_real_escape_string($comment); // make sure it is safe for html and mysql
+		$comment = mysql_real_escape_string($comment); // make sure it is safe for mysql
 		$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
 		if ($comment_result === False)
 		{
@@ -237,15 +242,14 @@ function add_comment($artID, $type, $comment)
 function print_background_row($backgroundID, $view)
 {
 	global $background_config_array, $site_url;
-	$background_select_result = mysql_query("SELECT background_name,category,userID,release_date,thumbnail_filename,download_start_timestamp,download_count,vote_sum,vote_count FROM background WHERE backgroundID='$backgroundID'");
+	$background_select_result = mysql_query("SELECT background_name,category,username,release_date,thumbnail_filename,download_start_timestamp,download_count,vote_sum,vote_count FROM background, user WHERE backgroundID='$backgroundID' AND background.userID = user.userID");
+	$background_res_result = mysql_query("SELECT resolution FROM background_resolution WHERE backgroundID='$backgroundID'");
 	$var_select_result = mysql_query("SELECT * FROM background WHERE parent = '$backgroundID'");
 	if (mysql_num_rows($var_select_result) > 0) $vars = true; else $vars = false;
 
-	list($background_name,$category,$userID,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count,$vote_sum,$vote_count) = mysql_fetch_row($background_select_result);
-
-	$user_select_result = mysql_query("SELECT realname FROM user WHERE userID = $userID");
-	list($author) = mysql_fetch_row($user_select_result);
-
+	list($background_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count,$vote_sum,$vote_count) = mysql_fetch_row($background_select_result);
+	while (list($background_res) = mysql_fetch_row($background_res_result))
+		$extra[0] = "$background_res ";
 
 	$release_date = fix_sql_date($release_date);
 	$link = "{$site_url}backgrounds/$category/$backgroundID/";
@@ -273,24 +277,20 @@ function print_background_row($backgroundID, $view)
 	}
 	else
 	{
-		print_item_row($background_name, $thumbnail, "Backgrounds - $category_name", $author, $release_date, $link, $vars, $vote);
+		print_item_row($background_name, $thumbnail, "Backgrounds - $category_name", $author, $release_date, $link, $vars, $vote, $extra);
 	}
 }
 
 function print_theme_row($themeID, $view)
 {
 	global $theme_config_array, $site_url;
-	$theme_select_result = mysql_query("SELECT theme_name, category, userID, release_date,small_thumbnail_filename,thumbnail_filename,download_filename, vote_sum, vote_count FROM theme WHERE themeID='$themeID'");
+	$theme_select_result = mysql_query("SELECT theme_name, category, user.username, release_date,small_thumbnail_filename,thumbnail_filename,download_filename, vote_sum, vote_count FROM theme,user WHERE themeID='$themeID' AND user.userID = theme.userID");
 	$var_select_result = mysql_query("SELECT * FROM theme WHERE parent = '$themeID'");
 	if (mysql_num_rows($var_select_result) > 0)
 		$vars = "<img src=\"/images/site/theme-24.png\" alt=\"Variations available\" height=\"16\" width=\"16\" />";
 	else
 		$vars = "";
-	list($theme_name,$category,$userID,$release_date,$thumbnail_filename,$screenshot,$download,$vote_sum,$vote_count) = mysql_fetch_row($theme_select_result);
-	
-	$user_select_result = mysql_query("SELECT realname FROM user WHERE userID = $userID");
-	list($author) = mysql_fetch_row($user_select_result);
-
+	list($theme_name,$category,$author,$release_date,$thumbnail_filename,$screenshot,$download,$vote_sum,$vote_count) = mysql_fetch_row($theme_select_result);
 
 	$release_date = fix_sql_date($release_date);
 	$link = "{$site_url}themes/$category/$themeID/";
@@ -318,7 +318,7 @@ function print_theme_row($themeID, $view)
 	}
 	else
 	{
-		print_item_row($theme_name, $thumbnail, $category_name, $author, $release_date, $link, $vars, $vote);
+		print_item_row($theme_name, $thumbnail, $category_name, $author, $release_date, $link, $vars, $vote, "");
 	}
 }
 
@@ -682,6 +682,12 @@ function validate_input_array_error ($input, $array)
 		return $input;
 	}
 }
+
+function validate_submit_url($url)
+{
+        return ereg("^(http(s){0,1}://|ftp://).*(\.tar\.gz|\.tar\.bz2|\.tgz|\.png|\.jpg)$", $url);
+}
+
 
 /* escape_gpc_array() - ensures special characters are escaped in gpc variables */
 function escape_gpc_array (&$array)

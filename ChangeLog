@@ -1,3 +1,14 @@
+2005-04-06  Thomas Wood  <thos@gnome.org>
+
+	* default.css: Darker border on input elements, added border to thumbnails
+	* includes/common.inc.php: Fixed bug 171936, added
+	validate_submit_url() function
+	* submit_background.php:
+	* submit_theme.php:
+
+	Validates submission urls, refills the form on errors.
+	Fixes duplicate escaping issues
+
 2005-04-05  Thomas Wood  <thos@gnome.org>
 
 	* account.php:

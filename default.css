@@ -44,10 +44,6 @@ body {
 	margin-bottom: 0.2em;
 }
 
-a img.thumbnail {
-	border: none;
-}
-
 img.thumbnail {
 	border: 1px #a2a2a2 solid;
 	margin-bottom: 2em;
@@ -56,7 +52,7 @@ img.thumbnail {
 }
 
 img.large_thumbnail {
-	border: none;
+	border: 1px #a2a2a2 solid;
 	margin: 2em;
 	text-align:middle;
 	clear: left right;
@@ -210,7 +206,7 @@ input, select, textarea {
 	font-family: sans-serif;
 	font-size: 1em;
 /*	color: #7d7d7d; */
-	border: solid 1px #dedede;
+	border: 1px #a2a2a2 solid;
 }
 
 input.link_button {
