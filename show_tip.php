@@ -7,7 +7,7 @@ if($tipID)
 	include("header.inc.php");
 	create_middle_box_top("tips");
 	
-   $tip_select_result = mysql_query("SELECT title,body, FROM tip WHERE tipID='$tipID'");
+   $tip_select_result = mysql_query("SELECT title,body FROM tip WHERE tipID='$tipID'");
 	if(mysql_num_rows($tip_select_result)==0)
    {
    	print("Invalid Tip.");
