@@ -20,18 +20,17 @@ while($icon_select_row=mysql_fetch_array($icon_select_result))
 }
 print("</table>\n");
 
-//print("<p>\nMost of the icons of this section were done by Tuomas \"tigert\" Kuosmanen, Jakub \"jimmac\" Steiner and Justin \"largo\" Stressman. Some icons were done by Garrett LeSage, Ed Halley, Ville \"drc\" P&#228;tsi, and Roman \"star\" Beigelbeck.");
 print("<p>\nThanks to the following artists for their great icons:");
-print("<ul>\n");
-print("<li><a href=\"mailto:tigert _AT_ ximian.com\">Tuomas \"tigert\" Kuosmanen</a>\n");
-print("<li><a href=\"mailto:jimmac _AT_ ximian.com\">Jakub \"jimmac\" Steiner</a>\n");
-print("<li><a href=\"mailto:largo _AT_ windowmaker.org\">Justin \"largo\" Stressman</a>\n");
-print("<li><a href=\"mailto:garrett _AT_ linuxart.com\">Garrett LeSage</a>\n");
-print("<li>Ed Halley\n");
-print("<li>Ville \"drc\" P&#228;tsi\n");
-print("<li><a href=\"mailto:roman _AT_ gnome.org\">Roman \"star\" Beigelbeck</a>\n");
-print("<li>and many more...\n");
-print("</ul>\n");
+print("<p>\n<table border=\"0\" cellpadding=\"2\">\n");
+print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a href=\"mailto:tigert _AT_ ximian.com\">Tuomas \"tigert\" Kuosmanen</a></td></tr>\n");
+print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a href=\"mailto:jimmac _AT_ ximian.com\">Jakub \"jimmac\" Steiner</a></td></tr>\n");
+print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a href=\"mailto:largo _AT_ windowmaker.org\">Justin \"largo\" Stressman</a></td></tr>\n");
+print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a href=\"mailto:garrett _AT_ linuxart.com\">Garrett LeSage</a></td></tr>\n");
+print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td>Ed Halley</td></tr>\n");
+print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td>Ville \"drc\" P&#228;tsi</td></tr>\n");
+print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a href=\"mailto:roman _AT_ gnome.org\">Roman \"star\" Beigelbeck</a></td></tr>\n");
+print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td>and many more...</td></tr>\n");
+print("</table>\n");
 
 create_middle_box_bottom();
 include("footer.inc.php");

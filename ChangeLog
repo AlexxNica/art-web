@@ -1,5 +1,9 @@
 2002-12-24  Alex Duggan  <aldug@gnome.org>
 
+	* icons.php: use image bullets in a table instead of <ul> for icon author list
+	
+2002-12-24  Alex Duggan  <aldug@gnome.org>
+
 	* main.css:
 	* includes/common.inc.php:
 	* includes/config.inc.php:
