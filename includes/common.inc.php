@@ -215,7 +215,7 @@ function display_icons($type, $page)
          }
       }
       
-      print("<table border=\"0\">\n<tr>");
+      print("<table border=\"1\">\n<tr>");
       $counter = 1;
       while(list($foo,$file)=each($icon_array))
 		{
@@ -229,9 +229,8 @@ function display_icons($type, $page)
 				print("<td><img src=\"images/icons/$type/$file\"></td>");
 				$counter++;
          }
-			print("</tr>\n");
-      }
-      print("</table>");
+		}
+      print("</tr>\n</table>");
    }
    else
    {
