@@ -35,7 +35,7 @@ else
 	print("<form action=\"$PHP_SELF\" method=\"post\">\n");
 	print("<table border=\"0\">");
 	print("<tr><td><b>Theme Name:</b></td><td><input type=\"text\" name=\"theme_name\" size=\"40\"></td></tr>\n");
-	print("<tr><td><b>Category</b></td><td><select name=\"category\"><option value=\"\">Choose<option value=\"gdm_greeter\">GDM Greeter<option value=\"gtk\">GTK+ 1.2<option value=\"gtk2\">GTK+ 2.0<option value=\"icon\">Icon<option value=\"metacity\">Metacity<option value=\"sawfish\">Sawfish<option value=\"sounds\">Sounds<option value=\"splash_screens\">Splash Screens<option value=\"other\">Other</select></td></tr>\n");
+	print("<tr><td><b>Category</b></td><td><select name=\"category\"><option value=\"\">Choose<option value=\"gtk2\">Applications (gtk+)<option value=\"icon\">Icon<option value=\"gdm_greeter\">Login Manager (gdm)<option value=\"splash_screens\">Splash Screens<option value=\"metacity\">Window Borders (metacity)</select></td></tr>\n");
 	print("<tr><td><b>Theme Author:</b></td><td><input type=\"text\" name=\"theme_author\" size=\"40\"></td></tr>\n");
 	print("<tr><td><b>Author Email:</b></td><td><input type=\"text\" name=\"author_email\" size=\"40\"></td></tr>\n");
 	print("<tr><td><b>URL of Theme:</b></td><td><input type=\"text\" name=\"theme_url\" size=\"40\"></td></tr>\n");
