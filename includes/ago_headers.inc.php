@@ -28,33 +28,31 @@ function ago_header($title)
 	<div class="mb-lite-title"><img src="/images/site/pill-icons/art.png" alt=""> ART</div>
 	<div class="mb-lite-contents">
 	<?
-	print("<font size=\"+1\"><a href=\"/index.php\">NEWS</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/updates.php\">UPDATES</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/search.php\">SEARCH</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/backgrounds/index.php\">BACKGROUNDS</a></font><br>\n");
-	while(list($key,$val) = each($GLOBALS["background_config_array"]))
-	{
-		$name = $val["name"];
-		$url = $val["url"];
-		print("&nbsp;&nbsp;&nbsp;<a href=\"$url\">$name</a><br>\n");
-	}
-	print("<font size=\"+1\"><a href=\"/themes/index.php\">THEMES</a></font><br>\n");
-	while(list($key,$val) = each($GLOBALS["theme_config_array"]))
-	{
-		$active = $val["active"];
-		if($active)
-		{
-			$name = $val["name"];
-			$url = $val["url"];
-			print("&nbsp;&nbsp;&nbsp;<a href=\"$url\">$name</a><br>\n");
-		}
-	}
-	print("<font size=\"+1\"><a href=\"/art-icons/index.php\">ICONS</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/tips.php\">TIPS & TRICKS</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/index.php\">News</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/updates.php\">Updates</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/search.php\">Search</a></font><br><br>\n");
+	print("<font size=\"+1\"><span class=\"purple-text\">Backgrounds</span></font><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/gnome/index.php\">GNOME</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/other/index.php\">Other</a><br><br>\n");
+	
+	print("<font size=\"+1\"><span class=\"purple-text\">Desktop Themes</span></font><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2/index.php\">Applications</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/metacity/index.php\">Window Borders</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/icon/index.php\">Icon</a><br><br>\n");
+	
+	print("<font size=\"+1\"><span class=\"purple-text\">Other Themes</span></font><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gdm_greeter/index.php\">Login Manager</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/splash_screens/index.php\">Splash Screens</a><br><br>\n");
+	//print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2_engines/index.php\">GTK Engines</a><br>\n");
+	//print("&nbsp;&nbsp;&nbsp;<a href=\"/legacy_themes.php\">Legacy</a><br><br>\n");
+	
+	print("<font size=\"+1\"><a href=\"/art-icons/index.php\">Icons</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/screenshots/index.php\">Screenshots</a></font><br>\n");
+	//print("<font size=\"+1\"><a href=\"/tips.php\">Tips &amp; Tricks</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/faq.php\">FAQ</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/submit.php\">SUBMIT</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/contact.php\">CONTACT</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/links.php\">LINKS</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/submit.php\">Submit</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/contact.php\">Contact</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"/links.php\">Links</a></font><br>\n");
 	
 	?>
 	</div>
@@ -69,58 +67,12 @@ function ago_footer()
 {
 	print("<td><img src=\"/images/site/pixel.png\" width=\"10\" alt=\" \"></td>\n");
 	?>
-	<!-- Right Column -->
-	<td width="225">
-
-	<!-- Screenshot -->
-	<div class="mb-lite-title"><img src="/images/site/pill-icons/screenshot.png" alt=""> SCREENSHOT</div>
-	<div class="mb-lite-contents">
-
-	<?php
-	print("<div align=\"center\">\n");
-	$screenshot_select_result = mysql_query("SELECT screenshotID, thumbnail_filename FROM screenshot ORDER BY date DESC LIMIT 1");
-	list($screenshotID,$thumbnail_filename) = mysql_fetch_row($screenshot_select_result);
-	print("<a href=\"/screenshots/$screenshotID.php\"><img src=\"/images/thumbnails/screenshots/$thumbnail_filename\" border=\"0\" alt=\" \"></a>\n");
-	print("<br><a href=\"/screenshots/index.php\">More ...</a>");
-	print("</div>\n</div>\n");
-	?>
-	<!-- End Screenshot -->
-	<br> 
-	<!-- Background -->
-	<div class="mb-lite-title"><img src="/images/site/pill-icons/background.png" alt=""> BACKGROUND</div>
-	<div class="mb-lite-contents">
-
-	<?php
-	print("<div align=\"center\">\n");
-	$background_select_result = mysql_query("SELECT backgroundID,category,thumbnail_filename FROM background WHERE status='active' ORDER BY add_timestamp DESC LIMIT 1");
-	list($backgroundID,$background_category,$thumbnail_filename) = mysql_fetch_row($background_select_result);
-	print("<a href=\"/backgrounds/$background_category/$backgroundID.php\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" border=\"0\" alt=\"thumbnail\"></a>\n");
-	print("</div>\n</div>\n");
-	?>
-	<!-- End Background -->
-	<br>
-	<!-- Theme -->
-	<div class="mb-lite-title"><img src="/images/site/pill-icons/theme.png" alt=""> THEME</div>
-	<div class="mb-lite-contents">
-
-	<?php
-	print("<div align=\"center\">\n");
-	$theme_select_result = mysql_query("SELECT themeID,category,small_thumbnail_filename FROM theme WHERE status='active' ORDER BY add_timestamp DESC LIMIT 1");
-	list($themeID,$theme_category,$thumbnail_filename) = mysql_fetch_row($theme_select_result);
-	print("<a href=\"/themes/$theme_category/$themeID.php\"><img src=\"/images/thumbnails/$theme_category/$thumbnail_filename\" border=\"0\" alt=\"thumbnail\"></a>\n");
-	print("</div>\n</div>\n");
-	?>
-	<!-- End Theme -->
-
-	<img src="/images/site/pixel.png" width="225" height="1" alt=" ">
-	</td>
-	<td><img src="/images/site/pixel.png" width="10" height="1" alt=" "></td>
-	<!--  End Right Column -->
-
+	
 	</tr>
 	</table>
 	</div>
 	
+	<p>
 	<div align="center">
 	<font color="black" size="-2">
 	Copyright &copy; 2002 - 2003<br><a class="footer" href="/copyright.php"><b>The art.gnome.org team</b></a>

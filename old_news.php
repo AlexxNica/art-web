@@ -19,7 +19,7 @@ while($news_select_row=mysql_fetch_array($news_select_result))
    $date = $month . "/" . $day . "/" . $year;
 	print("<table border=\"0\">\n");
    print("<tr><td><img src=\"images/site/News-Item.png\" alt=\"news-item\"></td><td><span class=\"yellow-text\"><font size=\"+1\">$title</font></span></td></tr>\n");
-   print("<tr><td>&nbsp;</td><td><span class=\"dark-violet-text\"><font size=\"-1\">$date - </span><a href=\"mailto:$author_email\" class=\"news-link\">$author</a></font></td></tr>\n");
+   print("<tr><td>&nbsp;</td><td><span class=\"dark-violet-text\"><font size=\"-1\">$date - </span><a href=\"mailto:$author_email\">$author</a></font></td></tr>\n");
    print("<tr><td>&nbsp;</td><td><div class=\"news-body\">$body</div></td></tr>\n");
    print("</table>\n");
 	print("<p>&nbsp;<p>\n");

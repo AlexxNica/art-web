@@ -2,7 +2,7 @@ body {
 	padding: 0px;
 	margin: 0px;
 	background-color: #fff;
-   color: #fff;
+   color: #000000;
 	font-family: verdana,helvetica;
 	font-size: small;
 }
@@ -15,24 +15,26 @@ img {
 	behavior: url("/images/site/pngbehavior.htc");
 }
 
+img.thumbnail {
+	border: 1px solid #000000;
+}
+
 a {
-	color: white;
-   text-decoration: none;
+	color: #555566;
+   text-decoration: underline;
 }
 
 a:hover {
-	color: #fff799;
-   text-decoration: underline;
+	color: red;
+   text-decoration: none;
 }
 
 a.screenshot {
-	color: #ffff00;
-   font-weight: bold;
+	font-weight: bold;
 }
 
 a.screenshot:hover {
-	color: #fff799;
-   text-decoration: underline;
+	text-decoration: underline;
 }
 
 a.footer {
@@ -45,13 +47,8 @@ a.footer:hover {
    text-decoration: underline;
 }
 
-a.news-link {
+.purple-text {
 	color: #555566;
-}
-
-a.news-link:hover {
-	color: #fff799;
-   text-decoration: underline;
 }
 
 .shot {
@@ -61,7 +58,8 @@ a.news-link:hover {
    padding-left: 15px;
 }
 .shot2 {
-	padding: 10px 15px 20px 15px;
+	margin: 10px 15px 20px 15px;
+	border: 1px solid #000000;
 }
 
 .align-right {
@@ -95,7 +93,7 @@ a.news-link:hover {
 }
 
 .yellow-text {
-	color: #ffff00;
+	/* color: #ffff00; */
    font-weight: bold;
 }
 .dark-violet-text {
@@ -142,7 +140,6 @@ a.news-link:hover {
    border-left: 1px solid #000000;
 	border-right: 1px solid #000000;
 	border-bottom: 1px solid #000000;
-   background: #a8a7b7;
    padding: 5px;
    font-size: small;
 }
@@ -156,4 +153,3 @@ a.news-link:hover {
    padding-left: 15px;
    text-align: center;
 }
-
