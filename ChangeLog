@@ -1,3 +1,7 @@
+2005-03-24  Thomas Wood  <thos@gnome.org>
+
+	* account.php: Fixed e-mail address recording at registration
+
 2005-03-23  Thomas Wood  <thos@gnome.org>
 
 	* account.php:

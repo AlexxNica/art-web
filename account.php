@@ -93,7 +93,7 @@ elseif (array_key_exists("register", $_POST))
 
 	if ($username && $realname && $email && $password)
 	{
-		$new_user_result = mysql_query("INSERT INTO user (username,realname,password) VALUES ('$username','$realname','$password')");
+		$new_user_result = mysql_query("INSERT INTO user (username,realname,password,email) VALUES ('$username','$realname','$password','$email')");
 		if (!$new_user_result)
 		{
 			print("<p>The following error occured while trying to create a new user:</p>");
