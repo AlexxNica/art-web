@@ -25,7 +25,8 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
 	   $num_pages = ceil($num_themes/$num_per_page);
 		$start = (($page - 1) * $num_per_page);
 		$theme_select_result = mysql_query("SELECT * FROM theme WHERE category='$category' ORDER BY add_timestamp DESC LIMIT $start, $num_per_page");
-		while($theme_select_row = mysql_fetch_array($theme_select_result))
+		print("<table width=\"100%\">\n<tr><td>");
+      while($theme_select_row = mysql_fetch_array($theme_select_result))
 		{
 			$themeID = $theme_select_row["themeID"];
 		   $thumbnail_filename = $theme_select_row["small_thumbnail_filename"];
@@ -34,7 +35,7 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
 		   print("<div class=\"list-thumb\"><a href=\"show_theme.php?themeID=$themeID&category=$category\" title=\"$theme_name\"><img src=\"images/thumbnails/$category/$thumbnail_filename\" border=\"0\" alt=\"$theme_name\"></a><br>$theme_name</div>\n");
 		
       }
-   	
+   	print("</td></tr></table>\n");
    	print("<p>\n");
       if($page > 1)
       {
