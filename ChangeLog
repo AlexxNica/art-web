@@ -1,3 +1,11 @@
+2003-01-22  Alex Duggan  <aldug@astrolinux.com>
+
+	* show_theme.php:
+	* theme_list.php:
+	* themes.php:
+	* includes/config.inc.php:
+	Add a icon theme section.
+
 2003-01-15  Alex Duggan  <aldug@gnome.org>
 
 	* includes/common.inc.php:

@@ -40,6 +40,10 @@ $linkbar = array (
    	"url" => "theme_list.php?category=gtk2",
       "indent" => "1",
       "alt" => "GTK+ 2.0"),
+   "themes_icon" => array(
+   	"url" => "theme_list.php?category=icon",
+      "indent" => "1",
+      "alt" => "Icon"),
    "themes_metacity" => array(
    	"url" => "theme_list.php?category=metacity",
       "indent" => "1",
@@ -122,6 +126,9 @@ $pill_array = array (
    "themes_gtk2" => array(
    	"icon" => "themes_gtk.png",
 		"alt" => "THEMES - GTK+ 2.0"),
+   "themes_icon" => array(
+   	"icon" => "themes_icon.png",
+		"alt" => "THEMES - Icon"),
    "themes_metacity" => array(
    	"icon" => "themes_metacity.png",
 		"alt" => "THEMES - Metacity"),

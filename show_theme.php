@@ -5,7 +5,7 @@ require("common.inc.php");
 require("change_site_prefs.php");
 require("ago_headers.inc.php");
 
-if($themeID && ($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $category == "metacity" || $category == "metatheme" || $category == "nautilus" || $category == "sawfish" || $category == "sounds" || $category == "splash_screens" || $category == "other"))
+if($themeID && ($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $category == "icon" || $category == "metacity" || $category == "metatheme" || $category == "nautilus" || $category == "sawfish" || $category == "sounds" || $category == "splash_screens" || $category == "other"))
 {
 	ago_header("THEMES - " . strtoupper($category));
 	$temp = "themes_" . $category;
