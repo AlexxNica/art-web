@@ -14,6 +14,7 @@ function ago_header($title)
 	<link rel="icon" type="image/png" href="/images/site/gnome-16.png">
 	<link rel="stylesheet" href="/main.css" type="text/css">
 	<link rel="stylesheet" href="/new_layout.css" type="text/css">
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="http://art.gnome.org/backend.php" />
 	</head>
 	<body>
 	<div id="body">
@@ -44,13 +45,10 @@ function ago_header($title)
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gdm_greeter/\">Login Manager</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/splash_screens/\">Splash Screens</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk_engines/\">GTK+ Engines</a><br><br>\n");
-	//print("&nbsp;&nbsp;&nbsp;<a href=\"/legacy_themes.php\">Legacy</a><br><br>\n");
-	
+
 	print("<font size=\"+1\"><a href=\"/art-icons/\">Icons</a></font><br>\n");
-	//print("<font size=\"+1\"><a href=\"/screenshots/index.php\">Screenshots</a></font><br>\n");
-	//print("<font size=\"+1\"><a href=\"/tips.php\">Tips &amp; Tricks</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/faq.php\">FAQ</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/submit.php\">Submit</a></font><br>\n");
+	print("<font size=\"+1\"><a href=\"http://live.gnome.org/GnomeArt_2fTutorials\">Tutorials</a></font><br />\n");
 	print("<font size=\"+1\"><a href=\"/contact.php\">Contact</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"http://gnomesupport.org/forums/index.php?c=6\">Forums</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/links.php\">Links</a></font><br>\n");

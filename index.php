@@ -43,7 +43,13 @@ if (!isset($view_old_news))
 
 	create_middle_box_top("featured");
 	print("<table border=\"0\">");
-	print_theme_row(710);
+	$featured_select_result = mysql_query("SELECT * FROM featured ORDER BY date DESC LIMIT 1");
+	$featured_select_row = mysql_fetch_array($featured_select_result);
+	if ($featured_select_row["type"] == "background")
+		print_background_row($featured_select_row["id"]);
+	else
+		print_theme_row($featured_select_row["id"]);
+
 	print("</table>");
 
 	create_middle_box_bottom();
@@ -61,16 +67,16 @@ else
 while($news_select_row=mysql_fetch_array($news_select_result))
 {
 	$date = fix_sql_date($news_select_row["date"]);
-   $author = $news_select_row["author"];
-   $author_email = spam_proof_email($news_select_row["author_email"]);
-   $title =  $news_select_row["title"];
-   $body =  $news_select_row["body"];
+	$author = $news_select_row["author"];
+	$author_email = spam_proof_email($news_select_row["author_email"]);
+	$title =  $news_select_row["title"];
+	$body =  $news_select_row["body"];
 	print("<table border=\"0\">\n");
-   print("<tr><td><img src=\"images/site/News-Item.png\" alt=\"news-item\"></td><td><span class=\"bold-text\"><font size=\"+1\">$title</font></span></td></tr>\n");
-   print("<tr><td>&nbsp;</td><td><font size=\"-1\">$date - <a href=\"mailto:$author_email\">$author</a></font></td></tr>\n");
-   print("<tr><td>&nbsp;</td><td><div class=\"news-body\">$body</div></td></tr>\n");
-   print("</table>\n");
-   print("<p>&nbsp;<p>\n");
+	print("<tr><td><img src=\"images/site/News-Item.png\" alt=\"news-item\"></td><td><span class=\"bold-text\"><font size=\"+1\">$title</font></span></td></tr>\n");
+	print("<tr><td>&nbsp;</td><td><font size=\"-1\">$date - <a href=\"mailto:$author_email\">$author</a></font></td></tr>\n");
+	print("<tr><td>&nbsp;</td><td><div class=\"news-body\">$body</div></td></tr>\n");
+	print("</table>\n");
+	print("<p>&nbsp;<p>\n");
 }
 
 print("<p>\n");

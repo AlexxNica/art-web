@@ -1,3 +1,9 @@
+2004-11-16  Thomas Wood  <set EMAIL_ADDRESS environment variable>
+
+	* includes/ago_headers.inc.php: Added link to Tutorials wiki
+	* index.php: Featured item now uses the database. RSS feed is
+	advertised in HTML header.
+
 2004-11-12  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_background.php:
