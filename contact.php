@@ -17,6 +17,7 @@ print("</table>\n");
 print("<p>\nYou can also catch us on the channel <span class=\"yellow-text\">#gnome-art</span> on <span class=\"yellow-text\">irc.gimp.org</span>.\n");
 print("There is also a discussion board for art.gnome.org relevant stuff at <a class=\"screenshot\" href=\"http://gnomesupport.org/forums/index.php?c=6\"><b>http://gnomesupport.org/forums/index.php?c=6</b></a>.");
 
+print("<p>\nIf you would like to submit a background or theme to art.gnome.org, please use the <a href=\"submit_background.php\">background submission</a> or <a href=\"submit_theme.php\">theme submission</a> forms.");
 create_middle_box_bottom();
 include("footer.inc.php");
 ?>
