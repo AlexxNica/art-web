@@ -74,19 +74,22 @@ function ago_header($title)
 	{
    	$url = $val["url"];
    	$alt = $val["alt"];
-   	$indent = $val["indent"];
-   	if($indent)
-   	{
-      	$a_head = "&nbsp;&nbsp;&nbsp;";
-      	$a_foot = "";
-   	}
-   	else
-   	{
-      	$a_head = "<font size=\"+1\">";
-      	$a_foot = "</font>";
-   	}
-   	print("$a_head<a href=\"$url\">$alt</a>$a_foot<br>\n");
-
+   	$active = $val["active"];
+		$indent = $val["indent"];
+   	if($active == 1)
+		{
+			if($indent)
+   		{
+      		$a_head = "&nbsp;&nbsp;&nbsp;";
+      		$a_foot = "";
+   		}
+   		else
+   		{
+      		$a_head = "<font size=\"+1\">";
+      		$a_foot = "</font>";
+   		}
+   		print("$a_head<a href=\"$url\">$alt</a>$a_foot<br>\n");
+		}
 	}
 	?>
 	</div>

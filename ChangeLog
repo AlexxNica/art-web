@@ -1,3 +1,9 @@
+2003-04-10  Alex Duggan  <aldug@astrolinux.com>
+
+	* includes/ago_headers.inc.php:
+	* includes/config.inc.php:  Add a field in linkbar array to that
+	links can be turned off.  Turn off metatheme link.
+
 2003-02-04  Alex Duggan  <aldug@astrolinux.com>
 
 	* icons.php:  Add Mark Dobossy to icon author credits
