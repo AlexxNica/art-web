@@ -215,21 +215,21 @@ function display_icons($type, $page)
          }
       }
       
-      print("<table border=\"0\">\n");
+      print("<table border=\"0\">\n<tr>");
+      $counter = 1;
       while(list($foo,$file)=each($icon_array))
 		{
-			$col = 0;
-         print("<tr>\n");
-         while($col < 8)
+			if($counter > 0 && (($counter % 8) == 0))
          {
-         	list($foo,$ext) = explode(".",$file);
-         	if(in_array($ext,$GLOBALS['valid_image_ext']))
-				{
-					print("<td><img src=\"images/icons/$type/$file\"></td>");
-					$col++;
-            }
-			}
-         print("</tr>\n");
+         	print("</tr>\n<tr>");
+         }
+         list($foo,$ext) = explode(".",$file);
+         if(in_array($ext,$GLOBALS['valid_image_ext']))
+			{
+				print("<td><img src=\"images/icons/$type/$file\"></td>");
+				$counter++;
+         }
+			print("</tr>\n");
       }
       print("</table>");
    }
