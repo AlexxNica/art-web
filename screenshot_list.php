@@ -5,7 +5,7 @@ require("session.inc.php");
 require("common.inc.php");
 
 include("header.inc.php");
-create_middle_box_top("backgrounds");
+create_middle_box_top("screenshots");
 print("<div align=\"center\">\n");
 $num_per_page = 12;
 if(!$page)

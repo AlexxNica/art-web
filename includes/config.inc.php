@@ -233,36 +233,15 @@ $pill_array = array (
    	"image" => "Copyright-Pill.png",
       "width" => "248",
       "height" => "62",
-      "alt" => "COPYRIGHT")
+      "alt" => "COPYRIGHT"),
+   "screenshots" => array(
+   	"image" => "Screenshots-Pill.png",
+      "width" => "237",
+      "height" => "62",
+      "alt" => "SCREENSHOTS")
+   
 
 );
-/*
-
-// Location of the base page on http
-$sys_http_root = "http://art.gnome.org";
-//$sys_http_root = "http://art.gnome.org/icons";
-
-// Location of base page on localhost
-$sys_http_local_root = "http://localhost/art.gnome.org";
-
-// Edit this array to add different number of images 
-$sys_number_images_array = array ("64","96");
-
-// Edit this array to add another icons section
-//$sys_icon_type_array = array("gtk+ Stock Icons" => "stock", "Nautilus Emblems" => "nautilus-emblems", "Other Icons" => "other");
-
-
-      
-   
-// Edit this array for valid image file extensions
-$sys_valid_images_array = array ("png","xpm","gif","jpg","jpeg","tiff");
-
-// Which dir to look in for images
-//$sys_icon_dir = "images/icons";
-
-// Location of icons via http
-$sys_http_icon_root = $sys_http_root."/".$sys_icon_dir;
-*/
 
 $sys_icon_type_array = array(
 	"gtk-stock" => array(
