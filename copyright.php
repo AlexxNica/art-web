@@ -5,7 +5,7 @@ require("common.inc.php");
 include("header.inc.php");
 create_middle_box_top("copyright");
 ?>
-<font size="+2">Site Design</font>
+<font size="+1">Site Design</font>
 <p>
 Art.gnome.org is Copyright &copy; <a href="http://foundation.gnome.org"><b>The GNOME Foundation</b></a> 2002. This include the design of the site and all screenshots and images used on this site. They may not be redistributed without prior permission of the authors of the site. For information on requesting permission to use images from this site, please <a href=contact.html>contact</a> one of the authors.
 
