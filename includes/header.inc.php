@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<title>ART.GNOME.ORG</title>
+<title>art.gnome.org</title>
 <link rel="stylesheet" href="main.css" type="text/css">
 <?
 require("config.inc.php");
@@ -92,7 +92,8 @@ else
 {
 	print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar-lite\">&nbsp;&nbsp;&nbsp;");
 }
-/*
+
+/* FIXME, temperarily disable mirror selection
 for($count=1;$count<5;$count++)
 {
 	if($count == 1)
@@ -186,7 +187,7 @@ if($site_theme == "slick")
 }
 else
 {
-	print("<tr valign=\"middle\"><td colspan=\"3\" class=\"horizontal-menu-bar-lite\">&nbsp;&nbsp;<span class=\"yellow-text\">ART.GNOME.ORG</span>&nbsp;&nbsp;-&nbsp;&nbsp;<b>Enhance your GNOME desktop!</b></td></tr>\n");	
+	print("<tr valign=\"middle\"><td colspan=\"3\" class=\"horizontal-menu-bar-lite\">&nbsp;&nbsp;<a class=\"screenshot\" href=\"/index.php\">art.gnome.org</a>&nbsp;&nbsp;-&nbsp;&nbsp;<b>Enhance your GNOME desktop!</b></td></tr>\n");	
 }
 ?>
 </table>
