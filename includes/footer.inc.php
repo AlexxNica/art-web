@@ -39,6 +39,7 @@ print("<div align=\"center\">\n");
 $screenshot_select_result = mysql_query("SELECT screenshotID, thumbnail_filename FROM screenshot ORDER BY date DESC LIMIT 1");
 list($screenshotID,$thumbnail_filename) = mysql_fetch_row($screenshot_select_result);
 print("<a href=\"show_screenshot.php?screenshotID=$screenshotID\"><img src=\"images/thumbnails/screenshots/$thumbnail_filename\" border=\"0\"></a>\n");
+print("<br><a href=\"screenshot_list.php\">More ...</a>");
 print("</div>\n");
 if($site_theme == "lite")
 {
