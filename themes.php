@@ -16,7 +16,6 @@ print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a cl
 print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a class=\"screenshot\" href=\"theme_list.php?category=sawfish\"><b>Sawfish</b></a> - Sawfish is the default window manager for GNOME. The themes for sawfish change the look of the decoration round your windows (titlebars etc).</td></tr>\n");
 print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a class=\"screenshot\" href=\"theme_list.php?category=sounds\"><b>Sounds</b></a> - Collection of sounds to compliment the GNOME desktop.</td></tr>\n");
 print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a class=\"screenshot\" href=\"theme_list.php?category=splash_screens\"><b>Splash Screens</b></a> - Splash Screens are what you first see when you log into GNOME.</td></tr>\n");
-print("<tr><td valign=\"top\"><img src=\"images/site/circle.png\"></td><td><a class=\"screenshot\" href=\"theme_list.php?category=other\"><b>Other...</b></a> - At the moment you can find here various GNOME splash screens.</td></tr>\n");
 print("</table>\n");
 
 create_middle_box_bottom();
