@@ -219,7 +219,7 @@ function display_icons($type, $page)
       $counter = 1;
       while(list($foo,$file)=each($icon_array))
 		{
-			if($counter > 0 && (($counter % 8) == 0))
+			if($counter > 1 && (($counter % 8) == 0))
          {
          	print("</tr>\n<tr>");
          }
