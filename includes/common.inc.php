@@ -169,4 +169,63 @@ function show_icons_alex ($type, $page, $num_per_page)
 
 }
 
+function display_icons($type, $page)
+{
+	$icons_per_page = 64;
+   if(is_dir($sys_icon_dir . "/$type"))
+   {
+   	$dir_handle = dir($sys_icon_dir . "/$type");
+      
+      //skip . and ..
+      $dir_handle->read();
+      $dir_handle->read();
+      
+      $num_icons = 0;
+      
+      // get the total number of icons
+      while($file = $dir_handle->read())
+      {
+      	list($foo,$ext) = explode(".",$file);
+         if(in_array($ext,$GLOBALS['valid_image_ext']))
+         {
+         	$num_icons ++;
+         }
+      }
+      $num_pages = ceil($num_icons / $icons_per_page);
+      
+      rewinddir ($d->handle);
+		$d->read();
+		$d->read();
+      
+      $start_file = $icons_per_page * ($page - 1);
+		for ($i=0;$i<$start_file;++$i)
+		{
+			$file = $d->read ();
+		}
+      
+      $counter = 0;
+      print("<table border=\"0\">\n");
+      while( ($file = $d->read ()) && ($i < $num_per_page) )
+		{
+			$col = 0;
+         print("<tr>\n");
+         while($col < 8)
+         {
+         	list($foo,$ext) = explode(".",$file);
+         	if(in_array($ext,$GLOBALS['valid_image_ext']))
+				{
+					print("<td><img src=\"images/icons/$type/$file\"></td>");
+				}
+			}
+         print("</tr>\n");
+      }
+      print("</table>");
+      
+   }
+   else
+   {
+   	print("Invalid Directory\n<p>\n");
+   }
+}
+
 ?>

@@ -278,4 +278,7 @@ $sys_icon_dir = "images/icons";
 // Location of icons via http
 $sys_http_icon_root = $sys_http_root."/".$sys_icon_dir;
 
+
+$sys_icon_dir = "/usr/local/www/art.gnome.org/images/icons";
+$valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 ?>
