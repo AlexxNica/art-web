@@ -1,3 +1,6 @@
+2002-12-08  Alex Duggan  <aldug@gnome.org>
+	* submit_theme.php: add other section
+   
 2002-12-04  Alex Duggan  <aldug@gnome.org>
 	* submit_theme.php: make the default category to "Choose" forcing them to choose a category
    * submit_background.php: make the default category to "Choose" forcing them to choose a category
