@@ -11,8 +11,8 @@ if($HTTP_POST_VARS)
 {
 	if($background_name && $category && $background_author && $author_email && $background_url && $background_description)
    {
-   	$incoming_background_insert_query  = "INSERT INTO incoming_background(backgroundID,status,background_name,category,author,author_email,background_url,background_description) ";
-   	$incoming_background_insert_query .= "VALUES('','new','$background_name','$category','$background_author','$author_email','$background_url','$background_description')";
+   	$incoming_background_insert_query  = "INSERT INTO incoming_background(backgroundID,status,background_name,category,author,author_email,background_url,background_screenshot_url,background_description) ";
+   	$incoming_background_insert_query .= "VALUES('','new','$background_name','$category','$background_author','$author_email','$background_url','$background_screenshot_url','$background_description')";
    	$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
       if(mysql_affected_rows()==1)
       {
@@ -40,6 +40,7 @@ else
 	print("<tr><td><b>Background Author:</b></td><td><input type=\"text\" name=\"background_author\" size=\"40\"></td></tr>\n");
 	print("<tr><td><b>Author Email:</b></td><td><input type=\"text\" name=\"author_email\" size=\"40\"></td></tr>\n");
 	print("<tr><td><b>URL of Background:</b></td><td><input type=\"text\" name=\"background_url\" size=\"40\"></td></tr>\n");
+	print("<tr><td><b>URL of Screenshot with Background:</b></td><td><input type=\"text\" name=\"background_screenshot_url\" size=\"40\"></td></tr>\n");
 	print("<tr><td><b>Description:</b></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap></textarea></td></tr>\n");
 	print("</table>\n<p>\n");
 	print("<input type=\"submit\" value=\"Submit Background\">\n");
