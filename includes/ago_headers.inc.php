@@ -61,6 +61,8 @@ function ago_header($title)
 	</td>
 	<td><img src="/images/site/pixel.png" width="10" alt=" "></td>
 	<!-- End Left Column -->
+	<!-- Center Column -->
+	<td width=\"100%\">
 <?php
 }
 
@@ -68,7 +70,8 @@ function ago_footer()
 {
 	print("<td><img src=\"/images/site/pixel.png\" width=\"10\" alt=\" \"></td>\n");
 	?>
-	
+	</td>
+	<!-- End Center Column  -->
 	</tr>
 	</table>
 	</div>

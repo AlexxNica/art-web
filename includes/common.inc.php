@@ -9,8 +9,7 @@ function create_middle_box_top($pill)
 	$attributes = $pill_array[$pill];
 	$alt = $attributes["alt"];
 	$icon = $attributes["icon"];
-	print("<!-- Center Column -->\n");
-	print("<td width=\"100%\">\n");
+	print("<p>");
 	print("<div class=\"mb-lite-title\"><img src=\"/images/site/pill-icons/$icon\" alt=\"\"> $alt</div>\n");
 	print("<div class=\"mb-lite-contents\">\n");
 }
@@ -19,7 +18,7 @@ function create_middle_box_bottom()
 {
 	global $site_theme;
 	print("</div>\n");
-	print("<!-- End Center Column  -->\n");
+	print("</p>");
 }
 
 function display_icons($type, $page)

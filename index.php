@@ -11,12 +11,12 @@ escape_gpc_array($_GET);
 $view_old_news = $_GET["view_old_news"];
 
 ago_header("GNOME artwork &amp; themes");
-create_middle_box_top("news");
 
 if (!isset($view_old_news))
 {
+	create_middle_box_top("latestupdates");
 	print("<table border=\"0\">\n");
-	print("<tr><td><img src=\"images/site/art-icon.png\" alt=\"news-item\"></td><td><span class=\"bold-text\"><font size=\"+1\">Latest Additions</font></span></td></tr>\n");
+//	print("<tr><td><img src=\"images/site/art-icon.png\" alt=\"news-item\"></td><td><span class=\"bold-text\"><font size=\"+1\">Latest Additions</font></span></td></tr>\n");
 	print("<tr><td>&nbsp;</td><td><div class=\"news-body\">");
 
 	$big_array = get_updates_array(4);
@@ -39,9 +39,17 @@ if (!isset($view_old_news))
 
 	print("</div><a href=\"/updates.php\">More...</a></td></tr>\n");
 	print("</table>\n");
-	print("<hr style=\"border: none; border-top: dashed gray 1px; margin-bottom: 1em;\">");
+	create_middle_box_bottom();
+
+	create_middle_box_top("featured");
+	print("<table border=\"0\">");
+	print_background_row(287);
+	print("</table>");
+
+	create_middle_box_bottom();
 }
 
+create_middle_box_top("news");
 if($view_old_news == 1)
 {
 	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 3,20");

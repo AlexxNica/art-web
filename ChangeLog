@@ -1,3 +1,14 @@
+2004-10-31  Thomas Wood  <thos@gnome.org>
+
+	* includes/ago_headers.inc.php:
+	* includes/common.inc.php:
+
+	Allowance for multiple middle boxes
+
+	* includes/config.inc.php: Added "Featured item" and "Latest Updates"
+	header configuration
+	* index.php: Added temporary static featured item
+
 2004-10-25  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_theme.php:
