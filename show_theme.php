@@ -2,7 +2,7 @@
 require("mysql.inc.php");
 require("session.inc.php");
 require("common.inc.php");
-if($themeID && ($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $category == "metacity" || $category == "metatheme" || $category == "nautilus" || $category == "sawfish" || $category == "sounds" || $category == "splash_screens" ))
+if($themeID && ($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $category == "metacity" || $category == "metatheme" || $category == "nautilus" || $category == "sawfish" || $category == "sounds" || $category == "splash_screens" || $category == "other"))
 {
 	include("header.inc.php");
 	$temp = "themes_" . $category;
