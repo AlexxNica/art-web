@@ -11,6 +11,7 @@ function ago_header($title)
 	<?
 	print("$title");
 	?> - art.gnome.org</title>
+	<link rel="icon" type="image/png" href="/images/site/gnome-16.png">
 	<link rel="stylesheet" href="/main.css" type="text/css">
 	</head>
 	<body>

@@ -1,5 +1,9 @@
 2003-07-10  Alex Duggan  <aldug@astrolinux.com>
 
+	* includes/ago_headers.inc.php: include a favicon
+
+2003-07-10  Alex Duggan  <aldug@astrolinux.com>
+
 	* includes/ago_headers.inc.php: fix copyright link in footer.
 
 2003-07-09  Alex Duggan  <aldug@astrolinux.com>
