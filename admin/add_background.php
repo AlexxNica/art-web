@@ -75,7 +75,7 @@ else
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
 	print("<tr><td><b>Background Name:</b></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\"></td></tr>\n");
-	print("<tr><td><b>Category</b></td><td><select name=\"category\" value=\"$category\"><option value=\"gnome\">GNOME<option value=\"other\">Other</select></td></tr>\n");
+	print("<tr><td><b>Category</b></td><td>");print_select_box("category", Array("gnome" => "GNOME", "other" => "OTHER"), $category); print("</td></tr>\n");
 	print("<tr><td><b>License</b></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
 	print("<tr><td><b>Version:</b></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
 	print("<tr><td><b>Variation</b></td><td><select name=\"parentID\"><option value=\"\">N/A</option>");

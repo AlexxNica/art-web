@@ -727,7 +727,7 @@ function file_chooser($var_name, $dir)
 	{
 		if ($dh = opendir($dir))
 		{
-			print("<select name=$var_name>");
+			print("<select name=$var_name><option></option>");
 			while (($file = readdir($dh)) !== false)
 			{
 				if (($file != ".") and ($file != ".."))

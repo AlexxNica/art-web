@@ -197,7 +197,7 @@ else
 	print("<form method=\"POST\" action=\"{$_SERVER['PHP_SELF']}\">");
 	print("<table>");
 	print("<tr><td>Username:</td><td><input name=\"username\" /></td></tr>");
-	print("<tr><td>Password:</td><td><input name=\"password\" /></td></tr>");
+	print("<tr><td>Password:</td><td><input name=\"password\" type=\"password\" /></td></tr>");
 	print("<tr><td>Realname:</td><td><input name=\"realname\" /></td></tr>");
 	print("<tr><td>E-mail:</td><td><input name=\"email\" /></td></tr>");
 	print("</table>");

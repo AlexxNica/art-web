@@ -221,5 +221,6 @@ $search_type_array = array ("background_name" => "Background Name", "theme_name"
 $thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "1000" => "All");
 $sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity", "rating" => "Rating");
 $view_array = array("icons" => "Icon", "list" => "List");
+$status_array = Array("new" => "New", "approved" => "Approved", "added" => "Added", "rejected" => "Rejected");
 
 ?>

@@ -7,13 +7,21 @@ admin_header("Submitted Themes");
 $theme_type_select_array = Array("" => "All", "metacity" => "Metacity", "Icon" => "Icon", "gtk2" => "GTK 2", "gdm_greeter" => "GDM Greeter", "splash_screens" => "Splash Screens", "desktop" => "Desktop");
 
 $mark_theme = validate_input_regexp_default($_POST["mark_theme"], "^[0-9]+$", "");
-$new_status = validate_input_array_default($_POST["new_status"], Array("new", "rejected", "added"), "");
+$new_status = validate_input_array_default($_POST["new_status"], array_keys($status_array), "");
 $theme_type = validate_input_array_default($_GET["theme_type"], array_keys($theme_type_select_array), "");
 
 if($mark_theme)
 {
-	$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='$new_status' WHERE themeID='$mark_theme'");
-	print("Successfully marked theme($mark_theme) as $new_status.<p><a href=\"" . $_SERVER["PHP_SELF"] . "\">Return</a> to incoming themes list.");
+	if (!$new_status)
+	{
+		print("<p class=\"error\">Invalid Status</p>");
+	}
+	else
+	{
+		$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='$new_status' WHERE themeID='$mark_theme'");
+		print("<p class=\"info\">Successfully marked theme $mark_theme as $new_status.</p>");
+	}
+	print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Click here</a> to return to incoming backgrounds list.");
 }
 else
 {
@@ -23,11 +31,11 @@ else
 
 	if($theme_type)
 	{
-		$query = "SELECT * FROM incoming_theme WHERE status='new' AND category='$theme_type'";
+		$query = "SELECT * FROM incoming_theme WHERE (status='new' OR status='approved') AND category='$theme_type'";
 	}
 	else
 	{
-		$query = "SELECT * FROM incoming_theme WHERE status='new'";
+		$query = "SELECT * FROM incoming_theme WHERE status='new' OR status='approved'";
 	}
 	$incoming_theme_select_result = mysql_query($query);
 	print("<hr>");
@@ -46,13 +54,7 @@ else
 		while($incoming_theme_select_row = mysql_fetch_array($incoming_theme_select_result))
 		{
 			if ($alt == 1) $colour = "bgcolor=\"#dedede\""; else $colour = "";
-			$themeID = $incoming_theme_select_row["themeID"];
-			$theme_name = $incoming_theme_select_row["theme_name"];
-			$category = $incoming_theme_select_row["category"];
-			$date = $incoming_theme_select_row["date"];
-			$userID = $incoming_theme_select_row["userID"];
-			$theme_url = $incoming_theme_select_row["theme_url"];
-			$theme_description = htmlspecialchars($incoming_theme_select_row["theme_description"]);
+			extract($incoming_theme_select_row);
 			print("<tr $colour><td>$themeID</td>");
 			if ($theme_type == "") print("<td>$category</td>");
 			print("<td>$theme_name</td>");
@@ -60,8 +62,9 @@ else
 			print("<td>$date</td>");
 			print("<td><a href=\"$theme_url\">Download</td>");
 			print("<td><form action=\"add_theme.php\" method=\"post\"><input type=\"hidden\" name=\"submitID\" value=\"$themeID\"><input type=\"submit\" value=\"Add\"></form>");
-			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"><input type=\"submit\" value=\"rejected\" name=\"new_status\"><input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\">");
-			print("<input type=\"submit\" value=\"added\" name=\"new_status\"></form>\n");
+			print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">");
+			print_select_box("new_status", $status_array, $status);
+			print("<input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"/><input type=\"submit\" value=\"Update\" /></form>");
 			print("</td></tr>");
 
 			$alt = 2 - $alt + 1;
