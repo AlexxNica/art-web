@@ -16,6 +16,8 @@ while(list($key,$val)=each($GLOBALS["sys_icon_type_array"]))
 }
 print("</table>\n");
 
+print("Thanks to Tuomas Kuosmanen, Jakub Steiner, Roman Beigelbeck and other GNOME artists for these great icons.\n");
+
 
 create_middle_box_bottom();
 include("footer.inc.php");
