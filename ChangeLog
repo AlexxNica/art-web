@@ -1,0 +1,11 @@
+2002-11-15  Alex Duggan  <aldug@gnome.org>
+
+	* icons.php:
+	* includes/config.inc
+	move configuration for icon sections from an array in 
+	includes/config.inc to icon mysql database
+
+2002-11-14  Alex Duggan  <aldug@gnome.org>
+	
+	* icons.php: added largo to icon credits and made a bulleted list of
+	icon authors
