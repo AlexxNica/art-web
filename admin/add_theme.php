@@ -78,7 +78,8 @@ else
 	"sawfish" => "sawfish",
 	"sounds" => "sounds",
 	"splash_screens" => "splash_screens",
-	"other" => "other"
+	"other" => "other",
+	"gtk_engines" => "gtk_engines"
 	);
 	$date = date("m/d/Y");
    list($month,$day,$year) = explode("/",$date);

@@ -42,8 +42,8 @@ function ago_header($title)
 	
 	print("<font size=\"+1\">Other Themes</font><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gdm_greeter/\">Login Manager</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/splash_screens/\">Splash Screens</a><br><br>\n");
-	//print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2_engines/index.php\">GTK Engines</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/splash_screens/\">Splash Screens</a><br>\n");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk_engines/\">GTK+ Engines</a><br><br>\n");
 	//print("&nbsp;&nbsp;&nbsp;<a href=\"/legacy_themes.php\">Legacy</a><br><br>\n");
 	
 	print("<font size=\"+1\"><a href=\"/art-icons/\">Icons</a></font><br>\n");

@@ -1,3 +1,14 @@
+2004-06-30  Thomas Wood <thos@gnome.org>
+	* index.php: Made sure author email address of news itms where
+	made spam_proof
+	* admin/add_theme.php:
+	* includes/ago_headers.inc.php:
+	* includes/config.inc.php:
+	
+	Added support for a GTK+ engines section
+	
+	* includes/config.inc.php: fixed $sys_icon_dir and $sys_theme_dir
+
 2004-06-27  Thomas Wood <thos@gnome.org>
 	* includes/ago_header.inc.php: Changed "Art & Themes" navigation link
 	to bold rather than "Users"

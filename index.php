@@ -21,7 +21,7 @@ while($news_select_row=mysql_fetch_array($news_select_result))
 {
 	$date = fix_sql_date($news_select_row["date"]);
    $author = $news_select_row["author"];
-   $author_email = $news_select_row["author_email"];
+   $author_email = spam_proof_email($news_select_row["author_email"]);
    $title =  $news_select_row["title"];
    $body =  $news_select_row["body"];
 	print("<table border=\"0\">\n");

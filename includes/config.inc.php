@@ -89,6 +89,12 @@ $theme_config_array = array (
 		"url" => "/themes/other/index.php",
 		"active" => "1",
 		"description" => "Other themes."
+		),
+	"gtk_engines" => array (
+		"name" => "GTK+ Engines",
+		"url" => "/themes/gtk_engines/index.php",
+		"active" => "1",
+		"description" => "GTK Engines are pieces of code that draw your theme."
 		)
 );
 
@@ -147,6 +153,9 @@ $pill_array = array (
    "themes_other" => array(
    	"icon" => "theme.png",
 		"alt" => "Themes - Other"),
+	"themes_gtk_engines" => array(
+		"icon" => "theme.png",
+		"alt" => "Themes - GTK Engines"),
 	"icons" => array(
    	"icon" => "icons.png",
 		"alt" => "Icons"),
@@ -175,10 +184,9 @@ $pill_array = array (
 
 $mirror_url = "http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org";
 
-$sys_theme_dir = "/usr/local/www/art.gnome.org/content/themes";
+$sys_theme_dir = "/usr/local/www/art-web/content/themes";
 
-$sys_icon_dir = "/usr/local/www/art.gnome.org/images/icons";
-//$sys_icon_dir = "/home/aldug/www/art-web/images/icons";
+$sys_icon_dir = "/usr/local/www/art-web/images/icons";
 
 $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 
