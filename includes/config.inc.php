@@ -236,6 +236,7 @@ $pill_array = array (
       "alt" => "COPYRIGHT")
 
 );
+/*
 
 // Location of the base page on http
 $sys_http_root = "http://art.gnome.org";
@@ -249,6 +250,19 @@ $sys_number_images_array = array ("64","96");
 
 // Edit this array to add another icons section
 //$sys_icon_type_array = array("gtk+ Stock Icons" => "stock", "Nautilus Emblems" => "nautilus-emblems", "Other Icons" => "other");
+
+
+      
+   
+// Edit this array for valid image file extensions
+$sys_valid_images_array = array ("png","xpm","gif","jpg","jpeg","tiff");
+
+// Which dir to look in for images
+//$sys_icon_dir = "images/icons";
+
+// Location of icons via http
+$sys_http_icon_root = $sys_http_root."/".$sys_icon_dir;
+*/
 
 $sys_icon_type_array = array(
 	"gtk-stock" => array(
@@ -267,18 +281,8 @@ $sys_icon_type_array = array(
       "tarball_filename" => "other_all.tar.gz",
       "image" => "Boot.png")
 );
-      
-   
-// Edit this array for valid image file extensions
-$sys_valid_images_array = array ("png","xpm","gif","jpg","jpeg","tiff");
-
-// Which dir to look in for images
-//$sys_icon_dir = "images/icons";
-
-// Location of icons via http
-$sys_http_icon_root = $sys_http_root."/".$sys_icon_dir;
-
 
 $sys_icon_dir = "/usr/local/www/art.gnome.org/images/icons";
+
 $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 ?>

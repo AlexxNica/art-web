@@ -41,7 +41,7 @@ function create_middle_box_bottom()
 	}
    print("<!-- End Center Column  -->\n");
 }
-
+/*
 function show_icons_alex ($type, $page, $num_per_page)
 {
 	if (is_dir ( $GLOBALS['sys_icon_dir'] . "/$type" ) )
@@ -168,7 +168,7 @@ function show_icons_alex ($type, $page, $num_per_page)
 	print "</p><p>\n";
 
 }
-
+*/
 function display_icons($type, $page)
 {
 	$icons_per_page = 64;
