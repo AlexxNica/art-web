@@ -2,173 +2,315 @@
 
 require("config.inc.php");
 
-function create_middle_box_top($pill)
+function create_title($title, $subtitle)
 {
-	global $pill_array;
-	global $site_theme;
-	$attributes = $pill_array[$pill];
-	$alt = $attributes["alt"];
-	$icon = $attributes["icon"];
-	print("<p>");
-	print("<div class=\"mb-lite-title\"><img src=\"/images/site/pill-icons/$icon\" alt=\"\"> $alt</div>\n");
-	print("<div class=\"mb-lite-contents\">\n");
+	print("<div class=\"h1\">$title</div>\n");
+	print("<div class=\"subtitle\">$subtitle</div>\n");
 }
 
-function create_middle_box_bottom()
+function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
 {
-	global $site_theme;
-	print("</div>\n");
-	print("</p>");
+	// Taken from Qwikiwiki
+
+	// Compute the difference
+	$numSeconds = $nowTimestamp - $thenTimestamp;
+	$numMinutes = round( $numSeconds / 60 );
+	$numHours   = round( $numSeconds / 60 / 60 );
+	$numDays    = round( $numSeconds / 60 / 60 / 24 );
+	$numWeeks   = round( $numSeconds / 60 / 60 / 24 / 7  );
+	     if( $numSeconds <  60 ) return "moments ago";
+	else if( $numMinutes ==  1 ) return "1 minute ago";
+	else if( $numMinutes <  60 ) return "$numMinutes minutes ago";
+	else if( $numHours   ==  1 ) return "1 hour ago";
+	else if( $numHours   <  24 ) return "$numHours hours ago";
+	else if( $numDays    ==  1 ) return "yesterday";
+	else if( $numDays    <   7 ) return "$numDays days ago";
+	else if( $numWeeks   ==  1 ) return "last week";
+	else if( $numWeeks   <   4 ) return "$numWeeks weeks ago";
+	else if( $numDays    < 365 ) return date( "F j", $thenTimestamp );
+	else                         return "ages ago";
 }
 
-function display_icons($type, $page)
+function add_vote($artID, $type, $vote)
 {
-	$icons_per_page = 64;
-	/* get the number of columns from the database */
-	$icon_select_result = mysql_query("SELECT num_columns FROM icon WHERE name='$type'");
-	list($num_columns) = mysql_fetch_row($icon_select_result);
-	if(is_dir($GLOBALS['sys_icon_dir'] . "/$type"))
+	if ($vote != -1)
 	{
-		$dir_handle = dir($GLOBALS['sys_icon_dir'] . "/$type");
+		$vote_result = mysql_query("UPDATE $type SET vote_sum=vote_sum+$vote, vote_count=vote_count+1 WHERE " . $type . "ID='$artID'");
+	}
+}
 
-		//skip . and ..
-		$dir_handle->read();
-		$dir_handle->read();
+function print_detailed_view($description, $type, $release_date, $add_timestamp, $version, $license, $download_count, $download_start_timestamp, $vote, $vote_sum, $vote_count, $extra_rows, $thumbnail_url)
+{
+	global $license_config_array;
+	list($year, $month, $day) = explode("-", $release_date);
 
-		$num_icons = 0;
+	$release_date = $year . "-" . $month . "-" . $day;
 
-		// get the total number of icons
-		while($file = $dir_handle->read())
-		{
-			list($foo,$ext) = explode(".",$file);
-		   if(in_array($ext,$GLOBALS['valid_image_ext']))
-		   {
-		   	$num_icons ++;
-		   }
-		}
-		$num_pages = ceil($num_icons / $icons_per_page);
+	$relative_date = FormatRelativeDate(time(), $add_timestamp);
 
-		rewinddir ($dir_handle->handle);
-		$dir_handle->read();
-		$dir_handle->read();
+	if ($vote_count < 5)
+	{
+		$rating = 0;
+		$rating_text = "5 votes required";
+		$rating_bar = "";
+	}
+	else 
+	{
+		$rating = calculate_rating($vote_sum, $vote_count);
+		$rating_text = "Rating: " . $rating . "%";
+		$rating_bar = rating_bar($rating);
+	}
+			
+	if($license == "")
+	{
+		$license = "not available";
+	}
 
-		$start_file = $icons_per_page * ($page - 1);
-		for ($i=0;$i<$start_file;++$i)
-		{
-			$file = $dir_handle->read ();
-		}
+	if($version == "0" || $version == "")
+	{
+		$version = "not available";
+	}
 
-		unset($icon_array);
-		$counter = 0;
-		while( ($file = $dir_handle->read ()) && ($counter < $icons_per_page) )
-		{
-			list($foo,$ext) = explode(".",$file);
-			if(in_array($ext,$GLOBALS['valid_image_ext']))
-			{
-				$icon_array[] = $file;
-				$counter++;
-			}
-		}
+	print("<p>" . htmlspecialchars($description) . "</p>");
 
-		print("<div align=\"center\">\n<table border=\"0\">\n<tr>");
-		$counter = 0;
-		while(list($foo,$file)=each($icon_array))
-		{
-			if($counter > 0 && (($counter % $num_columns) == 0))
-		   {
-		   	print("</tr>\n<tr>");
-		   }
-		   list($foo,$ext) = explode(".",$file);
-		   if(in_array($ext,$GLOBALS['valid_image_ext']))
-			{
-				print("<td><a href=\"/images/icons/$type/$file\"><img src=\"/images/icons/$type/$file\" border=\"0\"></a></td>");
-				$counter++;
-		   }
-		}
-		print("</tr>\n</table>\n</div>\n");
-		
-		print("<p>\n");
-		print("<div align=\"center\">\n");
-		/* Page Navigation System */
-		if($page > 1)
-		{
-			$prev_page = $page -1;
-		   print(" <a href=\"" . $GLOBALS["PHP_SELF"] . "?&page=$prev_page\">[&lt;]</a>");
-		}
-		for($count=1;$count<=$num_pages;$count++)
-		{
-			if($count == $page)
-			{
-				print("<span class=\"bold-text\">[$count]</span> ");
-			}
-			else
-			{
-				print("<a href=\"" . $GLOBALS["PHP_SELF"] . "?page=$count\">[$count]</a> ");
-			}
-		}
-		if($page < $num_pages)
-		{
-			$next_page = $page +1;
-		   print(" <a href=\"" . $GLOBALS["PHP_SELF"] . "?page=$next_page\">[&gt;]</a>");
-		}
-		print("</div>\n");
+	print("<table class=\"info\">");
+	print("<tr><th>Release Date</th><td>$release_date (last updated $relative_date)</td></tr>");
+	print("<tr><th>Version</th><td>$version</td></tr>");
+	print("<tr><th>License</th><td>{$license_config_array[$license]}</td></tr>");
+	$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
+	print("<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day</td></tr>");
+
+	print("<tr><th>Rating</th><td>");
+	print("<div class=\"rating_text\" style=\"float:left\">");
+	print($rating_bar);
+	print("$rating_text, $vote_count votes</div>");
+	if ($vote == -1)
+	{
+		print("<form class=\"rating_vote\" name=\"vote\" method=\"post\" action=\"" . $_SERVER["PHP_SELF"] . "\">Vote:\n");
+		print("[worst]");
+		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"1\"/>\n");
+		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"2\"/>\n");
+		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"3\"/>\n");
+		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"4\"/>\n");
+		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"5\"/>\n");
+		print("[best]");
+		print("</form>");
 	}
 	else
 	{
-		print("Invalid Directory\n<p>\n");
+		print("<div class=\"rating_vote\">");
+		print("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Thanks for your vote</i>");
+		print("</div>");
+	}
+
+	print("</td></tr>\n");
+	print($extra_rows);
+
+	print("</table>\n");
+
+	print("<center><img src=\"$thumbnail_url\" vspace=\"2\" class=\"large_thumbnail\" alt=\"thumbnail\" /></center>");
+}
+
+function print_item_row($name, $thumbnail, $category, $author, $date, $link, $vars, $vote)
+{
+	if ($vars)
+		$var_image = "<img src=\"/images/site/stock_color.png\" alt=\"Variations Available\" />";
+	else
+		$var_image = "";
+
+	print(utf8_encode("<table class=\"theme_row\"><tr valign=\"top\"><td class=\"theme_row_col1\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"$class\" />$vote</td><td><a href=\"$link\" class=\"h2\"><b>$name</b></a><br/><span class=\"subtitle\">$category<br/>$date<br/>$author<br/>$var_image</span></td></tr></table>"));
+}
+
+function print_comments($artID, $type)
+{
+	$comment_select_result = mysql_query("SELECT comment.commentID, comment.status, comment.userID, user.username, comment.comment, comment.timestamp FROM comment, user WHERE user.userID=comment.userID AND type='$type' and artID='$artID' and comment.status!='deleted' ORDER BY comment.timestamp");
+
+
+	$comment_count = mysql_num_rows($comment_select_result);
+
+	if ($comment_count == 1)
+	{
+		//Only one Comment
+		$msg = "comment";
+	}
+	else 
+	{
+		//More than one comment
+		$msg = "comments";
+	}
+
+	create_title("Comments", "This $type has $comment_count $msg");
+
+	if($comment_count > 0)
+	{
+		print("<br/>");
+		$count = 0;
+
+		
+		
+		while(list($commentID, $status, $userID, $username, $user_comment, $comment_time)=mysql_fetch_row($comment_select_result))
+		{
+			$count++;
+			print("<table class=\"comment\">\n");
+			print("<tr><td class=\"comment_head\">");
+			print("<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\">\n");
+			print("<i>$count: <a href=\"/users/$userID\">$username</a> posted on " . date("Y-m-d - H:i", $comment_time) . "</i>\n");
+			print("</td><td align=\"right\">\n");
+			
+			if ($status == "reported")
+			{
+				print("Reported");
+			}
+			else if ($status == "approved")
+			{
+				print("Approved");
+			}
+			else
+			{
+				print("<form name=\"report\" action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
+				print("<input type=\"hidden\" name=\"commentID\" value=\"" . $commentID . "\">\n");
+				print("<input type=\"submit\" name=\"report\" value=\"Report\" class=\"link_button\">");
+				print("</form>\n");
+			}
+			
+			print("</td></tr></table>");
+			print("<tr><td class=\"comment\">" . parse_comment($user_comment) . "</td></tr>");
+			print("</table><br/>\n");
+		}
+
+	}
+}
+
+function report_comment($report, $commentID) 
+{
+	if ($report && $commentID > -1) 
+	{
+		mysql_query("UPDATE comment SET status='reported' where commentID='$commentID' AND status!='deleted'");
+		//status!='deleted' because otherwise a deleted comment could be set reported by a user
+	}
+}
+
+function print_comment_form($comment)
+{
+
+	print("<div class=\"h2\">Add a new comment</div>");
+	if(!array_key_exists("username", $_SESSION))
+	{
+		print("<p class=\"info\">Only <a href=\"/account.php\">logged in</a> users may post comments.</p>\n");
+	}
+	else
+	{
+		$show_comment = "";
+		
+		if (strlen($comment) < 10 && strlen($comment) != 0) 
+		{
+			$comment_msg = "You comment is too short!<br/>\n";
+			$show_comment = $comment;
+		}
+		
+		print("<a name=\"comment\"/>\n");
+		print("<br/><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"POST\">\n");
+		
+		print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br/><br/>\n");
+		print("<input type=\"submit\" name=\"send\" value=\"Send\" />\n");
+		print("</form>\n");
+	}
+}
+
+function add_comment($artID, $type, $comment)
+{
+	if (array_key_exists("username", $_SESSION) and ($comment != ""))
+	{
+		if(strlen($comment) < 10)
+		{
+			return ("<p class=\"warning\">Comments must be more than 10 letters long!</p>");
+		}
+		$comment = mysql_real_escape_string(htmlspecialchars($comment, ENT_QUOTES)); // make sure it is safe for html and mysql
+		$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . mysql_real_escape_string($comment) . "')");
+		if ($comment_result === False)
+		{
+			return ("<p class=\"error\">There was an error adding your comment.</p>");
+		}
 	}
 }
 
 function print_background_row($backgroundID, $view)
 {
 	global $background_config_array, $site_url;
-	$background_select_result = mysql_query("SELECT background_name, category, author,release_date,thumbnail_filename,download_start_timestamp,download_count FROM background WHERE backgroundID='$backgroundID'");
-	list($background_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count) = mysql_fetch_row($background_select_result);
+	$background_select_result = mysql_query("SELECT background_name,category,userID,release_date,thumbnail_filename,download_start_timestamp,download_count,vote_sum,vote_count FROM background WHERE backgroundID='$backgroundID'");
+	$var_select_result = mysql_query("SELECT * FROM background WHERE parent = '$backgroundID'");
+	if (mysql_num_rows($var_select_result) > 0) $vars = true; else $vars = false;
+
+	list($background_name,$category,$userID,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count,$vote_sum,$vote_count) = mysql_fetch_row($background_select_result);
+
+	$user_select_result = mysql_query("SELECT realname FROM user WHERE userID = $userID");
+	list($author) = mysql_fetch_row($user_select_result);
+
+
 	$release_date = fix_sql_date($release_date);
 	$link = "{$site_url}backgrounds/$category/$backgroundID/";
 	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
-	if ($view == "icons")
+	$thumbnail = "{$site_url}images/thumbnails/backgrounds/$thumbnail_filename";
+	
+	if ($vote_count < 5) 
 	{
-		print("<a href=\"$link\"><img class=\"thumbnail-border\" style=\"margin:0.5em\" src=\"{$site_url}images/thumbnails/backgrounds/$thumbnail_filename\"></a>");
+		$vote = "<div class=\"rating_text\">5 votes required</div>\n";
 	}
 	else
 	{
-		print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"{$site_url}images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>Background - $category_name<br>$author</td></tr>\n"));
+		$vote = rating_bar(calculate_rating($vote_sum, $vote_count));
+		$vote .= "<div class=\"rating_text\">Rating: " . calculate_rating($vote_sum, $vote_count) . "%</div>\n";
 	}
-
+	
+	if ($view == "icons")
+	{
+		print("<div class=\"icon_view\"><a href=\"$link\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
+	}
+	else
+	{
+		print_item_row($background_name, $thumbnail, "Backgrounds - $category_name", $author, $release_date, $link, $vars, $vote);
+	}
 }
 
 function print_theme_row($themeID, $view)
 {
 	global $theme_config_array, $site_url;
-	$theme_select_result = mysql_query("SELECT theme_name, category, author, release_date,small_thumbnail_filename,thumbnail_filename,download_filename FROM theme WHERE themeID='$themeID'");
-	list($theme_name,$category,$author,$release_date,$thumbnail_filename,$screenshot,$download) = mysql_fetch_row($theme_select_result);
+	$theme_select_result = mysql_query("SELECT theme_name, category, userID, release_date,small_thumbnail_filename,thumbnail_filename,download_filename, vote_sum, vote_count FROM theme WHERE themeID='$themeID'");
+	$var_select_result = mysql_query("SELECT * FROM theme WHERE parent = '$themeID'");
+	if (mysql_num_rows($var_select_result) > 0)
+		$vars = "<img src=\"/images/site/theme-24.png\" alt=\"Variations available\" height=\"16\" width=\"16\" />";
+	else
+		$vars = "";
+	list($theme_name,$category,$userID,$release_date,$thumbnail_filename,$screenshot,$download,$vote_sum,$vote_count) = mysql_fetch_row($theme_select_result);
+	
+	$user_select_result = mysql_query("SELECT realname FROM user WHERE userID = $userID");
+	list($author) = mysql_fetch_row($user_select_result);
+
+
 	$release_date = fix_sql_date($release_date);
 	$link = "{$site_url}themes/$category/$themeID/";
 	$category_name = $theme_config_array["$category"]["name"];
+
+	$thumbnail = "{$site_url}images/thumbnails/$category/$thumbnail_filename";
+
+	if ($vote_count < 5) 
+	{
+		$vote = "<div class=\"rating_text\">5 votes required</div>\n";
+	}
+	else
+	{
+		$vote = rating_bar(calculate_rating($vote_sum, $vote_count));
+		$vote .= "<div class=\"rating_text\">Rating: " . calculate_rating($vote_sum, $vote_count) . "%</div>\n";
+	}
 	
-	if( ($category == "icon") or ($category == "metacity") )
-	{
-		$class = "thumbnail";
-	}
-	else
-	{
-		$class = "thumbnail-border";
-	}
-
-	if ( $category == "metacity" || $category == "splash_screens" || $category == "gtk_engines" )
-		$thumbnail = "<img src=\"{$site_url}images/thumbnails/$category/$thumbnail_filename\" class=\"$class\">";
-	else
-		$thumbnail = "<a href=\"{$site_url}images/thumbnails/$category/$screenshot\"><img src=\"{$site_url}images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></a>";
-
 	if ($view == "icons")
 	{
-		print("<a href=\"$link\"><img style=\"margin:0.5em;\" src=\"{$site_url}images/thumbnails/$category/$thumbnail_filename\" alt=\"\" class=\"$class\" /></a>");
+		print("<div class=\"icon_view\"><a href=\"$link\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
 	}
 	else
 	{
-		print(utf8_encode("<tr><td>$thumbnail</td><td><a class=\"bold-link\" href=\"$link\">$theme_name</a><br>$release_date<br>$category_name<br>$author</td></tr>\n"));
+		print_item_row($theme_name, $thumbnail, $category_name, $author, $release_date, $link, $vars, $vote);
 	}
 }
 
@@ -214,7 +356,6 @@ function get_updates_array($number)
 }
 
 
-
 function fix_sql_date($sql_date)
 {
 	list($year,$month,$day)=explode("-",$sql_date);
@@ -237,9 +378,8 @@ function ago_redirect($referrer)
 function ago_file_not_found()
 {
 	ago_header("404 - File Not Found");
-	create_middle_box_top("");
-	print("404 - File not Found.");
-	create_middle_box_bottom();
+	create_title("404 - File not Found","");
+	print("<p>The URL you requested could not be found</p>");
 	ago_footer();
 }
 
@@ -250,14 +390,14 @@ function print_select_box($name,$array,$selected)
 	{
 		if($key == $selected)
 		{
-			print("<option value=\"$key\" selected>$val\n");
+			print("<option value=\"$key\" selected=\"selected\">$val</option>");
 		}
 		else
 		{
-			print("<option value=\"$key\">$val\n");
+			print("<option value=\"$key\">$val</option>");
 		};
 	}
-	print("</select>\n");
+	print("</select>");
 }
 
 function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results_text, $view)
@@ -273,25 +413,20 @@ function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results
 		$sort_by = "name";
 	}
 
-	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"get\">");
-	print("<table border=\"0\">\n");
+	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"get\"><p>");
 
-	print("<tr><td>Sort By:</td><td>");
+	print("Sort By: ");
 	print_select_box("sort_by", $sort_by_array, $sort_by);
-	print("</td></tr>\n");
 
-	print("<tr><td>$results_text:</td><td>");
+	print(" $results_text: ");
 	print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page);
-	print("</td></tr>\n");
 
-	print("<tr><td>View:</td><td>");
+	print(" View: ");
 	print_select_box("view", $view_array, $view);
-	print("</td></tr>\n");
 
-	print("</table>\n");
 
-	print("<input type=\"submit\" value=\"Change\">\n");
-	print("</form>\n");
+	print(" <input type=\"submit\" value=\"Change\" />");
+	print("</p></form>\n");
 }
 
 function display_search_box($search_text, $search_type, $thumbnails_per_page, $sort_by)
@@ -338,6 +473,7 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 {
 	$num_pages = ceil($num_backgrounds/$thumbnails_per_page);
 
+
 	if($page > $num_pages)
 	{
 		$page = $num_pages;
@@ -358,6 +494,10 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	{
 		$order_query = "ORDER BY add_timestamp DESC";
 	}
+	elseif($sort_by == "rating")
+	{
+		$order_query = "ORDER BY (vote_sum/vote_count) DESC";
+	}
 	else
 	{
 		$order_query = "ORDER BY background_name";
@@ -372,12 +512,10 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 		$category_query = "";
 	}
 	$background_select_result = mysql_query("SELECT backgroundID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM background WHERE $category_query $search_type LIKE '%$search_text%' AND parent='0' $order_query LIMIT $start, $thumbnails_per_page");
-	print("<table>\n");
 	while(list($backgroundID, $perday)=mysql_fetch_row($background_select_result))
 	{
 		print_background_row($backgroundID, $view);
 	}
-	print("</table>");
 	return array($page, $num_pages);
 }
 
@@ -419,12 +557,10 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 		$category_query = "";
 	}
 	$theme_select_result = mysql_query("SELECT themeID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM theme WHERE $category_query $search_type LIKE '%$search_text%' $order_query LIMIT $start, $thumbnails_per_page");
-	print("<table>\n");
 	while(list($themeID)=mysql_fetch_row($theme_select_result))
 	{
 		print_theme_row($themeID, $view);
 	}
-	print("</table>");
 	return array($page, $num_pages);
 }
 
@@ -455,6 +591,32 @@ function calculate_downloads_per_day($download_count, $start_timestamp)
 	$popularity = ($download_count / $days);
 	$popularity = sprintf("%.1f",$popularity);
 	return $popularity;
+}
+
+function calculate_rating($vote_sum, $vote_count)
+{
+	return sprintf("%.1f", ($vote_sum / $vote_count) * 100 / 5);
+}
+
+function rating_bar($rating)
+{
+	$percent = sprintf("%.0f", $rating);
+	$bar = "<div class=\"rating-border\"><div class=\"rating\" style=\"width:$percent%\">&nbsp;</div></div>\n";
+
+	return $bar;
+}
+
+function parse_comment($comment)
+{
+	$comment = htmlspecialchars($comment);
+	$comment = str_replace("\n", "<br/>", $comment);
+	$comment = ereg_replace(":-\)|:\)", "<img src=\"/images/site/emoticons/stock_smiley-1.png\" alt=\":)\" />", $comment);
+	$comment = ereg_replace(";\)|;-\)", "<img src=\"/images/site/emoticons/stock_smiley-3.png\" alt=\":)\" />", $comment);
+	$comment = ereg_replace(":-P|:-p|:P|:p", "<img src=\"/images/site/emoticons/stock_smiley-10.png\" alt=\":-P\" />", $comment);
+	$comment = ereg_replace(":\(|:-\(", "<img src=\"/images/site/emoticons/stock_smiley-4.png\" alt=\":(\" />", $comment);
+	$comment = ereg_replace(":-D|:D", "<img src=\"/images/site/emoticons/stock_smiley-6.png\" alt=\":(\" />", $comment);
+
+	return $comment;
 }
 
 ////////////////////////////////

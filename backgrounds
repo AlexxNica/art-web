@@ -8,18 +8,20 @@ require("ago_headers.inc.php");
 
 // superglobals stuff
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
-$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity") ,"date");
+$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity","rating") ,"date");
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
 $view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
 list($foo, $unvalidated_category, $unvalidated_backgroundID) = explode("/", $_SERVER["PATH_INFO"]);
+$vote = validate_input_regexp_default ($_POST["vote"], "^[1-5]$", -1);
+$comment = $_POST["comment"]; // This is validated later
+$commentID = validate_input_regexp_default ($_POST["commentID"], "^[0-9]+$", -1);
+$report = $_POST["report"];
 
 /* print out the list of background categories */
 if ($unvalidated_category == "")
 {
 	ago_header("BACKGROUNDS");
-	create_middle_box_top("backgrounds");
-
-	print("Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.");
+	create_title("backgrounds", "Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.");
 	
 	print("<p>\n<table border=\"0\" cellpadding=\"4\">");
 	reset($background_config_array);
@@ -32,7 +34,6 @@ if ($unvalidated_category == "")
 	}
 	print("</table>\n");
 	
-	create_middle_box_bottom();
 	ago_footer();
 }
 else
@@ -43,8 +44,7 @@ else
 	if (array_key_exists ($category, $background_config_array) && $unvalidated_backgroundID == "")
 	{
 		ago_header("BACKGROUNDS - " . strtoupper($category));
-		$temp = "backgrounds_" . $category;
-		create_middle_box_top($temp);
+		create_title($background_config_array[$category]["name"] ." Backgrounds", $background_config_array[$category]["description"]);
 		
 		$background_select_all_result = mysql_query("SELECT * FROM background WHERE category='$category' AND status='active'AND parent='0' ORDER BY add_timestamp DESC");
 		$num_backgrounds = mysql_num_rows($background_select_all_result);
@@ -55,36 +55,34 @@ else
 		else
 		{
 			print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Backgrounds", $view);
-			print("<p>");
 			list($page, $num_pages) = background_search_result("", "background_name", $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view);
 
-			print("<div align=\"center\">\n");
+			print("<div style=\"clear:both\" align=\"center\">\n");
 			/* Page Navigation System */
 			if($page > 1)
 			{
 				$prev_page = $page -1;
-				print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">[&lt;]</a>");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">&lt;</a>");
 			}
 			for($count=1;$count<=$num_pages;$count++)
 			{
 				if($count == $page)
 				{
-					print("<span class=\"bold-text\">[$count]</span> ");
+					print(" <b>$count</b> ");
 				}
 				else
 				{
-					print("<a href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">[$count]</a> ");
+					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">$count</a>");
 				}
 			}
 			if($page < $num_pages)
 			{
 				$next_page = $page +1;
-				print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">[&gt;]</a>");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">&gt;</a>");
 			}
-			print("</div><p>\n");
+			print("</div>\n");
 		}
 
-		create_middle_box_bottom();
 		ago_footer();
 	}
 
@@ -92,6 +90,10 @@ else
 	else if (array_key_exists ($category,$background_config_array) && $unvalidated_backgroundID != "")
 	{
 		$backgroundID = validate_input_regexp_error ($unvalidated_backgroundID, "^[0-9]+$");
+
+		add_vote($backgroundID, "background", $vote);
+
+		report_comment($report, $commentID);
 
 		$background_select_result = mysql_query("SELECT * FROM background WHERE backgroundID='$backgroundID'");
 		if(mysql_num_rows($background_select_result)==0)
@@ -101,81 +103,63 @@ else
 		else
 		{
 			ago_header("BACKGROUNDS - " . strtoupper($category));
+
+
 			$temp = "backgrounds_" . $category;
-			create_middle_box_top($temp);
 			$background_select_row = mysql_fetch_array($background_select_result);
 			$thumbnail_filename = $background_select_row["thumbnail_filename"];
 			$screenshot_filename = $background_select_row["screenshot_filename"];
 			$name = $background_select_row["background_name"];
-			$author = $background_select_row["author"];
-			$author_email = $background_select_row["author_email"];
-			$author_email = spam_proof_email($author_email);
+			$userID = $background_select_row["userID"];
+			$user_select_result = mysql_query("SELECT username FROM user WHERE userID = $userID");
+			list($author) = mysql_fetch_row($user_select_result);
 			$release_date = $background_select_row["release_date"];
-			list($year,$month,$day)=explode("-",$release_date);
-			$release_date = $month . "/" . $day . "/" . $year;
 			$background_description = $background_select_row["background_description"];
-			$screenshot_description = $background_select_row["screenshot_description"];
 			$download_start_timestamp = $background_select_row["download_start_timestamp"];
 			$download_count = $background_select_row["download_count"];
+			$vote_sum = $background_select_row["vote_sum"];
+			$vote_count = $background_select_row["vote_count"];
+			$add_timestamp = $background_select_row["add_timestamp"];
+			$license = $background_select_row["license"];
+			$version = $background_select_row["version"];
+			
 			$background_resolution_select_result = mysql_query("SELECT background_resolutionID, type, resolution, filename FROM background_resolution WHERE backgroundID='$backgroundID' ORDER BY type,resolution");
-			print("<table border=\"0\">\n<tr><td valign=\"top\">");
-			print("<img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border-padding\">\n");
-			print("</td><td>\n");
-			print("<span class=\"bold-text\">Name:</span> $name<br>\n<span class=\"bold-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"bold-text\">Release Date:</span> $release_date<br>\n");
-			$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
-			print("<span class=\"bold-text\">Popularity:</span> $downloads_per_day Downloads per Day<br>\n");
-			print("<span class=\"bold-text\">Resolutions:</span>");
+
+			create_title($name . " by <a href=\"/users/$userID\">$author</a>", $background_config_array[$category]["name"] . " Backgrounds");
+
+
+
+			$thumbnail_url = "/images/thumbnails/backgrounds/$thumbnail_filename";
+			$more = "<tr><th>Resolutions</th><td>\n";
 			while(list($background_resolutionID,$type,$resolution,$filename)=mysql_fetch_row($background_resolution_select_result))
 			{
-				if($current_type != $type)
-				{
-					print("<br>\n&nbsp;&nbsp;");
-					$current_type = $type;
-				}
-				else
-				{
-					print(" ;\n");
-				}
-				//print("<a href=\"$mirror_url/backgrounds/$filename\">" . $type . "-" . $resolution . "</a>\n");
-				print("<a href=\"/download/backgrounds/$category/$background_resolutionID/$filename\">" . $type . "-" . $resolution . "</a>\n");
+				$more .= "<a href=\"/download/backgrounds/$category/$background_resolutionID/$filename\" class=\"$type\">&nbsp;$type - $resolution</a>&nbsp;&nbsp;\n";
+			}
 
-			}
-			print("<br>\n");
-			if($screenshot_filename != "")
-			{
-				print("<a href=\"/images/screenshots/$screenshot_filename\" class=\"bold-link\">Screenshot</a><p>\n");
-			}
-			print("</td></tr></table>\n");
-			print("<p>\n<span class=\"bold-text\">Info (Picture):</span> $background_description\n");
-			if($screenshot_description != "")
-			{
-				print("<p>\n<span class=\"bold-text\">Info (Screenshot):</span> $screenshot_description\n");
-			}
-			$back_select_result = mysql_query("SELECT backgroundID,background_name,category FROM background WHERE parent='$backgroundID'");
+			$more .= "</td></tr></table>\n";
+
+			print_detailed_view($background_description, "background", $release_date, $add_timestamp, $version, $license, $download_count, $download_start_timestamp, $vote, $vote_sum, $vote_count, $more, $thumbnail_url);
+
+			$back_select_result = mysql_query("SELECT backgroundID,background_name,category,thumbnail_filename FROM background WHERE parent='$backgroundID'");
 			if(mysql_num_rows($back_select_result)>0)
 			{
-				print("<p>\n<span class=\"bold-text\">Variations:</span> ");
+				create_title("Variations", "This background has a number of variations");
 				while(list($backID,$back_name,$back_cat)=mysql_fetch_row($back_select_result))
 				{
-					if($first_toggle)
-					{
-						print(" - ");
-					}
-					else
-					{
-						$first_toggle = 1;
-					}
-					print("<a href=\"/backgrounds/$back_cat/$backID/\">$back_name</a>");
-
+					print_background_row($backID, "icons");
 				}
 			}
-		create_middle_box_bottom();
-		ago_footer();
+
+			$comment_result = add_comment($backgroundID, "background", $comment);
+			print_comments($backgroundID, "background");
+			print($comment_result);
+			print_comment_form($comment);
+			ago_footer();
 		}
 	}
 	else
 	{
-		ago_file_not_found();	
+		ago_file_not_found();
 	}
 }
 ?>

@@ -1,0 +1,71 @@
+<?php
+
+/* $Id$ */
+
+require("mysql.inc.php");
+require("common.inc.php");
+require("ago_headers.inc.php");
+
+// superglobals stuff
+$page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
+$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity"), "date");
+$thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
+$view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
+list($foo, $unvalidated_author) = explode("/", $_SERVER["PATH_INFO"]);
+
+/* print out the list of theme categories */
+if ($unvalidated_author == "")
+{
+	ago_header("AUTHORS");
+	create_title("Authors", "The people creating the artwork");
+	$author_list_result = mysql_query("SELECT user.userID,user.username FROM user,theme,background WHERE active = 1 AND (user.userID = theme.userID OR user.userID = background.userID) GROUP BY user.userID ORDER BY realname ASC");
+	print("<ul>");
+	while (list($userID, $username) = mysql_fetch_row($author_list_result))
+	{
+		print("<li><a href=\"/users/$userID\">$username</a></li>");
+	}
+	print("</ul>");
+
+	ago_footer();
+}
+else
+{
+	$authorID = validate_input_regexp_error ($unvalidated_author, "^[0-9]+$");
+
+	if ($authorID != "")
+	{
+		ago_header("AUTHORS - " . strtoupper($category));
+		$author_result = mysql_query ("SELECT realname,email,homepage,info FROM user WHERE userID = $authorID");
+		list ($realname, $email,$homepage, $info) = mysql_fetch_row ($author_result);
+		$email = spam_proof_email ($email);
+		create_title ($realname, "");
+		print ("<p>$info</p>");
+		print("<table>");
+		print("<tr><td><img src=\"/images/site/stock_mail.png\" alt=\"e-mail\" /></td>");
+		print("<td><a href=\"mailto:$email\">$email</a></td</tr>");
+		print("<tr><td><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /></td>");
+		print("<td><a href=\"$homepage\">$homepage</a></td></tr>");
+		print("</table>");
+		$author_themes_result = mysql_query ("SELECT themeID FROM theme WHERE userID = $authorID");
+		if (mysql_num_rows ($author_themes_result) > 0)
+		{
+			create_title ("Themes", "Themes created by $realname");
+			while (list ($themeID) = mysql_fetch_row ($author_themes_result))
+				print_theme_row($themeID, "list");
+		}
+
+		$author_background_result = mysql_query ("SELECT backgroundID FROM background WHERE userID = $authorID");
+		if (mysql_num_rows ($author_background_result) > 0)
+		{
+			create_title ("Backgrounds", "Backgrounds created by $realname");
+			while (list ($backgroundID) = mysql_fetch_row ($author_background_result))
+				print_background_row($backgroundID, "list");
+		}
+	}
+	else
+	{
+		ago_file_not_found();
+	}
+}
+
+?>

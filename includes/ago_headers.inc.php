@@ -2,101 +2,96 @@
 
 function ago_header($title)
 {
-	?>
-	<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+	ini_set("session.use_only_cookies", "1");
+	session_start();
 
-	<html>
-	<head>
-	<title>
-	<?php
-	print("$title");
-	?> - art.gnome.org</title>
-	<link rel="icon" type="image/png" href="/images/site/gnome-16.png">
-	<link rel="stylesheet" href="/main.css" type="text/css">
-	<link rel="stylesheet" href="/new_layout.css" type="text/css">
-	<link rel="alternate" type="application/rss+xml" title="RSS" href="http://art.gnome.org/backend.php" />
-	</head>
-	<body>
-	<div id="body">
-	<table border="0" width="100%" cellpadding="0" cellspacing="0">
-	<tr valign="top">
-	<td>
-	<img src="/images/site/pixel.png" width="10" height="1" alt=" ">
-	</td>
-	<!-- Left Column -->
+	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
+	print("<html>");
+	print("<head>");
+	print("<link type=\"text/css\" rel=\"stylesheet\" title=\"Default\" href=\"/default.css\" />");
+	print("<link type=\"text/css\" rel=\"alternate stylesheet\" title=\"Left sidebar\" href=\"/left-sidebar.css\" />");
+	print("<script type=\"text/javascript\" src=\"/styleswitcher.js\"></script>");
+	print("<title>ART.GNOME.ORG</title></head>");
+	print("<body>");
+	print("<div id=\"header\">");
+	print("<div id=\"header-left\">&nbsp;</div><div id=\"header-right\">&nbsp;</div>");
+	print("<div id=\"header-links\">");
+	print("<a href=\"http://www.gnome.org/about/\">About GNOME</a> &middot; ");
+	print("<a href=\"http://www.gnome.org/start/stable/\">Download</a> &middot; ");
+	print("<a href=\"http://www.gnome.org/\">Users</a> &middot; ");
+	print("<a href=\"/\"><b>Art &amp; Themes</b></a> &middot; ");
+	print("<a href=\"http://developer.gnome.org/\">Developers</a> &middot; ");
+	print("<a href=\"http://foundation.gnome.org/\">Foundation</a> &middot; ");
+	print("<a href=\"http://www.gnome.org/contact/\">Contact</a> ");
+	print("</div></div>");
 
-	<td width="182">
-	<div class="mb-lite-title"><img src="/images/site/pill-icons/art.png" alt=""> ART</div>
-	<div class="mb-lite-contents">
-	<?php
-	print("<font size=\"+1\"><a href=\"/index.php\">News</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/updates.php\">Updates</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/search.php\">Search</a></font><br><br>\n");
-	print("<font size=\"+1\">Backgrounds</font><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/gnome/\">GNOME</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/other/\">Other</a><br><br>\n");
+	print("<div id=\"sidebar\">");
+	print("<img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" height=\"48px\" width=\"48px\" align=\"middle\" /> Art");
+	print("<ul>");
+	print("<li><a href=\"/\">News</a></li>");
+	print("<li><a href=\"/updates.php\">Updates</a></li>");
+	print("<li><a href=\"/search.php\">Search</a></li>");
+	print("<li><a href=\"/users/\">Authors</a></li>");
+	print("<li><a href=\"/faq.php\">FAQ</a></li>");
+	print("<li><a href=\"http://live.gnome.org/GnomeArt_2fTutorials\">Tutorials</a></li>");
+	print("</ul>");
+	print("<br />");
+	print("<img src=\"/images/site/wallpaper.png\" alt=\"Wallpapers\" height=\"48px\" width=\"48px\" align=\"middle\" /> Backgrounds");
+	print("<ul>");
+	print("<li><a href=\"/backgrounds/gnome/\">GNOME</a></li>");
+	print("<li><a href=\"/backgrounds/other/\">Other</a></li>");
+	print("</ul>");
+	print("<br />");
+	print("<img src=\"/images/site/theme.png\" alt=\"Themes\" height=\"48px\" width=\"48px\" align=\"middle\" /> Desktop Themes");
+	print("<ul>");
+	print("<li><a href=\"/themes/gtk2/\">Application</a></li>");
+	print("<li><a href=\"/themes/metacity/\">Window Border</a></li>");
+	print("<li><a href=\"/themes/icon/\">Icons</a></li>");
+	print("</ul>");
+	print("<img src=\"/images/site/Themes.png\" alt=\"Themes\" height=\"48px\" width=\"48px\" align=\"middle\" /> Other Themes");
+	print("<ul>");
+	print("<li><a href=\"/themes/gdm_greeter/\">Login Manager</a></li>");
+	print("<li><a href=\"/themes/splash_screens/\">Splash Screen</a></li>");
+	print("<li><a href=\"/themes/gtk_engines/\">GTK+ Engines</a></li>");
+	print("</ul>");
+	print("<br/><br/>");
+	if (!(array_key_exists("login", $_POST) or array_key_exists("logout", $_POST)))
+	{
+	if (array_key_exists("username", $_SESSION))
+	{
+		print("<p>Logged in as {$_SESSION['username']}");
+		print("<ul>");
+		print("<li><a href=\"/account.php\">My Account</a></li>");
+		print("</ul>");
+	}
+	else
+	{
+		print("<center>");
+		print("<form action=\"/account.php\" method=\"post\">");
+		print("<input name=\"username\" class=\"username\" size=\"10\" /><br/>");
+		print("<input name=\"password\" type=\"password\" class=\"password\" size=\"10\" /><br/>");
+		print("<input type=\"hidden\" value=\"{$_SERVER['PHP_SELF']}\" name=\"referer\" />");
+		print("<input type=\"submit\" value=\"Login\" name=\"login\" />");
+		print("</form>");
+		print("<a href=\"/account.php\" style=\"font-size:0.8em;\">(Register)</a>");
+		print("</center>");
+	}
+	}
 
-	print("<font size=\"+1\"><a href=\"/themes/desktop_themes/\">Desktop Themes</a></font><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2/\">Applications</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/metacity/\">Window Borders</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/icon/\">Icon</a><br><br>\n");
 
-	print("<font size=\"+1\">Other Themes</font><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gdm_greeter/\">Login Manager</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/splash_screens/\">Splash Screens</a><br>\n");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk_engines/\">GTK+ Engines</a><br><br>\n");
+	print("</div>");
 
-	print("<font size=\"+1\"><a href=\"/art-icons/\">Icons</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/faq.php\">FAQ</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"http://live.gnome.org/GnomeArt_2fTutorials\">Tutorials</a></font><br />\n");
-	print("<font size=\"+1\"><a href=\"/contact.php\">Contact</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"http://gnomesupport.org/forums/index.php?c=6\">Forums</a></font><br>\n");
-	print("<font size=\"+1\"><a href=\"/links.php\">Links</a></font><br>\n");
-	
-	?>
-	</div>
-	<img src="/images/site/pixel.png" width="182" height="1" alt=" ">
-	</td>
-	<td><img src="/images/site/pixel.png" width="10" alt=" "></td>
-	<!-- End Left Column -->
-	<!-- Center Column -->
-	<td width=\"100%\">
-<?php
+	print("<div id=\"content\">");
+
 }
 
 function ago_footer()
 {
-	print("<td><img src=\"/images/site/pixel.png\" width=\"10\" alt=\" \"></td>\n");
-	?>
-	</td>
-	<!-- End Center Column  -->
-	</tr>
-	</table>
-	</div>
-	
-	<p>
-	<div align="center">
-	<font color="black" size="-2">
-	Copyright &copy; 2002 - 2003<br><a href="/copyright.php"><b>The art.gnome.org team</b></a>
-	</font> 
-	</div>
-	
-	<p>
-	<div id="hdr">
-      <a href="/"><img id="logo" src="/images/site/gnome-64.png" alt="Home" title="Back to the Gnome Developer's home page"/></a>
-      <p class="none"></p>
-      <div id="hdrNav">
-			<a href="http://www.gnome.org/about/">About GNOME</a> &middot;
-			<a href="http://www.gnome.org/start/stable/">Download</a> &middot;
-			<a href="http://www.gnome.org/">Users</a> &middot;
-			<a href=""><b>Art &amp; Themes</b></a> &middot;
-			<a href="http://developer.gnome.org/">Developers</a> &middot;
-			<a href="http://foundation.gnome.org/">Foundation</a> &middot;
-			<a href="http://www.gnome.org/contact/">Contact</a>
-		</div>
-	</div>
-	</body>
-	</html>
-<?php
+	print("<div align=\"center\" style=\"font-size: 0.7em; margin-top:3em; clear: left;\">");
+	print("<p>Copyright &copy; 2002 - 2005<br /><a href=\"/copyright.php\"><b>The art.gnome.org team</b></a></p>");
+	print("</div>");
+	print("</div>");
+	print("</body>");
+	print("</html>");
 }
 ?>

@@ -16,7 +16,7 @@ extract($_GET, EXTR_SKIP);
 // write the updated background text do the database
 if($action == "write")
 {
-	if($theme_category && $theme_name && $theme_author && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename )
+	if($theme_category && $theme_name && $theme_author && $category && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename )
 	{
 		$date = $year . "-" . $month . "-" . $day;
 		$theme_update_query = "UPDATE theme SET category='$theme_category', theme_name='$theme_name', author='$theme_author', author_email='$author_email', release_date='$date', description='$description', thumbnail_filename='$thumbnail_filename', small_thumbnail_filename='$small_thumbnail_filename', download_filename='$download_filename'";
@@ -40,19 +40,18 @@ if($action == "write")
 elseif($action == "edit")
 {
 	$theme_categories = array("gdm_greeter","gtk","gtk2","icon","metacity","metatheme","nautilus","sawfish","sounds","splash_screens","other");
-	$theme_select_result = mysql_query("SELECT category,theme_name,author,author_email,release_date,description,thumbnail_filename,small_thumbnail_filename,download_filename FROM theme WHERE themeID='$themeID'");
+	$theme_select_result = mysql_query("SELECT category,theme_name,userID,release_date,description,thumbnail_filename,small_thumbnail_filename,download_filename FROM theme WHERE themeID='$themeID'");
 	if(mysql_num_rows($theme_select_result)==0)
 	{
 		print("Error, Invalid themeID.");
 	}
 	else
 	{
-		list($theme_category,$theme_name,$author,$author_email,$release_date,$description,$thumbnail_filename,$small_thumbnail_filename,$download_filename) = mysql_fetch_row($theme_select_result);
+		list($theme_category,$theme_name,$userID,$release_date,$description,$thumbnail_filename,$small_thumbnail_filename,$download_filename) = mysql_fetch_row($theme_select_result);
 		
 		$theme_category = htmlspecialchars($theme_category);
 		$theme_name = htmlspecialchars($theme_name);
-		$author = htmlspecialchars($author);
-		$author_email = htmlspecialchars($author_email);
+		$userID = htmlspecialchars($userID);
 		$description = htmlspecialchars($description);
 		$thumbnail_filename = htmlspecialchars($thumbnail_filename);
 		$small_thumbnail_filename = htmlspecialchars($small_thumbnail_filename);
@@ -78,8 +77,7 @@ elseif($action == "edit")
 			 print("<option value=\"$loop_theme_category\"$selected>$loop_theme_category\n");
 		}
 		print("</select></td></tr>\n");
-		print("<tr><td><b>Theme Author:</b></td><td><input type=\"text\" name=\"theme_author\" size=\"40\" value=\"$author\"></td></tr>\n");
-		print("<tr><td><b>Author Email:</b></td><td><input type=\"text\" name=\"author_email\" size=\"40\" value=\"$author_email\"></td></tr>\n");
+		print("<tr><td><b>UserID:</b></td><td><input type=\"text\" name=\"theme_author\" size=\"40\" value=\"$userID\"></td></tr>\n");
 		print("<tr><td><b>Release Date:</b></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
 		print("<tr><td><b>Description:</b></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
 		print("<tr><td><b>Thumbnail Filename:</b></td><td><input type=\"text\" name=\"thumbnail_filename\" size=\"40\" value=\"$thumbnail_filename\"></td></tr>\n");
@@ -97,7 +95,7 @@ elseif($action == "edit")
 }
 elseif (isset($category))
 {
-		$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE category='$category' $user_sql ORDER BY themeID");
+		$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE category='$category'  ORDER BY themeID");
 		print("<b>$category</b><br />");
 		if(mysql_num_rows($theme_select_result)==0)
 		{

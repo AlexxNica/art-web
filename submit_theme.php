@@ -6,83 +6,89 @@ require("ago_headers.inc.php");
 
 // superglobal stuff
 
-// ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
-escape_gpc_array ($_POST);
+$theme_name = mysql_real_escape_string($_POST["theme_name"]);
+//$category = validate_input_array_default($_POST["category"], $theme_config_array, "");
+$category = mysql_real_escape_string($_POST["category"]);
+$version = validate_input_regexp_default($_POST["version"], "^[0-9]+$", "0");
+//$license = validate_input_regexp_default($_POST["license"], $license_config_array, "");
+$license = mysql_real_escape_string($_POST["license"]);
+$theme_author = mysql_real_escape_string($_POST["theme_author"]);
+$theme_url = mysql_real_escape_string($_POST["theme_url"]);
+$theme_description = mysql_real_escape_string($_POST["theme_description"]);
 
-$theme_name = $_POST["theme_name"];
-$category = $_POST["category"];
-$theme_author = $_POST["theme_author"];
-$author_email = $_POST["author_email"];
-$theme_url = $_POST["theme_url"];
-$theme_description = $_POST["theme_description"];
-$submission_id = $_POST["submission_id"];
+$update = validate_input_regexp_default($_POST["update"], "^[0-9]+$", "");
 
 ago_header("Theme Submission");
-create_middle_box_top("themes");
+create_title("Theme Submission", "");
 
-if($_POST)
+if (!array_key_exists('username', $_SESSION))
 {
-	if($theme_name && $category && $theme_author && $author_email && $theme_url && $theme_description)
+	print("<p class=\"error\">You need to <a href=\"/account.php\">login</a> first.</p>");
+	ago_footer();
+	die();
+}
+
+if($theme_name)
+{
+	if($theme_name && $category && $theme_url && $theme_description && $license)
 	{
-		$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,status,theme_name,category,author,author_email,theme_url,theme_description) ";
-		$incoming_theme_insert_query .= "VALUES('','new','$theme_name','$category','$theme_author','$author_email','$theme_url','$theme_description')";
+		$date = date("Y-m-d");
+		$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,userID,status,date,theme_name,version,license,parentID,category,theme_url,theme_description,updateID) ";
+		$incoming_theme_insert_query .= "VALUES('','{$_SESSION['userID']}','new','$date','$theme_name','$version','$license','$parentID','$category','$theme_url','$theme_description','$update')";
 		$incoming_theme_insert_result = mysql_query("$incoming_theme_insert_query");
 		if(mysql_affected_rows()==1)
 		{
-			print("Thank you, your theme will be considered for inclusion in art.gnome.org.<br />");
-			$id = mysql_insert_id();
-			print("Your theme submission tracking ID is $id. Use this to track the status of your submission and in any queries regarding your submission status.");
+			print("<p class=\"info\">Thank you, your theme will be considered for inclusion in art.gnome.org.</p>");
+			print("<ul>");
+			print("<li><a href=\"{$_SERVER['PHP_SELF']}\">Submit another theme</a></li>");
+			print("<li><a href=\"/account.php\">Back to account page</a></li>");
+			print("</ul>");
 		}
 		else
 		{
-			print("There were form submission errors, please try again.");
+			print("<p class=\"error\">There were form submission errors, please try again.</p>");
+			print("<tt>".mysql_error()."</tt>");
 		}
 	}
 	else
 	{
-		if ($submission_id)
-		{
-			$submission_result = mysql_query("SELECT theme_name,status FROM incoming_theme WHERE themeID = $submission_id");
-			list ($submission_name,$submission_status) = mysql_fetch_row($submission_result);
-			print("<b>Submission Status</b><p>");
-			switch ($submission_status)
-			{
-				case "new" : print("The theme &quot;$submission_name&quot; is currently pending intial review."); break;
-				case "added" : print("&quot;$submission_name&quot; has been added to the art.gnome.org database and should be available through the site."); break;
-				case "rejected" : print("The theme &quot;$submission_name&quot; has been removed from the submissions list and not been added to the site. This may happen if the theme was inappropriate to art.gnome.org, appeared to be incomplete or unfinished, or could not be retrieved from the URL provided. If you have any queries regarding this status, please contact a memeber of the art.gnome.org team, quoting the submission tracking ID. See the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">Submission Policy</a> for more information. See the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">Submission Policy</a> for more information."); break;
-				default: print("There was an error retrieving the status of the theme submission ID you requested. Please check and try again.");
-			}
-			print("</p><a href=\"" . $_SERVER["PHP_SELF"] . "\">Back to Theme Submission Page</a>");
-		}
-		else
-		{
-			print("Error, you must fill out all of the previous form fields, please go back and try again.");
-		}
+		print("<p class=\"error\">Error, you must fill out all of the previous form fields, please go back and try again.</p>");
 	}
 }
 else
 {
-	print("If you would like to submit your theme to art.gnome.org, please fill out the form below and provide a web address where we can download your theme.\n<p>\n");
-	print("To help speed up your submission, please take a look at the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">Submission Policy</a> first.");
+	print("<p>If you would like to submit your theme to art.gnome.org, please fill out the form below and provide a web address where we can download your theme.\n</p>\n");
+	print("<p class=\"info\">To help speed up your submission, please take a look at the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">Submission Policy</a> first.</p>");
+	
+	if ($update)
+	{
+		$theme_select_result = mysql_query("SELECT theme_name,category,license,version,theme_description,parentID FROM incoming_theme WHERE themeID=$update AND userID={$_SESSION['userID']}");
+		list($name,$category,$license,$version,$description,$parentID) = mysql_fetch_row($theme_select_result);
+	}
+	
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">");
-	print("<tr><td><b>Theme Name:</b></td><td><input type=\"text\" name=\"theme_name\" size=\"40\"></td></tr>\n");
-	print("<tr><td><b>Category</b></td><td><select name=\"category\"><option value=\"\">Choose<option value=\"desktop\">Desktop Theme<option value=\"gtk2\">Applications (gtk+)<option value=\"icon\">Icon<option value=\"gdm_greeter\">Login Manager (gdm)<option value=\"splash_screens\">Splash Screens<option value=\"metacity\">Window Borders (metacity)</select></td></tr>\n");
-	print("<tr><td><b>Theme Author:</b></td><td><input type=\"text\" name=\"theme_author\" size=\"40\"></td></tr>\n");
-	print("<tr><td><b>Author Email:</b></td><td><input type=\"text\" name=\"author_email\" size=\"40\"></td></tr>\n");
+	print("<tr><td><b>Theme Name:</b></td><td><input type=\"text\" name=\"theme_name\" value=\"$name\" size=\"40\"></td></tr>\n");
+	print("<tr><td><b>Category</b></td><td>"); print_select_box("category", Array(""=>"Choose", "desktop"=>"Desktop Theme", "gtk2"=>"Applications (gtk+)", "icon"=>"Icon", "gdm_greeter" => "Login Manager (gdm)", "splash_screens"=>"Splash Screens","metacity"=>"Window Borders (metacity)"), $category); print("</td></tr>\n");
+	print("<tr><td><b>Variation of:</b></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>\n");
+	$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE userID = {$_SESSION['userID']}");
+	while(list($themeID,$theme_name)=mysql_fetch_row($theme_select_result))
+	{
+		if ($themeID = $parentID) $selected = "selected=\"true\""; else $selected = "selected=\"false\"";
+		print("<option value=\"$themeID\" $selected>$theme_name</option>");
+	}
+	print("<tr><td><b>License</b></td><td>");print_select_box("license", $license_config_array, $license); print("</td></tr>\n");
+	print("<tr><td><b>Version</b></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
+	print("<tr><td><b>Theme Author:</b></td><td><input type=\"hidden\" name=\"userID\" value=\"{$_SESSION['userID']}\" />{$_SESSION['realname']}</td></tr>\n");
 	print("<tr><td><b>URL of Theme:</b></td><td><input type=\"text\" name=\"theme_url\" size=\"40\"></td></tr>\n");
-	print("<tr><td><b>Description:</b></td><td><textarea name=\"theme_description\" cols=\"40\" rows=\"5\" wrap></textarea></td></tr>\n");
+	print("<tr><td><b>Description:</b></td><td><textarea name=\"theme_description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
 	print("</table>\n<p>\n");
-	print("<input type=\"submit\" value=\"Submit Theme\">\n"); 
+	print("<input type=\"hidden\" name=\"update\" value=\"$update\"/>");
+	print("<input type=\"submit\" value=\"Submit Theme\">\n");
 	print("</form>\n");
 
-	print("<hr /><b>Submission tracking</b>");
-	print("<p><form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">");
-	print("Submission ID: <input name=\"submission_id\" />");
-	print("<input type=\"submit\" value=\"Get Status\" /></form></p>");
 }
 
-create_middle_box_bottom();
 ago_footer();
 
 ?>

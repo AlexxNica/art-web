@@ -5,16 +5,13 @@ require("common.inc.php");
 require("ago_headers.inc.php");
 
 ago_header("SEARCH");
-create_middle_box_top("search");
+create_title("Search", "Search for themes and backgrounds");
 
 // superglobals stuff
 
-// ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
-escape_gpc_array ($_GET);
-
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
-$search_type = $_GET["search_type"];
-$search_text = $_GET["search_text"];
+$search_type = validate_input_array_default($_GET["search_type"], array("background_name", "theme_name", "author"), "");
+$search_text = mysql_real_escape_string($_GET["search_text"]);
 $sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity"),$valid_sort_by_array ,"date");
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
 
@@ -34,7 +31,7 @@ if($search_text && $search_type)
 		}
 		else
 		{
-			print("<p>No results matched your search, please try again.");
+			print("<p class=\"info\">No results matched your search, please try again.</p>");
 		}
 	}
 	/* theme name search */
@@ -48,27 +45,25 @@ if($search_text && $search_type)
 		}
 		else
 		{
-			print("<p>No results matched your search, please try again.");
+			print("<p class=\"info\">No results matched your search, please try again.</p>");
 		}
 	}
 	/* Author name search */
 	elseif ($search_type == "author")
 	{
-		$theme_all_select_result = mysql_query("SELECT author FROM theme WHERE author LIKE '%$search_text%' ORDER BY author");
-		$background_all_select_result = mysql_query("SELECT backgroundID FROM background WHERE background_name LIKE '%$search_text%' AND parent='0' ORDER BY background_name");
-		$num_themes = mysql_num_rows($theme_all_select_result);
-		$num_backgrounds = mysql_num_rows($background_all_select_result);
-		$num_authors = $num_themes + $num_backgrounds;
-		if($num_authors > 0)
+		$user_select_result = mysql_query("SELECT userID, realname FROM user WHERE realname LIKE '%$search_text%' ORDER BY realname");
+		if(mysql_num_rows($user_select_result) > 0)
 		{
-			if ($num_themes > 0)
-				list($page, $num_pages) = theme_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_authors, "list");
-			if ($num_backgrounds > 0)
-				list($page, $num_pages) = background_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_backgrounds, "list");
+			print("<div class=\"h2\">Search Results</div><ul>");
+			while (list($userID, $realname) = mysql_fetch_row($user_select_result))
+			{
+				print("<li><a href=\"/users/$userID\">$realname</a></li>");
+			}
+			print("</ul>");
 		}
 		else
 		{
-			print("<p>No results matched your search, please try again.");
+			print("<p class=\"info\">No results matched your search, please try again.</p>");
 		}
 	}
 	/* Page Navigation System */
@@ -100,11 +95,10 @@ if($search_text && $search_type)
 }
 else
 {
-	print("<b>Please enter some search terms in the box above.</b>\n<p>\n");
+	print("<p class=\"info\">Please enter some search terms in the box above.</p>");
 }
 
 
-create_middle_box_bottom();
 ago_footer();
 
 ?>

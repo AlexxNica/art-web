@@ -12,12 +12,16 @@ $sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date",
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
 $view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
 list($foo, $unvalidated_category, $unvalidated_themeID) = explode("/", $_SERVER["PATH_INFO"]);
+$vote = validate_input_regexp_default ($_POST["vote"], "^[1-5]$", -1);
+$comment = $_POST["comment"]; // This is validated later
+$commentID = validate_input_regexp_default ($_POST["commentID"], "^[0-9]+$", -1);
+$report = $_POST["report"];
 
 /* print out the list of theme categories */
 if ($unvalidated_category == "")
 {
 	ago_header("THEMES");
-	create_middle_box_top("themes");
+	create_title("Themes", "Desktop Themes");
 	
 	print("<p>\n<table border=\"0\" cellpadding=\"4\">");
 	reset($theme_config_array);
@@ -34,7 +38,6 @@ if ($unvalidated_category == "")
 	}
 	print("</table>\n");
 
-	create_middle_box_bottom();
 	ago_footer();
 }
 else
@@ -45,10 +48,9 @@ else
 	if (array_key_exists($category,$theme_config_array) && $unvalidated_themeID == "")
 	{
 		ago_header("THEMES - " . strtoupper($category));
-		$temp = "themes_" . $category;
-		create_middle_box_top($temp);
+		create_title($theme_config_array[$category]["name"], $theme_config_array[$category]["description"]);
 
-		$theme_select_all_result = mysql_query("SELECT * FROM theme WHERE category='$category' ORDER BY add_timestamp DESC");
+		$theme_select_all_result = mysql_query("SELECT * FROM theme WHERE category='$category' AND parent = 0 ORDER BY add_timestamp DESC");
 		$num_themes = mysql_num_rows($theme_select_all_result);
 		if($num_themes == 0)
 		{
@@ -57,31 +59,29 @@ else
 		else
 		{
 			print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Themes", $view);
-			print("<p>");
 			list($page, $num_pages) = theme_search_result("", "theme_name", $category, $thumbnails_per_page, $sort_by, $page, $num_themes, $view);
-
+			
 			/* Page Navigation System */
-			print("<div align=\"center\">\n");
+			print("<div style=\"clear:both;\" align=\"center\">\n");
 			if($page > 1)
 			{
 				$prev_page = $page -1;
-				print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">[&lt;]</a>");
+				print(" <a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">&lt;</a>");
 			}
 			for($count=1;$count<=$num_pages;$count++)
 			{
 				if($count == $page)
-					print("<span class=\"bold-text\">[$count]</span> ");
+					print(" <b>$count</b> ");
 				else
-					print("<a href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">[$count]</a> ");
+					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">$count</a>");
 			}
 			if($page < $num_pages)
 			{
 				$next_page = $page +1;
-				print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">[&gt;]</a>");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">&gt;</a>");
 			}
-			print("</div>\n<p>\n");
+			print("</div>");
 		}
-		create_middle_box_bottom();
 		ago_footer();
 	}
 
@@ -90,6 +90,10 @@ else
 	{
 		$themeID = validate_input_regexp_error ($unvalidated_themeID, "^[0-9]+$");
 
+		add_vote($themeID, "theme", $vote);
+
+		report_comment($report, $commentID);
+
 		$theme_select_result = mysql_query("SELECT * FROM theme WHERE themeID='$themeID'");
 		if(mysql_num_rows($theme_select_result)==0)
 		{
@@ -97,55 +101,78 @@ else
 		}
 		else
 		{
-			ago_header("THEMES - " . strtoupper($category));
-			$temp = "themes_" . $category;
-			create_middle_box_top($temp);
+			$var_select_result = mysql_query("SELECT themeID,theme_name,category,thumbnail_filename FROM theme WHERE parent = $themeID");
 
 			$theme_select_row = mysql_fetch_array($theme_select_result);
 			$small_thumbnail_filename = $theme_select_row["small_thumbnail_filename"];
 			$thumbnail_filename = $theme_select_row["thumbnail_filename"];
 			$name = $theme_select_row["theme_name"];
-			$author = $theme_select_row["author"];
-			$author_email = $theme_select_row["author_email"];
-			$author_email = spam_proof_email($author_email);
-			$date = $theme_select_row["release_date"];
-//			list($year,$month,$day)=explode("-",$date);
-//			$date = $month . "/" . $day . "/" . $year;
+			$userID = $theme_select_row["userID"];
+			$version = $theme_select_row["version"];
+			$user_result = mysql_query ("SELECT username FROM user WHERE userID=$userID");
+			list ($author) = mysql_fetch_row ($user_result);
+			$release_date = $theme_select_row["release_date"];
+			$depends = $theme_select_row["depends"];
+			$vote_sum = $theme_select_row["vote_sum"];
+			$vote_count = $theme_select_row["vote_count"];
+			$license = $theme_select_row["license"];
+
 			$description = $theme_select_row["description"];
 			$download_start_timestamp = $theme_select_row["download_start_timestamp"];
 			$download_count = $theme_select_row["download_count"];
 			$download_filename = $theme_select_row["download_filename"];
-			$timestamp = $theme_select_row["add_timestamp"];
+			$add_timestamp = $theme_select_row["add_timestamp"];
 
-			print("<table border=\"0\">\n");
-			print("<tr><td>");
-			if($category == "metacity" || $category == "splash_screens" || $category == "gtk_engines")
+			ago_header("THEMES - " . strtoupper($category));
+			create_title($name . " by <a href=\"/users/$userID\">$author</a>", $theme_config_array[$category]["name"]);
+
+			
+			$more = "";
+			
+			if ($depends != "")
 			{
-				print("<img src=\"/images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"thumbnail-border-padding\">");
+
+				$themes = explode(',', $depends);
+				// TODO: print this out as links to the themes
+				$more .= "<tr><td>Requires</td><td>$depends</td></tr>";
 			}
-			elseif($category == "icon")
-			{
-				print("<a href=\"/images/thumbnails/$category/$thumbnail_filename\"><img src=\"/images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"thumbnail-padding\"></a>");
-			}
-			else
-			{
-				print("<a href=\"/images/thumbnails/$category/$thumbnail_filename\"><img src=\"/images/thumbnails/$category/$small_thumbnail_filename\" border=\"0\" class=\"thumbnail-border-padding\"></a>");
-			}
-			print("</td>\n");
-			print("<td><span class=\"bold-text\">Name:</span> $name<br />\n<span class=\"bold-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"bold-text\">Release Date:</span> $date<br />\n");
-			print("<span class=\"bold-text\">Last Updated: </span>" . date("Y-m-d", $timestamp) . "<br />\n");
-			$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
-			print("<span class=\"bold-text\">Popularity:</span> $downloads_per_day Downloads per Day<br>\n");
-			print("<span class=\"bold-text\">Download:</span><br>");
+	
+
+			$more .= "<tr><td colspan=\"2\">";
 
 			// get the filesize from the server
 			$file_path = $sys_theme_dir . "/$category/$download_filename";
 			$filesize = get_filesize_string($file_path);
-			print("&nbsp;&nbsp;&nbsp;<a href=\"/download/themes/$category/$themeID/$download_filename\">$download_filename ($filesize)</a>\n");
 
-			print("</td></tr></table>\n<p>\n");
-			print("<span class=\"bold-text\">Info:</span> $description");
-			create_middle_box_bottom();
+			$more .= "<a href=\"/download/themes/$category/$themeID/$download_filename\" class=\"tar\"> $download_filename ($filesize)</a></td></tr>";
+
+			if($category == "metacity" || $category == "splash_screens" || $category == "gtk_engines")
+			{
+				$thumbnail_url="/images/thumbnails/$category/$small_thumbnail_filename";
+			}
+			else
+			{
+				$thumbnail_url="/images/thumbnails/$category/$thumbnail_filename";
+			}
+			
+
+			print_detailed_view($description, "theme", $release_date, $add_timestamp, $version, $license, $download_count, $download_start_timestamp, $vote, $vote_sum, $vote_count, $more, $thumbnail_url);
+
+			// Get any variations
+			if (mysql_num_rows($var_select_result) > 0)
+			{
+				create_title("Variations", "This theme has one or more variations");
+				while (list($themeID,$theme_name,$var_category, $thumbnail_filename) = mysql_fetch_row($var_select_result))
+				{
+					print("<a href=\"/themes/$var_category/$themeID\">$theme_name</a>");
+				}
+			}
+			$comment_result = add_comment($themeID, "theme", $comment);
+			print_comments($themeID, "theme");
+			print($comment_result);
+			print_comment_form($comment);
+
+
 			ago_footer();
 		}
 	}

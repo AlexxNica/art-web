@@ -5,7 +5,7 @@ require("common.inc.php");
 require("ago_headers.inc.php");
 
 ago_header("FAQ");
-create_middle_box_top("faq");
+create_title("ART.GNOME.ORG FAQ", "Frequently Asked Questions");
 
 $faq_select_result = mysql_query("SELECT faqID,question,answer FROM faq ORDER by faqID");
 if(mysql_num_rows($faq_select_result)==0)
@@ -31,7 +31,6 @@ else
    print("</ol>\n");
 }
 
-create_middle_box_bottom();
 ago_footer();
 
 ?>

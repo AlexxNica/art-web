@@ -8,13 +8,13 @@
 $background_config_array = array (
 	"gnome" => array (
 		"name" => "GNOME",
-		"url" => "/backgrounds/gnome/index.php",
+		"url" => "/backgrounds/gnome/",
 		"active" => "1",
 		"description" => "The GNOME project has built a complete, free and easy-to-use desktop environment for the user, as well as a powerful application framework for the software developer"
 		),
 	"other" => array (
 		"name" => "Other",
-		"url" => "/backgrounds/other/index.php",
+		"url" => "/backgrounds/other/",
 		"active" => "1",
 		"description" => "Backgrounds featuring other GNOME based companies such as Ximian, Codefactory, RedHat, etc."
 		)
@@ -197,8 +197,19 @@ $pill_array = array (
 		"alt" => "Submit")
 );
 
+$license_config_array = array (
+		"cc-atrib" => "CC Attribution",
+		"cc-atrib-sharealike" => "CC Attribution-ShareAlike",
+		"cc-atrib-noderivs" => "CC Attribution-NoDerivs",
+		"cc-attrib-noncom" => "CC Attribution-NonCommercial",
+		"cc-atrib-noncom-sharealike" => "CC Attribution-NonCommercial-ShareAlike",
+		"cc-atrib-noncom-noderivs" => "CC Attribution-NonCommercial-NoDerivs",
+		"gnu-gpl" => "GNU General Public License",
+		"gnu-lgpl" => "GNU Lesser General Public License",
+		"pub-dom" => "Public Domain");
+
 $mirror_url = "http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org";
-$site_url = "http://art.gnome.org/";
+$site_url = "http://art.thos.me.uk/";
 
 $sys_theme_dir = "/ftp/pub/gnome/teams/art.gnome.org/themes";
 
@@ -208,7 +219,7 @@ $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 
 $search_type_array = array ("background_name" => "Background Name", "theme_name" => "Theme Name", "author" => "Author Name");
 $thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "1000" => "All");
-$sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity");
+$sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity", "rating" => "Rating");
 $view_array = array("icons" => "Icon", "list" => "List");
 
 ?>
