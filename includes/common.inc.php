@@ -45,6 +45,14 @@ function create_middle_box_bottom()
 function display_icons($type, $page)
 {
 	$icons_per_page = 64;
+   if($type == "large")
+   {
+   	$num_columns = 4;
+   }
+   else
+   {
+   	$num_columns = 8;
+   }
    if(is_dir($GLOBALS['sys_icon_dir'] . "/$type"))
    {
    	$dir_handle = dir($GLOBALS['sys_icon_dir'] . "/$type");
@@ -92,7 +100,7 @@ function display_icons($type, $page)
       $counter = 0;
       while(list($foo,$file)=each($icon_array))
 		{
-			if($counter > 0 && (($counter % 8) == 0))
+			if($counter > 0 && (($counter % $num_columns) == 0))
          {
          	print("</tr>\n<tr>");
          }
