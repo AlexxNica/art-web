@@ -5,40 +5,18 @@ function create_middle_box_top($pill)
 	global $pill_array;
    global $site_theme;
    $attributes = $pill_array[$pill];
-   $width = $attributes["width"];
-   $heigh = $attributes["height"];
-   $src =  $attributes["image"];
-	$alt = $attributes["alt"];
-   print("<!-- Center Column -->\n");
+   $alt = $attributes["alt"];
+   $icon = $attributes["icon"];
+	print("<!-- Center Column -->\n");
 	print("<td width=\"100%\">\n");
-	if($site_theme == "lite")
-   {
-   	print("<div class=\"mb_lite-title\">$alt</div>\n");
-   	print("<div class=\"mb_lite-contents\">\n");
-   }
-   else
-   {
-      print("<table border=\"0\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n");
-		print("<tr><td width=\"1\"><img src=\"/images/site/ART-Pill_l.png\"></td><td width=\"$width\"><img src=\"/images/site/pills/$src\"></td><td width=\"100%\" class=\"horizontal-split\"></td><td><img src=\"/images/site/LBOX-top_r.png\"></td></tr>\n");
-		print("<tr><td width=\"1\" class=\"black-line\"></td><td colspan=\"2\" bgcolor=\"#a8a7b7\">\n");
-      print("<div class=\"mb_standard-contents\">\n");
-	}
+  	print("<div class=\"mb_lite-title\"><img src=\"/images/site/pill-icons/$icon\" alt=\"$alt\"> $alt</div>\n");
+  	print("<div class=\"mb_lite-contents\">\n");
 }
 
 function create_middle_box_bottom()
 {
 	global $site_theme;
-   if($site_theme == "lite")
-   {
-   	print("</div>\n");
-   }
-   else
-   {
-   	print("</div>\n");
-      print("</td><td width=\"13\" class=\"vertical-shadow\"></td></tr>\n");
-		print("<tr><td colspan=\"3\" class=\"horizontal-bottom-shadow\"><img src=\"/images/site/MBOX-shadow_l.png\"></td><td><img src=\"/images/site/MBOX-shadow_r.png\"></td></tr>\n");
-		print("</table>\n</td>\n");
-	}
+   print("</div>\n");
    print("<!-- End Center Column  -->\n");
 }
 

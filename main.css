@@ -66,10 +66,6 @@ a.news-link:hover {
 .align-justify {
 	text-align: justify;
 }
-.horizontal-menu-bar {
-	background-image: url("images/site/mb_pat.png");
-   background-repeat: repeat-x;
-}
 
 .horizontal-menu-bar-lite {
 	background: #555566;
@@ -80,20 +76,6 @@ a.news-link:hover {
 
 .horizontal-gradient-menu-bar {
 	background-image: url("images/site/LB_pat.png");
-   background-repeat: repeat-x;
-}
-
-.horizontal-shadow {
-	background-image: url("images/site/TB_shadowpat.png");
-   background-repeat: repeat-x;
-}
-
-.horizontal-split {
-	background-image: url("images/site/LBOX-pat_top.png");
-   background-repeat: repeat-x;
-}
-.horizontal-bottom-shadow {
-	background-image: url("images/site/MBOX-shadowpat.png");
    background-repeat: repeat-x;
 }
 
@@ -142,6 +124,11 @@ a.news-link:hover {
    background: #555566;
 	border: 1px solid #000000;
    padding: 3px;
+	vertical-align: middle;
+}
+
+.mb_lite-title img {
+	vertical-align: middle;
 }
 
 .mb_lite-contents {
@@ -165,24 +152,3 @@ a.news-link:hover {
    text-align: center;
 }
 
-/*
-select { 
-	background-color: #555566;
-	color: #ffff00;
-}
-
-input[type="submit"] { 
-	background-color: #555566;
-	color: #ffff00;
-}
-
-input[type="submit"]:hover { 
-	background-color: #eee;
-	color: #36c;
-}
-
-input[type="submit"]:active { 
-	background-color: #eee;
-	color: #9ac;
-}
-*/

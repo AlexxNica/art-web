@@ -1,3 +1,12 @@
+2002-12-24  Alex Duggan  <aldug@gnome.org>
+
+	* main.css:
+	* includes/common.inc.php:
+	* includes/config.inc.php:
+	* includes/footer.inc.php:
+	* includes/header.inc.php: Remove all bits of slick theme and add middle pill
+	icons to the lite theme
+	
 2002-12-21  Alex Duggan  <aldug@gnome.org>
 
 	* includes/common.inc.php: make links in print_background_row() and 
