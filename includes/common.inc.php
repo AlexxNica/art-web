@@ -144,4 +144,10 @@ function display_icons($type, $page)
    }
 }
 
+function spam_proof_email($good_email)
+{
+	$spam_protected_email = ereg_replace("@"," _AT_ ",$good_email);
+   return $spam_protected_email;
+}
+
 ?>
