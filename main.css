@@ -155,6 +155,16 @@ a.news-link:hover {
    font-size: small;
 }
 
+.list-thumb {
+	width: 85px;
+   float: left;
+   padding-top: 10px;
+   padding-right: 15px; 
+   padding-bottom: 10px; 
+   padding-left: 15px;
+   text-align: center;
+}
+
 /*
 select { 
 	background-color: #555566;
