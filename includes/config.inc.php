@@ -91,6 +91,12 @@ $linkbar = array (
       "height" => "",
       "indent" => "1",
       "alt" => "Splash Screens"),
+   "themes_other" => array(
+   	"url" => "theme_list.php?category=other",
+      "width" => "",
+      "height" => "",
+      "indent" => "1",
+      "alt" => "Other..."),
    "icons" => array(
    	"url" => "icons.php",
       "width" => "",
