@@ -92,6 +92,7 @@ else
 {
 	print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar-lite\">&nbsp;&nbsp;&nbsp;");
 }
+/*
 for($count=1;$count<5;$count++)
 {
 	if($count == 1)
@@ -156,6 +157,7 @@ for($count=1;$count<5;$count++)
       }
    }
 }
+*/
 if($site_theme == "standard")
 {
 	print("</td><td class=\"horizontal-menu-bar\" align=\"right\">");
@@ -168,7 +170,7 @@ if($site_theme == "standard")
 else
 {
 	print("</td><td class=\"horizontal-menu-bar-lite\" align=\"right\"><b>THEME:</b> ");
-   print("<a href=\"change_site_theme.php?new_site_theme=standard\">Standard</a> - <span class=\"yellow-text\">Lite</span>&nbsp;&nbsp;&nbsp;");
+   print("<b><a href=\"change_site_theme.php?new_site_theme=standard\">Standard</a></b> - <span class=\"yellow-text\">Lite</span>&nbsp;&nbsp;&nbsp;");
 }
 print("</td></tr>\n");
 
