@@ -4,23 +4,21 @@ require("common.inc.php");
 require("includes/headers.inc.php");
 
 admin_header("Add a News Item");
-
-$month = validate_input_regexp_default ($_POST["month"], "^[0-9]+$", "");
-$day = validate_input_regexp_default ($_POST["day"], "^[0-9+]$", "");
-$year  = validate_input_regexp_default ($_POST["year"], "^[0-9]+$", "");
-
-$title = mysql_real_escape_string($_POST["title"]);
-$news_body = mysql_real_escape_string($_POST["news_body"]);
-
 if($HTTP_POST_VARS)
 {
+
+	$month = validate_input_regexp_default ($_POST["month"], "^[0-9]+$", "");
+	$day = validate_input_regexp_default ($_POST["day"], "^[0-9]+$", "");
+	$year  = validate_input_regexp_default ($_POST["year"], "^[0-9]+$", "");
+
+	$author = mysql_real_escape_string($_POST["author"]);
+	$author_email = mysql_real_escape_string($_POST["author_email"]);
+
+	$title = mysql_real_escape_string($_POST["title"]);
+	$news_body = mysql_real_escape_string($_POST["news_body"]);
+
 	if($month && $day && $year && $title && $news_body)
 	{
-		if (!get_magic_quotes_gpc())
-		{
-			$title = addslashes($title);
-			$news_body = addslashes($news_body);
-		}
 		$date = $year . "-" . $month . "-" . $day;
 		$news_insert_result = mysql_query("INSERT INTO news(newsID,status,date,author,author_email,title,body) VALUES('','active','$date','$author','$author_email','$title','$news_body')");
 		$newsID = mysql_insert_id();
