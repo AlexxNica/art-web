@@ -1,0 +1,15 @@
+MAJOR
+
+- Port site to new build system when it's finished
+- Make site focus on system themes not component themes
+- New layout for theme background preview pages
+	o Include thumbnail and theme or background name
+	o Number of columns should be dynamic based on browser width
+	o Must work in Mozilla/IE/Konq/Opera
+
+
+MINOR
+
+- get rid of 2-d array in includes/config.inc.php in favor of
+  putting it in xml or a database.
+- background editing admin tools
