@@ -32,7 +32,43 @@ if($category == "gnome" || $category == "other")
 		   $background_name = $background_select_row["background_name"];
 		   print("<a href=\"show_background.php?backgroundID=$backgroundID&category=$category\" title=\"$background_name\"><img src=\"images/thumbnails/backgrounds/$thumbnail_filename\" class=\"shot\" border=\"0\" alt=\"$background_name\"></a>\n");
 		}
-		print("<p>\n<span class=\"yellow-text\">Page</span> ");
+		print("<p>\n");
+      if($page > 1)
+      {
+      	$prev_page = $page -1;
+         print(" <a href=\"$PHP_SELF?category=$category&page=$prev_page\">[&lt;]</a>");
+      }
+		for($count=1;$count<=$num_pages;$count++)
+		{
+			if($count == $page)
+   	   {
+   	   	print("<span class=\"yellow-text\">[$count]</span> ");
+			}
+   	   else
+   	   {
+   	   	print("<a href=\"$PHP_SELF?category=$category&page=$count\">[$count]</a> ");
+   	   }
+   	}
+      if($page < $num_pages)
+      {
+      	$next_page = $page +1;
+         print(" <a href=\"$PHP_SELF?category=$category&page=$next_page\">[&gt;]</a>");
+      }
+      print("<br>\n");
+      print("<form action=\"show_background.php\" method=\"get\">\n");
+      print("<select name=\"backgroundID\">\n");
+      $background_select_result = mysql_query("SELECT backgroundID, background_name FROM background WHERE category='$category' AND parent='0' ORDER BY background_name");
+		while(list($backgroundID,$background_name) = mysql_fetch_row($background_select_result))
+      {
+      	print("<option value=\"$backgroundID\">$background_name</option>\n");
+      }
+      print("</select>\n");
+      print("<input type=\"hidden\" name=\"category\" value=\"$category\">\n");
+      print("<input type=\"submit\" value=\"Go\">\n");
+      print("</form>");
+      
+      /*
+      print("<p>\n<span class=\"yellow-text\">Page</span> ");
 		if($page > 1)
       {
       	$prev_page = $page -1;
@@ -55,6 +91,7 @@ if($category == "gnome" || $category == "other")
       	$next_page = $page +1;
          print(" <a href=\"$PHP_SELF?category=$category&page=$next_page\">&gt;</a>");
       }
+      */
    }
    print("</div>\n");
    create_middle_box_bottom();
