@@ -41,7 +41,7 @@ else
       {
       	print(" ;\n");
       }
-      print("<a href=\"$mirror_url/images/backgrounds/$filename\">" . $type . "-" . $resolution . "</a>\n");
+      print("<a href=\"$mirror_url/backgrounds/$filename\">" . $type . "-" . $resolution . "</a>\n");
    }
    print("<br>\n");
    if($screenshot_filename != "")

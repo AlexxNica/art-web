@@ -31,7 +31,7 @@ if($themeID && ($category == "gdm_greeter" || $category == "gtk" || $category ==
    	print("<td><span class=\"yellow-text\">Name:</span> $name<br>\n<span class=\"yellow-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"yellow-text\">Release Date:</span> $date<br><span class=\"yellow-text\">Download:</span><br>");
    	while(list($name,$download_name,$size)=mysql_fetch_row($theme_download_select_result))
    	{
-   		print("&nbsp;&nbsp;&nbsp;<a href=\"$mirror_url/images/themes/$category/$download_name\">$name ($size)</a>\n");
+   		print("&nbsp;&nbsp;&nbsp;<a href=\"$mirror_url/themes/$category/$download_name\">$name ($size)</a>\n");
    	}
    	print("</td></tr></table>\n<p>\n");
    	print("<span class=\"yellow-text\">Info:</span> $description");
