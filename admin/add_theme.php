@@ -3,7 +3,6 @@
 require("mysql.inc.php");
 require("common.inc.php");
 require("includes/headers.inc.php");
-require("includes/common.inc.php");
 
 admin_header("Add a Theme");
 
