@@ -1,5 +1,9 @@
 2003-09-21  Alex Duggan  <aldug@astrolinux.com>
 
+	* copyright.php:  s/contact.html/contact.php/
+
+2003-09-21  Alex Duggan  <aldug@astrolinux.com>
+
 	* search.php: Add a message if no search terms are entered
 
 2003-09-21  Alex Duggan  <aldug@astrolinux.com>

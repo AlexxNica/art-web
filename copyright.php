@@ -8,7 +8,7 @@ create_middle_box_top("copyright");
 ?>
 <font size="+1">Site Design</font>
 <p>
-Art.gnome.org is Copyright &copy; <a href="contact.php"><b>the art.gnome.org team</b></a> 2002. This include the design of the site and all screenshots and images used on this site. They may not be redistributed without prior permission of the authors of the site. For information on requesting permission to use images from this site, please <a href=contact.html>contact</a> one of the authors.
+Art.gnome.org is Copyright &copy; <a href="contact.php"><b>the art.gnome.org team</b></a> 2002. This include the design of the site and all screenshots and images used on this site. They may not be redistributed without prior permission of the authors of the site. For information on requesting permission to use images from this site, please <a href="contact.php">contact</a> one of the authors.
 
 <p>
 <font size="+1">Themes and submitted content</font>
@@ -18,7 +18,7 @@ All material submitted for consideration to be included on this site is presumed
 <p>
 <font size="+1">Copyright disputes</font>
 <p>
-If you suspect any material on art.gnome.org infringes on someone else's copyright, please <a href="contact.html">let us know</a> and we will try to rectify the situation as soon as possible.
+If you suspect any material on art.gnome.org infringes on someone else's copyright, please <a href="contact.php">let us know</a> and we will try to rectify the situation as soon as possible.
 <?
 create_middle_box_bottom();
 ago_footer();
