@@ -128,19 +128,18 @@ function print_background_row($backgroundID)
 	$link = "/backgrounds/$category/$backgroundID/";
 	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
-	print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>Background - $category_name<br>$popularity Downloads per Day<br>$author</td></tr>\n"));
+	print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/backgrounds/$thumbnail_filename\" class=\"thumbnail-border\"></td><td><a class=\"bold-link\" href=\"$link\">$background_name</a><br>$release_date<br>Background - $category_name<br>$author</td></tr>\n"));
 
 }
 
 function print_theme_row($themeID)
 {
 	global $theme_config_array;
-	$theme_select_result = mysql_query("SELECT theme_name, category, author, release_date,small_thumbnail_filename,download_start_timestamp,download_count FROM theme WHERE themeID='$themeID'");
-	list($theme_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count) = mysql_fetch_row($theme_select_result);
+	$theme_select_result = mysql_query("SELECT theme_name, category, author, release_date,small_thumbnail_filename,thumbnail_filename,download_filename FROM theme WHERE themeID='$themeID'");
+	list($theme_name,$category,$author,$release_date,$thumbnail_filename,$screenshot,$download) = mysql_fetch_row($theme_select_result);
 	$release_date = fix_sql_date($release_date);
 	$link = "/themes/$category/$themeID/";
 	$category_name = $theme_config_array["$category"]["name"];
-	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
 	if($category == "icon")
 	{
 		$class = "thumbnail";
@@ -149,7 +148,13 @@ function print_theme_row($themeID)
 	{
 		$class = "thumbnail-border";
 	}
-	print(utf8_encode("<tr><td><a href=\"$link\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></td><td><a class=\"bold-link\" href=\"$link\">$theme_name</a><br>$release_date<br>$category_name<br>$popularity Downloads per Day<br>$author</td></tr>\n"));
+
+	if (($category == "metacity") or ($category == "splash_screen"))
+		$thumbnail = "<img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\">";
+	else
+		$thumbnail = "<a href=\"/images/thumbnails/$category/$screenshot\"><img src=\"/images/thumbnails/$category/$thumbnail_filename\" class=\"$class\"></a>";
+
+	print(utf8_encode("<tr><td>$thumbnail</td><td><a class=\"bold-link\" href=\"$link\">$theme_name</a><br>$release_date<br>$category_name<br>$author</td></tr>\n"));
 }
 
 function get_latest_backgrounds($number)

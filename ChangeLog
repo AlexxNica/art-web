@@ -1,3 +1,8 @@
+2004-12-13  Thomas Wood  <thos@gnome.org>
+
+	* backend.php: Set pubDate on items
+	* includes/common.inc.php: Fixed bug 135058 and 160545
+
 2004-12-04  Thomas Wood  <thos@gnome.org>
 
 	* backend.php: Added <guid> tag to feed
@@ -5,7 +10,8 @@
 2004-12-01  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_theme.php: File chooser now uses global theme dir variable
-	* includes/config.inc.php: Theme dir variable fixed
+	* includes/config.inc.php: Theme dir variable fixed (fixes file size
+	information)
 	* backend.php: Prettier items, using print_theme_row and print_background_row
 	* includes/common.inc.php: Ensure output of print_theme_row and
 	print_background_row is utf-8
