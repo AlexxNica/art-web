@@ -152,7 +152,7 @@ for($count=1;$count<5;$count++)
    	}
       else
       {
-      	print("- ");
+      	print(" - ");
       }
    }
 }
@@ -168,15 +168,25 @@ if($site_theme == "standard")
 else
 {
 	print("</td><td class=\"horizontal-menu-bar-lite\" align=\"right\">THEME:");
-   print("<a href=\"change_site_theme.php?new_site_theme=standard\">Standard</a> - <span class=\"yellow-text\">Lite</span>");
+   print("<a href=\"change_site_theme.php?new_site_theme=standard\">Standard</a> - <span class=\"yellow-text\">Lite</span>&nbsp;&nbsp;&nbsp;");
 }
 print("</td></tr>\n");
 
 ?>
 
 <tr class="horizontal-gradient-menu-bar"><td><img src="images/site/LOGO-Pill.png"></td><td></td><td class="align-right"><img src="images/site/LOGO-Elliptic.png"></td></tr>
-<tr><td colspan="3" class="horizontal-menu-bar"><img src="images/site/mb_pat.png" width="10" height="20"><img src="images/site/TB_art.png"><img src="images/site/mb_minus.png"><img src="images/site/TB_slogan.png"></td></tr>
-<tr><td colspan="3" class="horizontal-shadow"><img src="images/site/TB_shadow.png"></td></tr>
+
+<?
+if($site_theme == "standard")
+{
+	print("<tr><td colspan=\"3\" class=\"horizontal-menu-bar\"><img src=\"images/site/mb_pat.png\" width=\"10\" height=\"20\"><img src=\"images/site/TB_art.png\"><img src=\"images/site/mb_minus.png\"><img src=\"images/site/TB_slogan.png\"></td></tr>\n");
+	print("<tr><td colspan=\"3\" class=\"horizontal-shadow\"><img src=\"images/site/TB_shadow.png\"></td></tr>\n");
+}
+else
+{
+	print("<tr valign=\"middle\"><td colspan=\"3\" class=\"horizontal-menu-bar-lite\"><span class=\"yellow-text\">ART.GNOME.ORG</span> - Enhance your GNOME desktop!</td></tr>\n");	
+}
+?>
 </table>
 <p>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
