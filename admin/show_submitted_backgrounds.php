@@ -24,7 +24,7 @@ else
 	else
 	{
 		print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\" width=\"100%\" >");
-		print("<tr><th>Category</th><th>Name</th><th>Author</th><th>Date</th><th>Description</th><th>Action</th></tr>\n");
+		print("<tr><th>Category</th><th>Name</th><th>Author</th><th>Date</th><th>Download</th><th>Action</th></tr>\n");
 
 		$alt = 1;
 		while($incoming_background_select_row = mysql_fetch_array($incoming_background_select_result))
@@ -45,7 +45,13 @@ else
 			print("<td>$background_name</td>");
 			print("<td><a href=\"/users/$userID\">$userID</a></td>");
 			print("<td>$date</td>");
-			print("<td>$background_description</td>");
+			$background_res_select_result = mysql_query("SELECT resolution,filename FROM incoming_background_resolution WHERE background_resolutionID=$backgroundID");
+			print("<td>");
+			while (list($res, $url) = mysql_fetch_row($background_res_select_result))
+			{
+				print("<a href=\"$url\">$res</a>");
+			}
+			print("</td>");
 			print("<td><form action=\"add_background.php\" method=\"post\"><input type=\"submit\" value=\"Add\">");
 			print("<input type=\"hidden\" name=\"submitID\" value=\"$backgroundID\">");
 			print("</form><hr />");

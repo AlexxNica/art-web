@@ -23,7 +23,7 @@ $report = $_POST["report"];
 /* print out the list of theme categories */
 if ($unvalidated_category == "")
 {
-	ago_header("THEMES");
+	ago_header("Desktop Themes");
 	create_title("Themes", "Desktop Themes");
 	
 	print("<p>\n<table border=\"0\" cellpadding=\"4\">");
@@ -50,7 +50,7 @@ else
 	/* print out theme preview page */
 	if (array_key_exists($category,$theme_config_array) && $unvalidated_themeID == "")
 	{
-		ago_header("THEMES - " . strtoupper($category));
+		ago_header($theme_config_array[$category]["name"]);
 		create_title($theme_config_array[$category]["name"], $theme_config_array[$category]["description"]);
 
 		$theme_select_all_result = mysql_query("SELECT * FROM theme WHERE category='$category' AND parent = 0 ORDER BY add_timestamp DESC");
@@ -126,7 +126,7 @@ else
 			$download_filename = $theme_select_row["download_filename"];
 			$add_timestamp = $theme_select_row["add_timestamp"];
 
-			ago_header("THEMES - " . strtoupper($category));
+			ago_header($theme_config_array[$category]["name"]);
 			create_title($name . " by <a href=\"/users/$userID\">$author</a>", $theme_config_array[$category]["name"]);
 
 			

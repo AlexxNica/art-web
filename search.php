@@ -4,18 +4,16 @@ require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
 
-ago_header("SEARCH");
+ago_header("Search");
 create_title("Search", "Search for themes and backgrounds");
 
 // superglobals stuff
 
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
 $search_type = validate_input_array_default($_GET["search_type"], array("background_name", "theme_name", "author"), "");
-$search_text = mysql_real_escape_string($_GET["search_text"]);
+$search_text = mysql_real_escape_string(urldecode($_GET["search_text"]));
 $sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity"),$valid_sort_by_array ,"date");
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
-
-$search_text = urldecode($search_text);
 
 display_search_box(htmlspecialchars(stripslashes($search_text)), $search_type, $thumbnails_per_page, $sort_by);
 if($search_text && $search_type)

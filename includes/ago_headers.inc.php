@@ -10,8 +10,9 @@ function ago_header($title)
 	print("<head>");
 	print("<link type=\"text/css\" rel=\"stylesheet\" title=\"Default\" href=\"/default.css\" />");
 	print("<link type=\"text/css\" rel=\"alternate stylesheet\" title=\"Left sidebar\" href=\"/left-sidebar.css\" />");
+	print("<link rel=\"icon\" type=\"image/png\" href=\"http://www.gnome.org/img/logo/foot-16.png\"/>");
 	print("<script type=\"text/javascript\" src=\"/styleswitcher.js\"></script>");
-	print("<title>ART.GNOME.ORG</title></head>");
+	print("<title>GNOME Art - $title</title></head>");
 	print("<body>");
 	print("<div id=\"header\">");
 	print("<div id=\"header-left\">&nbsp;</div><div id=\"header-right\">&nbsp;</div>");

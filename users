@@ -13,10 +13,10 @@ $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page
 $view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
 list($foo, $unvalidated_author) = explode("/", $_SERVER["PATH_INFO"]);
 
-/* print out the list of theme categories */
+/* print out the list of authors */
 if ($unvalidated_author == "")
 {
-	ago_header("AUTHORS");
+	ago_header("Authors");
 	create_title("Authors", "The people creating the artwork");
 	$author_list_result = mysql_query("SELECT user.userID,user.username FROM user,theme,background WHERE active = 1 AND (user.userID = theme.userID OR user.userID = background.userID) GROUP BY user.userID ORDER BY realname ASC");
 	print("<ul>");
@@ -34,10 +34,10 @@ else
 
 	if ($authorID != "")
 	{
-		ago_header("AUTHORS - " . strtoupper($category));
 		$author_result = mysql_query ("SELECT realname,email,homepage,info FROM user WHERE userID = $authorID");
 		list ($realname, $email,$homepage, $info) = mysql_fetch_row ($author_result);
 		$email = spam_proof_email ($email);
+		ago_header("Author - " . $realname);
 		create_title ($realname, "");
 		print ("<p>$info</p>");
 		print("<table>");

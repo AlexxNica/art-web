@@ -79,7 +79,7 @@ else
 	print("<tr><td><b>License</b></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
 	print("<tr><td><b>Version:</b></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
 	print("<tr><td><b>Variation</b></td><td><select name=\"parentID\"><option value=\"\">N/A</option>");
-	$background_select_result = mysql_query("SELECT backgroundID,background_name FROM background");
+	$background_select_result = mysql_query("SELECT backgroundID,background_name FROM background WHERE userID=$userID");
 	while(list($backID,$back_name)=mysql_fetch_row($background_select_result))
 	{
 		if ($backID == $parentID)

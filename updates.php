@@ -12,7 +12,7 @@ if ($num_updates < 1 || $num_updates > 100)
 	$num_updates = 12;
 }
 
-ago_header("UPDATES");
+ago_header("Updates");
 create_title("Updates", "The $num_updates most recent additions to art.gnome.org");
 
 $big_array = get_updates_array($num_updates);

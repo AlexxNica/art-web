@@ -23,7 +23,7 @@ $report = $_POST["report"];
 /* print out the list of background categories */
 if ($unvalidated_category == "")
 {
-	ago_header("BACKGROUNDS");
+	ago_header("Backgrounds");
 	create_title("backgrounds", "Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.");
 	
 	print("<p>\n<table border=\"0\" cellpadding=\"4\">");
@@ -46,7 +46,7 @@ else
 	/* print out the background preview pages */
 	if (array_key_exists ($category, $background_config_array) && $unvalidated_backgroundID == "")
 	{
-		ago_header("BACKGROUNDS - " . strtoupper($category));
+		ago_header($background_config_array[$category]["name"] ." Backgrounds");
 		create_title($background_config_array[$category]["name"] ." Backgrounds", $background_config_array[$category]["description"]);
 		
 		$background_select_all_result = mysql_query("SELECT * FROM background WHERE category='$category' AND status='active'AND parent='0' ORDER BY add_timestamp DESC");
@@ -105,7 +105,7 @@ else
 		}
 		else
 		{
-			ago_header("BACKGROUNDS - " . strtoupper($category));
+			ago_header($background_config_array[$category]["name"] ." Backgrounds");
 
 
 			$temp = "backgrounds_" . $category;

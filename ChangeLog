@@ -1,5 +1,20 @@
 2005-03-24  Thomas Wood  <thos@gnome.org>
 
+	* admin/add_background.php: Restricts variations to the user of the
+	submission
+	* admin/show_submitted_backgrounds.php: Lists resolutions for download
+	* search.php: Decode url before validation
+	* includes/ago_headers.inc.php: added link icon
+	* index.php:
+	* backgrounds:
+	* themes:
+	* updates.php:
+	* users:
+
+	Improved page titles
+
+2005-03-24  Thomas Wood  <thos@gnome.org>
+
 	* account.php: Fixed e-mail address recording at registration
 
 2005-03-23  Thomas Wood  <thos@gnome.org>

@@ -8,7 +8,7 @@ require("ago_headers.inc.php");
 
 $view_old_news = validate_input_regexp_default($_GET["view_old_news"], "^1$", "0");
 
-ago_header("User Account");
+ago_header("News");
 
 create_title("News", "Latest news from art.gnome.org");
 if($view_old_news == 1)
