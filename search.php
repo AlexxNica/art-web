@@ -170,6 +170,10 @@ if($search_text && $search_type)
 	}
 	print("</div>\n");
 }
+else
+{
+	print("<b>Please enter some search terms in the box above.</b>\n<p>\n");
+}
 
 
 create_middle_box_bottom();
