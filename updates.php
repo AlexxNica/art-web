@@ -6,8 +6,9 @@ require("common.inc.php");
 include("header.inc.php");
 
 create_middle_box_top("updates");
-
-print("The 12 most recent additions are:");
+$num_updates = 12;
+print("The $num_updates most recent additions are:");
+/*
 unset($big_array);
 $background_select_result = mysql_query("SELECT backgroundID,add_timestamp FROM background ORDER BY add_timestamp DESC LIMIT 12");
 while( list($backgroundID,$add_timestamp) = mysql_fetch_row($background_select_result) )
@@ -21,8 +22,10 @@ while( list($backgroundID,$add_timestamp) = mysql_fetch_row($theme_select_result
 }
 rsort($big_array);
 //print_r($big_array);
+*/
+$big_array = get_updates_array($num_updates)
 print("<p>\n<table>\n");
-for($count=0;$count<12;$count++)
+for($count=0;$count<$num_updates;$count++)
 {
 	list($add_timestamp,$type,$ID) = explode("|",$big_array[$count]);
 	if($type == "background")
