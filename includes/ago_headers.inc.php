@@ -13,51 +13,10 @@ function ago_header($title)
 	?> - art.gnome.org</title>
 	<link rel="icon" type="image/png" href="/images/site/gnome-16.png">
 	<link rel="stylesheet" href="/main.css" type="text/css">
+	<link rel="stylesheet" href="/new_layout.css" type="text/css">
 	</head>
 	<body>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
-	<?
-	print("<tr valign=\"middle\"><td colspan=\"2\" class=\"horizontal-menu-bar-lite\">&nbsp;&nbsp;&nbsp;");
-
-	/* FIXME, temperarily disable mirror selection
-	for($count=1;$count<5;$count++)
-	{
-		if($count == 1)
-   	{
-   		if($count == $mirrorID)
-      	{
-      		print("<span class=\"yellow-text\">Main</span>");
-      	}
-      	else
-      	{
-        		print("<b><a href=\"/change_mirror.php?new_mirrorID=1\">Main</a></b>");
-			}
-   	}
-   	else
-   	{
-   		if($count == $mirrorID)
-      	{
-        		print("<span class=\"yellow-text\">Mirror " . ($count-1) . "</span>");
-      	}
-      	else
-      	{
-        		print("<b><a href=\"/change_mirror.php?new_mirrorID=".$count."\">Mirror " . ($count-1) . "</a></b>");
-   		}
-   	}
-   	if($count != 4)
-   	{
-   		print(" - ");
-   	}
-	}
-	*/
-	print("</td></tr>\n");
-
-	?>
-
-	<tr class="horizontal-gradient-menu-bar"><td><img src="/images/site/LOGO-Pill.png" alt="GNOME"></td><td class="align-right"><a href="http://www.gnome.org/"><img border="0" src="/images/site/LOGO-Elliptic.png" alt="GNOME Foot"></a></td></tr>
-	<tr valign="middle"><td colspan="2" class="horizontal-menu-bar-lite">&nbsp;&nbsp;<a class="screenshot" href="/index.php">art.gnome.org</a>&nbsp;&nbsp;-&nbsp;&nbsp;<b>Enhance your GNOME desktop!</b></td></tr>
-	</table>
-	<p>
+	<div id="body">
 	<table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 	<td>
@@ -66,8 +25,8 @@ function ago_header($title)
 	<!-- Left Column -->
 
 	<td width="182">
-	<div class="mb_lite-title"><img src="/images/site/pill-icons/art.png" alt=""> ART</div>
-	<div class="mb_lite-contents">
+	<div class="mb-lite-title"><img src="/images/site/pill-icons/art.png" alt=""> ART</div>
+	<div class="mb-lite-contents">
 	<?
 	print("<font size=\"+1\"><a href=\"/index.php\">NEWS</a></font><br>\n");
 	print("<font size=\"+1\"><a href=\"/updates.php\">UPDATES</a></font><br>\n");
@@ -114,8 +73,8 @@ function ago_footer()
 	<td width="225">
 
 	<!-- Screenshot -->
-	<div class="mb_lite-title"><img src="/images/site/pill-icons/screenshot.png" alt=""> SCREENSHOT</div>
-	<div class="mb_lite-contents">
+	<div class="mb-lite-title"><img src="/images/site/pill-icons/screenshot.png" alt=""> SCREENSHOT</div>
+	<div class="mb-lite-contents">
 
 	<?php
 	print("<div align=\"center\">\n");
@@ -128,8 +87,8 @@ function ago_footer()
 	<!-- End Screenshot -->
 	<br> 
 	<!-- Background -->
-	<div class="mb_lite-title"><img src="/images/site/pill-icons/background.png" alt=""> BACKGROUND</div>
-	<div class="mb_lite-contents">
+	<div class="mb-lite-title"><img src="/images/site/pill-icons/background.png" alt=""> BACKGROUND</div>
+	<div class="mb-lite-contents">
 
 	<?php
 	print("<div align=\"center\">\n");
@@ -141,8 +100,8 @@ function ago_footer()
 	<!-- End Background -->
 	<br>
 	<!-- Theme -->
-	<div class="mb_lite-title"><img src="/images/site/pill-icons/theme.png" alt=""> THEME</div>
-	<div class="mb_lite-contents">
+	<div class="mb-lite-title"><img src="/images/site/pill-icons/theme.png" alt=""> THEME</div>
+	<div class="mb-lite-contents">
 
 	<?php
 	print("<div align=\"center\">\n");
@@ -160,12 +119,41 @@ function ago_footer()
 
 	</tr>
 	</table>
+	</div>
+	
 	<div align="center">
 	<font color="black" size="-2">
 	Copyright &copy; 2002 - 2003<br><a class="footer" href="/copyright.php"><b>The art.gnome.org team</b></a>
 	</font> 
 	</div>
+	
 	<p>
+	<div id="hdr">
+      <a href="http://developer.gnome.org/"><img id="logo" src="/images/site/gnome-64.png" alt="Home" title="Back to the Gnome Developer's home page"/></a>
+      <p class="none"></p>
+      <div id="hdrNav">
+	<a href="http://www.gnome.org/">Users</a> &middot;
+	<a href="http://developer.gnome.org/">Developers</a> &middot;
+	<a href="http://cvs.gnome.org/lxr/">LXR</a> &middot;
+	<a href="http://cvs.gnome.org/bonsai/">Bonsai</a> &middot;
+	<a href="http://ftp.gnome.org/pub/GNOME/MIRRORS.html">FTP</a> &middot;
+	<a href="http://bugzilla.gnome.org/">Bugzilla</a> &middot;
+	<a href="http://www.gnome.org/softwaremap/">Software Map</a> &middot;
+	<a href="/"><b>Art &amp; Themes</b></a> &middot;
+	<a href="mailto:webmaster@gnome.org">Contact</a>
+      </div>
+    </div>
+
+    <!--
+	 <div id="copyright">
+	Last modified 2003/04/25 16:57:34<br />
+      Copyright &copy; 2003, <a href="http://www.gnome.org/">The GNOME Project</a>.<br />
+
+      <a href="http://validator.w3.org/check/referer">Optimised</a>
+      for <a href="http://www.w3.org/">standards</a>.
+      Hosted by <a href="http://www.redhat.com/">Red Hat</a>.
+    </div>
+	 -->
 	</body>
 	</html>
 <?

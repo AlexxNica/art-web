@@ -1,3 +1,11 @@
+2003-08-18  Alex Duggan  <aldug@astrolinux.com>
+
+	* main.css:
+	* new_layout.css:
+	* includes/ago-headers.inc.php:
+	* includes/common.inc.php: Use the new style header image with links that's
+	on the rest of the *.gnome.org sites.
+	
 2003-07-25  Alex Duggan  <aldug@astrolinux.com>
 
 	* themes:
