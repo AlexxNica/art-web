@@ -1,3 +1,9 @@
+2005-01-13  Thomas Wood  <thos@gnome.org>
+
+	* admin/add_background.php: Mark background as added if from
+	show_submitted_backgrounds page
+	* includes/common.inc.php: Fix typo
+
 2004-12-20  Thomas Wood  <thos@gnome.org>
 
 	* search.php: Fixed background search

@@ -37,9 +37,12 @@ if($add_background)
 		}
 		if($background_insert_result && $background_resolution_insert_result)
 		{
-			print("Successed added background to the database.\n<p>\nClick <a href=\"" . $_SERVER["PHP_SELF"] . "\">here</a> to add another.");
+			print("Successfully added background to the database.\n<p>\nClick <a href=\"" . $_SERVER["PHP_SELF"] . "\">here</a> to add another.");
 			if ($submitID)
-				print("<form action=\"show_submitted_backgrounds.php\" method=\"post\"><input type=\"hidden\" name=\"mark_background\" value=\"$submitID\"><input type=\"hidden\" name=\"new_status\" value=\"added\"><input type=\"submit\" value=\"Mark as added\"></form>");
+			{
+				$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='added' WHERE backgroundID='$mark_background'");
+				print("<hr />Successfully marked background as added.<p><a href=\"" . $_SERVER["PHP_SELF"] . "\">Click here</a> to return to incoming backgrounds list.");
+			}
 		}
 		else
 		{	
