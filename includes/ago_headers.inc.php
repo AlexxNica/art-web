@@ -11,6 +11,7 @@ function ago_header($title)
 	print("<link type=\"text/css\" rel=\"stylesheet\" title=\"Default\" href=\"/default.css\" />");
 	print("<link type=\"text/css\" rel=\"alternate stylesheet\" title=\"Left sidebar\" href=\"/left-sidebar.css\" />");
 	print("<link rel=\"icon\" type=\"image/png\" href=\"http://www.gnome.org/img/logo/foot-16.png\"/>");
+	print("<link rel=\"alternate\" href=\"/backend.php\" type=\"application/rss+xml\" title=\"art.gnome.org\">");
 	print("<script type=\"text/javascript\" src=\"/styleswitcher.js\"></script>");
 	print("<title>GNOME Art - $title</title></head>");
 	print("<body>");

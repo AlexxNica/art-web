@@ -94,7 +94,7 @@ else
 	$background_select_result = mysql_query("SELECT themeID,theme_name,category FROM theme WHERE userID=$userID ORDER BY category");
 	while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($background_select_result))
 	{
-		if ($themeID == $parentID)
+		if ($var_themeID == $parentID)
 			$selected = "selected=\"true\"";
 		else
 			$selected = "";

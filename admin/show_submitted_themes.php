@@ -50,14 +50,13 @@ else
 			$theme_name = $incoming_theme_select_row["theme_name"];
 			$category = $incoming_theme_select_row["category"];
 			$date = $incoming_theme_select_row["date"];
-			$author = $incoming_theme_select_row["author"];
-			$author_email = $incoming_theme_select_row["author_email"];
+			$userID = $incoming_theme_select_row["userID"];
 			$theme_url = $incoming_theme_select_row["theme_url"];
 			$theme_description = htmlspecialchars($incoming_theme_select_row["theme_description"]);
 			print("<tr $colour><td>$themeID</td>");
 			if ($theme_type == "") print("<td>$category</td>");
 			print("<td>$theme_name</td>");
-			print("<td><a href=\"mailto:$author_email\">$author</a></td>");
+			print("<td><a href=\"/users/$userID\">$userID</a></td>");
 			print("<td>$date</td>");
 			print("<td><a href=\"$theme_url\">Download</td>");
 			print("<td><form action=\"add_theme.php\" method=\"post\"><input type=\"hidden\" name=\"submitID\" value=\"$themeID\"><input type=\"submit\" value=\"Add\"></form>");

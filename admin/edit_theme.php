@@ -16,21 +16,22 @@ extract($_GET, EXTR_SKIP);
 // write the updated background text do the database
 if($action == "write")
 {
-	if($theme_category && $theme_name && $theme_author && $category && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename )
+	if($theme_name && $theme_category && $userID && $license && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename && $download_filename)
 	{
 		$date = $year . "-" . $month . "-" . $day;
-		$theme_update_query = "UPDATE theme SET category='$theme_category', theme_name='$theme_name', author='$theme_author', author_email='$author_email', release_date='$date', description='$description', thumbnail_filename='$thumbnail_filename', small_thumbnail_filename='$small_thumbnail_filename', download_filename='$download_filename'";
+		$theme_update_query = "UPDATE theme SET theme_name='$theme_name', category='$theme_category', userID='$userID', license='$license', version='$version', parent='$parentID', release_date='$date', description='$description', thumbnail_filename='$thumbnail_filename', small_thumbnail_filename='$small_thumbnail_filename', download_filename='$download_filename'";
 		if($update_timestamp_toggle == "on")
 		{
 			$new_timestamp = time();
-			 $theme_update_query .= ", add_timestamp='$new_timestamp'";
+			$theme_update_query .= ", add_timestamp='$new_timestamp'";
 		}
 		$theme_update_query .= " WHERE themeID='$themeID'";
 		$theme_update_result = mysql_query($theme_update_query);
 
-		print("Successfully edited theme text in database.");
+		print("<p class=\"info\">Successfully edited theme text in database.</p>");
+		print("<table><tr><td>theme_name</td><td>'$theme_name'</td></tr><tr><td>category</td><td>'$theme_category'</td></tr><tr><td>userID</td><td>'$userID'</td></tr><tr><td>license</td><td>'$license'</td></tr><tr><td>parent</td><td>'$parentID'</td></tr><tr><td>release_date</td><td>'$date'</td></tr><tr><td>description</td><td>'$description'</td></tr><tr><td>thumbnail_filename</td><td>'$thumbnail_filename'</td></tr><tr><td>small_thumbnail_filename</td><td>'$small_thumbnail_filename'</td></tr><tr><td>download_filename</td><td>'$download_filename'</table>");
 		print("<p>\n<a href=\"" . $_SERVER["PHP_SELF"] . "\">Click Here</a> to edit another.");
-			}
+		}
 	else
 	{
 		print("Error, all of the form fields are not filled in.");
@@ -39,25 +40,18 @@ if($action == "write")
 // display the background text fields for editing
 elseif($action == "edit")
 {
-	$theme_categories = array("gdm_greeter","gtk","gtk2","icon","metacity","metatheme","nautilus","sawfish","sounds","splash_screens","other");
-	$theme_select_result = mysql_query("SELECT category,theme_name,userID,release_date,description,thumbnail_filename,small_thumbnail_filename,download_filename FROM theme WHERE themeID='$themeID'");
+	$theme_categories = array("gdm_greeter","gtk2","icon","metacity","splash_screens");
+	$theme_select_result = mysql_query("SELECT * FROM theme WHERE themeID='$themeID'");
 	if(mysql_num_rows($theme_select_result)==0)
 	{
 		print("Error, Invalid themeID.");
 	}
 	else
 	{
-		list($theme_category,$theme_name,$userID,$release_date,$description,$thumbnail_filename,$small_thumbnail_filename,$download_filename) = mysql_fetch_row($theme_select_result);
-		
-		$theme_category = htmlspecialchars($theme_category);
-		$theme_name = htmlspecialchars($theme_name);
-		$userID = htmlspecialchars($userID);
-		$description = htmlspecialchars($description);
-		$thumbnail_filename = htmlspecialchars($thumbnail_filename);
-		$small_thumbnail_filename = htmlspecialchars($small_thumbnail_filename);
-		$download_filename = htmlspecialchars($download_filename);
-	
-		
+		$theme_array = mysql_fetch_array($theme_select_result);
+		foreach ($theme_array as $key => $value) $theme_array[$key] = htmlspecialchars($value);
+		extract($theme_array);
+
 		list($year,$month,$day) = explode("-",$release_date);
 		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 		print("<table border=\"0\">\n");
@@ -66,18 +60,31 @@ elseif($action == "edit")
 		for($count=0;$count<count($theme_categories);$count++)
 		{
 			$loop_theme_category = $theme_categories[$count];
-			 if($loop_theme_category == $theme_category)
-			 {
-			 	$selected = " selected";
-			 }
-			 else
-			 {
-			 	$selected = "";
-			 }
-			 print("<option value=\"$loop_theme_category\"$selected>$loop_theme_category\n");
+			if($loop_theme_category == $category)
+				$selected = " selected";
+			else
+				$selected = "";
+			print("<option value=\"$loop_theme_category\"$selected>$loop_theme_category\n");
 		}
 		print("</select></td></tr>\n");
-		print("<tr><td><b>UserID:</b></td><td><input type=\"text\" name=\"theme_author\" size=\"40\" value=\"$userID\"></td></tr>\n");
+		$user_select = mysql_query("SELECT userID,username FROM user");
+		while (list($uid, $uname) = mysql_fetch_row($user_select)) $user_array[$uid] = $uname;
+		print("<tr><td><b>UserID:</b></td><td>");print_select_box("userID", $user_array, $userID);print("</td></tr>\n");
+		print("<tr><td><b>License</b></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
+		print("<tr><td><b>Version</b></td><td><input type=\"text\" name=\"version\" value=\"$version\"></td></tr>\n");
+		print("<tr><td><b>Variation of </b></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>");
+
+		$theme_var_select_result = mysql_query("SELECT themeID,theme_name,category FROM theme WHERE userID=$userID AND parent=0 ORDER BY category");
+		while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($theme_var_select_result))
+		{
+			if ($var_themeID == $parent)
+				$selected = "selected=\"true\"";
+			else
+				$selected = "";
+			print("<option $selected value=\"$var_themeID\">$var_theme_name ($var_category)</option>");
+		}
+		print("</td></tr>");
+
 		print("<tr><td><b>Release Date:</b></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
 		print("<tr><td><b>Description:</b></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
 		print("<tr><td><b>Thumbnail Filename:</b></td><td><input type=\"text\" name=\"thumbnail_filename\" size=\"40\" value=\"$thumbnail_filename\"></td></tr>\n");

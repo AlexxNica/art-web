@@ -45,7 +45,7 @@ else
 			print("<td>$background_name</td>");
 			print("<td><a href=\"/users/$userID\">$userID</a></td>");
 			print("<td>$date</td>");
-			$background_res_select_result = mysql_query("SELECT resolution,filename FROM incoming_background_resolution WHERE background_resolutionID=$backgroundID");
+			$background_res_select_result = mysql_query("SELECT resolution,filename FROM incoming_background_resolution WHERE backgroundID=$backgroundID");
 			print("<td>");
 			while (list($res, $url) = mysql_fetch_row($background_res_select_result))
 			{

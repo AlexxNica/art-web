@@ -58,13 +58,13 @@ if (array_key_exists('admin_username', $_SESSION))
 	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_themes.php\">Submitted Themes</a><br>");
 
 	create_title("Backgrounds","");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"add_background.php\">Add A New Background</a><br>");
+	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_background.php\">Add A New Background</a><br>");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_background.php\">Edit A Background</a><br>");
 	print("&nbsp;&nbsp;&nbsp;Delete A Background<br>");
 
 
 	create_title("Themes", "");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"add_theme.php\">Add A New Theme</a><br>");
+	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_theme.php\">Add A New Theme</a><br>");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_theme.php\">Edit A Theme</a><br>");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_theme.php\">Delete A Theme</a><br>");
 
