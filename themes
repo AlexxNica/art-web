@@ -122,7 +122,7 @@ else if( array_key_exists($category,$theme_config_array) && $theme_num != "")
    	list($year,$month,$day)=explode("-",$date);
       $date = $month . "/" . $day . "/" . $year;
       $description = $theme_select_row["description"];
-   	$theme_download_select_result = mysql_query("SELECT name, download_name, size FROM theme_download WHERE themeID='$themeID' ORDER BY name");
+   	$theme_download_select_result = mysql_query("SELECT name, download_name FROM theme_download WHERE themeID='$themeID' ORDER BY name");
       print("<table border=\"0\">\n");
       print("<tr><td>");
       if($category == "metacity" || $category == "sawfish" || $category == "sounds")
@@ -135,9 +135,12 @@ else if( array_key_exists($category,$theme_config_array) && $theme_num != "")
       }
       print("</td>\n");
    	print("<td><span class=\"yellow-text\">Name:</span> $name<br>\n<span class=\"yellow-text\">Author:</span> <a href=\"mailto:$author_email\">$author</a><br>\n<span class=\"yellow-text\">Release Date:</span> $date<br><span class=\"yellow-text\">Download:</span><br>");
-   	while(list($name,$download_name,$size)=mysql_fetch_row($theme_download_select_result))
+   	while(list($name,$download_name)=mysql_fetch_row($theme_download_select_result))
    	{
-   		print("&nbsp;&nbsp;&nbsp;<a href=\"$mirror_url/themes/$category/$download_name\">$name ($size)</a>\n");
+   		// get the filesize from the server
+			$file_path = $sys_theme_dir . "/$category/$download_name";
+			$filesize = get_filesize_string($file_path);
+			print("&nbsp;&nbsp;&nbsp;<a href=\"$mirror_url/themes/$category/$download_name\">$name ($file_size)</a>\n");
    	}
    	print("</td></tr></table>\n<p>\n");
    	print("<span class=\"yellow-text\">Info:</span> $description");
