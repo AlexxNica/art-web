@@ -177,7 +177,7 @@ print("</td></tr>\n");
 
 ?>
 
-<tr class="horizontal-gradient-menu-bar"><td><img src="images/site/LOGO-Pill.png"></td><td></td><td class="align-right"><img src="images/site/LOGO-Elliptic.png"></td></tr>
+<tr class="horizontal-gradient-menu-bar"><td><img src="images/site/LOGO-Pill.png"></td><td></td><td class="align-right"><a href="http://www.gnome.org/"><img border="0" src="images/site/LOGO-Elliptic.png"></a></td></tr>
 
 <?
 if($site_theme == "slick")
