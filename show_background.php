@@ -20,6 +20,7 @@ else
    $name = $background_select_row["background_name"];
    $author = $background_select_row["author"];
    $author_email = $background_select_row["author_email"];
+   $author_email = spam_proof_email($author_email);
    $release_date = $background_select_row["release_date"];
    list($year,$month,$day)=explode("-",$release_date);
    $release_date = $month . "/" . $day . "/" . $year;

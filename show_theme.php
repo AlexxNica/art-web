@@ -21,7 +21,8 @@ if($themeID && ($category == "gdm_greeter" || $category == "gtk" || $category ==
    	$name = $theme_select_row["theme_name"];
    	$author = $theme_select_row["author"];
    	$author_email = $theme_select_row["author_email"];
-   	$date = $theme_select_row["release_date"];
+   	$author_email = spam_proof_email($author_email);
+      $date = $theme_select_row["release_date"];
    	list($year,$month,$day)=explode("-",$date);
       $date = $month . "/" . $day . "/" . $year;
       $description = $theme_select_row["description"];
