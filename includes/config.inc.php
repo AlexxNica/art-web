@@ -1,5 +1,8 @@
 <?php
 
+/* $Id$ */
+/* site configuration for art.gnome.org */
+
 $linkbar = array (
 	"news" => array(
    	"url" => "index.php",
