@@ -174,7 +174,7 @@ function display_icons($type, $page)
 	$icons_per_page = 64;
    if(is_dir($sys_icon_dir . "/$type"))
    {
-   	$dir_handle = dir($sys_icon_dir . "/$type");
+   	$dir_handle = dir($GLOBALS['sys_icon_dir'] . "/$type");
       
       //skip . and ..
       $dir_handle->read();
