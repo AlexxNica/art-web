@@ -1,5 +1,12 @@
 2003-01-22  Alex Duggan  <aldug@astrolinux.com>
 
+	* AUTHORS:
+	* HACKING:
+	* MAINTAINERS:
+	Initial import into cvs
+
+2003-01-22  Alex Duggan  <aldug@astrolinux.com>
+
 	* ago_headers.inc.php: update copyright notice to 2003
 
 2003-01-22  Alex Duggan  <aldug@astrolinux.com>
