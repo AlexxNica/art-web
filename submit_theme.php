@@ -14,7 +14,7 @@ print("<tr><td><b>Author Email:</b></td><td><input type=\"text\" name=\"author_e
 print("<tr><td><b>URL of Theme:</b></td><td><input type=\"text\" name=\"theme_url\" size=\"40\"></td></tr>\n");
 print("<tr><td><b>Description:</b></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap></textarea></td></tr>\n");
 print("</table>\n<p>\n");
-   
+print("<input type=\"submit\" value=\"Submit Theme\">\n"); 
 print("</form>\n");
 
 create_middle_box_bottom();
