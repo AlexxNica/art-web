@@ -22,6 +22,7 @@ for($count=0;$count<$num_updates;$count++)
 		list($background_name,$category,$author,$thumbnail_filename) = mysql_fetch_row($background_select_result);
 		print("\t\t\t<title>$background_name</title>\n");
 		print("\t\t\t<link>" . htmlspecialchars("http://art.gnome.org/backgrounds/$category/$ID/") . "</link>\n");
+		print("\t\t\t<guid>" . htmlspecialchars("http://art.gnome.org/backgrounds/$category/$ID/") . " </guid>");
 		print("\t\t\t<description><![CDATA[");
 		print("<table>");
 		print_background_row($ID);
@@ -35,6 +36,7 @@ for($count=0;$count<$num_updates;$count++)
 		$category_good = $theme_config_array["$category"]["name"];
 		print("\t\t\t<title>$theme_name</title>\n");
 		print("\t\t\t<link>" . htmlspecialchars("http://art.gnome.org/themes/$category/$ID/") . "</link>\n");
+		print("\t\t\t<guid>" . htmlspecialchars("http://art.gnome.org/themes/$category/$ID/") . "</guid>");
 		print("\t\t\t<description><![CDATA[");
 		print("<table>");
 		print_theme_row($ID);

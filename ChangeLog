@@ -1,3 +1,7 @@
+2004-12-04  Thomas Wood  <thos@gnome.org>
+
+	* backend.php: Added <guid> tag to feed
+
 2004-12-01  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_theme.php: File chooser now uses global theme dir variable
