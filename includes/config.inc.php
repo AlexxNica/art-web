@@ -17,7 +17,7 @@ $background_config_array = array (
 		"url" => "/backgrounds/other/index.php",
 		"active" => "1",
 		"description" => "Backgrounds featuring other GNOME based companies such as Ximian, Codefactory, RedHat, etc."
-		)		
+		)
 
 );
 
@@ -30,13 +30,13 @@ $theme_config_array = array (
 		"active" => "1",
 		"description" => "GDM Greeter themes change the appearance of the GNOME 2.0 login screen."
 		),
-	"gtk" => array (
+/*	"gtk" => array (
 		"name" => "GTK+ 1.0",
 		"url" => "/themes/gtk/index.php",
 		"active" => "1",
 		"description" => "GTK+ 1.2 themes alter the appearance of the GTK+ 1.2 widgets. In the GNOME desktop, this means the appearance of all your GNOME applications."
 		),
-	"gtk2" => array (
+*/	"gtk2" => array (
 		"name" => "Desktop Themes - Applications",
 		"url" => "/themes/gtk2/index.php",
 		"active" => "1",
@@ -54,7 +54,7 @@ $theme_config_array = array (
 		"active" => "1",
 		"description" => "Metacity is the default window manager for GNOME 2.2.x and beyond."
 		),
-	"metatheme" => array (
+/*	"metatheme" => array (
 		"name" => "Metatheme",
 		"url" => "/themes/metatheme/index.php",
 		"active" => "0",
@@ -78,107 +78,116 @@ $theme_config_array = array (
 		"active" => "1",
 		"description" => "Collection of sounds to compliment the GNOME desktop"
 		),
-	"splash_screens" => array (
+*/	"splash_screens" => array (
 		"name" => "Other Themes - Splash Screens",
 		"url" => "/themes/splash_screens/index.php",
 		"active" => "1",
 		"description" => "Splash Screens are what you first see when you log into GNOME."
 		),
-	"other" => array (
+/*	"other" => array (
 		"name" => "Other ...",
 		"url" => "/themes/other/index.php",
 		"active" => "1",
 		"description" => "Other themes."
 		),
-	"gtk_engines" => array (
+*/	"gtk_engines" => array (
 		"name" => "GTK+ Engines",
 		"url" => "/themes/gtk_engines/index.php",
 		"active" => "1",
 		"description" => "GTK+ Engines are pieces of code that draw your theme."
+		),
+	"desktop_themes" => array (
+		"name" => "Desktop Themes",
+		"url" => "/themes/desktop_themes/index.php",
+		"active" => "1",
+		"dexcription" => "Desktop themes are complete themes that cover all aspects of your desktop environment."
 		)
 );
 
 $pill_array = array (
 	"news" => array(
-   	"icon" => "news.png",
+		"icon" => "news.png",
 		"alt" => "News"),
 	"updates" => array(
-   	"icon" => "updates.png",
+		"icon" => "updates.png",
 		"alt" => "Updates"),
 	"search" => array(
-   	"icon" => "search.png",
+		"icon" => "search.png",
 		"alt" => "Search"),
 	"backgrounds" => array(
-   	"icon" => "background.png",
+		"icon" => "background.png",
 		"alt" => "Backgrounds"),
-   "backgrounds_gnome" => array(
-   	"icon" => "backgrounds_gnome.png",
+	"backgrounds_gnome" => array(
+		"icon" => "backgrounds_gnome.png",
 		"alt" => "Backgrounds - GNOME"),
-   "backgrounds_other" => array(
-   	"icon" => "backgrounds_other.png",
+	"backgrounds_other" => array(
+		"icon" => "backgrounds_other.png",
 		"alt" => "Backgrounds - Other"),
-   "themes" => array(
-   	"icon" => "theme.png",
+	"themes" => array(
+		"icon" => "theme.png",
 		"alt" => "Themes"),
-   "themes_gdm_greeter" => array(
-   	"icon" => "themes_gdm_greeter.png",
+	"themes_gdm_greeter" => array(
+		"icon" => "themes_gdm_greeter.png",
 		"alt" => "Other Themes - Login Manager"),
-   "themes_gtk" => array(
-   	"icon" => "themes_gtk.png",
+/*	"themes_gtk" => array(
+		"icon" => "themes_gtk.png",
 		"alt" => "Themes - GTK+ 1.2"),
-   "themes_gtk2" => array(
-   	"icon" => "themes_gtk.png",
+*/	"themes_gtk2" => array(
+		"icon" => "themes_gtk.png",
 		"alt" => "Desktop Themes - Applications"),
-   "themes_icon" => array(
-   	"icon" => "themes_icon.png",
+	"themes_icon" => array(
+		"icon" => "themes_icon.png",
 		"alt" => "Desktop Themes - Icon"),
-   "themes_metacity" => array(
-   	"icon" => "themes_metacity.png",
+	"themes_metacity" => array(
+		"icon" => "themes_metacity.png",
 		"alt" => "Desktop Themes - Window Borders"),
-   "themes_metatheme" => array(
-   	"icon" => "themes_metatheme.png",
+/*	"themes_metatheme" => array(
+		"icon" => "themes_metatheme.png",
 		"alt" => "Themes - Metatheme"),
-   "themes_nautilus" => array(
-   	"icon" => "themes_nautilus.png",
+	"themes_nautilus" => array(
+		"icon" => "themes_nautilus.png",
 		"alt" => "Themes - Nautilus"),
-   "themes_sawfish" => array(
-   	"icon" => "themes_sawfish.png",
+	"themes_sawfish" => array(
+		"icon" => "themes_sawfish.png",
 		"alt" => "Themes - Sawfish"),
-   "themes_sounds" => array(
-   	"icon" => "themes_sounds.png",
+	"themes_sounds" => array(
+		"icon" => "themes_sounds.png",
 		"alt" => "Themes - Sounds"),
-   "themes_splash_screens" => array(
-   	"icon" => "themes_splash_screens.png",
+*/	"themes_splash_screens" => array(
+		"icon" => "themes_splash_screens.png",
 		"alt" => "Other Themes - Splash Screens"),
-   "themes_other" => array(
-   	"icon" => "theme.png",
+	"themes_other" => array(
+		"icon" => "theme.png",
 		"alt" => "Themes - Other"),
 	"themes_gtk_engines" => array(
 		"icon" => "theme.png",
 		"alt" => "Themes - GTK+ Engines"),
+	"themes_desktop_themes" => array(
+		"icon" => "theme.png",
+		"alt" => "Themes - Desktop Themes"),
 	"icons" => array(
-   	"icon" => "icons.png",
+		"icon" => "icons.png",
 		"alt" => "Icons"),
-   "tips" => array(
-   	"icon" => "tips.png",
+/*	"tips" => array(
+		"icon" => "tips.png",
 		"alt" => "Tips &amp; Tricks"),
-   "faq" => array(
-   	"icon" => "faq.png",
+	"faq" => array(
+		"icon" => "faq.png",
 		"alt" => "FAQ"),
-   "contact" => array(
-   	"icon" => "contact.png",
+*/	"contact" => array(
+		"icon" => "contact.png",
 		"alt" => "Contact"),
 	"links" => array(
-   	"icon" => "links.png",
+		"icon" => "links.png",
 		"alt" => "Links"),
 	"copyright" => array(
-   	"icon" => "copyright.png",
+		"icon" => "copyright.png",
 		"alt" => "Copyright"),
-   "screenshots" => array(
-   	"icon" => "screenshot.png",
+/*	"screenshots" => array(
+		"icon" => "screenshot.png",
 		"alt" => "Screenshots"),
-	"submit" => array(
-   	"icon" => "submit.png",
+*/	"submit" => array(
+		"icon" => "submit.png",
 		"alt" => "Submit")
 );
 
@@ -193,5 +202,5 @@ $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 $search_type_array = array ("background" => "Background Name", "theme" => "Theme Name", "author" => "Author Name");
 $thumbnails_per_page_array = array("12" => "12", "24" => "24", "1000" => "All");
 $sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity");
-	
+
 ?>

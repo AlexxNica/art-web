@@ -34,12 +34,12 @@ function ago_header($title)
 	print("<font size=\"+1\">Backgrounds</font><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/gnome/\">GNOME</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/backgrounds/other/\">Other</a><br><br>\n");
-	
-	print("<font size=\"+1\"><a href=\"/themes/\">Desktop Themes</a></font><br>\n");
+
+	print("<font size=\"+1\"><a href=\"/themes/desktop_themes/\">Desktop Themes</a></font><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gtk2/\">Applications</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/metacity/\">Window Borders</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/icon/\">Icon</a><br><br>\n");
-	
+
 	print("<font size=\"+1\">Other Themes</font><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/gdm_greeter/\">Login Manager</a><br>\n");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"/themes/splash_screens/\">Splash Screens</a><br>\n");
