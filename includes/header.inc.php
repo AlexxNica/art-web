@@ -129,7 +129,7 @@ for($count=1;$count<5;$count++)
       	}
          else
          {
-         	print("<span class=\"yellow-text\">Mirror " . $count-1 . "</span>");
+         	print("<span class=\"yellow-text\">Mirror " . ($count-1) . "</span>");
          }
       }
       else
@@ -140,7 +140,7 @@ for($count=1;$count<5;$count++)
    		}
          else
          {
-         	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\">Mirror " . $count-1 . "</a>");
+         	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\">Mirror " . ($count-1) . "</a>");
    		}
       }
    }
