@@ -1,3 +1,17 @@
+2005-03-31  Thomas Wood  <set EMAIL_ADDRESS environment variable>
+
+	* admin/add_background.php:
+	* admin/add_theme.php:
+	* admin/edit_background.php:
+	* admin/edit_theme.php:
+	* admin/index.php:
+	* admin/show_submitted_backgrounds.php:
+	* admin/show_submitted_themes.php:
+
+	Admin improvements for new properties
+
+	* includes/ago_headers.inc.php: Added rss feed link to header, fixes bug 172280
+
 2005-03-24  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_background.php: Restricts variations to the user of the
