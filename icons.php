@@ -16,7 +16,7 @@ while(list($key,$val)=each($GLOBALS["sys_icon_type_array"]))
 }
 print("</table>\n");
 
-print("<p>\nMost of the icons of this section were done by Tuomas \"tigert\" Kuosmanen and Jakub \"jimmac\" Steiner. Some icons were done by Garrett LeSage, Ed Halley, Ville \"drc\" Patsi, and Roman \"star\" Beigelbeck.");
+print("<p>\nMost of the icons of this section were done by Tuomas \"tigert\" Kuosmanen and Jakub \"jimmac\" Steiner. Some icons were done by Garrett LeSage, Ed Halley, Ville \"drc\" P&#228;tsi, and Roman \"star\" Beigelbeck.");
 
 create_middle_box_bottom();
 include("footer.inc.php");
