@@ -8,13 +8,15 @@ include("header.inc.php");
 
 create_middle_box_top("icons");
 print("<table>\n");
-while(list($key,$val)=each($GLOBALS["sys_icon_type_array"]))
+$icon_select_result = mysql_query("SELECT * FROM icon");
+while($icon_select_row=mysql_fetch_array($icon_select_result))
 {
-	$realname = $val["realname"];
-   $icon_filename = $val["image"];
-   $tarball_name = $val["tarball_name"];
-   $tarball_filename =$val["tarball_filename"];
-   print("<tr><td><img src=\"images/icons/$key/$icon_filename\"></td><td><a href=\"show_icons.php?type=$key\">$realname</a> [<a href=\"/images/icons/$tarball_filename\">$tarball_name</a>]</td></tr>\n");
+	$name = $icon_select_row["name"];
+   $realname = $icon_select_row["realname"];
+   $icon_filename = $icon_select_row["image"];
+   $tarball_name = $icon_select_row["tarball_name"];
+   $tarball_filename =$icon_select_row["tarball_filename"];
+   print("<tr><td><img src=\"images/icons/$name/$icon_filename\"></td><td><a href=\"show_icons.php?type=$name\">$realname</a> [<a href=\"/images/icons/$tarball_filename\">$tarball_name</a>]</td></tr>\n");
 }
 print("</table>\n");
 
