@@ -115,7 +115,7 @@ for($count=1;$count<5;$count++)
    		}
          else
          {
-         	print("<a href=\"change_mirror.php?new_mirrorID=1\">Main</a>");
+         	print("<b><a href=\"change_mirror.php?new_mirrorID=1\">Main</a></b>");
 			}
       }
    }
@@ -140,7 +140,7 @@ for($count=1;$count<5;$count++)
    		}
          else
          {
-         	print("<a href=\"change_mirror.php?new_mirrorID=".$count."\">Mirror " . ($count-1) . "</a>");
+         	print("<b><a href=\"change_mirror.php?new_mirrorID=".$count."\">Mirror " . ($count-1) . "</a></b>");
    		}
       }
    }
@@ -167,7 +167,7 @@ if($site_theme == "standard")
 }
 else
 {
-	print("</td><td class=\"horizontal-menu-bar-lite\" align=\"right\">THEME:");
+	print("</td><td class=\"horizontal-menu-bar-lite\" align=\"right\"><b>THEME:</b> ");
    print("<a href=\"change_site_theme.php?new_site_theme=standard\">Standard</a> - <span class=\"yellow-text\">Lite</span>&nbsp;&nbsp;&nbsp;");
 }
 print("</td></tr>\n");
@@ -184,7 +184,7 @@ if($site_theme == "standard")
 }
 else
 {
-	print("<tr valign=\"middle\"><td colspan=\"3\" class=\"horizontal-menu-bar-lite\">&nbsp;&nbsp;<span class=\"yellow-text\">ART.GNOME.ORG</span>&nbsp;&nbsp;-&nbsp;&nbsp;Enhance your GNOME desktop!</td></tr>\n");	
+	print("<tr valign=\"middle\"><td colspan=\"3\" class=\"horizontal-menu-bar-lite\">&nbsp;&nbsp;<span class=\"yellow-text\">ART.GNOME.ORG</span>&nbsp;&nbsp;-&nbsp;&nbsp;<b>Enhance your GNOME desktop!</b></td></tr>\n");	
 }
 ?>
 </table>
