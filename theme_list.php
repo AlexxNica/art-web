@@ -30,8 +30,10 @@ if($category == "gdm_greeter" || $category == "gtk" || $category == "gtk2" || $c
 			$themeID = $theme_select_row["themeID"];
 		   $thumbnail_filename = $theme_select_row["small_thumbnail_filename"];
 		   $theme_name = $theme_select_row["theme_name"];
-		   print("<a href=\"show_theme.php?themeID=$themeID&category=$category\" title=\"$theme_name\"><img src=\"images/thumbnails/$category/$thumbnail_filename\" class=\"shot\" border=\"0\" alt=\"$theme_name\"></a>\n");
-		}
+		   //print("<a href=\"show_theme.php?themeID=$themeID&category=$category\" title=\"$theme_name\"><img src=\"images/thumbnails/$category/$thumbnail_filename\" class=\"shot\" border=\"0\" alt=\"$theme_name\"></a>\n");
+		   print("<div class=\"list-thumb\"><a href=\"show_theme.php?themeID=$themeID&category=$category\" title=\"$theme_name\"><img src=\"images/thumbnails/$category/$thumbnail_filename\" border=\"0\" alt=\"$theme_name\"><br>$theme_name</a></div>\n");
+		
+      }
    	
    	print("<p>\n");
       if($page > 1)
