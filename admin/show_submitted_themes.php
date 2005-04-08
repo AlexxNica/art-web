@@ -31,12 +31,9 @@ else
 
 	if($theme_type)
 	{
-		$query = "SELECT * FROM incoming_theme WHERE (status='new' OR status='approved') AND category='$theme_type'";
+		$query_extra = "AND category='$theme_type'";
 	}
-	else
-	{
-		$query = "SELECT * FROM incoming_theme WHERE status='new' OR status='approved'";
-	}
+	$query = "SELECT incoming_theme.*, user.username FROM incoming_theme,user WHERE (status='new' OR status='approved') $query_extra AND user.userID = incoming_theme.userID";
 	$incoming_theme_select_result = mysql_query($query);
 	print("<hr>");
 	if(mysql_num_rows($incoming_theme_select_result)==0)
@@ -58,7 +55,7 @@ else
 			print("<tr $colour><td>$themeID</td>");
 			if ($theme_type == "") print("<td>$category</td>");
 			print("<td>$theme_name</td>");
-			print("<td><a href=\"/users/$userID\">$userID</a></td>");
+			print("<td><a href=\"/users/$userID\">$username</a></td>");
 			print("<td>$date</td>");
 			print("<td><a href=\"$theme_url\">Download</td>");
 			print("<td><form action=\"add_theme.php\" method=\"post\"><input type=\"hidden\" name=\"submitID\" value=\"$themeID\"><input type=\"submit\" value=\"Add\"></form>");

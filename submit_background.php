@@ -38,10 +38,10 @@ if(array_key_exists("submit",$_POST))
 	if($background_name && $category && $background_description && (count($background_toggles)>0))
 	{
 		$valid_urls = True;
-		while(list($key,$val)=each($background_toggles))
+		foreach ($background_toggles as $key => $val)
 		{
-			$background = addslashes($backgrounds[$key]);
-			if (!validate_submit_url($background))
+			$background_validate = addslashes($backgrounds[$key]);
+			if (!validate_submit_url($background_validate))
 				$valid_urls = False;
 		}
 		if ($valid_urls)
@@ -51,7 +51,8 @@ if(array_key_exists("submit",$_POST))
 			$incoming_background_insert_query .= "VALUES('','new','$date','$version','$license','$background_name','$category','{$_SESSION['userID']}','$parentID','$background_description')";
 			$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
 			$backgroundID = mysql_insert_id();
-			while(list($key,$val)=each($background_toggles))
+			print_r($background_toggles);
+			foreach ($background_toggles as $key => $val)
 			{
 				list($type,$resolution)=explode("|",$key);
 				$type = addslashes($type);

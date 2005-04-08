@@ -23,6 +23,7 @@ $category = validate_input_array_default($_POST["category"], array_keys($theme_c
 $license = validate_input_array_default($_POST["license"], array_keys($license_config_array), "");
 $version = validate_input_regexp_default($_POST["version"], "^[0-9]+$", "0");
 $update = validate_input_regexp_default($_POST["update"], "^[0-9]+$", "");
+$parentID = validate_input_regexp_default($_POST["parentID"], "^[0-9]+$", "");
 
 ago_header("Theme Submission");
 create_title("Theme Submission", "");
@@ -87,7 +88,7 @@ else
 	$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE userID = {$_SESSION['userID']}");
 	while(list($themeID,$theme_name)=mysql_fetch_row($theme_select_result))
 	{
-		if ($themeID = $parentID) $selected = "selected=\"true\""; else $selected = "selected=\"false\"";
+		if ($themeID == $parentID) $selected = "selected=\"true\""; else $selected = "";
 		print("<option value=\"$themeID\" $selected>$theme_name</option>");
 	}
 	print("<tr><td><strong>License</strong></td><td>");print_select_box("license", $license_config_array, $license); print("</td></tr>\n");
