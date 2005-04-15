@@ -11,6 +11,7 @@ escape_gpc_array ($_POST);
 extract($_POST, EXTR_SKIP);
 
 admin_header("Delete a Theme");
+admin_auth(2);
 
 // write the updated background text do the database
 if($action == "delete")

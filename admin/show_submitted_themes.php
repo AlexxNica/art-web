@@ -4,6 +4,8 @@ require("common.inc.php");
 require("includes/headers.inc.php");
 
 admin_header("Submitted Themes");
+$admin_auth = admin_auth(1);
+
 $theme_type_select_array = Array("" => "All", "metacity" => "Metacity", "Icon" => "Icon", "gtk2" => "GTK 2", "gdm_greeter" => "GDM Greeter", "splash_screens" => "Splash Screens", "desktop" => "Desktop");
 
 $mark_theme = validate_input_regexp_default($_POST["mark_theme"], "^[0-9]+$", "");
@@ -58,7 +60,13 @@ else
 			print("<td><a href=\"/users/$userID\">$username</a></td>");
 			print("<td>$date</td>");
 			print("<td><a href=\"$theme_url\">Download</td>");
-			print("<td><form action=\"add_theme.php\" method=\"post\"><input type=\"hidden\" name=\"submitID\" value=\"$themeID\"><input type=\"submit\" value=\"Add\"></form>");
+			print("<td>");
+			if ($admin_auth > 1)
+			{
+				print("<form action=\"add_theme.php\" method=\"post\">");
+				print("<input type=\"hidden\" name=\"submitID\" value=\"$themeID\"><input type=\"submit\" value=\"Add\">");
+				print("</form>");
+			}
 			print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">");
 			print_select_box("new_status", $status_array, $status);
 			print("<input type=\"hidden\" name=\"mark_theme\" value=\"$themeID\"/><input type=\"submit\" value=\"Update\" /></form>");

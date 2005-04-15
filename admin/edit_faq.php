@@ -12,6 +12,7 @@ extract($_POST, EXTR_SKIP);
 extract($_GET, EXTR_SKIP);
 
 admin_header("Edit an FAQ Entry");
+admin_auth(2);
 
 // write the updated FAQ do the database
 if($action == "write")

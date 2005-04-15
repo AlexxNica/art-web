@@ -4,6 +4,7 @@ require("common.inc.php");
 require("includes/headers.inc.php");
 
 admin_header("Add a Background");
+admin_auth(2);
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
@@ -62,13 +63,7 @@ else
 	{
 		$submit_result = mysql_query("SELECT * FROM incoming_background WHERE backgroundID=$submitID");
 		$row = mysql_fetch_array($submit_result);
-		$background_name = $row['background_name'];
-		$category = $row['category'];
-		$userID = $row['userID'];
-		$parentID = $row['parentID'];
-		$license = $row['license'];
-		$version = $row['version'];
-		$background_description = $row['background_description'];
+		extract($row);
 	}
 	$date = date("m/d/Y");
 	list($month,$day,$year) = explode("/",$date);
@@ -79,7 +74,7 @@ else
 	print("<tr><td><b>License</b></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
 	print("<tr><td><b>Version:</b></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
 	print("<tr><td><b>Variation</b></td><td><select name=\"parentID\"><option value=\"\">N/A</option>");
-	$background_select_result = mysql_query("SELECT backgroundID,background_name FROM background WHERE userID=$userID AND parent=0");
+	$background_select_result = mysql_query("SELECT backgroundID,background_name FROM background WHERE userID=$userID AND parent=0 AND backgroundID=$parentID");
 	while(list($backID,$back_name)=mysql_fetch_row($background_select_result))
 	{
 		if ($backID == $parentID)

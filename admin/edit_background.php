@@ -14,6 +14,7 @@ if ($_GET)
 	$category = validate_input_array_default($_GET["category"], Array('gnome', 'other'), "");
 
 admin_header("Edit a Background");
+admin_auth(2);
 
 // write the updated background text do the database
 if($action == "write")
@@ -21,12 +22,12 @@ if($action == "write")
 	if($background_name && $userID && $month && $day && $year && $background_description && $thumbnail_filename && $license)
 	{
 		$date = $year . "-" . $month . "-" . $day;
-		$background_update_query  = "UPDATE background SET background_name='$background_name', license='$license', version='$version', category='$category', userID='$userID', parent='$parentID', release_date='$date', background_description='$background_description', thumbnail_filename='$thumbnail_filename' WHERE backgroundID='$backgroundID'";
+		$background_update_query  = "UPDATE background, background_resolution SET background.background_name='$background_name', background.license='$license', background.version='$version', background.category='$category', background.userID='$userID', background.parent='$parentID', background.release_date='$date', background.background_description='$background_description', background.thumbnail_filename='$thumbnail_filename', background_resolution.resolution='$resolution' WHERE background.backgroundID='$backgroundID' AND background_resolution.backgroundID='$backgroundID'";
 		$background_update_result = mysql_query($background_update_query);
-		if(mysql_affected_rows() == 1)
+		if(mysql_affected_rows() >= 1)
 		{
 			print("Successfully edited background text in database.");
-			print("<table><tr><td>background_name</td><td>'$background_name'</td></td><tr><td>license</td><td>'$license'</td></td><tr><td>version</td><td>'$version'</td></td><tr><td>parent</td><td>$parentID</td></tr><tr><td>category</td><td>'$category'</td></td><tr><td>userID</td><td>'$userID'</td></td><tr><td>release_date</td><td>'$date'</td></td><tr><td>background_description</td><td>'$background_description'</td></td><tr><td>thumbnail_filename</td><td>'$thumbnail_filename'</td></tr></table>");
+			print("<table><tr><td>background_name</td><td>'$background_name'</td></td><tr><td>license</td><td>'$license'</td></td><tr><td>version</td><td>'$version'</td></td><tr><td>parent</td><td>$parentID</td></tr><tr><td>category</td><td>'$category'</td></td><tr><td>userID</td><td>'$userID'</td></td><tr><td>release_date</td><td>'$date'</td></td><tr><td>background_description</td><td>'$background_description'</td></td><tr><td>thumbnail_filename</td><td>'$thumbnail_filename'</td></tr><tr><td>resolution</td><td>$resolution</td></tr></table>");
 			print("<p>\n<a href=\"" . $_SERVER["PHP_SELF"] . "\">Click Here</a> to edit another.");
 		}
 		else
@@ -45,8 +46,9 @@ if($action == "write")
 // display the background text fields for editing
 elseif($action == "edit")
 {
-	$background_select_result = mysql_query("SELECT * FROM background WHERE backgroundID='$backgroundID'");
-	if(mysql_num_rows($background_select_result)==0)
+	$background_select_query = "SELECT background.backgroundID, background.userID, background.status, background.background_name, background.version, background.license, background.parent, background.category, background.add_timestamp, background.release_date, background.background_description, background.thumbnail_filename, background_resolution.resolution FROM background, background_resolution WHERE background.backgroundID='$backgroundID' AND background_resolution.backgroundID='$backgroundID'";
+	$background_select_result = mysql_query($background_select_query);
+	if (mysql_num_rows($background_select_result)==0)
 	{
 		print("<p>Could not select background to be updated</p>");
 		print("<tt>".mysql_error()."</tt>");
@@ -79,11 +81,13 @@ elseif($action == "edit")
 			print("<option $selected value=\"$var_themeID\">$var_theme_name ($var_category)</option>");
 		}
 		print("</td></tr>");
+		
 
 
 		print("<tr><td><b>Release Date:</b></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
 		print("<tr><td><b>Background Description:</b></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap>$background_description</textarea></td></tr>\n");
 		print("<tr><td><b>Thumbnail Filename:</b></td><td><input type=\"text\" name=\"thumbnail_filename\" size=\"40\" value=\"$thumbnail_filename\"></td></tr>\n");
+		print("<tr><td><b>Resolution:</b></td<td><input type=\"text\" name=\"resolution\" size=\"40\" value=\"$resolution\"></td></tr>\n");
 		print("</table>\n<p>\n");
 		print("<input type=\"submit\" value=\"Update Background\">");
 		print("<input type=\"hidden\" name=\"action\" value=\"write\">\n");

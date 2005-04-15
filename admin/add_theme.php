@@ -5,6 +5,7 @@ require("common.inc.php");
 require("includes/headers.inc.php");
 
 admin_header("Add a Theme");
+admin_auth(2);
 
 $submitID = validate_input_regexp_default ($_POST["submitID"], "^[0-9]+$", "0");
 

@@ -8,6 +8,7 @@ $mark_background = validate_input_regexp_default($_POST["mark_background"], "^[0
 $new_status = validate_input_array_default($_POST["new_status"], array_keys($status_array), "");
 
 admin_header("Submitted Backgrounds");
+$admin_level = admin_auth(1);
 
 if($mark_background)
 {
@@ -56,9 +57,13 @@ else
 				print("<a href=\"$url\">$res</a>");
 			}
 			print("</td>");
-			print("<td><form action=\"add_background.php\" method=\"post\"><input type=\"submit\" value=\"Add\">");
-			print("<input type=\"hidden\" name=\"submitID\" value=\"$backgroundID\">");
-			print("</form><hr />");
+			print("<td>");
+			if ($admin_level > 1)
+			{
+				print("<form action=\"add_background.php\" method=\"post\"><input type=\"submit\" value=\"Add\">");
+				print("<input type=\"hidden\" name=\"submitID\" value=\"$backgroundID\">");
+				print("</form><hr />");
+			}
 			print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">");
 			print_select_box("new_status", $status_array, $status);
 			print("<input type=\"hidden\" name=\"mark_background\" value=\"$backgroundID\"/><input type=\"submit\" value=\"Update\" /></form>");

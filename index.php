@@ -10,14 +10,14 @@ $view_old_news = validate_input_regexp_default($_GET["view_old_news"], "^1$", "0
 
 ago_header("News");
 
-create_title("News", "Latest news from art.gnome.org");
+create_title("Latest News", "Latest news from art.gnome.org");
 if($view_old_news == 1)
 {
 	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 3,20");
 }
 else
 {
-	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 3");
+	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 1");
 }
 while($news_select_row=mysql_fetch_array($news_select_result))
 {
@@ -38,7 +38,23 @@ if($view_old_news == 1)
 }
 else
 {
-	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"" . $_SERVER["PHP_SELF"] . "?view_old_news=1\">View Older News</a></div>\n");
+	print("<div align=\"center\"><p><a href=\"" . $_SERVER["PHP_SELF"] . "?view_old_news=1\">View Older News</a></p></div>\n");
+	create_title("Recent Updates", "The latest five additions to art.gnome.org");
+	$big_array = get_updates_array(5);
+	for($count=0;$count<count($big_array);$count++)
+	{
+		list($add_timestamp,$type,$ID) = explode("|",$big_array[$count]);
+		if($type == "background")
+		{
+			print_background_row($ID, "list");
+		}
+		else
+		{
+			print_theme_row($ID, "list");
+		}
+	}
+	print("<div align=\"cetner\"><p><a href=\"backend.php\">RSS Updates Feed</a></p></div>");
+
 }
 
 ago_footer();

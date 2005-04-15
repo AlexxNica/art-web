@@ -8,6 +8,7 @@ $action = validate_input_array_default($_POST["action"], Array("delete", "confir
 $faqID = validate_input_regexp_default($_POST["faqID"], "^[0-9]+$", "-1");
 
 admin_header("Delete an FAQ");
+admin_auth(2);
 
 // write the updated background text do the database
 if($action == "delete")

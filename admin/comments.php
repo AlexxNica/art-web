@@ -1,0 +1,81 @@
+<?php
+require("mysql.inc.php");
+require("common.inc.php");
+require("includes/headers.inc.php");
+
+// ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
+escape_gpc_array ($_POST);
+
+admin_header("Moderate Comments");
+admin_auth(1);
+
+// grab bad comments
+$badcomments = "SELECT comment.commentID, comment.status, comment.userID, user.username, comment.comment, comment.timestamp, comment.type, comment.artID FROM comment, user WHERE user.userID=comment.userID AND comment.status='reported' ORDER BY comment.timestamp";
+$badcomment_result = mysql_query($badcomments);
+$badcomment_count = mysql_num_rows($badcomment_result);
+
+switch ($badcomment_count)
+{
+	case 0:
+		echo "There are no reported comments at this time.<br />";
+		break;
+	case 1:
+		echo "There is 1 comment reported at this time.<br />";
+		break;
+	case 2:
+		echo "There are $badcomment_count reported comments at this time.<br />";
+		break;
+}
+
+if($badcomment_count > 0)
+{
+	
+	echo "<br />";
+	$count = 0;
+
+	while(list($commentID, $status, $userID, $username, $user_comment, $comment_time, $comment_type, $comment_artID)=mysql_fetch_row($badcomment_result))
+	{
+		if($comment_type == "background") {
+			$backgroundcat = "SELECT category, background_name FROM `background` WHERE backgroundID = $comment_artID";
+			$result = mysql_query($backgroundcat);
+			list($category, $name) = mysql_fetch_row($result);
+		}
+		if($comment_type == "theme") {
+			$themecat = "SELECT category, theme_nameFROM `theme` WHERE themeID = $comment_artID";
+			$result = mysql_query($themecat);
+			list($category, $name) = mysql_fetch_row($result);
+		}
+		$link = "../".$comment_type."s/$category/$comment_artID";
+		$count++;
+		// display comment header
+		print("<table class=\"comment\">\n");
+		print("<tr><td class=\"comment_head\">");
+		print("<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\">\n");
+		print("<i>$count: <a href=\"/users/$userID\">$username</a> posted on " . date("Y-m-d - H:i", $comment_time) . " to <a href=\"$link\">$name</a> </i>\n");
+		print("</td><td align=\"right\">\n");
+		// mod stuff here.
+		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
+		print("<input type=\"hidden\" name=\"commentID\" value=\"" . $commentID . "\" />\n");
+		print("<input type=\"submit\" name=\"delete\" value=\"Delete\" class=\"link_button\" />");
+		print("<input type=\"submit\" name=\"reviewed\" value=\"Reviewed\" class=\"link_button\" />");
+		print("</form>\n");
+		// print comment
+		print("</td></tr></table>");
+		print("<tr><td class=\"comment\">" . html_parse_text($user_comment) . "</td></tr>");
+		print("</table><br/>\n");
+	}
+}
+
+if ($_POST['delete'] == true) {
+	mysql_query("UPDATE comment SET status='deleted' WHERE commentID='".$_POST['commentID']."'");
+	echo "Sucessfully deleted comment.  Click <a href=\"comments.php\">here</a> to return to the list.";
+}
+
+if ($_POST['reviewed'] == true) {	
+	mysql_query("UPDATE comment SET status='reviewed' WHERE commentID='".$_POST['commentID']."'");
+	echo "Sucessfully marked comment as reviewed.  Click <a href=\"comments.php\">here</a> to return to the list.";
+}
+
+
+admin_footer();
+?>

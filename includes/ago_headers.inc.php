@@ -36,6 +36,7 @@ function ago_header($title)
 	print("<li><a href=\"/users/\">Authors</a></li>");
 	print("<li><a href=\"/faq.php\">FAQ</a></li>");
 	print("<li><a href=\"http://live.gnome.org/GnomeArt_2fTutorials\">Tutorials</a></li>");
+	print("<li><a href=\"http://gnomesupport.org/forums/index.php?c=6\">Forums</a></li>");
 	print("</ul>");
 	print("<br />");
 	print("<img src=\"/images/site/wallpaper.png\" alt=\"Wallpapers\" height=\"48px\" width=\"48px\" align=\"middle\" /> Backgrounds");

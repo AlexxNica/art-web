@@ -17,9 +17,8 @@ if (array_key_exists('login', $_POST))
 
 	if ( (md5($password) == $cryptpass) && ($level) )
 	{
-		$_SESSION['admin_username'] = $username;
-		$_SESSION['admin_userID'] = $userID;
-		$_SESSION['admin_level'] = $level;
+		$_SESSION['username'] = $username;
+		$_SESSION['userID'] = $userID;
 	}
 	else
 	{
@@ -32,27 +31,8 @@ elseif (array_key_exists('logout', $_POST))
 	session_destroy();
 	$_SESSION = Array();
 }
-elseif (array_key_exists('change_pass', $_POST))
+if (array_key_exists('username', $_SESSION))
 {
-	$new_pass = md5($_POST['password']);
-	$query_result = mysql_query("UPDATE user SET password='$new_pass' WHERE userID = {$_SESSION['admin_userID']}");
-	if ($query_result !== FALSE)
-		print("Password changed.<br /><a href=\"{$_SERVER['PHP_SELF']}\">Continue.</a>");
-	else
-		print("Password change failed.");
-}
-
-if (array_key_exists('admin_username', $_SESSION))
-{
-	create_title("User Account","Logged in as {$_SESSION['admin_username']}");
-	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"POST\" />");
-	print("Change Password:<input value=\"\" name=\"password\" />");
-	print("<input type=\"submit\" value=\"Change\" name=\"change_pass\" />");
-	print("</form>");
-	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"POST\" />");
-	print("<input type=\"submit\" value=\"Logout\" name=\"logout\" />");
-	print("</form>");
-
 	create_title("Submissions","");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_backgrounds.php\">Submitted Backgrounds</a><br>");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_themes.php\">Submitted Themes</a><br>");
@@ -88,10 +68,10 @@ else
 	create_title("Please log in","");
 	print("<p>");
 	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"POST\">");
-	print("Username: <input name=\"username\" /><br />");
-	print("Password: <input name=\"password\" type=\"password\" /><br />");
-	print("<input type=\"submit\" value=\"Login\" name=\"login\" />");
-	print("</form>");
+	print("<table><tr><td>Username:</td><td><input name=\"username\" class=\"username\" /></td></tr>");
+	print("<tr><td>Password:</td><td><input name=\"password\" type=\"password\" class=\"password\" /></td></tr>");
+	print("<tr><td><input type=\"submit\" value=\"Login\" name=\"login\" /></td></tr>");
+	print("</table></form>");
 	print("</p>");
 }
 

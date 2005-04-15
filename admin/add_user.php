@@ -5,6 +5,7 @@ include "includes/headers.inc.php";
 include "common.inc.php";
 
 admin_header("Users Administration");
+admin_auth(2);
 
 if (!array_key_exists("action", $_POST))
 {

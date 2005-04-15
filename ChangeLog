@@ -1,3 +1,38 @@
+2005-04-15  Thomas Wood  <thos@gnome.org>
+
+	* admin/add_background.php:
+	* admin/add_faq.php:
+	* admin/add_news_item.php:
+	* admin/add_theme.php:
+	* admin/add_user.php:
+	* admin/delete_faq.php:
+	* admin/delete_theme.php:
+	* admin/delete_user.php:
+	* admin/edit_background.php:
+	* admin/edit_faq.php:
+	* admin/edit_news_item.php:
+	* admin/edit_theme.php:
+	* admin/edit_user.php:
+	* admin/includes/headers.inc.php:
+	* admin/index.php:
+	* admin/show_submitted_backgrounds.php:
+	* admin/show_submitted_themes.php:
+
+	New admin authentication level
+
+	* admin/comments.php: Added
+
+	* default.css: New UL image
+	* includes/ago_headers.inc.php: Added link to gnomesupport.org forums
+	* includes/common.inc.php: Item rows show the number of comments for
+	the item
+	* index.php: Show latest 5 updates
+
+	* submit_background.php:
+	* submit_theme.php:
+
+	Show category in Variations select list
+
 2005-04-08  Thomas Wood  <thos@gnome.org>
 
 	* admin/show_submitted_themes.php: Display username rather than userID

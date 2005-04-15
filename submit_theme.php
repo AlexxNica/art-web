@@ -85,11 +85,11 @@ else
 	print("<tr><td><strong>Theme Name:</strong></td><td><input type=\"text\" name=\"theme_name\" value=\"$theme_name\" size=\"40\"></td></tr>\n");
 	print("<tr><td><strong>Category</strong></td><td>"); print_select_box("category", Array(""=>"Choose", "desktop"=>"Desktop Theme", "gtk2"=>"Applications (gtk+)", "icon"=>"Icon", "gdm_greeter" => "Login Manager (gdm)", "splash_screens"=>"Splash Screens","metacity"=>"Window Borders (metacity)"), $category); print("</td></tr>\n");
 	print("<tr><td><strong>Variation of:</strong></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>\n");
-	$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE userID = {$_SESSION['userID']}");
-	while(list($themeID,$theme_name)=mysql_fetch_row($theme_select_result))
+	$theme_select_result = mysql_query("SELECT themeID,theme_name,category FROM theme WHERE userID = {$_SESSION['userID']}");
+	while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($theme_select_result))
 	{
-		if ($themeID == $parentID) $selected = "selected=\"true\""; else $selected = "";
-		print("<option value=\"$themeID\" $selected>$theme_name</option>");
+		if ($var_themeID == $parentID) $selected = "selected=\"true\""; else $selected = "";
+		print("<option value=\"$var_themeID\" $selected>$var_theme_name ($var_category)</option>");
 	}
 	print("<tr><td><strong>License</strong></td><td>");print_select_box("license", $license_config_array, $license); print("</td></tr>\n");
 	print("<tr><td><strong>Version</strong></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");

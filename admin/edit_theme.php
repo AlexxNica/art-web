@@ -4,6 +4,7 @@ require("common.inc.php");
 require("includes/headers.inc.php");
 
 admin_header("Edit a Theme");
+admin_auth(2);
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);

@@ -191,6 +191,10 @@ a {
 	text-decoration: none;
 }
 
+ul {
+	list-style-image: url("/images/site/ul-img.png");
+}
+
 li {
 	font-size: 1em;
 	font-family: sans-serif;

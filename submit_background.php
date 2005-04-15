@@ -99,14 +99,14 @@ else
 	print("<tr><td><strong>Background Name:</strong></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\"></td></tr>\n");
 	print("<tr><td><strong>Category</strong></td><td>");print_select_box("category", Array("" => "Choose", "gnome" => "GNOME", "other" => "Other"), $category);print("</td></tr>\n");
 	print("<tr><td><strong>Variation of:</strong></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>\n");
-	$background_select_result = mysql_query("SELECT backgroundID, background_name FROM incoming_background WHERE userID = {$_SESSION['userID']} AND parentID=0");
+	$background_select_result = mysql_query("SELECT backgroundID,background_name,category FROM background WHERE userID = {$_SESSION['userID']} AND parentID=0");
 	while(list($backID,$back_name)=mysql_fetch_row($background_select_result))
 	{
 		if ($backID == $parentID)
 			$selected = "selected=\"true\"";
 		else
 			$selected = "";
-		print("<option value=\"$backID\" $selected>$back_name</option>");
+		print("<option value=\"$backID\" $selected>$back_name ($category)</option>");
 	}
 	print("<tr><td><strong>Version</strong></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
 	print("<tr><td><strong>License</strong></td><td>");print_select_box("license", $license_config_array, $license); print("</td></tr>\n");

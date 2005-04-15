@@ -4,6 +4,8 @@ require("common.inc.php");
 require("includes/headers.inc.php");
 
 admin_header("Add a News Item");
+admin_auth(2);
+
 if($HTTP_POST_VARS)
 {
 

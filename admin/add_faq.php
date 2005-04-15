@@ -7,6 +7,7 @@ $question = mysql_real_escape_string($_POST["question"]);
 $answer = mysql_real_escape_string($_POST["answer"]);
 
 admin_header("Add a FAQ");
+admin_auth(2);
 
 if($HTTP_POST_VARS)
 {

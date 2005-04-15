@@ -256,7 +256,15 @@ function print_background_row($backgroundID, $view)
 	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
 	$thumbnail = "{$site_url}images/thumbnails/backgrounds/$thumbnail_filename";
-	
+
+	if ($view != "compact")
+	{
+		$comment_select = mysql_query("SELECT COUNT(*) AS count FROM comment WHERE artID = '$backgroundID' AND type='background' AND status != 'deleted'");
+		list($count) = mysql_fetch_row($comment_select);
+		if ($count > 1) $extra[1] = ", $count comments";
+		if ($count == 1) $extra[1] = ", $count comment";
+	}
+
 	if ($view == "compact")
 	{
 		$vote = "";
