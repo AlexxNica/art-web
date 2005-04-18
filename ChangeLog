@@ -1,3 +1,25 @@
+2005-04-18  Thomas Wood  <thos@gnome.org>
+
+	* account.php:
+	* includes/ago_headers.inc.php:
+	* faq.php:
+	* updates.php:
+
+	XHTML strict fixes, and formatting cleanups
+
+	* admin/comments.php: Misc. fixes
+	* admin/edit_background.php: Resolution Editing
+	* admin/includes/headers.inc.php: Fix return value of admin_auth()
+	* backgrounds:
+	* download:
+	* themes:
+
+	Support for archived items
+
+	* includes/common.inc.php: XHTML strict fixes, support for bb code in
+	html_parse_text(), support for archived items
+	* index.php: Parse news text
+
 2005-04-15  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_background.php:

@@ -65,23 +65,23 @@ else
 			list($page, $num_pages) = theme_search_result("", "theme_name", $category, $thumbnails_per_page, $sort_by, $page, $num_themes, $view);
 			
 			/* Page Navigation System */
-			print("<div style=\"clear:both;\" align=\"center\">\n");
+			print("<div style=\"clear:both; text-align: center;\">\n");
 			if($page > 1)
 			{
 				$prev_page = $page -1;
-				print(" <a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">&lt;</a>");
+				print(" <a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&lt;</a>");
 			}
 			for($count=1;$count<=$num_pages;$count++)
 			{
 				if($count == $page)
 					print(" <strong>$count</strong> ");
 				else
-					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">$count</a>");
+					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">$count</a>");
 			}
 			if($page < $num_pages)
 			{
 				$next_page = $page +1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&sort_by=$sort_by&thumbnails_per_page=$thumbnails_per_page&view=$view\">&gt;</a>");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&gt;</a>");
 			}
 			print("</div>");
 		}
@@ -144,18 +144,28 @@ else
 			$more .= "<tr><td colspan=\"2\">";
 
 			// get the filesize from the server
-			$file_path = $sys_theme_dir . "/$category/$download_filename";
+			if ($themeID < 1000)
+				$file_path = $sys_theme_dir . "/archives/$category/$download_filename";
+			else
+				$file_path = $sys_theme_dir . "/$category/$download_filename";
 			$filesize = get_filesize_string($file_path);
-
 			$more .= "<a href=\"/download/themes/$category/$themeID/$download_filename\" class=\"tar\"> $download_filename ($filesize)</a></td></tr>";
+
 
 			if($category == "metacity" || $category == "splash_screens" || $category == "gtk_engines")
 			{
-				$thumbnail_url="/images/thumbnails/$category/$small_thumbnail_filename";
+				if ($themeID < 1000)
+					$thumbnail_url="{$site_url}images/archive/thumbnails/$category/$small_thumbnail_filename";
+				else
+					$thumbnail_url="{$site_url}images/thumbnails/$category/$small_thumbnail_filename";
 			}
 			else
 			{
-				$thumbnail_url="/images/thumbnails/$category/$thumbnail_filename";
+				if ($themeID < 1000) {
+					$thumbnail_url="{$site_url}images/archive/thumbnails/$category/$thumbnail_filename";
+				} else {
+					$thumbnail_url="{$site_url}images/thumbnails/$category/$thumbnail_filename";
+				}
 			}
 			
 
@@ -167,7 +177,11 @@ else
 				create_title("Variations", "This theme has one or more variations");
 				while (list($themeID,$theme_name,$var_category, $thumbnail_filename) = mysql_fetch_row($var_select_result))
 				{
-					print("<a href=\"/themes/$var_category/$themeID\">$theme_name</a>");
+					if ($themeID < 1000) {
+						print("<a href=\"/themes/$var_category/$themeID\">$theme_name</a>");
+					} else {
+						print("<a href=\"/archives/themes/$var_category/$themeID\">$theme_name</a>");
+					}
 				}
 			}
 			$comment_result = add_comment($themeID, "theme", $comment);

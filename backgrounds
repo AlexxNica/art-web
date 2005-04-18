@@ -26,14 +26,14 @@ if ($unvalidated_category == "")
 	ago_header("Backgrounds");
 	create_title("backgrounds", "Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.");
 	
-	print("<ul>");
+	print("<ul>\n");
 	reset($background_config_array);
 	while(list($key,$val)=each($background_config_array))
 	{
 		$name = $val["name"];
 		$url = $val["url"];
 		$description = $val["description"];
-		print("<li><a class=\"bold-link\" href=\"$url\">$name</a> - $description</li>\n");
+		print("\t<li><a class=\"bold-link\" href=\"$url\">$name</a> - $description</li>\n");
 	}
 	print("</ul>\n");
 	
@@ -60,28 +60,28 @@ else
 			print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Backgrounds", $view);
 			list($page, $num_pages) = background_search_result("", "background_name", $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view);
 
-			print("<div style=\"clear:both\" align=\"center\">\n");
+			print("<div style=\"clear:both; text-align:center\">\n");
 			/* Page Navigation System */
 			if($page > 1)
 			{
 				$prev_page = $page -1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&lt;</a>");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&lt;</a>\n");
 			}
 			for($count=1;$count<=$num_pages;$count++)
 			{
 				if($count == $page)
 				{
-					print(" <b>$count</b> ");
+					print(" <strong>$count</strong>\n ");
 				}
 				else
 				{
-					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=&amp;sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">$count</a>");
+					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=&amp;sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">$count</a>\n");
 				}
 			}
 			if($page < $num_pages)
 			{
 				$next_page = $page +1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&gt;</a>");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&gt;</a>\n");
 			}
 			print("</div>\n");
 		}
@@ -112,7 +112,7 @@ else
 			$background_select_row = mysql_fetch_array($background_select_result);
 			$thumbnail_filename = $background_select_row["thumbnail_filename"];
 			$screenshot_filename = $background_select_row["screenshot_filename"];
-			$name = $background_select_row["background_name"];
+			$name = html_parse_text($background_select_row["background_name"]);
 			$userID = $background_select_row["userID"];
 			$user_select_result = mysql_query("SELECT username FROM user WHERE userID = $userID");
 			list($author) = mysql_fetch_row($user_select_result);
@@ -131,12 +131,19 @@ else
 			create_title($name . " by <a href=\"/users/$userID\">$author</a>", $background_config_array[$category]["name"] . " Backgrounds");
 
 
+			if ($backgroundID < 1000)
+				$thumbnail_url = "{$site_url}images/archive/thumbnails/backgrounds/$thumbnail_filename";
+			else
+				$thumbnail_url = "{$site_url}images/thumbnails/backgrounds/$thumbnail_filename";
 
-			$thumbnail_url = "/images/thumbnails/backgrounds/$thumbnail_filename";
 			$more = "<tr><th>Resolutions</th><td>\n";
 			while(list($background_resolutionID,$type,$resolution,$filename)=mysql_fetch_row($background_resolution_select_result))
 			{
-				$more .= "<a href=\"/download/backgrounds/$category/$background_resolutionID/$filename\" class=\"$type\">&nbsp;$type - $resolution</a>&nbsp;&nbsp;\n";
+				if ($backgroundID < 1000) {
+					$more .= "<a href=\"/download/backgrounds/$category/$background_resolutionID/$filename\" class=\"$type\">&nbsp;$type - $resolution</a>&nbsp;&nbsp;\n";
+				} else {
+					$more .= "<a href=\"/download/backgrounds/$category/$background_resolutionID/$filename\" class=\"$type\">&nbsp;$type - $resolution</a>&nbsp;&nbsp;\n";
+				}
 			}
 
 			$more .= "</td></tr></table>\n";

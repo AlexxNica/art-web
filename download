@@ -8,20 +8,25 @@ $request = $_SERVER["PATH_INFO"];
 
 list($foo,$section,$category,$download_num,$filename) = explode("/", $request);
 
+if ($download_num < 1000)
+	$archive = "/archive";
+else
+	$archive = "";
+
 if($section == "backgrounds")
 {
 	$background_resolutionID = $download_num;
 	$background_resolution_select_result = mysql_query("SELECT backgroundID, filename FROM background_resolution WHERE background_resolutionID='$background_resolutionID'");
 	list($backgroundID, $filename) = mysql_fetch_row($background_resolution_select_result);
 	$background_update_result = mysql_query("UPDATE background SET download_count=download_count+1 WHERE backgroundID='$backgroundID'");
-	
-	header("Location: $mirror_url/backgrounds/$filename");
+
+	header("Location: $mirror_url$archive/backgrounds/$filename");
 	exit();
 }
 else if($section == "themes")
 {
 	$theme_update_result = mysql_query("UPDATE theme SET download_count=download_count+1 WHERE themeID='$download_num'");
-	header("Location: $mirror_url/themes/$category/$filename");
+	header("Location: $mirror_url$archive/themes/$category/$filename");
 	exit();
 }
 else

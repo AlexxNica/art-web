@@ -9,6 +9,20 @@ escape_gpc_array ($_POST);
 admin_header("Moderate Comments");
 admin_auth(1);
 
+if ($_POST['delete'] == true) {
+	mysql_query("UPDATE comment SET status='deleted' WHERE commentID='".$_POST['commentID']."'");
+	echo "Sucessfully deleted comment.  Click <a href=\"comments.php\">here</a> to return to the list.";
+	admin_footer();
+	die();
+}
+
+if ($_POST['reviewed'] == true) {	
+	mysql_query("UPDATE comment SET status='reviewed' WHERE commentID='".$_POST['commentID']."'");
+	echo "Sucessfully marked comment as reviewed.  Click <a href=\"comments.php\">here</a> to return to the list.";
+	admin_footer();
+	die();
+}
+
 // grab bad comments
 $badcomments = "SELECT comment.commentID, comment.status, comment.userID, user.username, comment.comment, comment.timestamp, comment.type, comment.artID FROM comment, user WHERE user.userID=comment.userID AND comment.status='reported' ORDER BY comment.timestamp";
 $badcomment_result = mysql_query($badcomments);
@@ -41,7 +55,7 @@ if($badcomment_count > 0)
 			list($category, $name) = mysql_fetch_row($result);
 		}
 		if($comment_type == "theme") {
-			$themecat = "SELECT category, theme_nameFROM `theme` WHERE themeID = $comment_artID";
+			$themecat = "SELECT category, theme_name FROM `theme` WHERE themeID = $comment_artID";
 			$result = mysql_query($themecat);
 			list($category, $name) = mysql_fetch_row($result);
 		}
@@ -66,15 +80,7 @@ if($badcomment_count > 0)
 	}
 }
 
-if ($_POST['delete'] == true) {
-	mysql_query("UPDATE comment SET status='deleted' WHERE commentID='".$_POST['commentID']."'");
-	echo "Sucessfully deleted comment.  Click <a href=\"comments.php\">here</a> to return to the list.";
-}
 
-if ($_POST['reviewed'] == true) {	
-	mysql_query("UPDATE comment SET status='reviewed' WHERE commentID='".$_POST['commentID']."'");
-	echo "Sucessfully marked comment as reviewed.  Click <a href=\"comments.php\">here</a> to return to the list.";
-}
 
 
 admin_footer();

@@ -16,7 +16,7 @@ function admin_auth($reqlevel)
 	list($userID, $level) = mysql_fetch_row($authcheck_result);
 	if ($level >= $reqlevel)
 	{
-		return $reqlevel;
+		return $level;
 	} else
 	{
 		sleep('5'); //change value later...

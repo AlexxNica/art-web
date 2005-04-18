@@ -29,9 +29,9 @@ for($count=0;$count<count($big_array);$count++)
 	}
 }
 
-print("<div align=\"center\"><form action=\"{$_SERVER["PHP_SELF"]}\" method=\"get\">");
+print("<div style=\"text-align: center\"><form action=\"{$_SERVER["PHP_SELF"]}\" method=\"get\"><p>");
 print("Number of updates to display: <input type=\"text\" name=\"num_updates\" value=\"$num_updates\" size=\"3\" /> ");
-print("<input type=\"submit\" value=\"Show\" /></form></div>\n");
+print("<input type=\"submit\" value=\"Show\" /></p></form></div>\n");
 
 ago_footer();
 ?>

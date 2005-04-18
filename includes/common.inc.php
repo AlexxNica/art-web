@@ -28,7 +28,7 @@ function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
 	else if( $numWeeks   ==  1 ) return "last week";
 	else if( $numWeeks   <   4 ) return "$numWeeks weeks ago";
 	else if( $numDays    < 365 ) return date( "F j", $thenTimestamp );
-	else                         return "ages ago";
+	else                         return "over a year ago";
 }
 
 function add_vote($artID, $type, $vote)
@@ -61,54 +61,52 @@ function print_detailed_view($description, $type, $release_date, $add_timestamp,
 		$rating_bar = rating_bar($rating);
 	}
 			
-	if($license == "")
-	{
-		$license = "not available";
-	}
+	if($license == "unknown")
+		$license = "Not available";
+	else
+		$license = $license_config_array[$license];
 
 	if($version == "0" || $version == "")
-	{
-		$version = "not available";
-	}
+		$version = "Not available";
 
-	print("<p>" . htmlspecialchars($description) . "</p>");
+	print("<p>" . html_parse_text($description) . "</p>");
 
-	print("<table class=\"info\">");
-	print("<tr><th>Release Date</th><td>$release_date (last updated $relative_date)</td></tr>");
-	print("<tr><th>Version</th><td>$version</td></tr>");
-	print("<tr><th>License</th><td>{$license_config_array[$license]}</td></tr>");
+	print("<table class=\"info\">\n");
+	print("\t<tr><th>Release Date</th><td>$release_date (last updated $relative_date)</td></tr>\n");
+	print("\t<tr><th>Version</th><td>$version</td></tr>\n");
+	print("\t<tr><th>License</th><td>$license</td></tr>\n");
 	$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
-	print("<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day ($download_count downloads in total)</td></tr>");
+	print("\t<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day ($download_count downloads in total)</td></tr>\n");
 
-	print("<tr><th>Rating</th><td>");
-	print("<div class=\"rating_text\" style=\"float:left\">");
+	print("\t<tr><th>Rating</th><td>\n");
+	print("\t<div class=\"rating_text\" style=\"float:left\">\n");
 	print($rating_bar);
-	print("$rating_text, $vote_count votes</div>");
+	print("\t$rating_text, $vote_count votes</div>\n");
 	if ($vote == -1)
 	{
-		print("<form class=\"rating_vote\" name=\"vote\" method=\"post\" action=\"" . $_SERVER["PHP_SELF"] . "\">Vote:\n");
-		print("[worst]");
+		print("\t<form class=\"rating_vote\" name=\"vote\" method=\"post\" action=\"" . $_SERVER["PHP_SELF"] . "\"><div style=\"vertical-align: middle\">Vote:\n");
+		print("\t[worst]");
 		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"1\"/>\n");
-		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"2\"/>\n");
-		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"3\"/>\n");
-		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"4\"/>\n");
-		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"5\"/>\n");
+		print("\t<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"2\"/>\n");
+		print("\t<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"3\"/>\n");
+		print("\t<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"4\"/>\n");
+		print("\t<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"5\"/>\n");
 		print("[best]");
-		print("</form>");
+		print("\t</div></form>\n");
 	}
 	else
 	{
-		print("<div class=\"rating_vote\">");
-		print("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Thanks for your vote</i>");
-		print("</div>");
+		print("\t<div class=\"rating_vote\">\n");
+		print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Thanks for your vote</i>\n");
+		print("\t</div>\n");
 	}
 
-	print("</td></tr>\n");
+	print("\t</td></tr>\n");
 	print($extra_rows);
+	if ($type == "theme")
+		print("</table>\n");
 
-	print("</table>\n");
-
-	print("<div align=\"center\"><img src=\"$thumbnail_url\" vspace=\"2\" class=\"large_thumbnail\" alt=\"thumbnail\" /></div>");
+	print("<div style=\"text-align: center\"><img src=\"$thumbnail_url\" style=\"padding: 2px; border: none;\" class=\"large_thumbnail\" alt=\"thumbnail\" /></div>\n");
 }
 
 function print_item_row($name, $thumbnail, $category, $author, $date, $link, $vars, $vote, $extra)
@@ -118,12 +116,13 @@ function print_item_row($name, $thumbnail, $category, $author, $date, $link, $va
 	else
 		$var_image = "";
 
-	print(utf8_encode("<table class=\"theme_row\"><tr valign=\"top\">"));
-	print(utf8_encode("<td class=\"theme_row_col1\"><a href=\"$link\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"Thumbnail\" class=\"thumbnail\" /></a>$vote</td>"));
-	print(utf8_encode("<td><a href=\"$link\" class=\"h2\"><strong>$name</strong></a><br/><span class=\"subtitle\">$category<br/>$date<br/>$author<br/>$var_image"));
+	print(utf8_encode("<table class=\"theme_row\">\n"));
+	print(utf8_encode("\t<tr valign=\"top\">\n"));
+	print(utf8_encode("\t\t<td class=\"theme_row_col1\"><a href=\"$link\"><img style=\"padding: 10px; border: none;\" src=\"$thumbnail\" alt=\"Thumbnail\" class=\"thumbnail\" /></a>$vote\t\t</td>\n"));
+	print(utf8_encode("\t\t<td><a href=\"$link\" class=\"h2\"><strong>".html_parse_text($name)."</strong></a><br /><span class=\"subtitle\">$category<br />$date<br />$author<br />$var_image"));
 	foreach ($extra as $val)
 		print(utf8_encode($val));
-	print("</span></td></tr></table>");
+	print("</span>\n\t\t</td>\n\t</tr>\n</table>\n");
 }
 
 function print_comments($artID, $type)
@@ -148,7 +147,7 @@ function print_comments($artID, $type)
 
 	if($comment_count > 0)
 	{
-		print("<br/>");
+		print("<br />");
 		$count = 0;
 
 		
@@ -180,7 +179,7 @@ function print_comments($artID, $type)
 			
 			print("</td></tr></table>");
 			print("<tr><td class=\"comment\">" . html_parse_text($user_comment) . "</td></tr>");
-			print("</table><br/>\n");
+			print("</table><br />\n");
 		}
 
 	}
@@ -209,14 +208,14 @@ function print_comment_form($comment)
 		
 		if (strlen($comment) < 10 && strlen($comment) != 0) 
 		{
-			$comment_msg = "You comment is too short!<br/>\n";
+			$comment_msg = "You comment is too short!<br />\n";
 			$show_comment = $comment;
 		}
 		
 		print("<a name=\"comment\"/>\n");
-		print("<br/><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\">\n");
+		print("<br /><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\">\n");
 		
-		print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br/><br/>\n");
+		print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br /><br />\n");
 		print("<input type=\"submit\" name=\"send\" value=\"Send\" />\n");
 		print("</form>\n");
 	}
@@ -242,20 +241,27 @@ function add_comment($artID, $type, $comment)
 function print_background_row($backgroundID, $view)
 {
 	global $background_config_array, $site_url;
+
 	$background_select_result = mysql_query("SELECT background_name,category,username,release_date,thumbnail_filename,download_start_timestamp,download_count,vote_sum,vote_count FROM background, user WHERE backgroundID='$backgroundID' AND background.userID = user.userID");
+
 	$background_res_result = mysql_query("SELECT resolution FROM background_resolution WHERE backgroundID='$backgroundID'");
 	$var_select_result = mysql_query("SELECT * FROM background WHERE parent = '$backgroundID'");
 	if (mysql_num_rows($var_select_result) > 0) $vars = true; else $vars = false;
 
-	list($background_name,$category,$author,$release_date,$thumbnail_filename,$download_start_timestamp,$download_count,$vote_sum,$vote_count) = mysql_fetch_row($background_select_result);
+	extract(mysql_fetch_array($background_select_result));
 	while (list($background_res) = mysql_fetch_row($background_res_result))
 		$extra[0] = "{$extra[0]} $background_res";
 
 	$release_date = fix_sql_date($release_date);
-	$link = "{$site_url}backgrounds/$category/$backgroundID/";
+	if ($backgroundID < 1000) {
+		$link = "{$site_url}backgrounds/$category/$backgroundID/";
+		$thumbnail = "{$site_url}images/archive/thumbnails/backgrounds/$thumbnail_filename";
+	} else {
+		$link = "{$site_url}backgrounds/$category/$backgroundID/";
+		$thumbnail = "{$site_url}images/thumbnails/backgrounds/$thumbnail_filename";
+	}
 	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
-	$thumbnail = "{$site_url}images/thumbnails/backgrounds/$thumbnail_filename";
 
 	if ($view != "compact")
 	{
@@ -281,7 +287,7 @@ function print_background_row($backgroundID, $view)
 	
 	if ($view == "icons")
 	{
-		print("<div class=\"icon_view\"><a href=\"$link\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
+		print("<div class=\"icon_view\"><a href=\"$link\"><img style=\"padding: 2px; border: none;\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
 	}
 	else
 	{
@@ -298,14 +304,18 @@ function print_theme_row($themeID, $view)
 		$vars = "<img src=\"/images/site/theme-24.png\" alt=\"Variations available\" height=\"16\" width=\"16\" />";
 	else
 		$vars = "";
-	list($theme_name,$category,$author,$release_date,$thumbnail_filename,$screenshot,$download,$vote_sum,$vote_count) = mysql_fetch_row($theme_select_result);
+	extract(mysql_fetch_array($theme_select_result));
 
 	$release_date = fix_sql_date($release_date);
-	$link = "{$site_url}themes/$category/$themeID/";
+	
 	$category_name = $theme_config_array["$category"]["name"];
-
-	$thumbnail = "{$site_url}images/thumbnails/$category/$thumbnail_filename";
-
+	if ($themeID < 1000){
+		$link = "{$site_url}themes/$category/$themeID/";
+		$thumbnail = "{$site_url}images/archive/thumbnails/$category/$small_thumbnail_filename";
+	} else {
+		$link = "{$site_url}themes/$category/$themeID/";
+		$thumbnail = "{$site_url}images/thumbnails/$category/$small_thumbnail_filename";
+	}
 	if ($view == "compact")
 	{
 		$vote = "";
@@ -322,7 +332,7 @@ function print_theme_row($themeID, $view)
 	
 	if ($view == "icons")
 	{
-		print("<div class=\"icon_view\"><a href=\"$link\"><img vspace=\"2\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
+		print("<div class=\"icon_view\"><a href=\"$link\"><img style=\"padding: 2px; border: none;\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
 	}
 	else
 	{
@@ -465,23 +475,23 @@ function display_search_box($search_text, $search_type, $thumbnails_per_page, $s
 	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"get\">");
 	print("<table border=\"0\">\n");
 	
-	print("<tr><td>Search in:</td><td>");
+	print("\t<tr><td>Search in:</td><td>");
 	print_select_box("search_type", $search_type_array, $search_type);
 	print("</td></tr>\n");
 	
-	print("<tr><td>For The Text:</td><td><input type=\"text\" name=\"search_text\" value=\"$search_text\"/></td></tr>\n");
+	print("\t<tr><td>For The Text:</td><td><input type=\"text\" name=\"search_text\" value=\"$search_text\"/></td></tr>\n");
 	
-	print("<tr><td>Sort By:</td><td>");
+	print("\t<tr><td>Sort By:</td><td>");
 	print_select_box("sort_by", $sort_by_array, $sort_by);
 	print("</td></tr>\n");
 	
-	print("<tr><td>Results Per Page:</td><td>");
+	print("\t<tr><td>Results Per Page:</td><td>");
 	print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page);
 	print("</td></tr>\n");
 	
+	print("\t<tr><td colspan=\"2\"><input type=\"submit\" value=\"Search\"/></td></tr>");
+
 	print("</table>\n");
-	
-	print("<input type=\"submit\" value=\"Search\"/>\n");
 	print("</form>\n");
 }
 
@@ -624,8 +634,34 @@ function rating_bar($rating)
 
 function html_parse_text($comment)
 {
-	$comment = htmlspecialchars($comment);
-	$comment = str_replace("\r\n", "<br/>", $comment);
+$bbcode = array("<", ">",
+                "[list]", "[*]", "[/*]", "[/list]", 
+                "[img]", "[/img]", 
+                "[b]", "[/b]", 
+                "[u]", "[/u]", 
+                "[i]", "[/i]",
+                '[color="', "[/color]",
+                "[size=\"", "[/size]",
+                '[url="', "[/url]",
+                "[mail=\"", "[/mail]",
+                "[code]", "[/code]",
+                "[quote]", "[/quote]",
+                '"]');
+$htmlcode = array("&lt;", "&gt;",
+                  "<ul>", "<li>", "</li>", "</ul>", 
+                  "<img src=\"", "\" alt=\"\" />", 
+                  "<strong>", "</strong>", 
+                  "<span style=\"text-decoration: underline\">", "</span>", 
+                  "<em>", "</em>",
+                  "<span style=\"color:", "</span>",
+                  "<span style=\"font-size:", "</span>",
+                  '<a href="', "</a>",
+                  "<a href=\"mailto:", "</a>",
+                  "<code>", "</code>",
+                  "<table width=100% bgcolor=lightgray><tr><td bgcolor=white>", "</td></tr></table>",
+                  '">');
+	$comment = str_replace($bbcode, $htmlcode, $comment);
+	$comment = nl2br($comment);
 	$comment = ereg_replace(":-\)|:\)", "<img src=\"/images/site/emoticons/stock_smiley-1.png\" alt=\":)\" />", $comment);
 	$comment = ereg_replace(";\)|;-\)", "<img src=\"/images/site/emoticons/stock_smiley-3.png\" alt=\":)\" />", $comment);
 	$comment = ereg_replace(":-P|:-p|:P|:p", "<img src=\"/images/site/emoticons/stock_smiley-10.png\" alt=\":-P\" />", $comment);

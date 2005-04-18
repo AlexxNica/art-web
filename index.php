@@ -25,20 +25,21 @@ while($news_select_row=mysql_fetch_array($news_select_result))
 	$author = $news_select_row["author"];
 	$author_email = spam_proof_email($news_select_row["author_email"]);
 	$title =  $news_select_row["title"];
-	$body =  $news_select_row["body"];
-	print("<div class=\"news_item\"><div class=\"h2\">$title</div>");
-	print("<div class=\"subtitle\">Posted by <a href=\"mailto:$author_email\">$author</a> &middot; $date </div>");
-	print("<p>$body</p>\n");
+	$body =  html_parse_text($news_select_row["body"]);
+	print("<div class=\"news_item\">\n");
+	print("\t<div class=\"h2\">$title</div>\n");
+	print("\t<div class=\"subtitle\">Posted by <a href=\"mailto:$author_email\">$author</a> &middot; $date </div>\n");
+	print("\t<p>$body</p>\n");
 	print("</div>\n");
 }
 
 if($view_old_news == 1)
 {
-	print("<div align=\"center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"" . $_SERVER["PHP_SELF"] . "\">View Recent News</a></div>\n");
+	print("<div style=\"text-align: center\"><a href=\"backend.php\">RSS News Feed</a> | <a href=\"" . $_SERVER["PHP_SELF"] . "\">View Recent News</a></div>\n");
 }
 else
 {
-	print("<div align=\"center\"><p><a href=\"" . $_SERVER["PHP_SELF"] . "?view_old_news=1\">View Older News</a></p></div>\n");
+	print("<div style=\"text-align: center\"><p><a href=\"" . $_SERVER["PHP_SELF"] . "?view_old_news=1\">View Older News</a></p></div>\n");
 	create_title("Recent Updates", "The latest five additions to art.gnome.org");
 	$big_array = get_updates_array(5);
 	for($count=0;$count<count($big_array);$count++)
@@ -53,7 +54,7 @@ else
 			print_theme_row($ID, "list");
 		}
 	}
-	print("<div align=\"cetner\"><p><a href=\"backend.php\">RSS Updates Feed</a></p></div>");
+	print("<div style=\"text-align: center\"><p><a href=\"backend.php\">RSS Updates Feed</a></p></div>");
 
 }
 

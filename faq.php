@@ -19,7 +19,7 @@ else
 	while(list($faqID,$question,$answer)=mysql_fetch_row($faq_select_result))
 	{
 		$question = html_parse_text($question);
-		print("<li><a href=\"{$_SERVER["PHP_SELF"]}#$faqID\">$question</a></li>\n");
+		print("<li><a href=\"{$_SERVER["PHP_SELF"]}#q$faqID\">$question</a></li>\n");
 	}
 	print("</ol>\n<hr /><br />\n<ol>\n");
 
@@ -29,7 +29,7 @@ else
 	{
 		$question = html_parse_text($question);
 		$answer = html_parse_text($answer);
-		print("<li><a name=\"$faqID\"></a><span class=\"bold-text\">$question</span>\n<p>$answer</p></li>\n\n");
+		print("<li><a id=\"q$faqID\"></a><span class=\"bold-text\">$question</span>\n<p>$answer</p></li>\n\n");
 	}
 	print("</ol>\n");
 }
