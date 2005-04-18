@@ -46,7 +46,7 @@ else
 		print("<tr><td><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /></td>");
 		print("<td><a href=\"$homepage\">$homepage</a></td></tr>");
 		print("</table>");
-		$author_themes_result = mysql_query ("SELECT themeID FROM theme WHERE userID = $authorID");
+		$author_themes_result = mysql_query ("SELECT themeID FROM theme WHERE userID = $authorID AND status='active'");
 		if (mysql_num_rows ($author_themes_result) > 0)
 		{
 			create_title ("Themes", "Themes created by $realname");
@@ -54,7 +54,7 @@ else
 				print_theme_row($themeID, "list");
 		}
 
-		$author_background_result = mysql_query ("SELECT backgroundID FROM background WHERE userID = $authorID");
+		$author_background_result = mysql_query ("SELECT backgroundID FROM background WHERE userID = $authorID AND status='active'");
 		if (mysql_num_rows ($author_background_result) > 0)
 		{
 			create_title ("Backgrounds", "Backgrounds created by $realname");

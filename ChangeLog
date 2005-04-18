@@ -1,5 +1,9 @@
 2005-04-18  Thomas Wood  <thos@gnome.org>
 
+	* users: Only show 'active' items on user pages
+
+2005-04-18  Thomas Wood  <thos@gnome.org>
+
 	* account.php:
 	* includes/ago_headers.inc.php:
 	* faq.php:
