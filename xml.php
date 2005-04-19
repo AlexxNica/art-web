@@ -49,6 +49,11 @@ function list_backgrounds($parent, $category)
 		
 		$thumbnail = $row['thumbnail_filename'];
 
+		$archive = "";
+
+		if ($background_id < 1000)
+			$archive = "archive/";
+
 		print("\t<background release_date=\"$background_release_date\" vote_sum=\"$background_vote_sum\" vote_count=\"$background_vote_count\" download_start_timestamp=\"$background_download_start_timestamp\" download_count=\"$background_download_count\">\n");
 		print("\t\t<name>" . htmlspecialchars($background_name) . "</name>\n");
 		print("\t\t<description>" . htmlspecialchars($background_description) . "</description>\n");
@@ -56,7 +61,7 @@ function list_backgrounds($parent, $category)
 		print("\t\t<author>" . htmlspecialchars($username) . "</author>\n");
 		print("\t\t<license>" . htmlspecialchars($background_license) . "</license>\n");
 
-		print("\t\t<thumbnail>http://art.gnome.org/images/thumbnails/backgrounds/$thumbnail</thumbnail>\n");
+		print("\t\t<thumbnail>http://art.gnome.org/images/{$archive}thumbnails/backgrounds/$thumbnail</thumbnail>\n");
 
 		foreach ($row as $key => $val)
 		{
@@ -106,14 +111,19 @@ function list_themes($parent, $category)
 		$thumbnail = $row['thumbnail_filename'];
 		$small_thumbnail = $row['small_thumbnail_filename'];
 
+		$archive = "";
+
+		if ($theme_id < 1000)
+			$archive = "archive/";
+
 		print("\t<theme release_date=\"$theme_release_date\" vote_sum=\"$theme_vote_sum\" vote_count=\"$theme_vote_count\" download_start_timestamp=\"$theme_download_start_timestamp\" download_count=\"$theme_download_count\">\n");
 		print("\t\t<name>" . htmlspecialchars($theme_name) . "</name>\n");
 		print("\t\t<description>" . htmlspecialchars($theme_description) . "</description>\n");
 		print("\t\t<category>" . htmlspecialchars($category) . "</category>\n");
 		print("\t\t<author>" . htmlspecialchars($username) . "</author>\n");
 		print("\t\t<license>" . htmlspecialchars($theme_license) . "</license>\n");
-		print("\t\t<thumbnail>http://art.gnome.org/images/thumbnails/{$theme_category}/{$thumbnail}</thumbnail>\n");
-		print("\t\t<small_thumbnail>http://art.gnome.org/images/thumbnails/{$theme_category}/{$small_thumbnail}</small_thumbnail>\n");
+		print("\t\t<thumbnail>http://art.gnome.org/images/{$archive}thumbnails/{$theme_category}/{$thumbnail}</thumbnail>\n");
+		print("\t\t<small_thumbnail>http://art.gnome.org/images/{$archive}thumbnails/{$theme_category}/{$small_thumbnail}</small_thumbnail>\n");
 		print("\t\t<url>http://art.gnome.org/download/themes/{$theme_category}/{$theme_id}/{$row['download_filename']}</url>\n");
 		foreach ($row as $key => $val)
 		{
