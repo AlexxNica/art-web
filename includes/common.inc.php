@@ -118,7 +118,7 @@ function print_item_row($name, $thumbnail, $category, $author, $date, $link, $va
 
 	print(utf8_encode("<table class=\"theme_row\">\n"));
 	print(utf8_encode("\t<tr valign=\"top\">\n"));
-	print(utf8_encode("\t\t<td class=\"theme_row_col1\"><a href=\"$link\"><img style=\"padding: 10px; border: none;\" src=\"$thumbnail\" alt=\"Thumbnail\" class=\"thumbnail\" /></a>$vote\t\t</td>\n"));
+	print(utf8_encode("\t\t<td class=\"theme_row_col1\"><a href=\"$link\"><img src=\"$thumbnail\" alt=\"Thumbnail\" class=\"thumbnail\" /></a>$vote\t\t</td>\n"));
 	print(utf8_encode("\t\t<td><a href=\"$link\" class=\"h2\"><strong>".html_parse_text($name)."</strong></a><br /><span class=\"subtitle\">$category<br />$date<br />$author<br />$var_image"));
 	foreach ($extra as $val)
 		print(utf8_encode($val));
