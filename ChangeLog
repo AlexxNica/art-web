@@ -1,5 +1,9 @@
 2005-04-19  Thomas Wood  <thos@gnome.org>
 
+	* includes/common.inc.php: Only show items marked as 'active'
+
+2005-04-19  Thomas Wood  <thos@gnome.org>
+
 	* backend.php:
 	* includes/ago_headers.inc.php:
 	* xml.php:

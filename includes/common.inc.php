@@ -537,7 +537,7 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	{
 		$category_query = "";
 	}
-	$background_select_result = mysql_query("SELECT backgroundID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM background WHERE $category_query $search_type LIKE '%$search_text%' AND parent='0' $order_query LIMIT $start, $thumbnails_per_page");
+	$background_select_result = mysql_query("SELECT backgroundID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM background WHERE $category_query $search_type LIKE '%$search_text%' AND parent='0' AND status='active' $order_query LIMIT $start, $thumbnails_per_page");
 	while(list($backgroundID, $perday)=mysql_fetch_row($background_select_result))
 	{
 		print_background_row($backgroundID, $view);
@@ -582,7 +582,7 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 	{
 		$category_query = "";
 	}
-	$theme_select_result = mysql_query("SELECT themeID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM theme WHERE $category_query $search_type LIKE '%$search_text%' $order_query LIMIT $start, $thumbnails_per_page");
+	$theme_select_result = mysql_query("SELECT themeID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM theme WHERE $category_query $search_type LIKE '%$search_text%' AND status='active' $order_query LIMIT $start, $thumbnails_per_page");
 	while(list($themeID)=mysql_fetch_row($theme_select_result))
 	{
 		print_theme_row($themeID, $view);
