@@ -2,7 +2,7 @@
 require("mysql.inc.php");
 require("common.inc.php");
 
-header("Content-type: text/plain");
+header("Content-type: text/plain; charset=ISO-8859-1");
 
 
 //The Art:
@@ -138,7 +138,7 @@ function list_themes($parent, $category)
 	}
 }
 
-print("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
+print("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\n");
 print("<art>\n");
 
 

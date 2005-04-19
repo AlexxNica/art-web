@@ -1,5 +1,13 @@
 2005-04-19  Thomas Wood  <thos@gnome.org>
 
+	* backend.php:
+	* includes/ago_headers.inc.php:
+	* xml.php:
+
+	Character encoding fixes
+
+2005-04-19  Thomas Wood  <thos@gnome.org>
+
 	* includes/common.inc.php: Fix thumbnail spacing
 
 2005-04-19  Thomas Wood  <thos@gnome.org>

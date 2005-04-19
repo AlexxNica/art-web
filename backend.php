@@ -2,11 +2,11 @@
 require("mysql.inc.php");
 require("common.inc.php");
 header("Content-type: application/rss+xml");
-print("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
+print("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\n");
 print("<rss version=\"2.0\">\n");
 print("\t<channel>\n");
 print("\t<title>art.gnome.org releases</title>\n");
-print("\t<image><url>{$site_url}images/site/art-icon.png</url><title>art.gnome.org</title></image>\n");
+print("\t<image><link>{$site_url}</link><url>{$site_url}images/site/art-icon.png</url><title>art.gnome.org</title></image>\n");
 print("\t<link>$site_url</link>\n");
 print("\t<description>A list of recent backgrounds and themes released on art.gnome.org</description>\n");
 print("\t<webMaster>thos@nospam.gnome.org</webMaster>\n");
