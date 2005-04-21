@@ -111,131 +111,30 @@ function print_detailed_view($description, $type, $release_date, $add_timestamp,
 
 function print_item_row($name, $thumbnail, $category, $author, $date, $link, $vars, $vote, $extra)
 {
+	global  $background_config_array,  $theme_config_array;
+
 	if ($vars)
 		$var_image = "<img src=\"/images/site/stock_color.png\" alt=\"Variations Available\" />";
 	else
 		$var_image = "";
 
-	print(utf8_encode("<table class=\"theme_row\">\n"));
-	print(utf8_encode("\t<tr valign=\"top\">\n"));
-	print(utf8_encode("\t\t<td class=\"theme_row_col1\"><a href=\"$link\"><img src=\"$thumbnail\" alt=\"Thumbnail\" class=\"thumbnail\" /></a>$vote\t\t</td>\n"));
-	print(utf8_encode("\t\t<td><a href=\"$link\" class=\"h2\"><strong>".html_parse_text($name)."</strong></a><br /><span class=\"subtitle\">$category<br />$date<br />$author<br />$var_image"));
+	if (($category == "icon") or ($category == "metacity"))
+		$thumbnail_class = "thumbnail_no_border";
+	else
+		$thumbnail_class = "thumbnail";
+
+	if (($category == "gnome") or ($category == "other"))
+		$category_name = "Backgrounds - " . $background_config_array["$category"]["name"];
+	else
+		$category_name = $theme_config_array["$category"]["name"];
+
+	print("<table class=\"theme_row\">\n");
+	print("\t<tr valign=\"top\">\n");
+	print("\t\t<td class=\"theme_row_col1\"><a href=\"$link\"><img src=\"$thumbnail\" alt=\"Thumbnail\" class=\"$thumbnail_class\" /></a>$vote\t\t</td>\n");
+	print("\t\t<td><a href=\"$link\" class=\"h2\"><strong>".html_parse_text($name)."</strong></a><br /><span class=\"subtitle\">$category_name<br/>Date: $date<br />Author: $author<br />$var_image");
 	foreach ($extra as $val)
-		print(utf8_encode($val));
+		print($val);
 	print("</span>\n\t\t</td>\n\t</tr>\n</table>\n");
-}
-
-function print_comments($artID, $type)
-{
-	$comment_select_result = mysql_query("SELECT comment.commentID, comment.status, comment.userID, user.username, comment.comment, comment.timestamp FROM comment, user WHERE user.userID=comment.userID AND type='$type' and artID='$artID' and comment.status!='deleted' ORDER BY comment.timestamp");
-
-
-	$comment_count = mysql_num_rows($comment_select_result);
-
-	if ($comment_count == 1)
-	{
-		//Only one Comment
-		$msg = "comment";
-	}
-	else
-	{
-		//More than one comment
-		$msg = "comments";
-	}
-
-	create_title("Comments", "This $type has $comment_count $msg");
-
-	if($comment_count > 0)
-	{
-		print("<br />");
-		$count = 0;
-
-		
-		
-		while(list($commentID, $status, $userID, $username, $user_comment, $comment_time)=mysql_fetch_row($comment_select_result))
-		{
-			$count++;
-			print("<table class=\"comment\">\n");
-			print("<tr><td class=\"comment_head\">");
-			print("<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\">\n");
-			print("<i>$count: <a href=\"/users/$userID\">$username</a> posted on " . date("Y-m-d - H:i", $comment_time) . "</i>\n");
-			print("</td><td align=\"right\">\n");
-			
-			if ($status == "reported")
-			{
-				print("Reported");
-			}
-			else if ($status == "approved")
-			{
-				print("Approved");
-			}
-			else
-			{
-				print("<form name=\"report\" action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-				print("<input type=\"hidden\" name=\"commentID\" value=\"" . $commentID . "\" />\n");
-				print("<input type=\"submit\" name=\"report\" value=\"Report\" class=\"link_button\" />");
-				print("</form>\n");
-			}
-			
-			print("</td></tr></table>");
-			print("<tr><td class=\"comment\">" . html_parse_text($user_comment) . "</td></tr>");
-			print("</table><br />\n");
-		}
-
-	}
-}
-
-function report_comment($report, $commentID) 
-{
-	if ($report && $commentID > -1) 
-	{
-		mysql_query("UPDATE comment SET status='reported' where commentID='$commentID' AND status!='deleted'");
-		//status!='deleted' because otherwise a deleted comment could be set reported by a user
-	}
-}
-
-function print_comment_form($comment)
-{
-
-	print("<div class=\"h2\">Add a new comment</div>");
-	if(!array_key_exists("username", $_SESSION))
-	{
-		print("<p class=\"info\">Only <a href=\"/account.php\">logged in</a> users may post comments.</p>\n");
-	}
-	else
-	{
-		$show_comment = "";
-		
-		if (strlen($comment) < 10 && strlen($comment) != 0) 
-		{
-			$comment_msg = "You comment is too short!<br />\n";
-			$show_comment = $comment;
-		}
-		
-		print("<a name=\"comment\"/>\n");
-		print("<br /><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\">\n");
-		
-		print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br /><br />\n");
-		print("<input type=\"submit\" name=\"send\" value=\"Send\" />\n");
-		print("</form>\n");
-	}
-}
-
-function add_comment($artID, $type, $comment)
-{
-	if (array_key_exists("username", $_SESSION) and ($comment != ""))
-	{
-		if(strlen($comment) < 10)
-		{
-			return ("<p class=\"warning\">Comments must be more than 10 letters long!</p>");
-		}
-		$comment = mysql_real_escape_string($comment); // make sure it is safe for mysql
-		$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
-		if ($comment_result === False)
-		{
-			return ("<p class=\"error\">There was an error adding your comment.</p>");
-		}
-	}
 }
 
 function print_background_row($backgroundID, $view)
@@ -260,7 +159,6 @@ function print_background_row($backgroundID, $view)
 		$link = "{$site_url}backgrounds/$category/$backgroundID/";
 		$thumbnail = "{$site_url}images/thumbnails/backgrounds/$thumbnail_filename";
 	}
-	$category_name = $background_config_array["$category"]["name"];
 	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
 
 	if ($view != "compact")
@@ -291,7 +189,7 @@ function print_background_row($backgroundID, $view)
 	}
 	else
 	{
-		print_item_row($background_name, $thumbnail, "Backgrounds - $category_name", $author, $release_date, $link, $vars, $vote, $extra);
+		print_item_row($background_name, $thumbnail, $category, $username, $release_date, $link, $vars, $vote, $extra);
 	}
 }
 
@@ -308,7 +206,6 @@ function print_theme_row($themeID, $view)
 
 	$release_date = fix_sql_date($release_date);
 	
-	$category_name = $theme_config_array["$category"]["name"];
 	if ($themeID < 1000){
 		$link = "{$site_url}themes/$category/$themeID/";
 		$thumbnail = "{$site_url}images/archive/thumbnails/$category/$small_thumbnail_filename";
@@ -336,7 +233,7 @@ function print_theme_row($themeID, $view)
 	}
 	else
 	{
-		print_item_row($theme_name, $thumbnail, $category_name, $author, $release_date, $link, $vars, $vote, "");
+		print_item_row($theme_name, $thumbnail, $category, $username, $release_date, $link, $vars, $vote, "");
 	}
 }
 
@@ -634,7 +531,9 @@ function rating_bar($rating)
 
 function html_parse_text($comment)
 {
-$bbcode = array("<", ">",
+	$comment = strip_tags($comment);
+	$bbcode = array("&", "]\n", "]\r\n",
+		"<", ">",
                 "[list]", "[*]", "[/*]", "[/list]", 
                 "[img]", "[/img]", 
                 "[b]", "[/b]", 
@@ -647,19 +546,20 @@ $bbcode = array("<", ">",
                 "[code]", "[/code]",
                 "[quote]", "[/quote]",
                 '"]');
-$htmlcode = array("&lt;", "&gt;",
-                  "<ul>", "<li>", "</li>", "</ul>", 
-                  "<img src=\"", "\" alt=\"\" />", 
-                  "<strong>", "</strong>", 
-                  "<span style=\"text-decoration: underline\">", "</span>", 
-                  "<em>", "</em>",
-                  "<span style=\"color:", "</span>",
-                  "<span style=\"font-size:", "</span>",
-                  '<a href="', "</a>",
-                  "<a href=\"mailto:", "</a>",
-                  "<code>", "</code>",
-                  "<table width=100% bgcolor=lightgray><tr><td bgcolor=white>", "</td></tr></table>",
-                  '">');
+	$htmlcode = array("&amp;", "]", "]",
+		"&lt;", "&gt;",
+                "<ul>", "<li>", "</li>", "</ul>", 
+                "<img src=\"", "\" alt=\"\" />", 
+                "<strong>", "</strong>", 
+                "<span style=\"text-decoration: underline\">", "</span>", 
+                "<em>", "</em>",
+                "<span style=\"color:", "</span>",
+                "<span style=\"font-size:", "</span>",
+                '<a href="', "</a>",
+                "<a href=\"mailto:", "</a>",
+                "<code>", "</code>",
+                "<table width=100% bgcolor=lightgray><tr><td bgcolor=white>", "</td></tr></table>",
+                '">');
 	$comment = str_replace($bbcode, $htmlcode, $comment);
 	$comment = nl2br($comment);
 	$comment = ereg_replace(":-\)|:\)", "<img src=\"/images/site/emoticons/stock_smiley-1.png\" alt=\":)\" />", $comment);

@@ -46,7 +46,12 @@ body {
 
 img.thumbnail {
 	border: 1px #a2a2a2 solid;
-/*	margin-bottom: 2em;*/
+	margin-right: 1em;
+	text-align:middle;
+}
+
+img.thumbnail_no_border {
+	border: none;
 	margin-right: 1em;
 	text-align:middle;
 }
@@ -268,7 +273,6 @@ table.comment {
 	background-color: #DDDDDD;
 	padding: 1px;
 	border-width: 0px;
-	spacing: 1px;
 	width: 100%;
 }
 
