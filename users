@@ -18,7 +18,7 @@ if ($unvalidated_author == "")
 {
 	ago_header("Authors");
 	create_title("Authors", "The people creating the artwork");
-	$author_list_result = mysql_query("SELECT user.userID,user.username FROM user,theme,background WHERE active = 1 AND (user.userID = theme.userID OR user.userID = background.userID) GROUP BY user.userID ORDER BY realname ASC");
+	$author_list_result = mysql_query("SELECT user.userID,user.username FROM user,theme,background WHERE active = 1 AND (user.userID = theme.userID OR user.userID = background.userID) GROUP BY user.userID ORDER BY username ASC");
 	print("<ul>");
 	while (list($userID, $username) = mysql_fetch_row($author_list_result))
 	{
@@ -46,7 +46,9 @@ else
 		print("<tr><td><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /></td>");
 		print("<td><a href=\"$homepage\">$homepage</a></td></tr>");
 		print("</table>");
-		$author_themes_result = mysql_query ("SELECT themeID FROM theme WHERE userID = $authorID AND status='active'");
+
+		$author_themes_result = mysql_query ("SELECT themeID FROM theme WHERE userID = $authorID AND status='active' LIMIT 20");
+
 		if (mysql_num_rows ($author_themes_result) > 0)
 		{
 			create_title ("Themes", "Themes created by $realname");
@@ -54,7 +56,7 @@ else
 				print_theme_row($themeID, "list");
 		}
 
-		$author_background_result = mysql_query ("SELECT backgroundID FROM background WHERE userID = $authorID AND status='active'");
+		$author_background_result = mysql_query ("SELECT backgroundID FROM background WHERE userID = $authorID AND status='active' LIMIT 20");
 		if (mysql_num_rows ($author_background_result) > 0)
 		{
 			create_title ("Backgrounds", "Backgrounds created by $realname");

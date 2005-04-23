@@ -3,6 +3,7 @@
 function ago_header($title)
 {
 	ini_set("session.use_only_cookies", "1");
+	session_set_cookie_params(604800); // Set cookie lifetime to one week
 	session_start();
 	header("Content-Type: text/html; charset=ISO-8859-1");
 //	print('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
@@ -87,7 +88,7 @@ function ago_header($title)
 	}
 
 
-	print("</div>\n");
+	print("<br /><br /></div>\n");
 
 	print("<div id=\"content\">\n");
 

@@ -6,6 +6,7 @@ require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
 require("comments.inc.php");
+require("art.inc.php");
 
 // superglobals stuff
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
@@ -13,7 +14,7 @@ $sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date",
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
 $view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
 list($foo, $unvalidated_category, $unvalidated_themeID) = explode("/", $_SERVER["PATH_INFO"]);
-$vote = validate_input_regexp_default ($_POST["vote"], "^[1-5]$", -1);
+$rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
 if  (get_magic_quotes_gpc() == 1)
 	$comment = stripslashes($_POST["comment"]); // This is validated later
 else
@@ -94,8 +95,6 @@ else
 	{
 		$themeID = validate_input_regexp_error ($unvalidated_themeID, "^[0-9]+$");
 
-		add_vote($themeID, "theme", $vote);
-
 		report_comment($report, $commentID);
 
 		$theme_select_result = mysql_query("SELECT * FROM theme WHERE themeID='$themeID'");
@@ -105,6 +104,8 @@ else
 		}
 		else
 		{
+			ago_header($theme_config_array[$category]["name"]);
+
 			$var_select_result = mysql_query("SELECT themeID,theme_name,category,thumbnail_filename FROM theme WHERE parent = $themeID");
 
 			$theme_select_row = mysql_fetch_array($theme_select_result);
@@ -117,8 +118,6 @@ else
 			list ($author) = mysql_fetch_row ($user_result);
 			$release_date = $theme_select_row["release_date"];
 			$depends = $theme_select_row["depends"];
-			$vote_sum = $theme_select_row["vote_sum"];
-			$vote_count = $theme_select_row["vote_count"];
 			$license = $theme_select_row["license"];
 
 			$description = $theme_select_row["description"];
@@ -127,9 +126,30 @@ else
 			$download_filename = $theme_select_row["download_filename"];
 			$add_timestamp = $theme_select_row["add_timestamp"];
 
-			ago_header($theme_config_array[$category]["name"]);
-			create_title($name . " by <a href=\"/users/$userID\">$author</a>", $theme_config_array[$category]["name"]);
+			add_vote($themeID, $rating, $_SESSION['userID'], 'theme');
+		
+			$vote_result = mysql_query("SELECT rating, userID FROM `vote` WHERE artID='$themeID' AND type='theme'");
+			$vote_count = mysql_num_rows($vote_result);
+			$i=0;
+			while (list($rating,$dbuserID) = mysql_fetch_array($vote_result)) {
+				$vote_sum += $rating;
+				if($dbuserID == $_SESSION['userID']) {
+					$i++;
+					$userrating = $rating;
+				}
+			}
+				$vote = -1;
+			if ($i >= 1)
+				$vote = 0;
+			if (!isset($_SESSION['userID']) || $_SESSION['userID'] == 0)
+				$vote = 1;
+			elseif ($_SESSION['userID'] == $userID)
+				$vote = 2;
+			
 
+			create_title($name . " by <a href=\"/users/$userID\">$author</a>", $theme_config_array[$category]["name"]);
+			
+			
 			
 			$more = "";
 			
@@ -170,7 +190,7 @@ else
 			}
 			
 
-			print_detailed_view($description, "theme", $release_date, $add_timestamp, $version, $license, $download_count, $download_start_timestamp, $vote, $vote_sum, $vote_count, $more, $thumbnail_url);
+			print_detailed_view($description, "theme", $release_date, $add_timestamp, $version, $license, $download_count, $download_start_timestamp, $vote, $vote_sum, $vote_count, $more, $thumbnail_url, $userrating);
 
 			// Get any variations
 			if (mysql_num_rows($var_select_result) > 0)

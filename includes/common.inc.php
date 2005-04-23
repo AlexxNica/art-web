@@ -31,84 +31,6 @@ function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
 	else                         return "over a year ago";
 }
 
-function add_vote($artID, $type, $vote)
-{
-	if ($vote != -1)
-	{
-		$vote_result = mysql_query("UPDATE $type SET vote_sum=vote_sum+$vote, vote_count=vote_count+1 WHERE " . $type . "ID='$artID'");
-	}
-}
-
-function print_detailed_view($description, $type, $release_date, $add_timestamp, $version, $license, $download_count, $download_start_timestamp, $vote, $vote_sum, $vote_count, $extra_rows, $thumbnail_url)
-{
-	global $license_config_array;
-	list($year, $month, $day) = explode("-", $release_date);
-
-	$release_date = $year . "-" . $month . "-" . $day;
-
-	$relative_date = FormatRelativeDate(time(), $add_timestamp);
-
-	if ($vote_count < 5)
-	{
-		$rating = 0;
-		$rating_text = "5 votes required";
-		$rating_bar = "";
-	}
-	else 
-	{
-		$rating = calculate_rating($vote_sum, $vote_count);
-		$rating_text = "Rating: " . $rating . "%";
-		$rating_bar = rating_bar($rating);
-	}
-			
-	if($license == "unknown")
-		$license = "Not available";
-	else
-		$license = $license_config_array[$license];
-
-	if($version == "0" || $version == "")
-		$version = "Not available";
-
-	print("<p>" . html_parse_text($description) . "</p>");
-
-	print("<table class=\"info\">\n");
-	print("\t<tr><th>Release Date</th><td>$release_date (last updated $relative_date)</td></tr>\n");
-	print("\t<tr><th>Version</th><td>$version</td></tr>\n");
-	print("\t<tr><th>License</th><td>$license</td></tr>\n");
-	$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
-	print("\t<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day ($download_count downloads in total)</td></tr>\n");
-
-	print("\t<tr><th>Rating</th><td>\n");
-	print("\t<div class=\"rating_text\" style=\"float:left\">\n");
-	print($rating_bar);
-	print("\t$rating_text, $vote_count votes</div>\n");
-	if ($vote == -1)
-	{
-		print("\t<form class=\"rating_vote\" name=\"vote\" method=\"post\" action=\"" . $_SERVER["PHP_SELF"] . "\"><div style=\"vertical-align: middle\">Vote:\n");
-		print("\t[worst]");
-		print("<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"1\"/>\n");
-		print("\t<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"2\"/>\n");
-		print("\t<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"3\"/>\n");
-		print("\t<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"4\"/>\n");
-		print("\t<input type=\"submit\" class=\"link_button\" name=\"vote\" value=\"5\"/>\n");
-		print("[best]");
-		print("\t</div></form>\n");
-	}
-	else
-	{
-		print("\t<div class=\"rating_vote\">\n");
-		print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Thanks for your vote</i>\n");
-		print("\t</div>\n");
-	}
-
-	print("\t</td></tr>\n");
-	print($extra_rows);
-	if ($type == "theme")
-		print("</table>\n");
-
-	print("<div style=\"text-align: center\"><img src=\"$thumbnail_url\" style=\"padding: 2px; border: none;\" class=\"large_thumbnail\" alt=\"thumbnail\" /></div>\n");
-}
-
 function print_item_row($name, $thumbnail, $category, $author, $date, $link, $vars, $vote, $extra)
 {
 	global  $background_config_array,  $theme_config_array;
@@ -127,13 +49,13 @@ function print_item_row($name, $thumbnail, $category, $author, $date, $link, $va
 		$category_name = "Backgrounds - " . $background_config_array["$category"]["name"];
 	else
 		$category_name = $theme_config_array["$category"]["name"];
-
+	
 	print("<table class=\"theme_row\">\n");
 	print("\t<tr valign=\"top\">\n");
 	print("\t\t<td class=\"theme_row_col1\"><a href=\"$link\"><img src=\"$thumbnail\" alt=\"Thumbnail\" class=\"$thumbnail_class\" /></a>$vote\t\t</td>\n");
-	print("\t\t<td><a href=\"$link\" class=\"h2\"><strong>".html_parse_text($name)."</strong></a><br /><span class=\"subtitle\">$category_name<br/>Date: $date<br />Author: $author<br />$var_image");
+	print("\t\t<td class=\"theme_row_detail\"><a href=\"$link\" class=\"h2\"><strong>".html_parse_text($name)."</strong></a><br /><span class=\"subtitle\">$category_name<br/>Date: $date<br />Author: $author<br />$var_image");
 	foreach ($extra as $val)
-		print($val);
+		print($val."<br />");
 	print("</span>\n\t\t</td>\n\t</tr>\n</table>\n");
 }
 
@@ -141,15 +63,21 @@ function print_background_row($backgroundID, $view)
 {
 	global $background_config_array, $site_url;
 
-	$background_select_result = mysql_query("SELECT background_name,category,username,release_date,thumbnail_filename,download_start_timestamp,download_count,vote_sum,vote_count FROM background, user WHERE backgroundID='$backgroundID' AND background.userID = user.userID");
+	$background_select_result = mysql_query("SELECT background_name,category,username,release_date,thumbnail_filename,download_start_timestamp,download_count FROM background, user WHERE backgroundID='$backgroundID' AND background.userID = user.userID");
 
 	$background_res_result = mysql_query("SELECT resolution FROM background_resolution WHERE backgroundID='$backgroundID'");
 	$var_select_result = mysql_query("SELECT * FROM background WHERE parent = '$backgroundID'");
 	if (mysql_num_rows($var_select_result) > 0) $vars = true; else $vars = false;
 
+	$vote_result = mysql_query("SELECT rating FROM `vote` WHERE artID='$backgroundID'");
+	$vote_count = mysql_num_rows($vote_result);
+	while (list($rating) = mysql_fetch_array($vote_result))
+		$vote_sum += $rating;
+
+	$extra[0] = "Resolutions: ";
 	extract(mysql_fetch_array($background_select_result));
 	while (list($background_res) = mysql_fetch_row($background_res_result))
-		$extra[0] = "{$extra[0]} $background_res";
+		$extra[0] .= " $background_res";
 
 	$release_date = fix_sql_date($release_date);
 	if ($backgroundID < 1000) {
@@ -163,10 +91,11 @@ function print_background_row($backgroundID, $view)
 
 	if ($view != "compact")
 	{
-		$comment_select = mysql_query("SELECT COUNT(*) AS count FROM comment WHERE artID = '$backgroundID' AND type='background' AND status != 'deleted'");
-		list($count) = mysql_fetch_row($comment_select);
-		if ($count > 1) $extra[1] = ", $count comments";
-		if ($count == 1) $extra[1] = ", $count comment";
+		$query = "SELECT COUNT(*) AS count FROM comment WHERE artID = '$backgroundID' AND type='background' AND status != 'deleted'";
+		$comment_select = mysql_query($query);
+		list($count) = mysql_fetch_array($comment_select);
+		if ($count > 1) { $extra[1] = $count." comments"; }
+		if ($count == 1) { $extra[1] = $count." comment"; }
 	}
 
 	if ($view == "compact")
@@ -196,12 +125,17 @@ function print_background_row($backgroundID, $view)
 function print_theme_row($themeID, $view)
 {
 	global $theme_config_array, $site_url;
-	$theme_select_result = mysql_query("SELECT theme_name, category, user.username, release_date,small_thumbnail_filename,thumbnail_filename,download_filename, vote_sum, vote_count FROM theme,user WHERE themeID='$themeID' AND user.userID = theme.userID");
+	$theme_select_result = mysql_query("SELECT theme_name, category, user.username, release_date,small_thumbnail_filename,thumbnail_filename,download_filename FROM theme,user WHERE themeID='$themeID' AND user.userID = theme.userID");
 	$var_select_result = mysql_query("SELECT * FROM theme WHERE parent = '$themeID'");
 	if (mysql_num_rows($var_select_result) > 0)
 		$vars = "<img src=\"/images/site/theme-24.png\" alt=\"Variations available\" height=\"16\" width=\"16\" />";
 	else
 		$vars = "";
+
+	$vote_result = mysql_query("SELECT rating FROM `vote` WHERE artID='$themeID'");
+	$vote_count = mysql_num_rows($vote_result);
+	while (list($rating) = mysql_fetch_array($vote_result))
+		$vote_sum += $rating;
 	extract(mysql_fetch_array($theme_select_result));
 
 	$release_date = fix_sql_date($release_date);
@@ -546,7 +480,7 @@ function html_parse_text($comment)
                 "[code]", "[/code]",
                 "[quote]", "[/quote]",
                 '"]');
-	$htmlcode = array("&amp;", "]", "]",
+	$htmlcode = array("&amp;", "](NL)", "](NL)",
 		"&lt;", "&gt;",
                 "<ul>", "<li>", "</li>", "</ul>", 
                 "<img src=\"", "\" alt=\"\" />", 
@@ -562,6 +496,7 @@ function html_parse_text($comment)
                 '">');
 	$comment = str_replace($bbcode, $htmlcode, $comment);
 	$comment = nl2br($comment);
+	$comment = str_replace(">(NL)", ">\n", $comment);
 	$comment = ereg_replace(":-\)|:\)", "<img src=\"/images/site/emoticons/stock_smiley-1.png\" alt=\":)\" />", $comment);
 	$comment = ereg_replace(";\)|;-\)", "<img src=\"/images/site/emoticons/stock_smiley-3.png\" alt=\":)\" />", $comment);
 	$comment = ereg_replace(":-P|:-p|:P|:p", "<img src=\"/images/site/emoticons/stock_smiley-10.png\" alt=\":-P\" />", $comment);

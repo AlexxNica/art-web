@@ -1,3 +1,18 @@
+2005-04-23  Thomas Wood  <thos@gnome.org>
+
+	* account.php: Set last login time, pretty login boxes
+	* default.css: Stop unnecessary text wrapping
+	* includes/ago_headers.inc.php: Set cookie lifetime to one week
+	* includes/art.inc.php: (Added)
+	* includes/common.inc.php: Split out detail view funtions, updates for
+	new vote system
+	* users: Order author list by username, limit author theme/background
+	list to 20 items
+	* themes:
+	* backgrounds:
+	
+	New voting system
+
 2005-04-21  Thomas Wood  <thos@gnome.org>
 
 	* default.css: No border thumbnail style

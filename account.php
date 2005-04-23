@@ -21,10 +21,9 @@ if (array_key_exists('login', $_POST))
 		$_SESSION['username'] = $username;
 		$_SESSION['userID'] = $userID;
 		$_SESSION['realname'] = $realname;
-		$_SESSION['admin_level'] = $admin;
+		mysql_query("UPDATE user SET lastlog=NOW() WHERE userid=$userID;");
 		create_title("Login Successful", "");
 		print("<p>You are now logged in as $username. <a href=\"$referer\">Continue...</a></p>");
-		
 	}
 	else
 	{
@@ -189,8 +188,8 @@ else
 	create_title("Please log in","Log in to access your account");
 	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
 	print("<table>\n");
-	print("<tr><td>Username:</td><td><input name=\"username\" /></td></tr>\n");
-	print("<tr><td>Password:</td><td><input name=\"password\" type=\"password\" /></td></tr>\n");
+	print("<tr><td>Username:</td><td><input name=\"username\" class=\"username\" /></td></tr>\n");
+	print("<tr><td>Password:</td><td><input name=\"password\" type=\"password\" class=\"password\" /></td></tr>\n");
 	print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td></tr>\n");
 	print("</table>\n");
 	print("</form>\n");
