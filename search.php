@@ -14,18 +14,19 @@ $search_type = validate_input_array_default($_GET["search_type"], array("backgro
 $search_text = mysql_real_escape_string(urldecode($_GET["search_text"]));
 $sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity","rating"),$valid_sort_by_array ,"date");
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
+$order = validate_input_array_default($_GET['order'], array("ASC","DESC"), "ASC");
 
-display_search_box(htmlspecialchars(stripslashes($search_text)), $search_type, $thumbnails_per_page, $sort_by);
+display_search_box(htmlspecialchars(stripslashes($search_text)), $search_type, $thumbnails_per_page, $sort_by, $order);
 if($search_text && $search_type)
 {
 	/* background name search */
 	if ($search_type == "background_name")
 	{
-		$background_all_select_result = mysql_query("SELECT backgroundID FROM background WHERE background_name LIKE '%$search_text%' AND parent='0' ORDER BY background_name");
+		$background_all_select_result = mysql_query("SELECT backgroundID FROM background WHERE background_name LIKE '%$search_text%' AND parent='0' ORDER BY background_name $order");
 		$num_backgrounds = mysql_num_rows($background_all_select_result);
 		if($num_backgrounds > 0)
 		{
-			list($page, $num_pages) = background_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_backgrounds, "list");
+			list($page, $num_pages) = background_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_backgrounds, "list", $order);
 		}
 		else
 		{
@@ -35,11 +36,11 @@ if($search_text && $search_type)
 	/* theme name search */
 	elseif ($search_type == "theme_name")
 	{
-		$theme_all_select_result = mysql_query("SELECT themeID FROM theme WHERE theme_name LIKE '%$search_text%' ORDER BY theme_name");
+		$theme_all_select_result = mysql_query("SELECT themeID FROM theme WHERE theme_name LIKE '%$search_text%' ORDER BY theme_name $order");
 		$num_themes = mysql_num_rows($theme_all_select_result);
 		if($num_themes > 0)
 		{
-			list($page, $num_pages) = theme_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_themes, "list");
+			list($page, $num_pages) = theme_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_themes, "list", $order);
 		}
 		else
 		{
@@ -49,10 +50,12 @@ if($search_text && $search_type)
 	/* Author name search */
 	elseif ($search_type == "author")
 	{
-		$user_select_result = mysql_query("SELECT userID, realname FROM user WHERE realname LIKE '%$search_text%' ORDER BY realname");
+		$user_select_query = "SELECT userID, realname FROM user WHERE realname LIKE '%$search_text%' ORDER BY realname $order";
+		$user_select_result = mysql_query($user_select_query);
 		if(mysql_num_rows($user_select_result) > 0)
 		{
 			print("<div class=\"h2\">Search Results</div><ul>");
+			print $user_select_query;
 			while (list($userID, $realname) = mysql_fetch_row($user_select_result))
 			{
 				print("<li><a href=\"/users/$userID\">$realname</a></li>");
@@ -71,7 +74,7 @@ if($search_text && $search_type)
 	if($page > 1)
 	{
 		$prev_page = $page -1;
-		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page\">[&lt;]</a>");
+		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;order=$order\">[&lt;]</a>");
 	}
 	for($count=1;$count<=$num_pages;$count++)
 	{
@@ -81,13 +84,13 @@ if($search_text && $search_type)
 		}
 		else
 		{
-			print("<a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page\">[$count]</a> ");
+			print("<a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;order=$order\">[$count]</a> ");
 		}
 	}
 	if($page < $num_pages)
 	{
 		$next_page = $page +1;
-		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page\">[&gt;]</a>");
+		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;order=$order\">[&gt;]</a>");
 	}
 	print("</div>\n");
 }

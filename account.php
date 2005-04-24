@@ -12,7 +12,7 @@ if (array_key_exists('login', $_POST))
 	$username = mysql_real_escape_string($_POST['username']);
 	$password = mysql_real_escape_string($_POST['password']);
 	$query_result = mysql_query("SELECT userID, realname, password FROM user WHERE username = '$username'");
-	$referer = validate_input_regexp_default($_POST['referer'], "^[a-z\./]+$", "/account.php");
+	$referer = validate_input_regexp_default($_POST['referer'], "^[a-z0-9\./]+$", "/account.php");
 
 	list($userID, $realname, $cryptpass ) = mysql_fetch_row($query_result);
 

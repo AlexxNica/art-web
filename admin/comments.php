@@ -6,7 +6,7 @@ require("includes/headers.inc.php");
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
 
-admin_header("Moderate Comments");
+admin_header("Moderate Comments","Back to <a href=\"/admin/\">admin panel</a>");
 admin_auth(1);
 
 if ($_POST['delete'] == true) {

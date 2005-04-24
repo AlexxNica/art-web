@@ -3,11 +3,12 @@
 function ago_header($title)
 {
 	ini_set("session.use_only_cookies", "1");
+
 	session_set_cookie_params(604800); // Set cookie lifetime to one week
 	session_start();
 	header("Content-Type: text/html; charset=ISO-8859-1");
-//	print('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
-	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
+	print('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
+//	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
 //	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
 	print("<html>\n");
 	print("<head>\n");
@@ -21,7 +22,7 @@ function ago_header($title)
 	print("</head>\n");
 	print("<body>\n");
 	print("<div id=\"header\">\n");
-	print("\t<div id=\"header-left\">&nbsp;</div><div id=\"header-right\">&nbsp;</div>\n");
+	print("\t<div id=\"header-left\"><a href=\"/\"><img class=\"header\" src=\"/images/site/header-left.png\" alt=\"art.gnome.org\" /></a></div><div id=\"header-right\"><a href=\"/\"><img class=\"header\" src=\"/images/site/header-right.png\" alt=\"art.gnome.org\" /></a></div>\n");
 	print("\t<div id=\"header-links\">\n");
 	print("\t\t<a href=\"http://www.gnome.org/about/\">About GNOME</a> &middot;\n");
 	print("\t\t<a href=\"http://www.gnome.org/start/stable/\">Download</a> &middot;\n");

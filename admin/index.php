@@ -4,7 +4,7 @@ include "mysql.inc.php";
 include "includes/headers.inc.php";
 include "common.inc.php";
 
-admin_header("ART.GNOME.ORG Administration");
+admin_header("ART.GNOME.ORG Administration","");
 
 
 if (array_key_exists('login', $_POST))
@@ -42,11 +42,13 @@ if (array_key_exists('username', $_SESSION))
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_background.php\">Edit A Background</a><br>");
 	print("&nbsp;&nbsp;&nbsp;Delete A Background<br>");
 
-
 	create_title("Themes", "");
 	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_theme.php\">Add A New Theme</a><br>");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_theme.php\">Edit A Theme</a><br>");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_theme.php\">Delete A Theme</a><br>");
+
+	create_title("Comments","");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"comments.php\">Moderate Comments</a");
 
 	create_title("News","");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"add_news_item.php\">Add a News Item</a><br>");
@@ -58,8 +60,6 @@ if (array_key_exists('username', $_SESSION))
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_faq.php\">Edit FAQ Entry</a><br>");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_faq.php\">Delete FAQ Entry</a><br>");
 	print("&nbsp;&nbsp;&nbsp;Re-Order FAQ<br>");
-
-
 
 }
 else

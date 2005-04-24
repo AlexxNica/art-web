@@ -65,14 +65,12 @@ function print_background_row($backgroundID, $view)
 
 	$background_select_result = mysql_query("SELECT background_name,category,username,release_date,thumbnail_filename,download_start_timestamp,download_count FROM background, user WHERE backgroundID='$backgroundID' AND background.userID = user.userID");
 
-	$background_res_result = mysql_query("SELECT resolution FROM background_resolution WHERE backgroundID='$backgroundID'");
+	$background_res_result = mysql_query("SELECT DISTINCT(resolution) FROM background_resolution WHERE backgroundID='$backgroundID'");
 	$var_select_result = mysql_query("SELECT * FROM background WHERE parent = '$backgroundID'");
 	if (mysql_num_rows($var_select_result) > 0) $vars = true; else $vars = false;
 
-	$vote_result = mysql_query("SELECT rating FROM `vote` WHERE artID='$backgroundID'");
-	$vote_count = mysql_num_rows($vote_result);
-	while (list($rating) = mysql_fetch_array($vote_result))
-		$vote_sum += $rating;
+	$vote_select_result = mysql_query("SELECT SUM(rating) AS vote_sum, COUNT(rating) AS vote_count FROM `vote` WHERE artID='$backgroundID' AND type='background'");
+	list($vote_sum, $vote_count) = mysql_fetch_row($vote_select_result);
 
 	$extra[0] = "Resolutions: ";
 	extract(mysql_fetch_array($background_select_result));
@@ -104,7 +102,7 @@ function print_background_row($backgroundID, $view)
 	}
 	elseif ($vote_count < 5)
 	{
-		$vote = "<div class=\"rating_text\">5 votes required</div>\n";
+		$vote = "";
 	}
 	else
 	{
@@ -132,14 +130,22 @@ function print_theme_row($themeID, $view)
 	else
 		$vars = "";
 
-	$vote_result = mysql_query("SELECT rating FROM `vote` WHERE artID='$themeID'");
-	$vote_count = mysql_num_rows($vote_result);
-	while (list($rating) = mysql_fetch_array($vote_result))
-		$vote_sum += $rating;
+	$vote_select_result = mysql_query("SELECT SUM(rating) AS vote_sum, COUNT(rating) AS vote_count FROM `vote` WHERE artID='$themeID' AND type='theme'");
+	list($vote_sum, $vote_count) = mysql_fetch_row($vote_select_result);
+
 	extract(mysql_fetch_array($theme_select_result));
 
 	$release_date = fix_sql_date($release_date);
-	
+
+	if ($view != "compact")
+	{
+		$query = "SELECT COUNT(*) AS count FROM comment WHERE artID = '$themeID' AND type='theme' AND status != 'deleted'";
+		$comment_select = mysql_query($query);
+		list($count) = mysql_fetch_array($comment_select);
+		if ($count > 1) { $extra[0] = $count." comments"; }
+		if ($count == 1) { $extra[0] = $count." comment"; }
+	}
+
 	if ($themeID < 1000){
 		$link = "{$site_url}themes/$category/$themeID/";
 		$thumbnail = "{$site_url}images/archive/thumbnails/$category/$small_thumbnail_filename";
@@ -153,7 +159,7 @@ function print_theme_row($themeID, $view)
 	}
 	elseif ($vote_count < 5)
 	{
-		$vote = "<div class=\"rating_text\">5 votes required</div>\n";
+		$vote = "";
 	}
 	else
 	{
@@ -163,11 +169,15 @@ function print_theme_row($themeID, $view)
 	
 	if ($view == "icons")
 	{
-		print("<div class=\"icon_view\"><a href=\"$link\"><img style=\"padding: 2px; border: none;\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
+		if (($category == "icon") or ($category == "metacity"))
+			$thumbnail_class = "thumbnail_no_border";
+		else
+			$thumbnail_class = "thumbnail";
+			print("<div class=\"icon_view\"><a href=\"$link\"><img class=\"$thumbnail_class\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
 	}
 	else
 	{
-		print_item_row($theme_name, $thumbnail, $category, $username, $release_date, $link, $vars, $vote, "");
+		print_item_row($theme_name, $thumbnail, $category, $username, $release_date, $link, $vars, $vote, $extra);
 	}
 }
 
@@ -257,9 +267,9 @@ function print_select_box($name,$array,$selected)
 	print("</select>");
 }
 
-function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results_text, $view)
+function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results_text, $view, $order)
 {
-	global $thumbnails_per_page_array, $sort_by_array, $view_array;
+	global $thumbnails_per_page_array, $sort_by_array, $view_array, $order_array;
 	
 	if($thumbnails_per_page == "")
 	{
@@ -268,6 +278,10 @@ function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results
 	if($sort_by == "")
 	{
 		$sort_by = "name";
+	}
+	if($order == "")
+	{
+		$order = "DESC";
 	}
 
 	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"get\"><p>");
@@ -281,14 +295,16 @@ function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results
 	print(" View: ");
 	print_select_box("view", $view_array, $view);
 
+	print(" Order: ");
+	print_select_box("order", $order_array, $order);
 
 	print(" <input type=\"submit\" value=\"Change\" />");
 	print("</p></form>\n");
 }
 
-function display_search_box($search_text, $search_type, $thumbnails_per_page, $sort_by)
+function display_search_box($search_text, $search_type, $thumbnails_per_page, $sort_by, $order)
 {
-	global $search_type_array, $thumbnails_per_page_array, $sort_by_array;
+	global $search_type_array, $thumbnails_per_page_array, $sort_by_array, $order_array;
 		
 	if($search_type == "")
 	{
@@ -301,6 +317,10 @@ function display_search_box($search_text, $search_type, $thumbnails_per_page, $s
 	if($sort_by == "")
 	{
 		$sort_by = "name";
+	}
+	if($order == "")
+	{
+		$order = "DESC";
 	}
 	
 	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"get\">");
@@ -319,6 +339,10 @@ function display_search_box($search_text, $search_type, $thumbnails_per_page, $s
 	print("\t<tr><td>Results Per Page:</td><td>");
 	print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page);
 	print("</td></tr>\n");
+
+	print("\t<tr><td>Order:</td><td>");
+	print_select_box("order", $order_array, $order);
+	print("</td></tr>\n");
 	
 	print("\t<tr><td colspan=\"2\"><input type=\"submit\" value=\"Search\"/></td></tr>");
 
@@ -326,7 +350,7 @@ function display_search_box($search_text, $search_type, $thumbnails_per_page, $s
 	print("</form>\n");
 }
 
-function background_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view)
+function background_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view, $order="DESC")
 {
 	$num_pages = ceil($num_backgrounds/$thumbnails_per_page);
 
@@ -345,19 +369,19 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 
 	if($sort_by == "popularity")
 	{
-		$order_query = "ORDER by perday DESC";
+		$order_query = "ORDER by perday $order";
 	}
 	elseif($sort_by == "date")
 	{
-		$order_query = "ORDER BY add_timestamp DESC";
+		$order_query = "ORDER BY add_timestamp $order";
 	}
 	elseif($sort_by == "rating")
 	{
-		$order_query = "ORDER BY (vote_sum/vote_count) DESC";
+		$order_query = "ORDER BY (vote_sum/vote_count) $order";
 	}
 	else
 	{
-		$order_query = "ORDER BY background_name";
+		$order_query = "ORDER BY background_name $order";
 	}
 
 	if($category != "")
@@ -376,7 +400,7 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	return array($page, $num_pages);
 }
 
-function theme_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_themes, $view)
+function theme_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_themes, $view, $order="DESC")
 {
 	$num_pages = ceil($num_themes/$thumbnails_per_page);
 
@@ -394,15 +418,15 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 
 	if($sort_by == "popularity")
 	{
-		$order_query = "ORDER by perday DESC";
+		$order_query = "ORDER by perday $order";
 	}
 	elseif($sort_by == "date")
 	{
-		$order_query = "ORDER BY add_timestamp DESC";
+		$order_query = "ORDER BY add_timestamp $order";
 	}
 	else
 	{
-		$order_query = "ORDER BY theme_name";
+		$order_query = "ORDER BY theme_name $order";
 	}
 	
 	if($category != "")
@@ -483,7 +507,7 @@ function html_parse_text($comment)
 	$htmlcode = array("&amp;", "](NL)", "](NL)",
 		"&lt;", "&gt;",
                 "<ul>", "<li>", "</li>", "</ul>", 
-                "<img src=\"", "\" alt=\"\" />", 
+                "<img src=\"", "\" class=\"thumbnail\" alt=\"\" />", 
                 "<strong>", "</strong>", 
                 "<span style=\"text-decoration: underline\">", "</span>", 
                 "<em>", "</em>",

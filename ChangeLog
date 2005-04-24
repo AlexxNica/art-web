@@ -1,3 +1,24 @@
+2005-04-24  Thomas Wood  <thos@gnome.org>
+
+	* account.php: Allow numbers in referer
+	* admin/comments.php: Link back to admin page
+	* admin/includes/headers.inc.php: Link back to admin page
+	* admin/index.php: Added link to comments
+	* backgrounds: Added order option for searches
+	* default.css: Added css fixes-should validate now, added support for
+	links in headers, misc. tweaks
+	* includes/ago_headers.inc.php: Changed doctype to xhtml 1.0 strict,
+	added links in headers
+	* includes/art.inc.php: Fix "only registered users can vote" link
+	* includes/comments.inc.php: XHTML fixes
+	* includes/common.inc.php: Added support for order option in searches;
+	added comments info to theme listings
+	* includes/config.inc.php: Added support for order option in searches;
+	fixes themes links and descriptions in art.gnome.org/themes
+	* index.php: Fixed to show all old news
+	* search.php: Added support for order option in searches.
+	* themes: Added support for order option in searches.
+
 2005-04-23  Thomas Wood  <thos@gnome.org>
 
 	* account.php: Set last login time, pretty login boxes

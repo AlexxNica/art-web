@@ -13,6 +13,7 @@ $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
 $sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity","rating") ,"date");
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
 $view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
+$order = validate_input_array_default ($_GET['order'], array("ASC","DESC"), "ASC");
 list($foo, $unvalidated_category, $unvalidated_backgroundID) = explode("/", $_SERVER["PATH_INFO"]);
 $rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
 if  (get_magic_quotes_gpc() == 1)
@@ -51,7 +52,7 @@ else
 		ago_header($background_config_array[$category]["name"] ." Backgrounds");
 		create_title($background_config_array[$category]["name"] ." Backgrounds", $background_config_array[$category]["description"]);
 		
-		$background_select_all_result = mysql_query("SELECT * FROM background WHERE category='$category' AND status='active'AND parent='0' ORDER BY add_timestamp DESC");
+		$background_select_all_result = mysql_query("SELECT * FROM background WHERE category='$category' AND status='active'AND parent='0' ORDER BY add_timestamp $order");
 		$num_backgrounds = mysql_num_rows($background_select_all_result);
 		if($num_backgrounds == 0)
 		{
@@ -59,15 +60,15 @@ else
 		}
 		else
 		{
-			print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Backgrounds", $view);
-			list($page, $num_pages) = background_search_result("", "background_name", $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view);
+			print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Backgrounds", $view, $order);
+			list($page, $num_pages) = background_search_result("", "background_name", $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view, $order);
 
 			print("<div style=\"clear:both; text-align:center\">\n");
 			/* Page Navigation System */
 			if($page > 1)
 			{
 				$prev_page = $page -1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&lt;</a>\n");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">&lt;</a>\n");
 			}
 			for($count=1;$count<=$num_pages;$count++)
 			{
@@ -77,13 +78,13 @@ else
 				}
 				else
 				{
-					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=&amp;sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">$count</a>\n");
+					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=&amp;sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">$count</a>\n");
 				}
 			}
 			if($page < $num_pages)
 			{
 				$next_page = $page +1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view\">&gt;</a>\n");
+				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">&gt;</a>\n");
 			}
 			print("</div>\n");
 		}

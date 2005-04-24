@@ -2,11 +2,11 @@
 
 include "ago_headers.inc.php";
 
-function admin_header($title)
+function admin_header($title, $subtitle='Back to <a href="/admin/">admin panel</a>')
 {
 	session_start();
 	ago_header("ART.GNOME.ORG Admin");
-	create_title($title,"");
+	create_title($title,$subtitle);
 }
 
 function admin_auth($reqlevel)

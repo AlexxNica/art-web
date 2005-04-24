@@ -86,7 +86,7 @@ function print_detailed_view($description, $type, $release_date, $add_timestamp,
 	
 		case 1:
 			print("\t<div class=\"rating_vote\">\n");
-			print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Only <a href=\"account.php\">registered users</a> may vote.</i>\n");
+			print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Only <a href=\"/account.php\">registered users</a> may vote.</i>\n");
 			print("\t</div>\n");
 		break;
 

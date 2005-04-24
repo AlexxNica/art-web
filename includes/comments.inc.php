@@ -31,7 +31,7 @@ function print_comments($artID, $type)
 		{
 			$count++;
 			print("<table class=\"comment\">\n");
-			print("<tr><td class=\"comment_head\">");
+			print("<tr><td class=\"comment_head\">\n");
 			print("<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\">\n");
 			print("<i>$count: <a href=\"/users/$userID\">$username</a> posted on " . date("Y-m-d - H:i", $comment_time) . "</i>\n");
 			print("</td><td align=\"right\">\n");
@@ -46,13 +46,13 @@ function print_comments($artID, $type)
 			}
 			else
 			{
-				print("<form name=\"report\" action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
+				print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\"><div>\n");
 				print("<input type=\"hidden\" name=\"commentID\" value=\"$commentID\" />\n");
 				print("<input type=\"submit\" name=\"report\" value=\"(Report Abuse)\" class=\"link_button\" style=\"font-size: 0.8em;\" />");
-				print("</form>\n");
+				print("</div></form>\n");
 			}
 			
-			print("</td></tr></table>");
+			print("</td></tr></table></td></tr>");
 			print("<tr><td class=\"comment\">" . html_parse_text($user_comment) . "</td></tr>");
 			print("</table><br />\n");
 		}

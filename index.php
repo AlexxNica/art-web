@@ -13,7 +13,7 @@ ago_header("News");
 create_title("Latest News", "Latest news from art.gnome.org");
 if($view_old_news == 1)
 {
-	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 3,20");
+	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 1,20");
 }
 else
 {

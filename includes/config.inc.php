@@ -26,31 +26,31 @@ $background_config_array = array (
 $theme_config_array = array (
 	"gdm_greeter" => array (
 		"name" => "Other Themes - Login Manager",
-		"url" => "/themes/gdm_greeter/index.php",
+		"url" => "/themes/gdm_greeter/",
 		"active" => "1",
 		"description" => "GDM Greeter themes change the appearance of the GNOME 2.0 login screen."
 		),
 /*	"gtk" => array (
 		"name" => "GTK+ 1.0",
-		"url" => "/themes/gtk/index.php",
+		"url" => "/themes/gtk/",
 		"active" => "1",
 		"description" => "GTK+ 1.2 themes alter the appearance of the GTK+ 1.2 widgets. In the GNOME desktop, this means the appearance of all your GNOME applications."
 		),
 */	"gtk2" => array (
 		"name" => "Desktop Themes - Applications",
-		"url" => "/themes/gtk2/index.php",
+		"url" => "/themes/gtk2/",
 		"active" => "1",
 		"description" => "GTK+ 2.0 themes control the appearance of your GNOME 2.0 programs."
 		),
 	"icon" => array (
 		"name" => "Desktop Themes - Icon",
-		"url" => "/themes/icon/index.php",
+		"url" => "/themes/icon/",
 		"active" => "1",
 		"description" => "GNOME 2.2.x system icon themes change the themes in nautilus, file-roller, etc.."
 		),
 	"metacity" => array (
 		"name" => "Desktop Themes - Window Borders",
-		"url" => "/themes/metacity/index.php",
+		"url" => "/themes/metacity/",
 		"active" => "1",
 		"description" => "Metacity is the default window manager for GNOME 2.2.x and beyond."
 		),
@@ -80,7 +80,7 @@ $theme_config_array = array (
 		),
 */	"splash_screens" => array (
 		"name" => "Other Themes - Splash Screens",
-		"url" => "/themes/splash_screens/index.php",
+		"url" => "/themes/splash_screens/",
 		"active" => "1",
 		"description" => "Splash Screens are what you first see when you log into GNOME."
 		),
@@ -92,15 +92,15 @@ $theme_config_array = array (
 		),
 */	"gtk_engines" => array (
 		"name" => "GTK+ Engines",
-		"url" => "/themes/gtk_engines/index.php",
+		"url" => "/themes/gtk_engines/",
 		"active" => "1",
 		"description" => "GTK+ Engines are pieces of code that draw your theme."
 		),
 	"desktop_themes" => array (
 		"name" => "Desktop Themes",
-		"url" => "/themes/desktop_themes/index.php",
+		"url" => "/themes/desktop_themes/",
 		"active" => "1",
-		"dexcription" => "Desktop themes are complete themes that cover all aspects of your desktop environment."
+		"description" => "Desktop themes are complete themes that cover all aspects of your desktop environment."
 		)
 );
 
@@ -219,6 +219,7 @@ $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 
 $search_type_array = array ("background_name" => "Background Name", "theme_name" => "Theme Name", "author" => "Author Name");
 $thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "1000" => "All");
+$order_array = array("ASC"=>"Ascending", "DESC"=>"Descending");
 $sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity", "rating" => "Rating");
 $view_array = array("icons" => "Icon", "list" => "List");
 $status_array = Array("new" => "New", "approved" => "Approved", "added" => "Added", "rejected" => "Rejected");
