@@ -1,9 +1,8 @@
 @import url(default.css);
 
 #content{
-	position: absolute;
-	top:84px;
-	left:230px;
+	margin-top:106px;
+	margin-left:230px;
 	right: 0px;
 	padding-left: 1em;
 	padding-right: 1em;
