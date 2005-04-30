@@ -1,4 +1,9 @@
-2005-04-24  Thomas Wood  <thos@gnome.org>
+2005-04-30  James McGuire <jamesm@bluebottle.com>
+
+	* backgrounds: Set default order to descending
+	* default.css: Fix IE 6 problems
+
+2005-04-24  Thomas Wood <thos@gnome.org>, James McGuire <jamesm@bluebottle.com>
 
 	* account.php: Allow numbers in referer
 	* admin/comments.php: Link back to admin page

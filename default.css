@@ -1,4 +1,12 @@
 body {
+	padding-bottom: 0;
+	padding-left: 0;
+	padding-top: 0;
+	padding-right: 0;
+	margin-bottom: 0;
+	margin-top: 0;
+	margin-left: 0;
+	margin-right: 0;
 }
 
 .h1{
@@ -74,6 +82,13 @@ img.large_thumbnail {
 	clear: left right;
 }
 
+img.sidebar {
+	border: none;
+	vertical-align: middle;
+	height: 48px;
+	width: 48px;
+}
+
 div.news_item {
 	padding-left: 42px;
 	margin-top: 1em;
@@ -145,6 +160,7 @@ th {
 
 #header{
 	position: absolute;
+	margin: 0px;
 	top: 0px;
 	left: 0px;
 	right: 0px;
@@ -177,10 +193,10 @@ th {
 }
 
 #content{
-	position: absolute;
-	top:84px;
+/*	position: absolute; */
+	margin-top: 106px;
 	left:0px;
-	right: 230px;
+	margin-right: 230px;
 	padding-left: 1em;
 	padding-right: 1em;
 }
@@ -190,7 +206,7 @@ th {
 	right: 0px;
 	top: 84px;
 	width: 200px;
-	0height:100%;
+	height:100%;
 	border-left: #bfbfbf 1px dashed;
 	padding: 1em;
 	font-family: sans-serif;
