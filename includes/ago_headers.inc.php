@@ -7,7 +7,7 @@ function ago_header($title)
 	session_set_cookie_params(604800); // Set cookie lifetime to one week
 	session_start();
 	header("Content-Type: text/html; charset=ISO-8859-1");
-	print('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
+	print('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'."\n");
 //	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
 //	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
 	print("<html>\n");
@@ -22,7 +22,7 @@ function ago_header($title)
 	print("</head>\n");
 	print("<body>\n");
 	print("<div id=\"header\">\n");
-	print("\t<div id=\"header-left\"><a href=\"/\"><img class=\"header\" src=\"/images/site/header-left.png\" alt=\"art.gnome.org\" /></a></div><div id=\"header-right\"><a href=\"/\"><img class=\"header\" src=\"/images/site/header-right.png\" alt=\"art.gnome.org\" /></a></div>\n");
+	print("\t<a href=\"/\"><div id=\"header-left\">&nbsp;</div></a><a href=\"/\"><div id=\"header-right\">&nbsp;</div></a>\n");
 	print("\t<div id=\"header-links\">\n");
 	print("\t\t<a href=\"http://www.gnome.org/about/\">About GNOME</a> &middot;\n");
 	print("\t\t<a href=\"http://www.gnome.org/start/stable/\">Download</a> &middot;\n");
@@ -35,7 +35,7 @@ function ago_header($title)
 	print("</div>\n");
 
 	print("<div id=\"sidebar\">\n");
-	print("\t<img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" height=\"48px\" width=\"48px\" style=\"vertical-align:middle\" /> Art\n");
+	print("\t<img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" class=\"sidebar\" /> Art\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/\">News</a></li>\n");
 	print("\t\t<li><a href=\"/updates.php\">Updates</a></li>\n");
@@ -46,19 +46,26 @@ function ago_header($title)
 	print("\t\t<li><a href=\"http://gnomesupport.org/forums/index.php?c=6\">Forums</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br />\n");
-	print("\t<img src=\"/images/site/wallpaper.png\" alt=\"Wallpapers\" height=\"48px\" width=\"48px\" style=\"vertical-align:middle\" /> Backgrounds\n");
+	if (is_ie())
+                print("\t<img src=\"/images/site/spacer.gif\" alt=\"Wallpapers\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/wallpaper.png', sizingMethod='scale');\" /> Backgrounds\n");
+	else
+		print("\t<img src=\"/images/site/wallpaper.png\" alt=\"Wallpapers\" class=\"sidebar\" /> Backgrounds\n");
+
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/backgrounds/gnome/\">GNOME</a></li>\n");
 	print("\t\t<li><a href=\"/backgrounds/other/\">Other</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br />\n");
-	print("\t<img src=\"/images/site/theme.png\" alt=\"Themes\" height=\"48px\" width=\"48px\" style=\"vertical-align:middle\" /> Desktop Themes\n");
+	print("\t<img src=\"/images/site/theme.png\" alt=\"Themes\" class=\"sidebar\" /> Desktop Themes\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/themes/gtk2/\">Application</a></li>\n");
 	print("\t\t<li><a href=\"/themes/metacity/\">Window Border</a></li>\n");
 	print("\t\t<li><a href=\"/themes/icon/\">Icons</a></li>\n");
 	print("\t</ul>\n");
-	print("\t<img src=\"/images/site/Themes.png\" alt=\"Themes\" height=\"48px\" width=\"48px\" style=\"vertical-align:middle\" /> Other Themes\n");
+	if (is_ie())
+		print("\t<img src=\"/images/site/spacer.gif\" alt=\"Themes\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/Themes.png', sizingMethod='scale');\" /> Other Themes\n");
+	else
+                print("\t<img src=\"/images/site/Themes.png\" alt=\"Themes\" class=\"sidebar\" /> Other Themes\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/themes/gdm_greeter/\">Login Manager</a></li>\n");
 	print("\t\t<li><a href=\"/themes/splash_screens/\">Splash Screen</a></li>\n");

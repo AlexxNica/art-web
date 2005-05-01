@@ -47,12 +47,13 @@ elseif($action == "confirm")
 }
 else
 {
+	print("<table>\n");
 	$theme_categories = array("gdm_greeter","gtk","gtk2","icon","metacity","metatheme","nautilus","sawfish","sounds","splash_screens","other");
 	for($count=0;$count<count($theme_categories);$count++)
 	{
 		$category = $theme_categories[$count];
 		$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE category='$category' ORDER by theme_name");
-		print("<table border=\"0\">\n");
+//		print("<table border=\"0\">\n");
 		print("<tr><td>$category</td>");
 		if(mysql_num_rows($theme_select_result)==0)
 		{
@@ -64,13 +65,14 @@ else
 			print("<td><select name=\"themeID\" size=\"5\">\n");
 			while(list($themeID,$theme_name) = mysql_fetch_row($theme_select_result))
 			{
-				print("<option value=\"$themeID\">$theme_name\n");
+				print("<option value=\"$themeID\">$theme_name</option>\n");
 			}
 			print("</select></td><td><input type=\"submit\" value=\"Delete\"></td></tr>");
 			print("<input type=\"hidden\" name=\"action\" value=\"confirm\">\n</form>\n");
 		}
-		print("</table>\n<p>\n");
+//		print("</table>\n<p>\n");
 	}
+	print("</table>");
 }
 
 admin_footer();

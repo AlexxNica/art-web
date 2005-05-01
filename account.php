@@ -139,7 +139,7 @@ elseif (array_key_exists('username', $_SESSION))
 	print("<li><a href=\"/submit_background.php\">Submit a background</a></li>");
 	print("</ul>");
 	print("<div class=\"h2\">Theme submissions</div><div class=\"subtitle\">Status of submitted theme</div>");
-	$submissions_select_result = mysql_query("SELECT themeID,theme_name,category,status FROM incoming_theme WHERE userID = '{$_SESSION['userID']}' ");
+	$submissions_select_result = mysql_query("SELECT themeID,theme_name,category,status,comment FROM incoming_theme WHERE userID = '{$_SESSION['userID']}' ");
 	if (mysql_num_rows($submissions_select_result) < 1 )
 	{
 		print("<p>(None)</p>");
@@ -147,12 +147,15 @@ elseif (array_key_exists('username', $_SESSION))
 	else
 	{
 		print("<table><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
-		while (list($themeID,$theme_name,$category,$status) = mysql_fetch_row($submissions_select_result) )
+		while (list($themeID,$theme_name,$category,$status,$comment) = mysql_fetch_row($submissions_select_result) )
 		{
 			if ($status == "new")
 				$status = "pending";
 			elseif ($status == "rejected")
-				$status = "Removed from the submissions list. Please read the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> to find the possible reasons.";
+				if ($comment == "")
+					$status = "Removed from the submissions list. Please read the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> to find the possible reasons.";
+				else
+					$status = "Removed - " . html_parse_text($comment);
 
 			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$theme_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td>");
 			if ($status == "added")
@@ -163,7 +166,7 @@ elseif (array_key_exists('username', $_SESSION))
 	}
 	print("<br />");
 	print("<div class=\"h2\">Background submissions</div><div class=\"subtitle\">Status of submitted backgrounds</div>");
-	$submissions_select_result = mysql_query("SELECT backgroundID,background_name,category,status FROM incoming_background WHERE userID = '{$_SESSION['userID']}' ");
+	$submissions_select_result = mysql_query("SELECT backgroundID,background_name,category,status,comment FROM incoming_background WHERE userID = '{$_SESSION['userID']}' ");
 	if (mysql_num_rows($submissions_select_result) < 1 )
 	{
 		print("<p>(None)</p>");
@@ -171,12 +174,15 @@ elseif (array_key_exists('username', $_SESSION))
 	else
 	{
 		print("<table><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
-		while (list($backgroundID,$background_name,$category,$status) = mysql_fetch_row($submissions_select_result) )
+		while (list($backgroundID,$background_name,$category,$status,$comment) = mysql_fetch_row($submissions_select_result) )
 		{
 			if ($status == "new")
 				$status = "pending";
 			elseif ($status == "rejected")
-				$status = "Removed from the submissions list. Please read the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidlines</a> to find the possible reasons.";
+				if ($comment == "")
+					$status = "Removed from the submissions list. Please read the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> to find the possible reasons.";
+				else
+					$status = "Removed - " . html_parse_text($comment);
 			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$background_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td>");
 		}
 		print("</table>");

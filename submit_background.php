@@ -51,7 +51,6 @@ if(array_key_exists("submit",$_POST))
 			$incoming_background_insert_query .= "VALUES('','new','$date','$version','$license','$background_name','$category','{$_SESSION['userID']}','$parentID','$background_description')";
 			$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
 			$backgroundID = mysql_insert_id();
-			print_r($background_toggles);
 			foreach ($background_toggles as $key => $val)
 			{
 				list($type,$resolution)=explode("|",$key);

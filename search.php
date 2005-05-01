@@ -55,7 +55,6 @@ if($search_text && $search_type)
 		if(mysql_num_rows($user_select_result) > 0)
 		{
 			print("<div class=\"h2\">Search Results</div><ul>");
-			print $user_select_query;
 			while (list($userID, $realname) = mysql_fetch_row($user_select_result))
 			{
 				print("<li><a href=\"/users/$userID\">$realname</a></li>");

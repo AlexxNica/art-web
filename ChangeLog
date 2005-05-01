@@ -1,3 +1,25 @@
+2005-05-01  Thomas Wood <thos@gnome.org>, James McGuire <jamesm@bluebottle.com>
+
+	* account.php: Enabled comments on rejected items
+	* admin/add_background.php:
+	* admin/delete_theme.php:
+	* admin/edit_background.php:
+	* admin/edit_theme.php:
+	* admin/index.php:
+
+	XHTML fixes
+
+	* admin/show_submitted_backgrounds.php:
+	* admin/show_submitted_themes.php:
+
+	Enabled comments for rejected items
+
+	* default.css: Epiphany fix, added header images to css.
+	* includes/ago_headers.inc.php: Header images displayed using css
+	* includes/common.inc.php: Added is_ie()
+	* search.php: Removed query print.
+	* submit_background.php: Removed debug print.
+
 2005-04-30  James McGuire <jamesm@bluebottle.com>
 
 	* left_sidebar.css: Fix IE 6 problems

@@ -34,32 +34,32 @@ elseif (array_key_exists('logout', $_POST))
 if (array_key_exists('username', $_SESSION))
 {
 	create_title("Submissions","");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_backgrounds.php\">Submitted Backgrounds</a><br>");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_themes.php\">Submitted Themes</a><br>");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_backgrounds.php\">Submitted Backgrounds</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_themes.php\">Submitted Themes</a><br />");
 
 	create_title("Backgrounds","");
-	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_background.php\">Add A New Background</a><br>");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_background.php\">Edit A Background</a><br>");
-	print("&nbsp;&nbsp;&nbsp;Delete A Background<br>");
+	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_background.php\">Add A New Background</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_background.php\">Edit A Background</a><br />");
+	print("&nbsp;&nbsp;&nbsp;Delete A Background<br />");
 
 	create_title("Themes", "");
-	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_theme.php\">Add A New Theme</a><br>");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_theme.php\">Edit A Theme</a><br>");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_theme.php\">Delete A Theme</a><br>");
+	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_theme.php\">Add A New Theme</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_theme.php\">Edit A Theme</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_theme.php\">Delete A Theme</a><br />");
 
 	create_title("Comments","");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"comments.php\">Moderate Comments</a");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"comments.php\">Moderate Comments</a><br />");
 
 	create_title("News","");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"add_news_item.php\">Add a News Item</a><br>");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_news_item.php\">Edit News Item</a><br>");
-	print("&nbsp;&nbsp;&nbsp;Delete News Item<br>");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"add_news_item.php\">Add a News Item</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_news_item.php\">Edit News Item</a><br />");
+	print("&nbsp;&nbsp;&nbsp;Delete News Item<br />");
 
 	create_title("FAQ","");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"add_faq.php\">Add FAQ Entry</a><br>");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_faq.php\">Edit FAQ Entry</a><br>");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_faq.php\">Delete FAQ Entry</a><br>");
-	print("&nbsp;&nbsp;&nbsp;Re-Order FAQ<br>");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"add_faq.php\">Add FAQ Entry</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_faq.php\">Edit FAQ Entry</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_faq.php\">Delete FAQ Entry</a><br />");
+	print("&nbsp;&nbsp;&nbsp;Re-Order FAQ<br />");
 
 }
 else

@@ -487,6 +487,13 @@ function rating_bar($rating)
 	return $bar;
 }
 
+function is_ie() {
+	if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE") && !strstr($_SERVER['HTTP_USER_AGENT'], "Opera"))
+		return true;
+	else
+		return false;
+}
+
 function html_parse_text($comment)
 {
 	$comment = strip_tags($comment);
