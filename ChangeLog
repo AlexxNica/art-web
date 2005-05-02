@@ -1,3 +1,10 @@
+2005-05-01  James McGuire <jamesm@bluebottle.com>
+
+	* backgrounds: capitalize 'backgrounds'
+	* submit_theme.php: alphabetize, and added GTK+ Engines (gtk_engines).
+	* includes/ago_headers.inc.php: linked logos and titles on the sidebar
+	* includes/config.inc.php: alphabetize theme_config_array
+
 2005-05-01  Thomas Wood <thos@gnome.org>, James McGuire <jamesm@bluebottle.com>
 
 	* account.php: Enabled comments on rejected items

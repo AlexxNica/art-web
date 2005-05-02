@@ -35,7 +35,7 @@ function ago_header($title)
 	print("</div>\n");
 
 	print("<div id=\"sidebar\">\n");
-	print("\t<img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" class=\"sidebar\" /> Art\n");
+	print("\t<a href=\"/\"><img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" class=\"sidebar\" /> Art</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/\">News</a></li>\n");
 	print("\t\t<li><a href=\"/updates.php\">Updates</a></li>\n");
@@ -46,26 +46,33 @@ function ago_header($title)
 	print("\t\t<li><a href=\"http://gnomesupport.org/forums/index.php?c=6\">Forums</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br />\n");
-	if (is_ie())
-                print("\t<img src=\"/images/site/spacer.gif\" alt=\"Wallpapers\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/wallpaper.png', sizingMethod='scale');\" /> Backgrounds\n");
-	else
-		print("\t<img src=\"/images/site/wallpaper.png\" alt=\"Wallpapers\" class=\"sidebar\" /> Backgrounds\n");
+	print("\t<a href=\"/backgrounds\">");
 
+	if (is_ie())
+                print("<img src=\"/images/site/spacer.gif\" alt=\"Wallpapers\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/wallpaper.png', sizingMethod='scale');\" /> Backgrounds");
+	else
+		print("<img src=\"/images/site/wallpaper.png\" alt=\"Wallpapers\" class=\"sidebar\" /> Backgrounds");
+
+	print("</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/backgrounds/gnome/\">GNOME</a></li>\n");
 	print("\t\t<li><a href=\"/backgrounds/other/\">Other</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br />\n");
-	print("\t<img src=\"/images/site/theme.png\" alt=\"Themes\" class=\"sidebar\" /> Desktop Themes\n");
+	print("\t<a href=\"/themes\"><img src=\"/images/site/theme.png\" alt=\"Themes\" class=\"sidebar\" /> Desktop Themes</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/themes/gtk2/\">Application</a></li>\n");
 	print("\t\t<li><a href=\"/themes/metacity/\">Window Border</a></li>\n");
 	print("\t\t<li><a href=\"/themes/icon/\">Icons</a></li>\n");
 	print("\t</ul>\n");
+	print("\t<a href=\"/themes\">");
+	
 	if (is_ie())
-		print("\t<img src=\"/images/site/spacer.gif\" alt=\"Themes\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/Themes.png', sizingMethod='scale');\" /> Other Themes\n");
+		print("<img src=\"/images/site/spacer.gif\" alt=\"Themes\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/Themes.png', sizingMethod='scale');\" /> Other Themes");
 	else
-                print("\t<img src=\"/images/site/Themes.png\" alt=\"Themes\" class=\"sidebar\" /> Other Themes\n");
+                print("<img src=\"/images/site/Themes.png\" alt=\"Themes\" class=\"sidebar\" /> Other Themes");
+	
+	print("</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/themes/gdm_greeter/\">Login Manager</a></li>\n");
 	print("\t\t<li><a href=\"/themes/splash_screens/\">Splash Screen</a></li>\n");

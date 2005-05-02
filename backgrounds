@@ -27,7 +27,7 @@ $report = $_POST["report"];
 if ($unvalidated_category == "")
 {
 	ago_header("Backgrounds");
-	create_title("backgrounds", "Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.");
+	create_title("Backgrounds", "Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.");
 	
 	print("<ul>\n");
 	reset($background_config_array);

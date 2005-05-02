@@ -24,12 +24,7 @@ $background_config_array = array (
 /* themes */
 
 $theme_config_array = array (
-	"gdm_greeter" => array (
-		"name" => "Other Themes - Login Manager",
-		"url" => "/themes/gdm_greeter/",
-		"active" => "1",
-		"description" => "GDM Greeter themes change the appearance of the GNOME 2.0 login screen."
-		),
+
 /*	"gtk" => array (
 		"name" => "GTK+ 1.0",
 		"url" => "/themes/gtk/",
@@ -78,7 +73,13 @@ $theme_config_array = array (
 		"active" => "1",
 		"description" => "Collection of sounds to compliment the GNOME desktop"
 		),
-*/	"splash_screens" => array (
+*/	"gdm_greeter" => array (
+		"name" => "Other Themes - Login Manager",
+		"url" => "/themes/gdm_greeter/",
+		"active" => "1",
+		"description" => "GDM Greeter themes change the appearance of the GNOME 2.0 login screen."
+		),
+	"splash_screens" => array (
 		"name" => "Other Themes - Splash Screens",
 		"url" => "/themes/splash_screens/",
 		"active" => "1",
