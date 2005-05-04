@@ -5,23 +5,13 @@ require("common.inc.php");
 require("ago_headers.inc.php");
 
 // superglobal stuff
-if (!get_magic_quotes_gpc())
-{
-	$theme_name = mysql_real_escape_string($_POST["theme_name"]);
-	$theme_author = mysql_real_escape_string($_POST["theme_author"]);
-	$theme_url = mysql_real_escape_string($_POST["theme_url"]);
-	$theme_description = mysql_real_escape_string($_POST["theme_description"]);
-} else
-{
-	$theme_name = $_POST["theme_name"];
-	$theme_author = $_POST["theme_author"];
-	$theme_url = $_POST["theme_url"];
-	$theme_description = $_POST["theme_description"];
-}
-
+$theme_name = escape_string($_POST["theme_name"]);
+$theme_author = escape_string($_POST["theme_author"]);
+$theme_url = escape_string($_POST["theme_url"]);
+$theme_description = escape_string($_POST["theme_description"]);
 $category = validate_input_array_default($_POST["category"], array_keys($theme_config_array), "");
 $license = validate_input_array_default($_POST["license"], array_keys($license_config_array), "");
-$version = validate_input_regexp_default($_POST["version"], "^[0-9]+$", "0");
+$version = validate_input_regexp_default($_POST["version"], "^[0-9\.]+$", "0");
 $update = validate_input_regexp_default($_POST["update"], "^[0-9]+$", "");
 $parentID = validate_input_regexp_default($_POST["parentID"], "^[0-9]+$", "");
 

@@ -16,15 +16,13 @@ if($_POST["add_theme"])
 	$month = validate_input_regexp_default ($_POST["month"], "^[0-9]+$", "0");
 	$day = validate_input_regexp_default ($_POST["day"], "^[0-9]+$", "0");
 	$year = validate_input_regexp_default ($_POST["year"], "^[0-9]+$", "0");
-
-
-	$theme_name = mysql_real_escape_string($_POST["theme_name"]);
+	$theme_name = escape_string($_POST["theme_name"]);
 	$category = validate_input_array_default($_POST["category"], array_keys($theme_config_array), "");
-	$description = mysql_real_escape_string($_POST["description"]);
-	$thumbnail_filename = mysql_real_escape_string($_POST["thumbnail_filename"]);
-	$small_thumbnail_filename = mysql_real_escape_string($_POST["small_thumbnail_filename"]);
-	$download_filename = mysql_real_escape_string($_POST["download_filename"]);
-	$license = mysql_real_escape_string($_POST["license"]);
+	$description = escape_string($_POST["description"]);
+	$thumbnail_filename = escape_string($_POST["thumbnail_filename"]);
+	$small_thumbnail_filename = escape_string($_POST["small_thumbnail_filename"]);
+	$download_filename = escape_string($_POST["download_filename"]);
+	$license = escape_string($_POST["license"]);
 
 	if($theme_name && $userID && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename && $download_filename )
 	{

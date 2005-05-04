@@ -593,6 +593,15 @@ function validate_input_array_error ($input, $array)
 	}
 }
 
+function escape_string($foo)
+{
+	if (!get_magic_quotes_gpc())
+		return mysql_real_escape_string($foo);
+	else
+		return $foo;
+}
+
+
 function validate_submit_url($url)
 {
         return ereg("^(http(s){0,1}://|ftp://).*(\.tar\.gz|\.tar\.bz2|\.tgz|\.png|\.jpg)$", $url);

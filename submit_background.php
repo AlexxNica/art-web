@@ -5,21 +5,14 @@ require("common.inc.php");
 require("ago_headers.inc.php");
 
 // superglobal stuff
-if (!get_magic_quotes_gpc())
-{
-	$background_name = mysql_real_escape_string($_POST["background_name"]);
-	$background_url = mysql_real_escape_string($_POST["background_url"]);
-	$background_description = mysql_real_escape_string($_POST["background_description"]);
-} else
-{
-	$background_name = $_POST["background_name"];
-	$background_url = $_POST["background_url"];
-	$background_description = $_POST["background_description"];
-}
+$background_name = escape_string($_POST["background_name"]);
+$background_url = escape_string($_POST["background_url"]);
+$background_description = escape_string($_POST["background_description"]);
+
 $category = validate_input_array_default($_POST["category"], array("gnome", "other"), "");
 $license = validate_input_array_default($_POST["license"], array_keys($license_config_array), "");
 $parentID = validate_input_regexp_default ($_POST["parentID"], "^[0-9]+$", "0");
-$version = validate_input_regexp_default($_POST["version"], "^[0-9]+$", "0");
+$version = validate_input_regexp_default($_POST["version"], "^[0-9\.]+$", "0");
 $background_toggles = $_POST['background_toggles']; // This is an array, which is validated later
 $backgrounds = $_POST['backgrounds']; // This is an array, which is validated later
 

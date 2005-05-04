@@ -3,8 +3,8 @@
 function ago_header($title)
 {
 	ini_set("session.use_only_cookies", "1");
-
-	session_set_cookie_params(604800); // Set cookie lifetime to one week
+	ini_set("session.gc_maxlifetime", "86400"); // set session data lifetime to 48 hours
+	session_set_cookie_params(86400); // Set cookie lifetime to 48 hours
 	session_start();
 	header("Content-Type: text/html; charset=ISO-8859-1");
 	print('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'."\n");
@@ -22,7 +22,7 @@ function ago_header($title)
 	print("</head>\n");
 	print("<body>\n");
 	print("<div id=\"header\">\n");
-	print("\t<a href=\"/\"><div id=\"header-left\">&nbsp;</div></a><a href=\"/\"><div id=\"header-right\">&nbsp;</div></a>\n");
+	print("\t<div id=\"header-left\"><a href=\"/\">&nbsp;</a></div><div id=\"header-right\"><a href=\"/\">&nbsp;</a></div>\n");
 	print("\t<div id=\"header-links\">\n");
 	print("\t\t<a href=\"http://www.gnome.org/about/\">About GNOME</a> &middot;\n");
 	print("\t\t<a href=\"http://www.gnome.org/start/stable/\">Download</a> &middot;\n");

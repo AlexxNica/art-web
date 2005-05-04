@@ -1,3 +1,14 @@
+2005-05-04  Thomas Wood  <thos@gnome.org>
+
+	* includes/ago_headers.inc.php: Set session data lifetime to 48 hours
+	* includes/common.inc.php: New string escape function to check magic
+	quotes configuration
+	* admin/add_theme.php:
+	* submit_background.php:
+	* submit_theme.php:
+
+	Use new string escape function, Fix version validation
+
 2005-05-01  James McGuire <jamesm@bluebottle.com>
 
 	* backgrounds: capitalize 'backgrounds'
