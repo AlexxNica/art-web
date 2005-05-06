@@ -10,9 +10,12 @@ function ago_header($title)
 	print('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'."\n");
 //	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
 //	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-	print("<html>\n");
+	print("<html lang=\"en\">\n");
 	print("<head>\n");
 	print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\" />\n");
+	print("<meta name=\"description\" content=\"Themes and backgrounds for use with the GNOME desktop environment\" />\n");
+	print("<meta name=\"author\" content=\"The art.gnome.org team\" />\n");
+	print("<meta name=\"keywords\" content=\"art.gnome.org art backgrounds wallpapers images icons gdm linux artwork splash screens download screen metacity gtk login manager engines themes gnome desktop environment\" />\n");
 	print("<link type=\"text/css\" rel=\"stylesheet\" title=\"Default\" href=\"/default.css\" />\n");
 	print("<link type=\"text/css\" rel=\"alternate stylesheet\" title=\"Left sidebar\" href=\"/left-sidebar.css\" />\n");
 	print("<link rel=\"icon\" type=\"image/png\" href=\"http://www.gnome.org/img/logo/foot-16.png\" />\n");
@@ -35,7 +38,7 @@ function ago_header($title)
 	print("</div>\n");
 
 	print("<div id=\"sidebar\">\n");
-	print("\t<a href=\"/\"><img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" class=\"sidebar\" /> Art</a>\n");
+	print("\t<a href=\"/\"><img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" height=\"48\" width=\"48\" class=\"sidebar\" /> Art</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/\">News</a></li>\n");
 	print("\t\t<li><a href=\"/updates.php\">Updates</a></li>\n");
@@ -49,9 +52,9 @@ function ago_header($title)
 	print("\t<a href=\"/backgrounds\">");
 
 	if (is_ie())
-                print("<img src=\"/images/site/spacer.gif\" alt=\"Wallpapers\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/wallpaper.png', sizingMethod='scale');\" /> Backgrounds");
+                print("<img src=\"/images/site/spacer.gif\" alt=\"Wallpapers\" height=\"48\" width=\"48\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/wallpaper.png', sizingMethod='scale');\" /> Backgrounds");
 	else
-		print("<img src=\"/images/site/wallpaper.png\" alt=\"Wallpapers\" class=\"sidebar\" /> Backgrounds");
+		print("<img src=\"/images/site/wallpaper.png\" alt=\"Wallpapers\" height=\"48\" width=\"48\" class=\"sidebar\" /> Backgrounds");
 
 	print("</a>\n");
 	print("\t<ul>\n");
@@ -59,7 +62,7 @@ function ago_header($title)
 	print("\t\t<li><a href=\"/backgrounds/other/\">Other</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br />\n");
-	print("\t<a href=\"/themes\"><img src=\"/images/site/theme.png\" alt=\"Themes\" class=\"sidebar\" /> Desktop Themes</a>\n");
+	print("\t<a href=\"/themes\"><img src=\"/images/site/theme.png\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" /> Desktop Themes</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/themes/gtk2/\">Application</a></li>\n");
 	print("\t\t<li><a href=\"/themes/metacity/\">Window Border</a></li>\n");
@@ -68,9 +71,9 @@ function ago_header($title)
 	print("\t<a href=\"/themes\">");
 	
 	if (is_ie())
-		print("<img src=\"/images/site/spacer.gif\" alt=\"Themes\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/Themes.png', sizingMethod='scale');\" /> Other Themes");
+		print("<img src=\"/images/site/spacer.gif\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/Themes.png', sizingMethod='scale');\" /> Other Themes");
 	else
-                print("<img src=\"/images/site/Themes.png\" alt=\"Themes\" class=\"sidebar\" /> Other Themes");
+                print("<img src=\"/images/site/Themes.png\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" /> Other Themes");
 	
 	print("</a>\n");
 	print("\t<ul>\n");
@@ -92,8 +95,8 @@ function ago_header($title)
 	{
 		print("<div style=\"text-align: center\">\n");
 		print("\t<form action=\"/account.php\" method=\"post\"><p>\n");
-		print("\t<input name=\"username\" class=\"username\" size=\"10\" /><br />\n");
-		print("\t<input name=\"password\" type=\"password\" class=\"password\" size=\"10\" /><br />\n");
+		print("\t<label for=\"username\">User</label> <input id=\"username\" name=\"username\" class=\"username\" size=\"10\" /><br />\n");
+		print("\t<label for=\"password\">Pass</label> <input id=\"password\" name=\"password\" type=\"password\" class=\"password\" size=\"10\" /><br />\n");
 		print("\t<input type=\"hidden\" value=\"{$_SERVER['PHP_SELF']}\" name=\"referer\" />\n");
 		print("\t<input type=\"submit\" value=\"Login\" name=\"login\" />\n");
 		print("\t</p></form>\n");
