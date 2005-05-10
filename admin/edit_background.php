@@ -4,7 +4,7 @@ require("common.inc.php");
 require("includes/headers.inc.php");
 
 
-$resolution_array = Array("1024x768" => "1024x768", "1280x1024" => "1280x1024", "1600x1200" => "1600x1200");
+$resolution_array = Array("1024x768" => "1024x768", "1280x1024" => "1280x1024", "1400x1050" => "1400x1050", "1600x1200" => "1600x1200", "1680x1050" => "1680x1050", "1920x1200" => "1920x1200");
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
@@ -97,14 +97,14 @@ elseif($action == "edit")
 		list($year,$month,$day) = explode("-",$release_date);
 		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 		print("<table border=\"0\">\n");
-		print("<tr><td><strong>Background Name:</strong></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\" /></td></tr>\n");
-		print("<tr><td><strong>Category</strong></td><td>");print_select_box("category", Array("gnome"=>"GNOME","other"=>"Other"), $category);print("</td></tr>\n");
+		print("<tr><td><strong><label for=\"background_name\">Background Name</label>:</strong></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\" id=\"background_name\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"category\">Category</label></strong></td><td>");print_select_box("category", Array("gnome"=>"GNOME","other"=>"Other"), $category);print("</td></tr>\n");
 		$user_select = mysql_query("SELECT userID,username FROM user");
 		while (list($uid, $uname) = mysql_fetch_row($user_select)) $user_array[$uid] = $uname;
-		print("<tr><td><strong>UserID:</strong></td><td>");print_select_box("userID", $user_array, $userID);print("</td></tr>\n");
-		print("<tr><td><strong>License</strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
-		print("<tr><td><strong>Version</strong></td><td><input type=\"text\" name=\"version\" value=\"$version\" /></td></tr>\n");
-		print("<tr><td><strong>Variation of </strong></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>");
+		print("<tr><td><strong><label for=\"userID\">UserID:</label></strong></td><td>");print_select_box("userID", $user_array, $userID);print("</td></tr>\n");
+		print("<tr><td><strong><label for=\"license\">License</label></strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
+		print("<tr><td><strong><label for=\"version\">Version</label></strong></td><td><input type=\"text\" name=\"version\" id=\"version\" value=\"$version\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"variation\">Variation of </label></strong></td><td><select name=\"parentID\" id=\"variation\"><option value=\"0\">N/A</option>");
 
 		$background_var_select_result = mysql_query("SELECT backgroundID,background_name,category FROM background WHERE userID=$userID AND parent=0 ORDER BY category");
 		while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($background_var_select_result))
@@ -117,15 +117,15 @@ elseif($action == "edit")
 		}
 		print("</select></td></tr>");
 
-		print("<tr><td><strong>Release Date:</strong></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlength=\"2\" />/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlength=\"2\" />/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlength=\"4\" /></td></tr>\n");
-		print("<tr><td><strong>Background Description:</strong></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap>$background_description</textarea></td></tr>\n");
-		print("<tr><td><strong>Thumbnail Filename:</strong></td><td><input type=\"text\" name=\"thumbnail_filename\" size=\"40\" value=\"$thumbnail_filename\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"month\">Release Date</label>:</strong></td><td><input type=\"text\" name=\"month\" id=\"month\" value=\"$month\" size=\"2\" maxlength=\"2\" />/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlength=\"2\" />/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlength=\"4\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"background_description\">Background Description</label>:</strong></td><td><textarea name=\"background_description\" id=\"background_description\" cols=\"40\" rows=\"5\" wrap>$background_description</textarea></td></tr>\n");
+		print("<tr><td><strong><label for=\"thumbnail_filename\">Thumbnail Filename</label>:</strong></td><td><input type=\"text\" name=\"thumbnail_filename\" id=\"thumbnail_filename\" size=\"40\" value=\"$thumbnail_filename\" /></td></tr>\n");
 
 		$background_resolution_result = mysql_query("SELECT background_resolutionID,resolution,filename FROM background_resolution WHERE backgroundID=$backgroundID");
 		$i = 0;
 		while($resolution_row = mysql_fetch_array($background_resolution_result)) {
 			extract($resolution_row);
-			print("<tr><td><strong>Resolution #$i:</strong></td>");
+			print("<tr><td><strong><label for=\"resolution[$i]\">Resolution #$i</label>:</strong></td>");
 			print("<td>");print_select_box("resolution[$i]", $resolution_array, $resolution);
 			print("&nbsp;<input type=\"text\" name=\"filename[$i]\" size=\"40\" value=\"$filename\" />");
 			print("<input type=\"hidden\" name=\"background_resolutionID[$i]\" value=\"$background_resolutionID\" /></td></tr>\n");
@@ -150,7 +150,7 @@ elseif($category != "")
 	else
 	{
 		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-		print("<div><strong>$category</strong><br /><select name=\"backgroundID\" size=\"24\">\n");
+		print("<div><strong><label for=\"$category\">$category</label></strong><br /><select name=\"backgroundID\" id=\"$category\" size=\"24\">\n");
 		while(list($backgroundID,$background_name) = mysql_fetch_row($background_select_result))
 		{
 			print("<option value=\"$backgroundID\">$backgroundID: ".html_parse_text($background_name)."</option>\n");
@@ -172,7 +172,7 @@ else
 	print("</ul>");
 	print("<strong>Edit Background</strong>\n");
 	print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"get\"><p>\n");
-	print("BackgroundID: <input type=\"text\" name=\"backgroundID\" />\n");
+	print("<label for=\"backgroundID\">BackgroundID</label>: <input type=\"text\" name=\"backgroundID\" id=\"backgroundID\" />\n");
 	print("<input type=\"hidden\" name=\"action\" value=\"edit\" />\n");
 	print("<input type=\"submit\" value=\"edit\" />\n");
 	print("</p></form>\n");

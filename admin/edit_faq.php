@@ -49,13 +49,13 @@ elseif($action == "edit")
 		$question = htmlspecialchars($question);
 		$answer = htmlspecialchars($answer);
 		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-		print("<p>Question:<br>\n");
-		print("<textarea name=\"question\" cols=\"60\" rows=\"6\">$question</textarea>\n");
-		print("<p>Answer:<br>\n");
-		print("<textarea name=\"answer\" cols=\"60\" rows=\"16\">$answer</textarea>\n");
-		print("<input type=\"hidden\" name=\"action\" value=\"write\">\n");
-		print("<input type=\"hidden\" name=\"faqID\" value=\"$faqID\">\n");
-		print("<p><input type=\"submit\" value=\"Update FAQ\">\n");
+		print("<p><label for=\"question\"><strong>Question:</strong></label><br />\n");
+		print("<textarea name=\"question\" id=\"question\" cols=\"60\" rows=\"6\">$question</textarea></p>\n");
+		print("<p><label for=\"answer\"><strong>Answer:</strong></label><br />\n");
+		print("<textarea name=\"answer\" id=\"answer\" cols=\"60\" rows=\"16\">$answer</textarea>\n");
+		print("<input type=\"hidden\" name=\"action\" value=\"write\" />\n");
+		print("<input type=\"hidden\" name=\"faqID\" value=\"$faqID\" /></p>\n");
+		print("<p><input type=\"submit\" value=\"Update FAQ\" /></p>\n");
 		print("</form>\n");
 	}
 }
@@ -73,7 +73,7 @@ else
 		{
 			$question = html_parse_text($question);
 			$answer = html_parse_text($answer);
-			print("<li><span class=\"yellow-text\">$question [<a href=\"" . $_SERVER["PHP_SELF"] . "?action=edit&faqID=$faqID\">Edit</a>]</span>\n<p>$answer\n\n");
+			print("<li><span class=\"yellow-text\">$question [<a href=\"" . $_SERVER["PHP_SELF"] . "?action=edit&amp;faqID=$faqID\">Edit</a>]</span>\n<p>$answer</p>\n</li>\n\n");
 		}
 		print("</ol>\n");
 	}

@@ -32,11 +32,11 @@ if($HTTP_POST_VARS)
 else
 {
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-	print("<p>Question:<br>\n");
-	print("<textarea name=\"question\" cols=\"60\" rows=\"6\"></textarea>\n");
-	print("<p>Answer:<br>\n");
-	print("<textarea name=\"answer\" cols=\"60\" rows=\"16\"></textarea>\n");
-	print("<p><input type=\"submit\" value=\"Add FAQ\">\n");
+	print("<p><label for=\"question\"><strong>Question:</strong></label><br />\n");
+	print("<textarea name=\"question\" cols=\"60\" rows=\"6\" id=\"question\"></textarea></p>\n");
+	print("<p><label for=\"answer\"><strong>Answer:</strong></label><br />\n");
+	print("<textarea name=\"answer\" id=\"answer\" cols=\"60\" rows=\"16\"></textarea></p>\n");
+	print("<p><input type=\"submit\" value=\"Add FAQ\" /></p>\n");
 	print("</form>\n");
 }
 admin_footer();

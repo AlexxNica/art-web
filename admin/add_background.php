@@ -69,11 +69,11 @@ else
 	list($month,$day,$year) = explode("/",$date);
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
-	print("<tr><td><b>Background Name:</b></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\"></td></tr>\n");
-	print("<tr><td><b>Category</b></td><td>");print_select_box("category", Array("gnome" => "GNOME", "other" => "OTHER"), $category); print("</td></tr>\n");
-	print("<tr><td><b>License</b></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
-	print("<tr><td><b>Version:</b></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
-	print("<tr><td><b>Variation</b></td><td><select name=\"parentID\"><option value=\"\">N/A</option>");
+	print("<tr><td><strong>Background Name:</strong></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\"></td></tr>\n");
+	print("<tr><td><strong>Category</strong></td><td>");print_select_box("category", Array("gnome" => "GNOME", "other" => "OTHER"), $category); print("</td></tr>\n");
+	print("<tr><td><strong>License</strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
+	print("<tr><td><strong>Version:</strong></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
+	print("<tr><td><strong>Variation</strong></td><td><select name=\"parentID\"><option value=\"\">N/A</option>");
 	$background_select_result = mysql_query("SELECT backgroundID,background_name FROM background WHERE userID=$userID AND parent=0");
 	while(list($backID,$back_name)=mysql_fetch_row($background_select_result))
 	{
@@ -84,16 +84,16 @@ else
 		print("<option$selected value=\"$backID\">$back_name</option>");
 	}
 	print("</select></td></tr>\n");
-	print("<tr><td><b>User:</b></td><td><input type=\"hidden\" name=\"userID\" value=\"$userID\">$userID</td></tr>\n");
-	print("<tr><td><b>Release Date:</b></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
-	print("<tr><td><b>Background Description:</b></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap>$background_description</textarea></td></tr>\n");
-	print("<tr><td><b>Thumbnail Filename:</b></td><td>");file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/backgrounds");print("</td></tr>\n");
+	print("<tr><td><strong>User:</strong></td><td><input type=\"hidden\" name=\"userID\" value=\"$userID\">$userID</td></tr>\n");
+	print("<tr><td><strong>Release Date:</strong></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
+	print("<tr><td><strong>Background Description:</strong></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap>$background_description</textarea></td></tr>\n");
+	print("<tr><td><strong>Thumbnail Filename:</strong></td><td>");file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/backgrounds");print("</td></tr>\n");
 	print("</table>\n<p>\n");
 
 	if ($submitID)
 	{
 		print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\"  >");
-		print("<tr><td><b>X</b></td><td><b>Type/Resolution</b></td><td><b>Filename</b></td></tr>\n");
+		print("<tr><td><strong>X</strong></td><td><strong>Type/Resolution</strong></td><td><strong>Filename</strong></td></tr>\n");
 		$background_resolution_result = mysql_query("SELECT type,resolution,filename FROM incoming_background_resolution WHERE backgroundID=$submitID");
 		while (list($type,$resolution,$filename) = mysql_fetch_row($background_resolution_result))
 		{
@@ -104,7 +104,7 @@ else
 	else
 	{
 		print("<table border=\"0\">\n");
-		print("<tr><td><b>X</b></td><td><b>Type/Resolution</b></td><td><b>Filename</b></td></tr>\n");
+		print("<tr><td><strong>X</strong></td><td><strong>Type/Resolution</strong></td><td><strong>Filename</strong></td></tr>\n");
 		print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1024x768]\"></td><td>JPG - 1024x768</td><td><input type=\"text\" name=\"backgrounds[jpg|1024x768]\"></td></tr>\n");
 		print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1280x1024]\"></td><td>JPG - 1280x1024</td><td><input type=\"text\" name=\"backgrounds[jpg|1280x1024]\"></td></tr>\n");
 		print("<tr><td><input type=\"checkbox\" name=\"background_toggles[jpg|1400x1050]\"></td><td>JPG - 1400x1050</td><td><input type=\"text\" name=\"backgrounds[jpg|1400x1050]\"></td></tr>\n");

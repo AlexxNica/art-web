@@ -34,22 +34,23 @@ elseif($action == "confirm")
 	 print("Are you sure you want to delete \"$question\" (faqID: $faqID) from the database?");
 	 print("<p>\n");
 	 print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-	 print("<input type=\"submit\" value=\"Continue\">\n");
-	 print("<input type=\"hidden\" name=\"faqID\" value=\"$faqID\">\n");
-	 print("<input type=\"hidden\" name=\"action\" value=\"delete\">\n");
+	 print("<input type=\"submit\" value=\"Continue\" />\n");
+	 print("<input type=\"hidden\" name=\"faqID\" value=\"$faqID\" />\n");
+	 print("<input type=\"hidden\" name=\"action\" value=\"delete\" />\n");
 	 print("</form>\n");
 }
 else
 {
-	 $faq_select_result = mysql_query("SELECT faqID,question FROM faq ORDER by faqID");
-	 print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-	 print("<select name=\"faqID\" size=\"5\">\n");
+	$faq_select_result = mysql_query("SELECT faqID,question FROM faq ORDER by faqID");
+	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
+	print("<div><label for=\"faq\"><strong>Delete FAQ</strong></label><br />");
+	print("<select name=\"faqID\" size=\"5\" id=\"faq\">\n");
 	while(list($faqID,$question) = mysql_fetch_row($faq_select_result))
 	{
-		print("<option value=\"$faqID\">$question\n");
+		print("<option value=\"$faqID\">$faqID - $question</option>\n");
 	}
-	print("</select><input type=\"submit\" value=\"Delete\">");
-	print("<input type=\"hidden\" name=\"action\" value=\"confirm\">\n</form>\n");
+	print("</select><br /><input type=\"submit\" value=\"Delete\" />");
+	print("<input type=\"hidden\" name=\"action\" value=\"confirm\" />\n</div></form>\n");
 }
 
 admin_footer();

@@ -121,16 +121,14 @@ elseif (array_key_exists('username', $_SESSION))
 	$info = htmlspecialchars ($info, ENT_QUOTES);
 	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\" />");
 	print("<table>\n");
-	print("<tr><th>Password</th><td><input value=\"\" type=\"password\" name=\"password\" size=\"20\" /> (leave blank to remain unchanged)</td></tr>\n");
-	print("<tr><th>Name</th><td><input value=\"$realname\" name=\"realname\" size=\"20\" /></td></tr>\n");
-	print("<tr><th>E-mail</th><td><input value=\"$email\" name=\"email\" size=\"20\" /></td></tr>\n");
-	print("<tr><th>Homepage</th><td><input value=\"$homepage\" name=\"homepage\" size=\"20\" /></td></tr>\n");
-	print("<tr><th>Info</th><td><textarea name=\"info\" rows=\"2\" cols=\"20\">$info</textarea></td></tr>\n");
+	print("<tr><th><label for=\"password\">Password</label></th><td><input value=\"\" type=\"password\" name=\"password\" id=\"password\" size=\"20\" /> (leave blank to remain unchanged)</td></tr>\n");
+	print("<tr><th><label for=\"realname\">Name</label></th><td><input value=\"$realname\" name=\"realname\" id=\"realname\" size=\"20\" /></td></tr>\n");
+	print("<tr><th><label for=\"email\">E-mail</label></th><td><input value=\"$email\" name=\"email\" id=\"email\" size=\"20\" /></td></tr>\n");
+	print("<tr><th><label for=\"homepage\">Homepage</label></th><td><input value=\"$homepage\" name=\"homepage\" id=\"homepage\" size=\"20\" /></td></tr>\n");
+	print("<tr><th><label for=\"info\">Info</label></th><td><textarea name=\"info\" rows=\"2\" cols=\"20\" id=\"info\">$info</textarea></td></tr>\n");
 	print("<tr><td colspan=\"2\"><br /><input type=\"submit\" value=\"Change\" name=\"change_profile\" /></td></tr>");
+	print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Logout\" name=\"logout\" /></td></tr>");
 	print("</table>\n");
-	print("</form>");
-	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\" />");
-	print("<input type=\"submit\" value=\"Logout\" name=\"logout\" />");
 	print("</form>");
 
 	create_title("Submissions","");
@@ -159,7 +157,7 @@ elseif (array_key_exists('username', $_SESSION))
 
 			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$theme_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td>");
 			if ($status == "added")
-				print ("<td><form action=\"/submit_theme.php\" method=\"post\"><input type=\"hidden\" name=\"update\" value=\"$themeID\" /><input type=\"submit\" value=\"Update\"/></form></td>");
+				print ("<td><form action=\"/submit_theme.php\" method=\"post\"><div><input type=\"hidden\" name=\"update\" value=\"$themeID\" /><input type=\"submit\" value=\"Update\"/></div></form></td>");
 			print ("</tr>");
 		}
 		print("</table>");
@@ -183,7 +181,7 @@ elseif (array_key_exists('username', $_SESSION))
 					$status = "Removed from the submissions list. Please read the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> to find the possible reasons.";
 				else
 					$status = "Removed - " . html_parse_text($comment);
-			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$background_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td>");
+			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$background_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td></tr>");
 		}
 		print("</table>");
 	}
@@ -194,8 +192,8 @@ else
 	create_title("Please log in","Log in to access your account");
 	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
 	print("<table>\n");
-	print("<tr><td>Username:</td><td><input name=\"username\" class=\"username\" /></td></tr>\n");
-	print("<tr><td>Password:</td><td><input name=\"password\" type=\"password\" class=\"password\" /></td></tr>\n");
+	print("<tr><td><label for=\"username\">Username</label>:</td><td><input name=\"username\" class=\"username\" /></td></tr>\n");
+	print("<tr><td><label for=\"password\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" /></td></tr>\n");
 	print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td></tr>\n");
 	print("</table>\n");
 	print("</form>\n");
@@ -204,10 +202,10 @@ else
 	create_title("Register","Register as a new user for art.gnome.org");
 	print("<form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">");
 	print("<table>");
-	print("<tr><td>Username:</td><td><input name=\"username\" /></td></tr>");
-	print("<tr><td>Password:</td><td><input name=\"password\" type=\"password\" /></td></tr>");
-	print("<tr><td>Realname:</td><td><input name=\"realname\" /></td></tr>");
-	print("<tr><td>E-mail:</td><td><input name=\"email\" /></td></tr>");
+	print("<tr><td><label for=\"nusername\">Username</label>:</td><td><input name=\"username\" id=\"nusername\" /></td></tr>");
+	print("<tr><td><label for=\"npassword\">Password</label>:</td><td><input name=\"password\" id=\"npassword\" type=\"password\" /></td></tr>");
+	print("<tr><td><label for=\"realname\">Realname</label>:</td><td><input name=\"realname\" id=\"realname\" /></td></tr>");
+	print("<tr><td><label for=\"email\">E-mail</label>:</td><td><input name=\"email\" id=\"email\" /></td></tr>");
 	print("<tr><td colspan=\"2\"><input type=\"submit\" name=\"register\" value=\"Register\" /></td></tr>");
 	print("</table>");
 	print("</form>");

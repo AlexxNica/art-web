@@ -56,8 +56,8 @@ elseif($action == "edit")
 		list($year,$month,$day) = explode("-",$release_date);
 		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 		print("<table border=\"0\">\n");
-		print("<tr><td><strong>Theme Name:</strong></td><td><input type=\"text\" name=\"theme_name\" size=\"40\" value=\"$theme_name\" /></td></tr>\n");
-		print("<tr><td><strong>Theme Category:</strong></td><td><select name=\"theme_category\">\n");
+		print("<tr><td><strong><label for=\"theme_name\">\"Theme Name</label>:</strong></td><td><input type=\"text\" name=\"theme_name\" id=\"theme_name\" size=\"40\" value=\"$theme_name\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"theme_category\">Theme Category</label>:</strong></td><td><select name=\"theme_category\" id=\"theme_category\">\n");
 		for($count=0;$count<count($theme_categories);$count++)
 		{
 			$loop_theme_category = $theme_categories[$count];
@@ -70,10 +70,10 @@ elseif($action == "edit")
 		print("</select></td></tr>\n");
 		$user_select = mysql_query("SELECT userID,username FROM user");
 		while (list($uid, $uname) = mysql_fetch_row($user_select)) $user_array[$uid] = $uname;
-		print("<tr><td><strong>UserID:</strong></td><td>");print_select_box("userID", $user_array, $userID);print("</td></tr>\n");
-		print("<tr><td><strong>License</strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
-		print("<tr><td><strong>Version</strong></td><td><input type=\"text\" name=\"version\" value=\"$version\" /></td></tr>\n");
-		print("<tr><td><strong>Variation of </strong></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>");
+		print("<tr><td><strong><label for=\"userID\">UserID</label>:</strong></td><td>");print_select_box("userID", $user_array, $userID);print("</td></tr>\n");
+		print("<tr><td><strong><label for=\"license\">License</label></strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
+		print("<tr><td><strong><label for=\"version\">Version</label></strong></td><td><input type=\"text\" name=\"version\" id=\"version\" value=\"$version\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"variation\">Variation of</label> </strong></td><td><select name=\"parentID\" id=\"variation\"><option value=\"0\">N/A</option>");
 
 		$theme_var_select_result = mysql_query("SELECT themeID,theme_name,category FROM theme WHERE userID=$userID AND parent=0 ORDER BY category");
 		while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($theme_var_select_result))
@@ -86,25 +86,24 @@ elseif($action == "edit")
 		}
 		print("</select></td></tr>");
 
-		print("<tr><td><strong>Release Date:</strong></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlength=\"2\" />/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlength=\"2\" />/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlength=\"4\" /></td></tr>\n");
-		print("<tr><td><strong>Description:</strong></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
-		print("<tr><td><strong>Thumbnail Filename:</strong></td><td><input type=\"text\" name=\"thumbnail_filename\" size=\"40\" value=\"$thumbnail_filename\" /></td></tr>\n");
-		print("<tr><td><strong>Small Thumbnail Filename:</strong></td><td><input type=\"text\" name=\"small_thumbnail_filename\" size=\"40\" value=\"$small_thumbnail_filename\" /></td></tr>\n");
-		print("<tr><td><strong>Download Filename:</strong></td><td><input type=\"text\" name=\"download_filename\" size=\"40\" value=\"$download_filename\" /></td></tr>\n");
-		print("</table>\n<p>\n");
+		print("<tr><td><strong><label for=\"month\">Release Date</label>:</strong></td><td><input type=\"text\" id=\"month\" name=\"month\" value=\"$month\" size=\"2\" maxlength=\"2\" />/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlength=\"2\" />/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlength=\"4\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"description\">Description</label>:</strong></td><td><textarea name=\"description\" id=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
+		print("<tr><td><strong><label for=\"thumbnail_filename\">Thumbnail Filename</label>:</strong></td><td><input type=\"text\" name=\"thumbnail_filename\" id=\"thumbnail_filename\" size=\"40\" value=\"$thumbnail_filename\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"small_thumbnail_filename\">Small Thumbnail Filename</label>:</strong></td><td><input type=\"text\" name=\"small_thumbnail_filename\" id=\"small_thumbnail_filename\" size=\"40\" value=\"$small_thumbnail_filename\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"download_filename\">Download Filename</label>:</strong></td><td><input type=\"text\" name=\"download_filename\" id=\"download_filename\" size=\"40\" value=\"$download_filename\" /></td></tr>\n");
+		print("<tr><td><input type=\"checkbox\" name=\"update_timestamp_toggle\" />Update Timestamp");
 		print("<input type=\"hidden\" name=\"action\" value=\"write\" />\n");
 		print("<input type=\"hidden\" name=\"themeID\" value=\"$themeID\" />\n");
-		print("</p>\n");
-		
-		print("<p>\n<input type=\"checkbox\" name=\"update_timestamp_toggle\" />Update Timestamp</p>");
-		print("<p><input type=\"submit\" value=\"Update Theme\" /></p>");
-		print("</form>");
+		print("</td></tr>\n");
+		print("<tr><td><input type=\"submit\" value=\"Update Theme\" /></td></tr>\n");
+		print("</table>\n");
+		print("</form>\n");
  	}
 }
 elseif (isset($category))
 {
 		$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE category='$category'  ORDER BY themeID");
-		print("<strong>$category</strong><br />");
+		print("<strong><label for=\"$category\">$category</label></strong><br />");
 		if(mysql_num_rows($theme_select_result)==0)
 		{
 			print("None\n");
@@ -112,7 +111,7 @@ elseif (isset($category))
 		else
 		{
 			print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\"><div>\n");
-			print("<select name=\"themeID\" size=\"24\">\n");
+			print("<select name=\"themeID\" size=\"24\" id=\"$category\">\n");
 			while(list($themeID,$theme_name) = mysql_fetch_row($theme_select_result))
 			{
 				print("<option value=\"$themeID\">$themeID: ".html_parse_text($theme_name)."</option>\n");
@@ -136,7 +135,7 @@ else
 	
 	print("<strong>Edit ThemeID</strong>\n");
 	print("<form action=\"\" method=\"get\"><p>\n");
-	print("ThemeID: <input type=\"text\" name=\"themeID\" />\n");
+	print("<label for=\"ThemeID\">ThemeID</label>: <input type=\"text\" name=\"themeID\" id=\"themeID\" />\n");
 	print("<input type=\"hidden\" name=\"action\" value=\"edit\" />\n");
 	print("<input type=\"submit\" value=\"Edit\" />\n");
 	print("</p></form>");

@@ -38,13 +38,13 @@ else
 	list($todays_month,$todays_day,$todays_year) = explode("-",$todays_date);
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
-	print("<tr><td>Date:</td><td><input type=\"text\" name=\"month\" size=\"2\" maxlength=\"2\" value=\"$todays_month\">/<input type=\"text\" name=\"day\" size=\"2\" maxlength=\"2\" value=\"$todays_day\">/<input type=\"text\" name=\"year\" size=\"4\" maxlength=\"4\" value=\"$todays_year\"></td></tr>\n");
-	print("<tr><td>Author:</td><td><input type=\"text\" name=\"author\" size=\"30\"></td></tr>\n");
-	print("<tr><td>Author's Email:</td><td><input type=\"text\" name=\"author_email\" size=\"30\"></td></tr>\n");
-	print("<tr><td>Title:</td><td><input type=\"text\" name=\"title\" size=\"30\"></td></tr>\n");
-	print("<tr><td>News Body:</td><td><textarea name=\"news_body\" cols=\"60\" rows=\"15\" wrap></textarea></td></tr>\n");
-	print("</table>\n<p>");
-	print("<input type=\"submit\" value=\"Add News Item\">\n");
+	print("<tr><td><label for=\"month\"><strong>Date</strong></label>:</td><td><input type=\"text\" id=\"month\" name=\"month\" size=\"2\" maxlength=\"2\" value=\"$todays_month\" />/<input type=\"text\" name=\"day\" size=\"2\" maxlength=\"2\" value=\"$todays_day\" />/<input type=\"text\" name=\"year\" size=\"4\" maxlength=\"4\" value=\"$todays_year\" /></td></tr>\n");
+	print("<tr><td><label for=\"author\"><strong>Author</strong></label>:</td><td><input type=\"text\" id=\"author\" name=\"author\" size=\"30\" /></td></tr>\n");
+	print("<tr><td><label for=\"author_email\"><strong>Author's Email</strong></label>:</td><td><input type=\"text\" id=\"author_email\" name=\"author_email\" size=\"30\" /></td></tr>\n");
+	print("<tr><td><label for=\"title\"><strong>Title</strong></label>:</td><td><input type=\"text\" name=\"title\" id=\"title\" size=\"30\" /></td></tr>\n");
+	print("<tr><td><label for=\"news_body\"><strong>News Body</strong></label>:</td><td><textarea name=\"news_body\" id=\"news_body\" cols=\"60\" rows=\"15\" wrap></textarea></td></tr>\n");
+	print("<tr><td><input type=\"submit\" value=\"Add News Item\" /></td></tr>\n");
+	print("</table>\n");
 	print("</form>\n");
 }
 

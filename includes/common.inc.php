@@ -252,7 +252,7 @@ function ago_file_not_found()
 
 function print_select_box($name,$array,$selected)
 {
-	print("<select name=\"$name\">\n");
+	print("<select name=\"$name\" id=\"$name\">\n");
 	while(list($key,$val) = each($array))
 	{
 		if($key == $selected)

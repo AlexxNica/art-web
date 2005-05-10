@@ -78,17 +78,17 @@ else
 	list($month,$day,$year) = explode("/",$date);
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
-	print("<tr><td><b>Theme Name:</b></td><td><input type=\"text\" name=\"theme_name\" size=\"40\" value=\"$theme_name\"></td></tr>\n");
-	print("<tr><td><b>Category</b></td><td>");
+	print("<tr><td><strong>Theme Name:</strong></td><td><input type=\"text\" name=\"theme_name\" size=\"40\" value=\"$theme_name\"></td></tr>\n");
+	print("<tr><td><strong>Category</strong></td><td>");
 	create_select_box("category",$category_array,$theme_category);
 	print("</td></tr>\n");
-	print("<tr><td><b>UserID:</b></td><td><input type=\"text\" name=\"userID\" size=\"40\" value=\"$userID\"></td></tr>\n");
-	print("<tr><td><b>Release Date:</b></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
-	print("<tr><td><b>License</b></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
-	print("<tr><td><b>Version:</b></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
-	print("<tr><td><b>Depends:</b></td><td><input type=\"text\" name=\"depends\" size=\"40\" value=\"$depends\"></td></tr>\n");
+	print("<tr><td><strong>UserID:</strong></td><td><input type=\"text\" name=\"userID\" size=\"40\" value=\"$userID\"></td></tr>\n");
+	print("<tr><td><strong>Release Date:</strong></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
+	print("<tr><td><strong>License</strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
+	print("<tr><td><strong>Version:</strong></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
+	print("<tr><td><strong>Depends:</strong></td><td><input type=\"text\" name=\"depends\" size=\"40\" value=\"$depends\"></td></tr>\n");
 
-	print("<tr><td><b>Variation of</b></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>");
+	print("<tr><td><strong>Variation of</strong></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>");
 
 	$background_select_result = mysql_query("SELECT themeID,theme_name,category FROM theme WHERE userID=$userID ORDER BY category");
 	while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($background_select_result))
@@ -101,19 +101,19 @@ else
 	}
 	print("</td></tr>");
 
-	print("<tr><td><b>Description:</b></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
+	print("<tr><td><strong>Description:</strong></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
 
-	print("<tr><td><b>Thumbnail Filename:</b></td><td>");
+	print("<tr><td><strong>Thumbnail Filename:</strong></td><td>");
 	if (isset($theme_category)) file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/");
 	else print("<input type=\"text\" name=\"thumbnail_filename\" size=\"40\">");
 	print("</td></tr>\n");
 
-	print("<tr><td><b>Small Thumbnail Filename:</b></td><td>");
+	print("<tr><td><strong>Small Thumbnail Filename:</strong></td><td>");
 	if (isset($theme_category)) file_chooser("small_thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/");
 	else print("<input type=\"text\" name=\"small_thumbnail_filename\" size=\"40\">");
 	print("</td></tr>\n");
 
-	print("<tr><td><b>Download Filename:</b></td><td>");
+	print("<tr><td><strong>Download Filename:</strong></td><td>");
 	if (isset($theme_category)) file_chooser("download_filename", "$sys_theme_dir/$theme_category/"); 
 	else print("<input type=\"text\" name=\"download_filename\" size=\"40\">");
 	print("</td></tr>\n");

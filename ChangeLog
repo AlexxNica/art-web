@@ -1,3 +1,27 @@
+2005-08-06  James McGuire  <jamesm@bluebottle.com>
+
+	
+	* contact.php:
+	* copyright.php: 
+		change <b> to <strong>
+
+	* account.php:
+	* submit_background.php:
+	* submit_theme.php:
+		add labels, xhtml fixes
+	* admin/add_background:
+	* admin/add_faq.php:
+	* admin/add_news_item.php:
+	* admin/add_theme.php:
+	* admin/edit_faq.php:
+	* admin/edit_news_item.php:
+	* admin/edit_theme.php:
+		add labels, xhtml fixes, made style more consistent
+
+	* admin/edit_background: add labels, xhtml fixes, added more resolutions, changed layout
+	* includes/common.inc.php: modified print_select_box to include id
+	* admin/delete_theme.php: add labels, xhtml fixes, added gtk_engines
+
 2005-05-06  Thomas Wood  <thos@gnome.org>
 
 	* includes/ago_headers.inc.php: Extra metadata to improve

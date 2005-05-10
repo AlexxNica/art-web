@@ -48,13 +48,13 @@ elseif($action == "confirm")
 else
 {
 	print("<table>\n");
-	$theme_categories = array("gdm_greeter","gtk","gtk2","icon","metacity","metatheme","nautilus","sawfish","sounds","splash_screens","other");
+	$theme_categories = array("gdm_greeter","gtk","gtk2","gtk_engines","icon","metacity","metatheme","nautilus","sawfish","sounds","splash_screens","other");
 	for($count=0;$count<count($theme_categories);$count++)
 	{
 		$category = $theme_categories[$count];
 		$theme_select_result = mysql_query("SELECT themeID, theme_name FROM theme WHERE category='$category' ORDER by theme_name");
 //		print("<table border=\"0\">\n");
-		print("<tr><td>$category</td>");
+		print("<tr><td><label for=\"$category\"><strong>$category</strong></label></td>");
 		if(mysql_num_rows($theme_select_result)==0)
 		{
 			print("<td colspan=\"2\">None</td></tr>\n");
@@ -62,10 +62,10 @@ else
 		else
 		{
 			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-			print("<td><select name=\"themeID\" size=\"5\">\n");
+			print("<td><select name=\"themeID\" size=\"5\" id=\"$category\">\n");
 			while(list($themeID,$theme_name) = mysql_fetch_row($theme_select_result))
 			{
-				print("<option value=\"$themeID\">$theme_name</option>\n");
+				print("<option value=\"$themeID\">".html_parse_text($theme_name)."</option>\n");
 			}
 			print("</select></td><td><input type=\"submit\" value=\"Delete\"></td></tr>");
 			print("<input type=\"hidden\" name=\"action\" value=\"confirm\">\n</form>\n");
