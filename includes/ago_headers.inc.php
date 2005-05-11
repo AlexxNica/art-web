@@ -25,7 +25,7 @@ function ago_header($title)
 	print("</head>\n");
 	print("<body>\n");
 	print("<div id=\"header\">\n");
-	print("\t<div id=\"header-left\"><a href=\"/\">&nbsp;</a></div><div id=\"header-right\"><a href=\"/\">&nbsp;</a></div>\n");
+	print("\t<div id=\"header-left\"><a href=\"/\"><img class=\"header\" src=\"/images/site/header-left.png\" alt=\"art.gnome.org\" /></a></div><div id=\"header-right\"><a href=\"/\"><img class=\"header\" src=\"/images/site/header-right.png\" alt=\"art.gnome.org\" /></a></div>\n");
 	print("\t<div id=\"header-links\">\n");
 	print("\t\t<a href=\"http://www.gnome.org/about/\">About GNOME</a> &middot;\n");
 	print("\t\t<a href=\"http://www.gnome.org/start/stable/\">Download</a> &middot;\n");

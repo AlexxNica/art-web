@@ -1,7 +1,9 @@
 <?php
 require("mysql.inc.php");
 require("common.inc.php");
-header("Content-type: application/rss+xml");
+// using text/xml until firefox bug is fixed.
+//header("Content-type: application/rss+xml");
+header("Content-type: text/xml");
 print("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\n");
 print("<rss version=\"2.0\">\n");
 print("\t<channel>\n");

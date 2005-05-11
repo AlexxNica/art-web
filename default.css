@@ -177,8 +177,6 @@ th {
 	height: 82px;
 	width:118px;
 	border: none;
-	background-image: url("/images/site/header-left.png"); 	 
-        background-repeat: no-repeat;
 }
 
 #header-right{
@@ -187,8 +185,6 @@ th {
 	top: 0px;
 	height: 82px;
 	width:315px;
-	background-image: url("/images/site/header-right.png"); 	 
-        background-repeat: no-repeat;
 }
 
 #header-links{

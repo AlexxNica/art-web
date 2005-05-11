@@ -16,15 +16,15 @@ list($foo, $unvalidated_author) = explode("/", $_SERVER["PATH_INFO"]);
 /* print out the list of authors */
 if ($unvalidated_author == "")
 {
-	ago_header("Authors");
-	create_title("Authors", "The people creating the artwork");
+	ago_header("Users");
+	create_title("Users", "The people creating the artwork");
 	$author_list_result = mysql_query("SELECT user.userID,user.username FROM user,theme,background WHERE active = 1 AND (user.userID = theme.userID OR user.userID = background.userID) GROUP BY user.userID ORDER BY username ASC");
-	print("<ul>");
+	print("<ul>\n");
 	while (list($userID, $username) = mysql_fetch_row($author_list_result))
 	{
-		print("<li><a href=\"/users/$userID\">$username</a></li>");
+		print("\t<li><a href=\"/users/$userID\">$username</a></li>\n");
 	}
-	print("</ul>");
+	print("</ul>\n");
 
 	ago_footer();
 }
@@ -37,17 +37,17 @@ else
 		$author_result = mysql_query ("SELECT realname,email,homepage,info FROM user WHERE userID = $authorID");
 		list ($realname, $email,$homepage, $info) = mysql_fetch_row ($author_result);
 		$email = spam_proof_email ($email);
-		ago_header("Author - " . $realname);
+		ago_header($realname);
 		create_title ($realname, "");
-		print ("<p>$info</p>");
-		print("<table>");
-		print("<tr><td><img src=\"/images/site/stock_mail.png\" alt=\"e-mail\" /></td>");
-		print("<td><a href=\"mailto:$email\">$email</a></td></tr>");
-		print("<tr><td><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /></td>");
-		print("<td><a href=\"$homepage\">$homepage</a></td></tr>");
-		print("</table>");
+		print ("<p>$info</p>\n");
+		print("<table>\n");
+		print("\t<tr><td><img src=\"/images/site/stock_mail.png\" alt=\"e-mail\" /></td>\n");
+		print("\t\t<td><a href=\"mailto:$email\">$email</a></td></tr>\n");
+		print("\t<tr><td><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /></td>\n");
+		print("\t\t<td><a href=\"$homepage\">$homepage</a></td></tr>\n");
+		print("</table>\n");
 
-		$author_themes_result = mysql_query ("SELECT themeID FROM theme WHERE userID = $authorID AND status='active' LIMIT 20");
+		$author_themes_result = mysql_query ("SELECT themeID FROM theme WHERE userID = $authorID AND status='active' ORDER BY add_timestamp DESC LIMIT 40");
 
 		if (mysql_num_rows ($author_themes_result) > 0)
 		{
@@ -56,7 +56,7 @@ else
 				print_theme_row($themeID, "list");
 		}
 
-		$author_background_result = mysql_query ("SELECT backgroundID FROM background WHERE userID = $authorID AND status='active' LIMIT 20");
+		$author_background_result = mysql_query ("SELECT backgroundID FROM background WHERE userID = $authorID AND status='active' ORDER BY add_timestamp DESC LIMIT 40 ");
 		if (mysql_num_rows ($author_background_result) > 0)
 		{
 			create_title ("Backgrounds", "Backgrounds created by $realname");

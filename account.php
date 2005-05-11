@@ -192,8 +192,8 @@ else
 	create_title("Please log in","Log in to access your account");
 	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
 	print("<table>\n");
-	print("<tr><td><label for=\"username\">Username</label>:</td><td><input name=\"username\" class=\"username\" /></td></tr>\n");
-	print("<tr><td><label for=\"password\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" /></td></tr>\n");
+	print("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
+	print("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
 	print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td></tr>\n");
 	print("</table>\n");
 	print("</form>\n");

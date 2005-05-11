@@ -1,3 +1,12 @@
+2005-05-10  James McGuire <jamesm@bluebottle.com>
+
+	* account.php: fixed <label>'s
+	* backend.php: fixed bug 172278 - rss feed using unsupported header for firefox users
+	* default.css: 
+	* includes/ago_headers.inc.php:
+		added links on top again
+	* users: changed limit to 40, changed title to Users, changed order of themes and backgrounds
+
 2005-08-06  James McGuire  <jamesm@bluebottle.com>
 
 	
