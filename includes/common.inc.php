@@ -497,9 +497,13 @@ function is_ie() {
 function html_parse_text($comment)
 {
 	$comment = strip_tags($comment);
+	// when there's time, change below to ereg/preg with [img]javascript in front of the string, and [/img] at the end.  but this will work for now.
+	$comment = str_replace("[img]javascript:", "noscript", $comment);
+	$comment = str_replace("[img]javascript", "noscript", $comment);
 	$bbcode = array("&", "]\n", "]\r\n",
 		"<", ">",
                 "[list]", "[*]", "[/*]", "[/list]", 
+		"[**]", "[/**]",
                 "[img]", "[/img]", 
                 "[b]", "[/b]", 
                 "[u]", "[/u]", 
@@ -513,7 +517,8 @@ function html_parse_text($comment)
                 '"]');
 	$htmlcode = array("&amp;", "](NL)", "](NL)",
 		"&lt;", "&gt;",
-                "<ul>", "<li>", "</li>", "</ul>", 
+                "</p><ul>", "<li>", "</li>", "</ul><p>",
+		"<li class=\"indent\">", "</li>",
                 "<img src=\"", "\" class=\"thumbnail\" alt=\"\" />", 
                 "<strong>", "</strong>", 
                 "<span style=\"text-decoration: underline\">", "</span>", 

@@ -1,4 +1,3 @@
-
 <?php
 
 include "mysql.inc.php";
@@ -14,12 +13,12 @@ if (!array_key_exists("action", $_POST))
 	print("<form method=\"POST\" action=\"{$_SERVER['PHP_SELF']}\"><input type=\"hidden\" name=\"action\" value=\"del_user\" />");
 	print("<select name=\"userID\">");
 	$user_select_result = mysql_query("SELECT userID, username FROM user WHERE active = 1");
-	while (list($userID,$username) = mysql_fetch_row($user_select_result))
+	while (list($userID, $username) = mysql_fetch_row($user_select_result))
 	{
-		print("<option value=\"$userID\">$username</option>");
+		print("<option value=\"$userID\">$userID - $username</option>");
 	}
 	print("</select>");
-	print("<input type=\"submit\" value=\"Delete\">");
+	print("<input type=\"submit\" value=\"Delete\" />");
 	print("</form>");
 }
 else
@@ -41,4 +40,3 @@ admin_footer();
 
 
 ?>
-

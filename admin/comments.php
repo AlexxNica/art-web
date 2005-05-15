@@ -41,13 +41,18 @@ switch ($badcomment_count)
 		break;
 }
 
+if($_SESSION['userID']) {
+	$timezone_select_result = mysql_query("SELECT timezone FROM user WHERE `userID` = '".$_SESSION['userID']."'");
+	extract(mysql_fetch_array($timezone_select_result, MYSQL_ASSOC));
+}
+
 if($badcomment_count > 0)
 {
 	
 	echo "<br />";
 	$count = 0;
-
-	while(list($commentID, $status, $userID, $username, $user_comment, $comment_time, $comment_type, $comment_artID)=mysql_fetch_row($badcomment_result))
+	
+	while(list($commentID, $status, $userID, $username, $comment, $comment_time, $comment_type, $comment_artID)=mysql_fetch_row($badcomment_result))
 	{
 		if($comment_type == "background") {
 			$backgroundcat = "SELECT category, background_name FROM `background` WHERE backgroundID = $comment_artID";
@@ -65,7 +70,7 @@ if($badcomment_count > 0)
 		print("<table class=\"comment\">\n");
 		print("<tr><td class=\"comment_head\">");
 		print("<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\">\n");
-		print("<i>$count: <a href=\"/users/$userID\">$username</a> posted on " . date("Y-m-d - H:i", $comment_time) . " to <a href=\"$link\">$name</a> </i>\n");
+		print("<i>$count: <a href=\"/users/$username\">$username</a> posted on " . date("Y-m-d - H:i", ($comment_time + (3600 * ($timezone + 5)))) . " to <a href=\"$link\">$name</a> </i>\n");
 		print("</td><td align=\"right\">\n");
 		// mod stuff here.
 		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
@@ -75,7 +80,7 @@ if($badcomment_count > 0)
 		print("</form>\n");
 		// print comment
 		print("</td></tr></table>");
-		print("<tr><td class=\"comment\">" . html_parse_text($user_comment) . "</td></tr>");
+		print("<tr><td class=\"comment\">" . html_parse_text($comment) . "</td></tr>");
 		print("</table><br/>\n");
 	}
 }

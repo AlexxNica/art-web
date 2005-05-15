@@ -1,3 +1,18 @@
+2005-05-15  James McGuire <jamesm@bluebottle.com>
+
+	* account.php: added timezone, location, edit profile link
+	* themes: 
+	* backgrounds:
+		changed link from /users/(userid) to /users/(username)
+	* default.css: added li.indent class.
+	* index.php: changed title from "News" to "Artwork & Themes"
+	* users: added support for /users/(username), changed profile pages as to display icons only if their info is set, added 404 error for non-existing users
+	* admin/add_theme.php: changed list to extract
+	* admin/comments.php: changed variable, changed link from /users/(userid) to /users/(username)
+	* admin/delete_user.php: added userid to the list
+	* includes/comments.inc.php: added timezone support, changed link from /users/(userid) to /users/(username)
+	* common.inc.php: security fix- prevents malicious user from [img]javascript:[/img]'ing, added support for indent lists.
+
 2005-05-10  James McGuire <jamesm@bluebottle.com>
 
 	* account.php: fixed <label>'s

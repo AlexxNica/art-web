@@ -72,7 +72,7 @@ else
 	if (array_key_exists("submitID", $_POST))
 	{
 		$theme_select_result = mysql_query("SELECT theme_name,userID,category,license,theme_description,version,depends,parentID FROM incoming_theme WHERE themeID=$submitID");
-		list($theme_name,$userID,$theme_category,$license,$description,$version,$depends,$parentID) = mysql_fetch_row($theme_select_result);
+		extract(mysql_fetch_array($theme_select_result));
 	}
 
 	list($month,$day,$year) = explode("/",$date);

@@ -48,6 +48,8 @@ elseif (array_key_exists('change_profile', $_POST))
 		$_POST['realname'] = stripslashes ($_POST['realname']);
 		$_POST['email'] = stripslashes ($_POST['email']);
 		$_POST['homepage'] = stripslashes ($_POST['homepage']);
+		$_POST['timezone'] = stripslashes ($_POST['timezone']);
+		$_POST['location'] = stripslashes ($_POST['location']);
 	}
 
 	$new_pass = mysql_real_escape_string ($_POST['password']);
@@ -55,13 +57,15 @@ elseif (array_key_exists('change_profile', $_POST))
 	$realname = mysql_real_escape_string ($_POST['realname']);
 	$email = mysql_real_escape_string ($_POST['email']);
 	$homepage = mysql_real_escape_string ($_POST['homepage']);
+	$timezone = mysql_real_escape_string ($_POST['timezone']);
+	$location = mysql_real_escape_string ($_POST['location']);
 
 	$pass_sql = "";
 	if ($new_pass != "")
 	{
 		$pass_sql = " password='".md5($new_pass)."', ";
 	}
-	$query_result = mysql_query("UPDATE user SET $pass_sql realname='$realname', info='$info', email='$email', homepage='$homepage' WHERE userID = {$_SESSION['userID']}");
+	$query_result = mysql_query("UPDATE user SET $pass_sql realname='$realname', info='$info', email='$email', homepage='$homepage', timezone='$timezone', location='$location' WHERE userID = {$_SESSION['userID']}");
 	if ($query_result !== FALSE)
 	{
 		create_title("Profile updated.","");
@@ -111,20 +115,28 @@ elseif (array_key_exists("register", $_POST))
 }
 elseif (array_key_exists('username', $_SESSION))
 {
-	create_title("My Profile","Logged in as {$_SESSION['username']}");
-	print("<ul><li><a href=\"/users/{$_SESSION['userID']}/\">Public Profile Page</a></li></ul>");
-	$query_result = mysql_query("SELECT realname,email,homepage,info FROM user WHERE userID = '{$_SESSION['userID']}'");
-	list($realname,$email,$homepage,$info) = mysql_fetch_row($query_result);
+	create_title("My Profile","Logged in as <a href=\"/users/{$_SESSION['userID']}/\" name=\"Public Profile Page\">{$_SESSION['username']}</a>");
+	print("<ul><li><a href=\"/users/{$_SESSION['username']}/\">Public Profile Page</a></li></ul>");
+	$query_result = mysql_query("SELECT realname,email,homepage,info,timezone,location FROM user WHERE userID = '{$_SESSION['userID']}'");
+	extract(mysql_fetch_array($query_result));	
 	$realname = htmlspecialchars ($realname, ENT_QUOTES);
 	$email = htmlspecialchars ($email, ENT_QUOTES);
 	$homepage = htmlspecialchars ($homepage, ENT_QUOTES);
 	$info = htmlspecialchars ($info, ENT_QUOTES);
+	$location = htmlspecialchars($location, ENT_QUOTES);
+	$timezone_array = array("-12"=>"UTC -12", "-11"=>"UTC -11", "-10"=>"UTC -10", "-9"=>"UTC -9","-8"=>"UTC -8","-7"=>"UTC -7","-6"=>"UTC -6","-5"=>"UTC -5","-4"=>"UTC -4","-3.5"=>"UTC -3.5","-3"=>"UTC -3","-2"=>"UTC -2","-1"=>"UTC -1",
+			"0"=>"UTC 0","1"=>"UTC +1","2"=>"UTC +2", "3"=>"UTC +3", "3.5"=>"UTC +3.5", "4"=>"UTC +4","4.5","UTC +4.5", "5"=>"UTC +5","5.5"=>"UTC +5.5", "6"=>"UTC +6", "7"=>"UTC +7", "8"=>"UTC +8", "9"=>"UTC +9", "9.5"=>"UTC +9.5", "10"=>"UTC +10", "11"=>"UTC+11", "12"=>"UTC+12");
+	if ($timezone < -12 || $timezone > 12)
+		$timezone = 0;
+
 	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\" />");
 	print("<table>\n");
-	print("<tr><th><label for=\"password\">Password</label></th><td><input value=\"\" type=\"password\" name=\"password\" id=\"password\" size=\"20\" /> (leave blank to remain unchanged)</td></tr>\n");
-	print("<tr><th><label for=\"realname\">Name</label></th><td><input value=\"$realname\" name=\"realname\" id=\"realname\" size=\"20\" /></td></tr>\n");
-	print("<tr><th><label for=\"email\">E-mail</label></th><td><input value=\"$email\" name=\"email\" id=\"email\" size=\"20\" /></td></tr>\n");
-	print("<tr><th><label for=\"homepage\">Homepage</label></th><td><input value=\"$homepage\" name=\"homepage\" id=\"homepage\" size=\"20\" /></td></tr>\n");
+	print("<tr><th><label for=\"password\">Password</label></th><td><input value=\"\" type=\"password\" name=\"password\" id=\"password\" size=\"20\" maxlength=\"12\" /> (leave blank to remain unchanged)</td></tr>\n");
+	print("<tr><th><label for=\"realname\">Name</label></th><td><input value=\"$realname\" name=\"realname\" id=\"realname\" size=\"20\" maxlength=\"50\" /></td></tr>\n");
+	print("<tr><th><label for=\"email\">E-mail</label></th><td><input value=\"$email\" name=\"email\" id=\"email\" size=\"20\" maxlength=\"50\" /></td></tr>\n");
+	print("<tr><th><label for=\"homepage\">Homepage</label></th><td><input value=\"$homepage\" name=\"homepage\" id=\"homepage\" size=\"20\" maxlength=\"100\" /></td></tr>\n");
+	print("<tr><th><label for=\"location\">Location</label></th><td><input value=\"$location\" name=\"location\" id=\"location\" size=\"20\" maxlength=\"50\" /></td></tr>\n");
+	print("<tr><th><label for=\"timezone\">Timezone</label></th><td>");print_select_box("timezone",$timezone_array,$timezone);print(" (Current adjusted time: ".date("h:i a", mktime()+(($timezone+5) *3600)).")</td></tr>\n");
 	print("<tr><th><label for=\"info\">Info</label></th><td><textarea name=\"info\" rows=\"2\" cols=\"20\" id=\"info\">$info</textarea></td></tr>\n");
 	print("<tr><td colspan=\"2\"><br /><input type=\"submit\" value=\"Change\" name=\"change_profile\" /></td></tr>");
 	print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Logout\" name=\"logout\" /></td></tr>");

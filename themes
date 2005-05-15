@@ -148,7 +148,7 @@ else
 				$vote = 2;
 			
 
-			create_title($name . " by <a href=\"/users/$userID\">$author</a>", $theme_config_array[$category]["name"]);
+			create_title($name . " by <a href=\"/users/$author\">$author</a>", $theme_config_array[$category]["name"]);
 			
 			
 			

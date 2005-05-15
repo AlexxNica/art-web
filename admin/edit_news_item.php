@@ -58,7 +58,7 @@ else
 			print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"><div>");
 			print("<label for=\"news\"><strong>News Item</strong></label><br />");
 			print("<select name=\"newsID\" size=\"20\" id=\"news\">");
-			while(list($newsID, $title, $date) = mysql_fetch_row($news_select_result))
+			while(list($newsID, $title, $date) = mysql_fetch_array($news_select_result))
 				print("<option value=\"$newsID\">$newsID - ".html_parse_text($title)."</option>");
 			print("</select><br /><input type=\"submit\" name=\"action\" value=\"Edit\" /></div></form>");
 		}

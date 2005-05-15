@@ -231,6 +231,10 @@ li {
 	font-family: sans-serif;
 }
 
+li.indent {
+	margin-left: 1em;
+}
+
 a.box {
 	padding-left: 0.3em;
 	padding-right: 0.3em;

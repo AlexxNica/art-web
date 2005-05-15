@@ -147,7 +147,7 @@ else
 				$vote = 2;
 
 
-			create_title($name . " by <a href=\"/users/$userID\">$author</a>", $background_config_array[$category]["name"] . " Backgrounds");
+			create_title($name . " by <a href=\"/users/$author\">$author</a>", $background_config_array[$category]["name"] . " Backgrounds");
 			
 			
 

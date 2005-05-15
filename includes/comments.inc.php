@@ -4,8 +4,14 @@ function print_comments($artID, $type)
 {
 	$comment_select_result = mysql_query("SELECT comment.commentID, comment.status, comment.userID, user.username, comment.comment, comment.timestamp FROM comment, user WHERE user.userID=comment.userID AND type='$type' and artID='$artID' and comment.status!='deleted' ORDER BY comment.timestamp");
 
+	if($_SESSION['userID']) {
+		$timezone_select_result = mysql_query("SELECT timezone FROM user WHERE `userID` = '".$_SESSION['userID']."'");
+		extract(mysql_fetch_array($timezone_select_result, MYSQL_ASSOC));
+	}
 
 	$comment_count = mysql_num_rows($comment_select_result);
+
+	
 
 	if ($comment_count == 1)
 	{
@@ -33,7 +39,7 @@ function print_comments($artID, $type)
 			print("<table class=\"comment\">\n");
 			print("<tr><td class=\"comment_head\">\n");
 			print("<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\">\n");
-			print("<i>$count: <a href=\"/users/$userID\">$username</a> posted on " . date("Y-m-d - H:i", $comment_time) . "</i>\n");
+			print("<i>$count: <a href=\"/users/$username\">$username</a> posted on " . date("Y-m-d - H:i", ($comment_time + (3600 * ($timezone + 5)))) . "</i>\n");
 			print("</td><td align=\"right\">\n");
 			
 			if ($status == "reported")
