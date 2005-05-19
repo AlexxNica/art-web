@@ -1,4 +1,7 @@
 2005-05-19  James McGuire <jamesm@bluebottle.com>
+	* users: xhtml fix
+
+2005-05-19  James McGuire <jamesm@bluebottle.com>
 
 	* admin/edit_background.php: added update_timestamp option
 	* admin/add_theme.php: fixed variable loading problem

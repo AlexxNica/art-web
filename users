@@ -68,7 +68,7 @@ else
 			}
 			if($location) {
 				print("\t<tr><td><img src=\"/images/site/stock_home.png\" alt=\"location\" /></td>\n");
-				print("\t\t<td>$location</a></td></tr>\n");
+				print("\t\t<td>$location</td></tr>\n");
 			}
 			if($table)
 				print("</table>\n");
@@ -125,7 +125,7 @@ else
 			}
 			if($location) {
 				print("\t<tr><td><img src=\"/images/site/stock_home.png\" alt=\"location\" /></td>\n");
-				print("\t\t<td>$location</a></td></tr>\n");
+				print("\t\t<td>$location</td></tr>\n");
 			}
 			if($table)
 				print("</table>\n");	
