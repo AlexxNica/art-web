@@ -1,3 +1,8 @@
+2005-05-19  James McGuire <jamesm@bluebottle.com>
+
+	* admin/edit_background.php: added update_timestamp option
+	* admin/add_theme.php: fixed variable loading problem
+
 2005-05-15  James McGuire <jamesm@bluebottle.com>
 
 	* account.php: added timezone, location, edit profile link

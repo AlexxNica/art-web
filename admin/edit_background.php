@@ -26,7 +26,12 @@ if($action == "write")
 	if($background_name && $userID && $month && $day && $year && $background_description && $thumbnail_filename && $license && $resolution)
 	{
 		$date = $year . "-" . $month . "-" . $day;
-		$background_update_query  = "UPDATE background SET background.background_name='$background_name', background.license='$license', background.version='$version', background.category='$category', background.userID='$userID', background.parent='$parentID', background.release_date='$date', background.background_description='$background_description', background.thumbnail_filename='$thumbnail_filename' WHERE background.backgroundID='$backgroundID'";
+		$background_update_query  = "UPDATE background SET background.background_name='$background_name', background.license='$license', background.version='$version', background.category='$category', background.userID='$userID', background.parent='$parentID', background.release_date='$date', background.background_description='$background_description', background.thumbnail_filename='$thumbnail_filename'";
+		if ($update_timestamp_toggle == "on")
+		{
+			$background_update_query .= ", add_timestamp='".time()."'";
+		}
+		$background_update_query .= " WHERE background.backgroundID='$backgroundID'";
 		if(!$background_update_result = mysql_query($background_update_query)) {
 			$error = 1;
 		}
@@ -131,12 +136,12 @@ elseif($action == "edit")
 			print("<input type=\"hidden\" name=\"background_resolutionID[$i]\" value=\"$background_resolutionID\" /></td></tr>\n");
 			$i++;
 		}
-		
-		print("</table>\n<p>\n");
-		print("<input type=\"submit\" value=\"Update Background\" />");
+		print("<tr><td><input type=\"checkbox\" name=\"update_timestamp_toggle\" />Update Timestamp");
+		print("<tr><td><input type=\"submit\" value=\"Update Background\" />");
 		print("<input type=\"hidden\" name=\"action\" value=\"write\" />\n");
-		print("<input type=\"hidden\" name=\"backgroundID\" value=\"$backgroundID\" />\n");
-		print("</p></form>");
+		print("<input type=\"hidden\" name=\"backgroundID\" value=\"$backgroundID\" /></td></tr>\n");
+		print("</table>\n");
+		print("</form>");
  	}
 }
 elseif($category != "")

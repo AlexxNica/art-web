@@ -69,10 +69,10 @@ else
 	);
 	$date = date("m/d/Y");
 
-	if (array_key_exists("submitID", $_POST))
+	if ($submitID != "")
 	{
 		$theme_select_result = mysql_query("SELECT theme_name,userID,category,license,theme_description,version,depends,parentID FROM incoming_theme WHERE themeID=$submitID");
-		extract(mysql_fetch_array($theme_select_result));
+	list($theme_name,$userID,$theme_category,$license,$description,$version,$depends,$parentID) = mysql_fetch_row($theme_select_result);
 	}
 
 	list($month,$day,$year) = explode("/",$date);
@@ -110,12 +110,12 @@ else
 
 	print("<tr><td><strong>Small Thumbnail Filename:</strong></td><td>");
 	if (isset($theme_category)) file_chooser("small_thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/");
-	else print("<input type=\"text\" name=\"small_thumbnail_filename\" size=\"40\">");
+	else print("<input type=\"text\" name=\"small_thumbnail_filename\" size=\"40\" />");
 	print("</td></tr>\n");
 
 	print("<tr><td><strong>Download Filename:</strong></td><td>");
 	if (isset($theme_category)) file_chooser("download_filename", "$sys_theme_dir/$theme_category/"); 
-	else print("<input type=\"text\" name=\"download_filename\" size=\"40\">");
+	else print("<input type=\"text\" name=\"download_filename\" size=\"40\" />");
 	print("</td></tr>\n");
 
 	print("</table>\n");
