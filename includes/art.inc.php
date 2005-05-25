@@ -81,9 +81,9 @@ function print_detailed_view($itemID, $type)
 	}
 	else
 	{
-		$resolution_select = mysql_query("SELECT filename,resolution,type FROM background_resolution WHERE backgroundID=$itemID");
-		while (list($download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
-			$download .= "<a class=\"$image_type\" href=\"/download/backgrounds/$category/$itemID/$download_filename\"> $image_type - $resolution</a>&nbsp;&nbsp;";
+		$resolution_select = mysql_query("SELECT background_resolutionID,filename,resolution,type FROM background_resolution WHERE backgroundID=$itemID");
+		while (list($resID,$download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
+			$download .= "<a class=\"$image_type\" href=\"/download/backgrounds/$category/$resID/$download_filename\"> $image_type - $resolution</a>&nbsp;&nbsp;";
 	}
 
 	if ($rating == 0)

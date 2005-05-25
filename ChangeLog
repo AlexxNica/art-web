@@ -1,3 +1,7 @@
+2005-05-25  Thomas Wood  <thos@gnome.org>
+
+	* includes/art.inc.php: Fix background download bug
+
 2005-05-25  James McGuire <jamesm@bluebottle.com>
 	* backgrounds: fixed sorting by name bug.
 	* includes/art.inc.php: put the title through html_entities
