@@ -78,7 +78,7 @@ else
 				}
 				else
 				{
-					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=&amp;sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">$count</a>\n");
+					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">$count</a>\n");
 				}
 			}
 			if($page < $num_pages)

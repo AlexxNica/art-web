@@ -102,7 +102,7 @@ function print_detailed_view($itemID, $type)
 
 	// Start output ///////////////////////////////////////////////////////
 
-	create_title($item_name . " by <a href=\"/users/$author\">$author</a>", $subtitle);
+	create_title(htmlentities($item_name) . " by <a href=\"/users/$author\">$author</a>", $subtitle);
 	if ($category == "icon" || $category == "gtk2" || $category == "gdm_greeter" )
 		print("<a href=\"".get_thumbnail_url($thumbnail_filename, $itemID, $type, $category) . "\">");
 
