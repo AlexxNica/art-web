@@ -2,10 +2,11 @@
 
 require("config.inc.php");
 
-function create_title($title, $subtitle)
+function create_title($title, $subtitle="")
 {
 	print("<div class=\"h1\">$title</div>\n");
-	print("<div class=\"subtitle\">$subtitle</div>\n");
+	if ($subtitle)
+		print("<div class=\"subtitle\">$subtitle</div>\n");
 }
 
 function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
@@ -27,158 +28,88 @@ function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
 	else if( $numDays    <   7 ) return "$numDays days ago";
 	else if( $numWeeks   ==  1 ) return "last week";
 	else if( $numWeeks   <   4 ) return "$numWeeks weeks ago";
-	else if( $numDays    < 365 ) return date( "F j", $thenTimestamp );
-	else                         return "over a year ago";
+	else                         return date( "j F Y", $thenTimestamp );
 }
 
-function print_item_row($name, $thumbnail, $category, $author, $date, $link, $vars, $vote, $extra)
+function get_thumbnail_url($filename, $itemID, $type, $category)
 {
-	global  $background_config_array,  $theme_config_array;
-
-	if ($vars)
-		$var_image = "<img src=\"/images/site/stock_color.png\" alt=\"Variations Available\" />";
+	global $site_url;
+	if ($type == "theme")
+	{
+		if ($itemID < 1000)
+			$thumbnail_url="{$site_url}images/archive/thumbnails/$category/$filename";
+		else
+			$thumbnail_url="{$site_url}images/thumbnails/$category/$filename";
+	}
 	else
-		$var_image = "";
+	{
+		if ($itemID < 1000)
+			$thumbnail_url="{$site_url}images/archive/thumbnails/backgrounds/$filename";
+		else
+			$thumbnail_url="{$site_url}images/thumbnails/backgrounds/$filename";
+	}
+	return $thumbnail_url;
+}
+
+
+function print_item_row($itemID, $type, $style="list")
+{
+	global  $background_config_array,  $theme_config_array, $site_url;
+
+	if ($type == "theme")
+		$select = mysql_query("SELECT theme_name, category, add_timestamp, small_thumbnail_filename, rating FROM $type WHERE themeID = $itemID");
+	else
+		$select = mysql_query("SELECT background_name, category, add_timestamp, thumbnail_filename, rating FROM $type WHERE backgroundID = $itemID");
+
+	list($name,$category,$date,$thumbnail_filename, $rating) = mysql_fetch_row($select);
+
+	$date = ucfirst(FormatRelativeDate(time(), $date));
+
+	$thumbnail = get_thumbnail_url($thumbnail_filename, $itemID, $type, $category);
 
 	if (($category == "icon") or ($category == "metacity"))
 		$thumbnail_class = "thumbnail_no_border";
 	else
 		$thumbnail_class = "thumbnail";
 
-	if (($category == "gnome") or ($category == "other"))
+	if ($type == 'background')
+	{
 		$category_name = "Backgrounds - " . $background_config_array["$category"]["name"];
+	}
 	else
+	{
 		$category_name = $theme_config_array["$category"]["name"];
-	
-	print("<table class=\"theme_row\">\n");
-	print("\t<tr valign=\"top\">\n");
-	print("\t\t<td class=\"theme_row_col1\"><a href=\"$link\"><img src=\"$thumbnail\" alt=\"Thumbnail\" class=\"$thumbnail_class\" /></a>$vote\t\t</td>\n");
-	print("\t\t<td class=\"theme_row_detail\"><a href=\"$link\" class=\"h2\"><strong>".html_parse_text($name)."</strong></a><br /><span class=\"subtitle\">$category_name<br/>Date: $date<br />Author: $author<br />$var_image");
-	foreach ($extra as $val)
-		print($val."<br />");
-	print("</span>\n\t\t</td>\n\t</tr>\n</table>\n");
+	}
+	$link = "/{$type}s/$category/$itemID";
+
+	if ($style == "icons")
+	{
+		print("<div class=\"icon_view\">\n<a href=\"$link\">");
+		print("<img src=\"$thumbnail\" alt=\"Thumbnail of $item_name\" class=\"$thumbnail_class\" />");
+		print("</a><br/>\n");
+		rating_bar($rating);
+		print("</div>\n");
+	} else
+	{
+		print("<table border=\"0\" style=\"margin-bottom:1em;\"><tr>\n");
+		print("\t<td style=\"width:120px\"><a href=\"$link\"><img src=\"$thumbnail\" alt=\"Thumbnail\" class=\"$thumbnail_class\"/></a>");
+		print("</td>\n");
+		print("\t<td><a href=\"$link\" class=\"h2\"><strong>".html_parse_text($name)."</strong></a><br/>");
+		print("\t\t<span class=\"subtitle\">$category_name<br/>$date</span><br/>");
+		rating_bar($rating);
+		print("</td>\n");
+		print("</tr></table>\n");
+	}
 }
 
 function print_background_row($backgroundID, $view)
 {
-	global $background_config_array, $site_url;
-
-	$background_select_result = mysql_query("SELECT background_name,category,username,release_date,thumbnail_filename,download_start_timestamp,download_count FROM background, user WHERE backgroundID='$backgroundID' AND background.userID = user.userID");
-
-	$background_res_result = mysql_query("SELECT DISTINCT(resolution) FROM background_resolution WHERE backgroundID='$backgroundID'");
-	$var_select_result = mysql_query("SELECT * FROM background WHERE parent = '$backgroundID'");
-	if (mysql_num_rows($var_select_result) > 0) $vars = true; else $vars = false;
-
-	$vote_select_result = mysql_query("SELECT SUM(rating) AS vote_sum, COUNT(rating) AS vote_count FROM `vote` WHERE artID='$backgroundID' AND type='background'");
-	list($vote_sum, $vote_count) = mysql_fetch_row($vote_select_result);
-
-	$extra[0] = "Resolutions: ";
-	extract(mysql_fetch_array($background_select_result));
-	while (list($background_res) = mysql_fetch_row($background_res_result))
-		$extra[0] .= " $background_res";
-
-	$release_date = fix_sql_date($release_date);
-	if ($backgroundID < 1000) {
-		$link = "{$site_url}backgrounds/$category/$backgroundID/";
-		$thumbnail = "{$site_url}images/archive/thumbnails/backgrounds/$thumbnail_filename";
-	} else {
-		$link = "{$site_url}backgrounds/$category/$backgroundID/";
-		$thumbnail = "{$site_url}images/thumbnails/backgrounds/$thumbnail_filename";
-	}
-	$popularity = calculate_downloads_per_day($download_count, $download_start_timestamp);
-
-	if ($view != "compact")
-	{
-		$query = "SELECT COUNT(*) AS count FROM comment WHERE artID = '$backgroundID' AND type='background' AND status != 'deleted'";
-		$comment_select = mysql_query($query);
-		list($count) = mysql_fetch_array($comment_select);
-		if ($count > 1) { $extra[1] = $count." comments"; }
-		if ($count == 1) { $extra[1] = $count." comment"; }
-	}
-
-	if ($view == "compact")
-	{
-		$vote = "";
-	}
-	elseif ($vote_count < 5)
-	{
-		$vote = "";
-	}
-	else
-	{
-		$vote = rating_bar(calculate_rating($vote_sum, $vote_count));
-		$vote .= "<div class=\"rating_text\">Rating: " . calculate_rating($vote_sum, $vote_count) . "%</div>\n";
-	}
-	
-	if ($view == "icons")
-	{
-		print("<div class=\"icon_view\"><a href=\"$link\"><img style=\"padding: 2px; border: none;\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
-	}
-	else
-	{
-		print_item_row($background_name, $thumbnail, $category, $username, $release_date, $link, $vars, $vote, $extra);
-	}
+	print_item_row($backgroundID, 'background', $view);
 }
 
 function print_theme_row($themeID, $view)
 {
-	global $theme_config_array, $site_url;
-	$theme_select_result = mysql_query("SELECT theme_name, category, user.username, release_date,small_thumbnail_filename,thumbnail_filename,download_filename FROM theme,user WHERE themeID='$themeID' AND user.userID = theme.userID");
-	$var_select_result = mysql_query("SELECT * FROM theme WHERE parent = '$themeID'");
-	if (mysql_num_rows($var_select_result) > 0)
-		$vars = "<img src=\"/images/site/theme-24.png\" alt=\"Variations available\" height=\"16\" width=\"16\" />";
-	else
-		$vars = "";
-
-	$vote_select_result = mysql_query("SELECT SUM(rating) AS vote_sum, COUNT(rating) AS vote_count FROM `vote` WHERE artID='$themeID' AND type='theme'");
-	list($vote_sum, $vote_count) = mysql_fetch_row($vote_select_result);
-
-	extract(mysql_fetch_array($theme_select_result));
-
-	$release_date = fix_sql_date($release_date);
-
-	if ($view != "compact")
-	{
-		$query = "SELECT COUNT(*) AS count FROM comment WHERE artID = '$themeID' AND type='theme' AND status != 'deleted'";
-		$comment_select = mysql_query($query);
-		list($count) = mysql_fetch_array($comment_select);
-		if ($count > 1) { $extra[0] = $count." comments"; }
-		if ($count == 1) { $extra[0] = $count." comment"; }
-	}
-
-	if ($themeID < 1000){
-		$link = "{$site_url}themes/$category/$themeID/";
-		$thumbnail = "{$site_url}images/archive/thumbnails/$category/$small_thumbnail_filename";
-	} else {
-		$link = "{$site_url}themes/$category/$themeID/";
-		$thumbnail = "{$site_url}images/thumbnails/$category/$small_thumbnail_filename";
-	}
-	if ($view == "compact")
-	{
-		$vote = "";
-	}
-	elseif ($vote_count < 5)
-	{
-		$vote = "";
-	}
-	else
-	{
-		$vote = rating_bar(calculate_rating($vote_sum, $vote_count));
-		$vote .= "<div class=\"rating_text\">Rating: " . calculate_rating($vote_sum, $vote_count) . "%</div>\n";
-	}
-	
-	if ($view == "icons")
-	{
-		if (($category == "icon") or ($category == "metacity"))
-			$thumbnail_class = "thumbnail_no_border";
-		else
-			$thumbnail_class = "thumbnail";
-			print("<div class=\"icon_view\"><a href=\"$link\"><img class=\"$thumbnail_class\" src=\"$thumbnail\" alt=\"Thumbnail\"/></a>$vote</div> ");
-	}
-	else
-	{
-		print_item_row($theme_name, $thumbnail, $category, $username, $release_date, $link, $vars, $vote, $extra);
-	}
+	print_item_row($themeID, 'theme', $view);
 }
 
 function get_latest_backgrounds($number)
@@ -209,7 +140,7 @@ function get_updates_array($number)
 	$theme_array = get_latest_themes($number);
 	$big_array = array_merge($background_array,$theme_array);
 	rsort($big_array);
-	
+
 	if($number < count($big_array))
 	{
 		$return_array = array_slice($big_array,0,$number);
@@ -244,10 +175,12 @@ function ago_redirect($referrer)
 
 function ago_file_not_found()
 {
-	ago_header("404 - File Not Found");
-	create_title("404 - File not Found","");
-	print("<p>The URL you requested could not be found</p>");
+	if (!headers_sent())
+		ago_header("404 - File not found");
+	create_title("404 - File not found");
+	print("<p class=\"error\">The page you requested could not be found</p>");
 	ago_footer();
+	die();
 }
 
 function print_select_box($name,$array,$selected)
@@ -377,7 +310,7 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 	}
 	elseif($sort_by == "rating")
 	{
-		$order_query = "ORDER BY (vote_sum/vote_count) $order";
+		$order_query = "ORDER BY (rating) $order";
 	}
 	else
 	{
@@ -469,22 +402,19 @@ function calculate_downloads_per_day($download_count, $start_timestamp)
 	$now = time();
 	$difference = $now - $start_timestamp;
 	$days = $difference / (60*60*24);
+	if ($days == 0)
+		return "--";
 	$popularity = ($download_count / $days);
 	$popularity = sprintf("%.1f",$popularity);
 	return $popularity;
 }
 
-function calculate_rating($vote_sum, $vote_count)
-{
-	return sprintf("%.1f", ($vote_sum / $vote_count) * 100 / 5);
-}
-
 function rating_bar($rating)
 {
-	$percent = sprintf("%.0f", $rating);
-	$bar = "<div class=\"rating-border\"><div class=\"rating\" style=\"width:$percent%\">&nbsp;</div></div>\n";
-
-	return $bar;
+	//$percent = sprintf("%.0f", $rating);
+	//$bar = "<div class=\"rating-border\"><div class=\"rating\" style=\"width:$percent%\">&nbsp;</div></div>\n";
+	$rating = ceil($rating);
+	for ($i=1; $i <= $rating; $i++) print("<img src=\"/images/site/stock_about.png\" alt=\"star\"/>");
 }
 
 function is_ie() {

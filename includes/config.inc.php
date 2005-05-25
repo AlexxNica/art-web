@@ -32,19 +32,19 @@ $theme_config_array = array (
 		"description" => "GTK+ 1.2 themes alter the appearance of the GTK+ 1.2 widgets. In the GNOME desktop, this means the appearance of all your GNOME applications."
 		),
 */	"gtk2" => array (
-		"name" => "Desktop Themes - Applications",
+		"name" => "Application Themes",
 		"url" => "/themes/gtk2/",
 		"active" => "1",
 		"description" => "GTK+ 2.0 themes control the appearance of your GNOME 2.0 programs."
 		),
 	"icon" => array (
-		"name" => "Desktop Themes - Icon",
+		"name" => "Icons",
 		"url" => "/themes/icon/",
 		"active" => "1",
 		"description" => "GNOME 2.2.x system icon themes change the themes in nautilus, file-roller, etc.."
 		),
 	"metacity" => array (
-		"name" => "Desktop Themes - Window Borders",
+		"name" => "Window Borders",
 		"url" => "/themes/metacity/",
 		"active" => "1",
 		"description" => "Metacity is the default window manager for GNOME 2.2.x and beyond."
@@ -74,13 +74,13 @@ $theme_config_array = array (
 		"description" => "Collection of sounds to compliment the GNOME desktop"
 		),
 */	"gdm_greeter" => array (
-		"name" => "Other Themes - Login Manager",
+		"name" => "Login Manager",
 		"url" => "/themes/gdm_greeter/",
 		"active" => "1",
 		"description" => "GDM Greeter themes change the appearance of the GNOME 2.0 login screen."
 		),
 	"splash_screens" => array (
-		"name" => "Other Themes - Splash Screens",
+		"name" => "Splash Screens",
 		"url" => "/themes/splash_screens/",
 		"active" => "1",
 		"description" => "Splash Screens are what you first see when you log into GNOME."

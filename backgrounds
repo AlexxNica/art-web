@@ -97,95 +97,15 @@ else
 	{
 		$backgroundID = validate_input_regexp_error ($unvalidated_backgroundID, "^[0-9]+$");
 
+		ago_header("Backgrounds - " . $category);
 		report_comment($report, $commentID);
-
-		$background_select_result = mysql_query("SELECT * FROM background WHERE backgroundID='$backgroundID'");
-		if(mysql_num_rows($background_select_result)==0)
-		{
-			ago_file_not_found();
-		}
-		else
-		{
-			ago_header($background_config_array[$category]["name"] ." Backgrounds");
-
-
-			$temp = "backgrounds_" . $category;
-			$background_select_row = mysql_fetch_array($background_select_result);
-			$thumbnail_filename = $background_select_row["thumbnail_filename"];
-			$screenshot_filename = $background_select_row["screenshot_filename"];
-			$name = html_parse_text($background_select_row["background_name"]);
-			$userID = $background_select_row["userID"];
-			$user_select_result = mysql_query("SELECT username FROM user WHERE userID = $userID");
-			list($author) = mysql_fetch_row($user_select_result);
-			$release_date = $background_select_row["release_date"];
-			$background_description = $background_select_row["background_description"];
-			$download_start_timestamp = $background_select_row["download_start_timestamp"];
-			$download_count = $background_select_row["download_count"];
-			$add_timestamp = $background_select_row["add_timestamp"];
-			$license = $background_select_row["license"];
-			$version = $background_select_row["version"];
-
-			add_vote($backgroundID, $rating, $_SESSION['userID'], 'background');
-
-			$background_resolution_select_result = mysql_query("SELECT background_resolutionID, type, resolution, filename FROM background_resolution WHERE backgroundID='$backgroundID' ORDER BY type,resolution");
-			$vote_result = mysql_query("SELECT rating, userID FROM vote WHERE artID='$backgroundID' AND type='background'");
-			$vote_count = mysql_num_rows($vote_result);
-			$i = 0;
-			while (list($rating,$dbuserID) = mysql_fetch_array($vote_result)) {
-				$vote_sum += $rating;
-				if($dbuserID == $_SESSION['userID']) {
-					$i++;
-					$userrating = $rating;
-				}
-			}
-			$vote = -1;
-			if ($i >= 1)
-				$vote = 0;
-			if (!isset($_SESSION['userID']) || $_SESSION['userID'] == 0)
-				$vote = 1;
-			elseif ($_SESSION['userID'] == $userID)
-				$vote = 2;
-
-
-			create_title($name . " by <a href=\"/users/$author\">$author</a>", $background_config_array[$category]["name"] . " Backgrounds");
-			
-			
-
-			if ($backgroundID < 1000)
-				$thumbnail_url = "{$site_url}images/archive/thumbnails/backgrounds/$thumbnail_filename";
-			else
-				$thumbnail_url = "{$site_url}images/thumbnails/backgrounds/$thumbnail_filename";
-
-			$more = "<tr><th>Resolutions</th><td>\n";
-			while(list($background_resolutionID,$type,$resolution,$filename)=mysql_fetch_row($background_resolution_select_result))
-			{
-				if ($backgroundID < 1000) {
-					$more .= "<a href=\"/download/backgrounds/$category/$background_resolutionID/$filename\" class=\"$type\">&nbsp;$type - $resolution</a>&nbsp;&nbsp;\n";
-				} else {
-					$more .= "<a href=\"/download/backgrounds/$category/$background_resolutionID/$filename\" class=\"$type\">&nbsp;$type - $resolution</a>&nbsp;&nbsp;\n";
-				}
-			}
-
-			$more .= "</td></tr></table>\n";
-
-			print_detailed_view($background_description, "background", $release_date, $add_timestamp, $version, $license, $download_count, $download_start_timestamp, $vote, $vote_sum, $vote_count, $more, $thumbnail_url, $userrating);
-
-			$back_select_result = mysql_query("SELECT backgroundID,background_name,category,thumbnail_filename FROM background WHERE parent='$backgroundID'");
-			if(mysql_num_rows($back_select_result)>0)
-			{
-				create_title("Variations", "This background has a number of variations");
-				while(list($backID,$back_name,$back_cat)=mysql_fetch_row($back_select_result))
-				{
-					print_background_row($backID, "icons");
-				}
-			}
-
-			$comment_result = add_comment($backgroundID, "background", $comment);
-			print_comments($backgroundID, "background");
-			print($comment_result);
-			print_comment_form($comment);
-			ago_footer();
-		}
+		add_vote($backgroundID, $rating, $_SESSION['userID'], 'background');
+		print_detailed_view($backgroundID, "background");
+		$comment_result = add_comment($backgroundID, "background", $comment);
+		print_comments($backgroundID, "background");
+		print($comment_result);
+		print_comment_form($comment);
+		ago_footer();
 	}
 	else
 	{

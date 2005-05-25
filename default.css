@@ -35,30 +35,6 @@ body {
 	font-size: 1.2em;
 }
 
-
-.theme_row {
-	clear: left;
-	padding: 10px;
-	width: 100%;
-}
-
-.theme_row_detail {
-	width:100%;
-}
-
-.theme_row_title{
-	display: block;
-	color: #455982;
-	font-family: sans-serif;
-	font-size: 1.4em;
-	border-top: none;
-	border-left: none;
-	border-right: none;
-	border-bottom: solid 2px #dedede;
-	margin-top: 1em;
-	margin-bottom: 0.2em;
-}
-
 img.header {
 	border: none;
 }
@@ -74,13 +50,6 @@ img.thumbnail_no_border {
 	border: none;
 	margin-right: 1em;
 	vertical-align:middle;
-}
-
-img.large_thumbnail {
-	border: 1px #a2a2a2 solid;
-	margin: 2em;
-	vertical-align:middle;
-	clear: left right;
 }
 
 img.sidebar {
@@ -104,7 +73,7 @@ p, td, form {
 	font-family: sans-serif;
 /*	color: #7d7d7d; */
 	font-size: 1em;
-	padding: 0.2em;
+/*	padding: 0.2em; */
 }
 
 form {
@@ -112,33 +81,34 @@ form {
 	margin: 0px;
 	border: 0px;
 }
+
 p.info {
-	padding-left:18px;
+	padding-left:24px;
 	background-image: url("/images/site/stock_dialog-info.png");
 	background-repeat: no-repeat;
 }
 
 p.warning {
-	padding-left:18px;
+	padding-left:24px;
 	background-image: url("/images/site/stock_dialog-warning.png");
 	background-repeat: no-repeat;
 }
 
 p.error {
-	padding-left:18px;
+	padding-left:24px;
 	background-image: url("/images/site/stock_dialog-error.png");
 	background-repeat: no-repeat;
 }
 
 a.jpg {
-	padding-left:18px;
+	padding-left:24px;
 	height: 18px;
 	background-image: url("/images/site/gnome-mime-image-jpeg.png");
 	background-repeat: no-repeat;
 }
 
 a.png {
-	padding-left:18px;
+	padding-left:24px;
 	height: 18px;
 	background-image: url("/images/site/gnome-mime-image-png.png");
 	background-repeat: no-repeat;
@@ -157,6 +127,8 @@ th {
 	text-align: left;
 	font-family: sans-serif;
 	font-size: 1em;
+	vertical-align:top;
+	padding-right: 1em;
 }
 
 #header{
@@ -207,7 +179,7 @@ th {
 	position: absolute;
 	right: 0px;
 	top: 84px;
-	width: 200px;
+	width: 180px;
 	height:100%;
 	border-left: #bfbfbf 1px dashed;
 	padding: 1em;
@@ -238,7 +210,8 @@ li.indent {
 a.box {
 	padding-left: 0.3em;
 	padding-right: 0.3em;
-	background-color: #dedede;
+/*	background-color: #dedede;
+*/
 }
 
 input, select, textarea {
@@ -246,6 +219,7 @@ input, select, textarea {
 	font-size: 1em;
 /*	color: #7d7d7d; */
 	border: 1px #a2a2a2 solid;
+	margin: 0.1em;
 }
 
 input.link_button {
@@ -267,52 +241,18 @@ input.password {
 	background-repeat: no-repeat;
 }
 
-div.rating-border {
-	height: 0.5em;
-	background-color: #eeeeee;
-	border: solid gray 1px;
-	font-size: 4pt;
-	width: 96px;
-	margin: 1px;
-}
-
-div.rating {
-	height: 0.5em;
-	background-color: #455982;
-}
-
-div.rating_text {
-	font-size:10px;
-	color:#444444;
-/*	text-align: bottom; */
-	vertical-align: bottom;
-}
-
-.rating_vote {
-	font-size:10px;
-	color:#444444;
-	float: left;
-	margin-left: 2em;
-}
-
 div.icon_view {
 	float:left;
 	padding:1em;
 }
 
-table.comment {
-	background-color: #DDDDDD;
-	padding: 1px;
-	border-width: 0px;
-	width: 100%;
+.comment {
+	background-image: url('/images/site/stock_draw-callouts.png');
+	background-repeat: no-repeat;
+	padding-left: 28px;
 }
 
-
-td.comment_head {
-	background-color: #EFEFEF;
+table.theme_info {
+	clear: left;
+	margin-top:1em;
 }
-
-td.comment {
-	background-color: #FFFFFF;
-}
-

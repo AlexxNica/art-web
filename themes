@@ -10,12 +10,12 @@ require("art.inc.php");
 
 // superglobals stuff
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
-$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity"), "date");
+$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity","rating"), "date");
 $thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
 $view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
 $order = validate_input_array_default ($_GET['order'], array("ASC", "DESC"), "DESC");
 list($foo, $unvalidated_category, $unvalidated_themeID) = explode("/", $_SERVER["PATH_INFO"]);
-$rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
+$new_rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
 if  (get_magic_quotes_gpc() == 1)
 	$comment = stripslashes($_POST["comment"]); // This is validated later
 else
@@ -96,124 +96,18 @@ else
 	{
 		$themeID = validate_input_regexp_error ($unvalidated_themeID, "^[0-9]+$");
 
+		ago_header($theme_config_array[$category]["name"]);
 		report_comment($report, $commentID);
+		add_vote($themeID, $new_rating, $_SESSION['userID'], 'theme');
 
-		$theme_select_result = mysql_query("SELECT * FROM theme WHERE themeID='$themeID'");
-		if(mysql_num_rows($theme_select_result)==0)
-		{
-			ago_file_not_found();
-		}
-		else
-		{
-			ago_header($theme_config_array[$category]["name"]);
+		print_detailed_view($themeID, 'theme');
 
-			$var_select_result = mysql_query("SELECT themeID,theme_name,category,thumbnail_filename FROM theme WHERE parent = $themeID");
+		$comment_result = add_comment($themeID, "theme", $comment);
+		print_comments($themeID, "theme");
+		print($comment_result);
+		print_comment_form($comment);
 
-			$theme_select_row = mysql_fetch_array($theme_select_result);
-			$small_thumbnail_filename = $theme_select_row["small_thumbnail_filename"];
-			$thumbnail_filename = $theme_select_row["thumbnail_filename"];
-			$name = $theme_select_row["theme_name"];
-			$userID = $theme_select_row["userID"];
-			$version = $theme_select_row["version"];
-			$user_result = mysql_query ("SELECT username FROM user WHERE userID=$userID");
-			list ($author) = mysql_fetch_row ($user_result);
-			$release_date = $theme_select_row["release_date"];
-			$depends = $theme_select_row["depends"];
-			$license = $theme_select_row["license"];
-
-			$description = $theme_select_row["description"];
-			$download_start_timestamp = $theme_select_row["download_start_timestamp"];
-			$download_count = $theme_select_row["download_count"];
-			$download_filename = $theme_select_row["download_filename"];
-			$add_timestamp = $theme_select_row["add_timestamp"];
-
-			add_vote($themeID, $rating, $_SESSION['userID'], 'theme');
-		
-			$vote_result = mysql_query("SELECT rating, userID FROM `vote` WHERE artID='$themeID' AND type='theme'");
-			$vote_count = mysql_num_rows($vote_result);
-			$i=0;
-			while (list($rating,$dbuserID) = mysql_fetch_array($vote_result)) {
-				$vote_sum += $rating;
-				if($dbuserID == $_SESSION['userID']) {
-					$i++;
-					$userrating = $rating;
-				}
-			}
-				$vote = -1;
-			if ($i >= 1)
-				$vote = 0;
-			if (!isset($_SESSION['userID']) || $_SESSION['userID'] == 0)
-				$vote = 1;
-			elseif ($_SESSION['userID'] == $userID)
-				$vote = 2;
-			
-
-			create_title($name . " by <a href=\"/users/$author\">$author</a>", $theme_config_array[$category]["name"]);
-			
-			
-			
-			$more = "";
-			
-			if ($depends != "")
-			{
-
-				$themes = explode(',', $depends);
-				// TODO: print this out as links to the themes
-				$more .= "<tr><td>Requires</td><td>$depends</td></tr>";
-			}
-	
-
-			$more .= "<tr><td colspan=\"2\">";
-
-			// get the filesize from the server
-			if ($themeID < 1000)
-				$file_path = $sys_theme_dir . "/../archive/themes/$category/$download_filename";
-			else
-				$file_path = $sys_theme_dir . "/$category/$download_filename";
-			$filesize = get_filesize_string($file_path);
-			$more .= "<a href=\"/download/themes/$category/$themeID/$download_filename\" class=\"tar\"> $download_filename ($filesize)</a></td></tr>";
-
-
-			if($category == "metacity" || $category == "splash_screens" || $category == "gtk_engines")
-			{
-				if ($themeID < 1000)
-					$thumbnail_url="{$site_url}images/archive/thumbnails/$category/$small_thumbnail_filename";
-				else
-					$thumbnail_url="{$site_url}images/thumbnails/$category/$small_thumbnail_filename";
-			}
-			else
-			{
-				if ($themeID < 1000) {
-					$thumbnail_url="{$site_url}images/archive/thumbnails/$category/$thumbnail_filename";
-				} else {
-					$thumbnail_url="{$site_url}images/thumbnails/$category/$thumbnail_filename";
-				}
-			}
-			
-
-			print_detailed_view($description, "theme", $release_date, $add_timestamp, $version, $license, $download_count, $download_start_timestamp, $vote, $vote_sum, $vote_count, $more, $thumbnail_url, $userrating);
-
-			// Get any variations
-			if (mysql_num_rows($var_select_result) > 0)
-			{
-				create_title("Variations", "This theme has one or more variations");
-				while (list($themeID,$theme_name,$var_category, $thumbnail_filename) = mysql_fetch_row($var_select_result))
-				{
-					if ($themeID < 1000) {
-						print("<a href=\"/themes/$var_category/$themeID\">$theme_name</a>");
-					} else {
-						print("<a href=\"/archives/themes/$var_category/$themeID\">$theme_name</a>");
-					}
-				}
-			}
-			$comment_result = add_comment($themeID, "theme", $comment);
-			print_comments($themeID, "theme");
-			print($comment_result);
-			print_comment_form($comment);
-
-
-			ago_footer();
-		}
+		ago_footer();
 	}
 	else
 	{

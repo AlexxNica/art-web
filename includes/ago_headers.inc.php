@@ -41,9 +41,9 @@ function ago_header($title)
 	print("\t<a href=\"/\"><img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" height=\"48\" width=\"48\" class=\"sidebar\" /> Art</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/\">News</a></li>\n");
-	print("\t\t<li><a href=\"/updates.php\">Updates</a></li>\n");
+	//print("\t\t<li><a href=\"/updates.php\">Updates</a></li>\n");
 	print("\t\t<li><a href=\"/search.php\">Search</a></li>\n");
-	print("\t\t<li><a href=\"/users/\">Authors</a></li>\n");
+	//print("\t\t<li><a href=\"/users/\">Authors</a></li>\n");
 	print("\t\t<li><a href=\"/faq.php\">FAQ</a></li>\n");
 	print("\t\t<li><a href=\"http://live.gnome.org/GnomeArt_2fTutorials\">Tutorials</a></li>\n");
 	print("\t\t<li><a href=\"http://gnomesupport.org/forums/index.php?c=6\">Forums</a></li>\n");
@@ -114,7 +114,7 @@ function ago_header($title)
 
 function ago_footer()
 {
-	print("\n<div style=\"text-align: center; font-size: 0.7em; margin-top:3em; clear: left;\">\n");
+	print("<br/><div style=\"text-align: center; font-size: 0.7em; padding:1em; margin-top:3em; clear: left;\">\n");
 	print("\t<p>Copyright &copy; 2002 - 2005<br /><a href=\"/copyright.php\"><strong>The art.gnome.org team</strong></a></p>\n");
 	print("</div>\n");
 	print("</div>\n");

@@ -1,5 +1,7 @@
 <?php
 
+require_once("common.inc.php");
+
 function print_comments($artID, $type)
 {
 	$comment_select_result = mysql_query("SELECT comment.commentID, comment.status, comment.userID, user.username, comment.comment, comment.timestamp FROM comment, user WHERE user.userID=comment.userID AND type='$type' and artID='$artID' and comment.status!='deleted' ORDER BY comment.timestamp");
@@ -11,56 +13,51 @@ function print_comments($artID, $type)
 
 	$comment_count = mysql_num_rows($comment_select_result);
 
-	
-
 	if ($comment_count == 1)
 	{
 		//Only one Comment
-		$msg = "comment";
+		$msg = "Comment";
 	}
 	else
 	{
 		//More than one comment
-		$msg = "comments";
+		$msg = "Comments";
 	}
 
-	create_title("Comments", "This $type has $comment_count $msg");
+	create_title("$comment_count $msg");
 
 	if($comment_count > 0)
 	{
 		print("<br />");
 		$count = 0;
 
-		
-		
 		while(list($commentID, $status, $userID, $username, $user_comment, $comment_time)=mysql_fetch_row($comment_select_result))
 		{
 			$count++;
-			print("<table class=\"comment\">\n");
-			print("<tr><td class=\"comment_head\">\n");
-			print("<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\">\n");
-			print("<i>$count: <a href=\"/users/$username\">$username</a> posted on " . date("Y-m-d - H:i", ($comment_time + (3600 * ($timezone + 5)))) . "</i>\n");
-			print("</td><td align=\"right\">\n");
-			
+			print("<div class=\"comment\">\n");
+			print("\t<div class=\"h2\">From <a href=\"/users/".urlencode("$username")."\">$username</a></div>\n");
+			print("\t\t<div class=\"subtitle\">Posted ".FormatRelativeDate(time(), $comment_time ) . date(" - H:i", ($comment_time + (3600 * ($timezone + 5))))."</div>\n");
+
+			print("\t\t<p>". html_parse_text($user_comment) . "</p>\n");
+
 			if ($status == "reported")
 			{
-				print("Reported");
+				print("\t<div style=\"text-align:right;\">Reported</div>\n");
 			}
 			else if ($status == "approved")
 			{
-				print("Approved");
+				print("\t<div style=\"text-align:right;\">Already Reviewed</div>\n");
 			}
 			else
 			{
-				print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\"><div>\n");
-				print("<input type=\"hidden\" name=\"commentID\" value=\"$commentID\" />\n");
-				print("<input type=\"submit\" name=\"report\" value=\"(Report Abuse)\" class=\"link_button\" style=\"font-size: 0.8em;\" />");
-				print("</div></form>\n");
+				print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
+				print("\t<div style=\"text-align:right;\">\n");
+				print("\t<input type=\"hidden\" name=\"commentID\" value=\"$commentID\" />\n");
+				print("\t<input type=\"submit\" name=\"report\" value=\"(Report Abuse)\" class=\"link_button\" style=\"font-size: 0.8em;\" />\n");
+				print("\t</div>\n");
+				print("\t</form>\n");
 			}
-			
-			print("</td></tr></table></td></tr>");
-			print("<tr><td class=\"comment\">" . html_parse_text($user_comment) . "</td></tr>");
-			print("</table><br />\n");
+			print("</div>\n");
 		}
 
 	}
