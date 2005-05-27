@@ -8,6 +8,9 @@ admin_auth(2);
 
 if($HTTP_POST_VARS)
 {
+	if(get_magic_quotes_gpc() == 1)
+		foreach ($_POST as $k => $v)
+			$_POST[$k] = stripslashes($_POST[$k]);
 
 	$month = validate_input_regexp_default ($_POST["month"], "^[0-9]+$", "");
 	$day = validate_input_regexp_default ($_POST["day"], "^[0-9]+$", "");

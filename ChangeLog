@@ -1,3 +1,7 @@
+2005-05-27  James McGuire  <jamesm@bluebottle.com>
+
+	* admin/add_news_item.php: Fix slashes in add_news.php
+
 2005-05-25  Thomas Wood  <thos@gnome.org>
 
 	* includes/art.inc.php: Fix background download bug
