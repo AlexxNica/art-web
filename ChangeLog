@@ -1,3 +1,19 @@
+2005-05-28  James McGuire  <jamesm@bluebottle.com>
+
+	* account.php: migrated to try_login()
+	* default.css: added seperator for comments
+	* faq.php: added support for asking questions
+	* admin/edit_faq.php: show approved faq's only
+	* admin/index.php: added link for show_submitted_faq.php
+	* includes/art.inc.php: linked licenses to license urls, allow users to vote 1st, log in 2nd.
+	* includes/comments.inc.php: DESC comments, put username in htmlentities(), seperator for comments, allow user to comment 1st, login 2nd.
+	* includes/common.inc.php: made try_login(), is_logged_in() functions
+	* includes/config.inc.php: added license_config_link_array, which has links to each license.
+
+	* themes: 
+	* backgrounds: 
+	-allow users to vote 1st, log in 2nd.
+
 2005-05-27  James McGuire  <jamesm@bluebottle.com>
 
 	* admin/add_news_item.php: Fix slashes in add_news.php

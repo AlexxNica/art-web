@@ -4,7 +4,7 @@ require_once("common.inc.php");
 
 function print_comments($artID, $type)
 {
-	$comment_select_result = mysql_query("SELECT comment.commentID, comment.status, comment.userID, user.username, comment.comment, comment.timestamp FROM comment, user WHERE user.userID=comment.userID AND type='$type' and artID='$artID' and comment.status!='deleted' ORDER BY comment.timestamp");
+	$comment_select_result = mysql_query("SELECT comment.commentID, comment.status, comment.userID, user.username, comment.comment, comment.timestamp FROM comment, user WHERE user.userID=comment.userID AND type='$type' and artID='$artID' and comment.status!='deleted' ORDER BY comment.timestamp DESC");
 
 	if($_SESSION['userID']) {
 		$timezone_select_result = mysql_query("SELECT timezone FROM user WHERE `userID` = '".$_SESSION['userID']."'");
@@ -35,7 +35,7 @@ function print_comments($artID, $type)
 		{
 			$count++;
 			print("<div class=\"comment\">\n");
-			print("\t<div class=\"h2\">From <a href=\"/users/".urlencode("$username")."\">$username</a></div>\n");
+			print("\t<div class=\"h2\">From <a href=\"/users/".urlencode("$username")."\">".htmlentities($username)."</a></div>\n");
 			print("\t\t<div class=\"subtitle\">Posted ".FormatRelativeDate(time(), $comment_time ) . date(" - H:i", ($comment_time + (3600 * ($timezone + 5))))."</div>\n");
 
 			print("\t\t<p>". html_parse_text($user_comment) . "</p>\n");
@@ -51,7 +51,7 @@ function print_comments($artID, $type)
 			else
 			{
 				print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
-				print("\t<div style=\"text-align:right;\">\n");
+				print("\t<div style=\"text-align:right;\" class=\"abuse\">\n");
 				print("\t<input type=\"hidden\" name=\"commentID\" value=\"$commentID\" />\n");
 				print("\t<input type=\"submit\" name=\"report\" value=\"(Report Abuse)\" class=\"link_button\" style=\"font-size: 0.8em;\" />\n");
 				print("\t</div>\n");
@@ -76,42 +76,39 @@ function print_comment_form($comment)
 {
 
 	print("<div class=\"h2\">Add a new comment</div>");
-	if(!array_key_exists("username", $_SESSION))
+	$show_comment = "";
+
+	if (strlen($comment) < 10 && strlen($comment) != 0) 
 	{
-		print("<p class=\"info\">Only <a href=\"/account.php\">logged in</a> users may post comments.</p>\n");
+		$comment_msg = "You comment is too short!<br />\n";
+		$show_comment = $comment;
 	}
-	else
-	{
-		$show_comment = "";
 		
-		if (strlen($comment) < 10 && strlen($comment) != 0) 
-		{
-			$comment_msg = "You comment is too short!<br />\n";
-			$show_comment = $comment;
-		}
+	print("<a name=\"comment\"/>\n");
+	print("<br /><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\">\n");
 		
-		print("<a name=\"comment\"/>\n");
-		print("<br /><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\">\n");
-		
-		print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br /><br />\n");
-		print("<input type=\"submit\" name=\"send\" value=\"Add Comment\" />\n");
-		print("</form>\n");
-	}
+	print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br /><br />\n");
+	print("<input type=\"submit\" name=\"send\" value=\"Add Comment\" />\n");
+	print("</form>\n");
+
 }
 
 function add_comment($artID, $type, $comment)
 {
-	if (array_key_exists("username", $_SESSION) and ($comment != ""))
+	if ($comment)
 	{
 		if(strlen($comment) < 10)
 		{
 			return ("<p class=\"warning\">Comments must be more than 10 letters long!</p>");
 		}
-		$comment = mysql_real_escape_string($comment); // make sure it is safe for mysql
-		$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
-		if ($comment_result === False)
+		elseif(is_logged_in('comments'))
 		{
-			return ("<p class=\"error\">There was an error adding your comment.</p>");
+			$comment = mysql_real_escape_string($comment); // make sure it is safe for mysql
+			$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
+			if ($comment_result === False)
+			{
+				return ("<p class=\"error\">There was an error adding your comment.</p>");
+			}
 		}
 	}
 }

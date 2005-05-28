@@ -61,7 +61,7 @@ elseif($action == "edit")
 }
 else
 {
-	$faq_select_result = mysql_query("SELECT faqID,question,answer FROM faq ORDER by faqID");
+	$faq_select_result = mysql_query("SELECT faqID,question,answer FROM faq WHERE status != 'pending' ORDER by faqID");
 	if(mysql_num_rows($faq_select_result)==0)
 	{
 		print("There are no FAQ entries available for editing.");

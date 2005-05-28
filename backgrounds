@@ -98,10 +98,14 @@ else
 		$backgroundID = validate_input_regexp_error ($unvalidated_backgroundID, "^[0-9]+$");
 
 		ago_header("Backgrounds - " . $category);
-		report_comment($report, $commentID);
-		add_vote($backgroundID, $rating, $_SESSION['userID'], 'background');
-		print_detailed_view($backgroundID, "background");
 		$comment_result = add_comment($backgroundID, "background", $comment);
+		report_comment($report, $commentID);
+		if($rating != '-1')
+		{
+			if(is_logged_in('vote'))
+				add_vote($backgroundID, $rating, $_SESSION['userID'], 'background');
+		}
+		print_detailed_view($backgroundID, "background");
 		print_comments($backgroundID, "background");
 		print($comment_result);
 		print_comment_form($comment);

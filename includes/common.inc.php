@@ -51,6 +51,138 @@ function get_thumbnail_url($filename, $itemID, $type, $category)
 	return $thumbnail_url;
 }
 
+function try_login($actionrequired='')
+{	
+	$username = mysql_real_escape_string($_POST['username']);
+	$password = mysql_real_escape_string($_POST['password']);
+	$query_result = mysql_query("SELECT userID, realname, password FROM user WHERE username = '$username'");
+	$referer = validate_input_regexp_default($_POST['referer'], "^[a-z0-9#\?\&\=\./]+$", "/account.php");
+
+	list($userID, $realname, $cryptpass ) = mysql_fetch_row($query_result);
+
+	if ( (md5($password) == $cryptpass)  )
+	{
+		$_SESSION['username'] = $username;
+		$_SESSION['userID'] = $userID;
+		$_SESSION['realname'] = $realname;
+		mysql_query("UPDATE user SET lastlog=NOW() WHERE userid=$userID;");
+		create_title("Login Successful", "");
+		if ($_SERVER['QUERY_STRING'])
+			$referer = $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+		else
+			$referer = $_SERVER['PHP_SELF'];
+		switch ($actionrequired)
+		{
+		case 'faq':
+			$query = "INSERT INTO `faq` (`faqID`, `question`, `answer`, `status`, `userID`) VALUES ('', '".mysql_real_escape_string($_POST['question'])."', '', 'pending', '".$_SESSION['userID']."')";
+			if(mysql_query($query))
+				print("<p>Thank you $username.  Your question has been successfully submitted.  <a href=\"$referer\">Continue...</a></p>");
+				ago_footer();
+				die();
+		break;
+		case 'comments':
+			list($f00, $unvalidated_type, $category, $artID) = explode("/", $_SERVER['PHP_SELF']);
+			if ($unvalidated_type == 'themes')
+				$type = 'theme';
+			elseif ($unvalidated_type == 'backgrounds')
+				$type = 'background';
+			else
+				++$fail;
+			if(!ereg("^[0-9]+$", $artID))
+				++$fail;
+			$comment = mysql_real_escape_string($_POST['comment']); // make sure it is safe for mysql
+			if(!$fail)
+				$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
+			if ($comment_result === False)
+			{
+				return ("<p class=\"error\">There was an error adding your comment.</p>");
+			} else
+				print("<p>Thank you $username.  Your comment was successfully entered.  <a href=\"$referer?time=".time()."#comment\">Continue...</a></p>");
+			ago_footer();
+			die();
+		break;
+		case 'vote':
+			list($f00, $unvalidated_type, $category, $artID) = explode("/", $_SERVER['PHP_SELF']);
+			if ($unvalidated_type == 'themes')
+				$type = 'theme';
+			elseif ($unvalidated_type == 'backgrounds')
+				$type = 'background';
+			else
+				$fail++;
+			if(!ereg("^[0-9]+$", $artID))
+				$fail++;
+			if(!ereg("^[1-5]+$", $_POST['rating']))
+				$fail++;
+			if(!$fail)
+			{
+				$result = mysql_query("SELECT userID FROM $type WHERE {$type}ID='$artID'");
+				list($authorID) = mysql_fetch_row($result);
+
+				if($_SESSION['userID'] != $authorID)
+				{
+					if(add_vote($artID, mysql_real_escape_string($_POST['rating']), $_SESSION['userID'], $type))
+						print("<p>Thanks for your vote, $username.  <a href=\"$referer?time=".time()."\">Continue...</a></p>");
+					else
+						print("<p class=\"error\">There was an error counting your vote.  Please contact an administrator</p>");
+				}		
+				else
+					print("<p>Thanks for logging in, $username, but you are not allowed to vote for your own artwork.  <a href=\"$referer?time=".time()."\">Continue...</a></p>");
+
+			}
+			else
+				print("<p class=\"error\">There was an error counting your vote.  Please contact an administrator</p>");
+			ago_footer();
+			die();
+		break;
+		default:
+			print("<p>You are now logged in as $username. <a href=\"$referer\">Continue...</a></p>");
+		break;
+		}
+	}
+	else
+	{
+		create_title("Login failed","");
+		print("<p>Please <a href=\"{$_SERVER["PHP_SELF"]}\">try again</a>.</p>");
+	}
+
+}
+
+function is_logged_in($actionrequired)
+{
+	if ($_SESSION['userID'])
+		return true;
+	else
+	{
+		if ($_SERVER['QUERY_STRING'])
+			$referer = $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+		else
+			$referer = $_SERVER['PHP_SELF'];
+
+		if ($actionrequired == 'comments')
+			$referer = $referer."#comment";
+		if(array_key_exists('login', $_POST))
+			try_login($actionrequired);
+		else {
+			print('<p class="warning">');
+			print("The feature you are trying to access is for registered users only.  Please login.</p>");
+			create_title("Please log in","Log in to access your account");
+
+			print("<form action=\"$referer\" method=\"post\">\n");
+			print("<table>\n");
+			print("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
+			print("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
+			print("<tr><td><input type=\"hidden\" value=\"$referer\" name=\"referer\" /><input type=\"submit\" value=\"Login\" name=\"login\" /></td><td><a href=\"/account.php\" style=\"font-size:0.8em;\">(Register)</a></td></tr>\n");
+			print("<tr><td>");
+			foreach($_POST as $k => $v)
+				print("<input type=\"hidden\" value=\"$v\" name=\"$k\" />");
+			print("</td></tr>\n");
+			print("</table>\n");
+			print("</form>\n");
+			ago_footer();
+			die();
+		}
+	}
+}
 
 function print_item_row($itemID, $type, $style="list")
 {

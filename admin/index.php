@@ -59,6 +59,7 @@ if (array_key_exists('username', $_SESSION))
 	print("&nbsp;&nbsp;&nbsp;<a href=\"add_faq.php\">Add FAQ Entry</a><br />");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_faq.php\">Edit FAQ Entry</a><br />");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_faq.php\">Delete FAQ Entry</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_faq.php\">Pending FAQ Entries</a><br />");
 	print("&nbsp;&nbsp;&nbsp;Re-Order FAQ<br />");
 
 }

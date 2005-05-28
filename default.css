@@ -248,8 +248,15 @@ div.icon_view {
 
 .comment {
 	background-image: url('/images/site/stock_draw-callouts.png');
+//	background-image: url('/images/site/commentbd.png');
 	background-repeat: no-repeat;
-	padding-left: 28px;
+	padding-left: 24px;
+}
+
+div.abuse {
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	border-bottom: dotted 2px #dedede;
 }
 
 table.theme_info {

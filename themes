@@ -97,12 +97,18 @@ else
 		$themeID = validate_input_regexp_error ($unvalidated_themeID, "^[0-9]+$");
 
 		ago_header($theme_config_array[$category]["name"]);
+		$comment_result = add_comment($themeID, "theme", $comment);
 		report_comment($report, $commentID);
-		add_vote($themeID, $new_rating, $_SESSION['userID'], 'theme');
+		if($new_rating != '-1')
+		{
+			if(is_logged_in('vote'))
+				add_vote($themeID, $new_rating, $_SESSION['userID'], 'theme');
+		}
+
 
 		print_detailed_view($themeID, 'theme');
 
-		$comment_result = add_comment($themeID, "theme", $comment);
+		
 		print_comments($themeID, "theme");
 		print($comment_result);
 		print_comment_form($comment);

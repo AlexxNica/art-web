@@ -8,30 +8,7 @@ include "common.inc.php";
 ago_header("Account");
 
 if (array_key_exists('login', $_POST))
-{
-	$username = mysql_real_escape_string($_POST['username']);
-	$password = mysql_real_escape_string($_POST['password']);
-	$query_result = mysql_query("SELECT userID, realname, password FROM user WHERE username = '$username'");
-	$referer = validate_input_regexp_default($_POST['referer'], "^[a-z0-9\./]+$", "/account.php");
-
-	list($userID, $realname, $cryptpass ) = mysql_fetch_row($query_result);
-
-	if ( (md5($password) == $cryptpass)  )
-	{
-		$_SESSION['username'] = $username;
-		$_SESSION['userID'] = $userID;
-		$_SESSION['realname'] = $realname;
-		mysql_query("UPDATE user SET lastlog=NOW() WHERE userid=$userID;");
-		create_title("Login Successful", "");
-		print("<p>You are now logged in as $username. <a href=\"$referer\">Continue...</a></p>");
-	}
-	else
-	{
-		create_title("Login failed","");
-		print("<p>Please <a href=\"{$_SERVER["PHP_SELF"]}\">try again</a>.</p>");
-	}
-
-}
+	try_login();
 elseif (array_key_exists('logout', $_POST))
 {
 	session_destroy();
