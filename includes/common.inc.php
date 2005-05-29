@@ -120,17 +120,15 @@ function try_login($actionrequired='')
 
 				if($_SESSION['userID'] != $authorID)
 				{
-					if(add_vote($artID, mysql_real_escape_string($_POST['rating']), $_SESSION['userID'], $type))
-						print("<p>Thanks for your vote, $username.  <a href=\"$referer?time=".time()."\">Continue...</a></p>");
-					else
-						print("<p class=\"error\">There was an error counting your vote.  Please contact an administrator</p>");
+					add_vote($artID, mysql_real_escape_string($_POST['rating']), $_SESSION['userID'], $type);
+					print("<p>Thanks for your vote, $username.  <a href=\"$referer?time=".time()."\">Continue...</a></p>");
 				}		
 				else
 					print("<p>Thanks for logging in, $username, but you are not allowed to vote for your own artwork.  <a href=\"$referer?time=".time()."\">Continue...</a></p>");
 
 			}
 			else
-				print("<p class=\"error\">There was an error counting your vote.  Please contact an administrator</p>");
+				print("<p class=\"error\">Poop.There was an error counting your vote.  Please contact an administrator</p>");
 			ago_footer();
 			die();
 		break;

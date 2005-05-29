@@ -22,7 +22,6 @@ function add_vote($artID, $rating, $userID, $type)
 		list($rating,$count) = mysql_fetch_row($rating_sel);
 		if ($count < 5) $rating = 0; else $rating = round($rating / $count, 4);
 		mysql_query("UPDATE $type SET rating = $rating WHERE {$type}ID = $artID LIMIT 1");
-		print mysql_error();
 	}
 }
 

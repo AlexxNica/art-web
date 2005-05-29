@@ -1,4 +1,8 @@
 2005-05-28  James McGuire  <jamesm@bluebottle.com>
+	* includes/art.inc.php: remove debug info
+	* includes/common.inc.php: fixed voting bug.
+
+2005-05-28  James McGuire  <jamesm@bluebottle.com>
 
 	* account.php: migrated to try_login()
 	* default.css: added seperator for comments
