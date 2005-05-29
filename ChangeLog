@@ -1,4 +1,7 @@
 2005-05-28  James McGuire  <jamesm@bluebottle.com>
+	* admin/show_submitted_faq.php: initial import.
+
+2005-05-28  James McGuire  <jamesm@bluebottle.com>
 	* includes/art.inc.php: remove debug info
 	* includes/common.inc.php: fixed voting bug.
 
