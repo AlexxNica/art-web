@@ -43,33 +43,27 @@ else
 
 	print("<div style=\"width:48%; float:left; clear: left;\">");
 	create_title("Recent Updates", "The latest five additions to art.gnome.org");
-	$big_array = get_updates_array(5);
-	for($count=0;$count<count($big_array);$count++)
-	{
-		list($add_timestamp,$type,$ID) = explode("|",$big_array[$count]);
-		if($type == "background")
-		{
-			print_background_row($ID, "list");
-		}
-		else
-		{
-			print_theme_row($ID, "list");
-		}
-	}
-	print("<div style=\"text-align:center\"><p><a href=\"/updates.php\">More updates</a> - <a href=\"backend.php\">RSS Updates Feed</a></p></div>");
-	print("</div>");
 
-	print("<div style=\"width:48%; float:right; clear: right;\">");
-	create_title("Top Rated", "The five top rated items");
-	mysql_query("CREATE TEMPORARY TABLE top_rated TYPE=HEAP SELECT backgroundID, 0 as themeID, rating FROM background");
-	mysql_query("INSERT INTO top_rated SELECT 0 AS backgroundID, themeID, rating FROM theme");
-	$select = mysql_query("SELECT * FROM top_rated ORDER BY rating DESC LIMIT 5");
-	mysql_query("DROP TABLE top_rated");
+	$select = mysql_query("SELECT backgroundID, 0 AS themeID, add_timestamp FROM background UNION SELECT 0 AS backgroundID, themeID, add_timestamp FROM theme ORDER BY add_timestamp DESC LIMIT 5");
 	while (list($backgroundID, $themeID) = mysql_fetch_row($select))
 	{
 		if ($backgroundID) print_background_row($backgroundID, 'list');
 		if ($themeID) print_theme_row($themeID, 'list');
 	}
+
+	print("<div style=\"text-align:center\"><p><a href=\"/updates.php\">More updates</a> - <a href=\"backend.php\">RSS Updates Feed</a></p></div>");
+	print("</div>");
+
+	print("<div style=\"width:48%; float:right; clear: right;\">");
+	create_title("Top Rated", "The five top rated items");
+
+	$select = mysql_query("SELECT backgroundID, 0 AS themeID, rating FROM background UNION SELECT 0 AS backgroundID, themeID, rating FROM theme ORDER BY rating DESC LIMIT 5");
+	while (list($backgroundID, $themeID) = mysql_fetch_row($select))
+	{
+		if ($backgroundID) print_background_row($backgroundID, 'list');
+		if ($themeID) print_theme_row($themeID, 'list');
+	}
+
 	print("</div>");
 
 }

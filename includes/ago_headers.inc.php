@@ -1,5 +1,7 @@
 <?php
 
+$time_start= microtime(true);
+
 function ago_header($title)
 {
 	ini_set("session.use_only_cookies", "1");
@@ -74,7 +76,7 @@ function ago_header($title)
 		print("<img src=\"/images/site/spacer.gif\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/Themes.png', sizingMethod='scale');\" /> Other Themes");
 	else
                 print("<img src=\"/images/site/Themes.png\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" /> Other Themes");
-	
+
 	print("</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/themes/gdm_greeter/\">Login Manager</a></li>\n");
@@ -114,11 +116,17 @@ function ago_header($title)
 
 function ago_footer()
 {
+	global $time_start;
+
 	print("<br/><div style=\"text-align: center; font-size: 0.7em; padding:1em; margin-top:3em; clear: left;\">\n");
-	print("\t<p>Copyright &copy; 2002 - 2005<br /><a href=\"/copyright.php\"><strong>The art.gnome.org team</strong></a></p>\n");
+	print("\t<p>Copyright &copy; 2002 - 2005<br /><a href=\"/copyright.php\"><strong>The art.gnome.org team</strong></a><br/></p>\n");
 	print("</div>\n");
 	print("</div>\n");
 	print("</body>\n");
 	print("</html>");
+
+	$time_end = microtime(true);
+	$time = round($time_end - $time_start, 2);
+	print("<!-- Page generated in $time seconds -->\n");
 }
 ?>

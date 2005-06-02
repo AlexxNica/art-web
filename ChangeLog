@@ -1,3 +1,10 @@
+2005-06-02  Thomas Wood  <thos@gnome.org>
+
+	* includes/ago_headers.inc.php: Calculate page generation time for
+	profiling
+	* index.php: Use UNION now that it is available, remove temporary
+	tables now that they are unavailable
+
 2005-05-28  James McGuire  <jamesm@bluebottle.com>
 	* admin/show_submitted_faq.php: initial import.
 
