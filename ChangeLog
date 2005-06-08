@@ -1,3 +1,10 @@
+2005-06-08  Thomas Wood  <thos@gnome.org>
+
+	* backend.php:
+	* includes/common.inc.php:
+
+	Enable absolute URLs in the RSS feed
+
 2005-06-02  Thomas Wood  <thos@gnome.org>
 
 	* includes/ago_headers.inc.php: Calculate page generation time for

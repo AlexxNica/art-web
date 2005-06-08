@@ -182,7 +182,7 @@ function is_logged_in($actionrequired)
 	}
 }
 
-function print_item_row($itemID, $type, $style="list")
+function print_item_row($itemID, $type, $style="list", $absolute_url=false)
 {
 	global  $background_config_array,  $theme_config_array, $site_url;
 
@@ -210,7 +210,9 @@ function print_item_row($itemID, $type, $style="list")
 	{
 		$category_name = $theme_config_array["$category"]["name"];
 	}
-	$link = "/{$type}s/$category/$itemID";
+	if ($absolute_url)
+		$link = $site_url;
+	$link .= "/{$type}s/$category/$itemID";
 
 	if ($style == "icons")
 	{
@@ -232,14 +234,14 @@ function print_item_row($itemID, $type, $style="list")
 	}
 }
 
-function print_background_row($backgroundID, $view)
+function print_background_row($backgroundID, $view, $absolute_url=false)
 {
-	print_item_row($backgroundID, 'background', $view);
+	print_item_row($backgroundID, 'background', $view, $absolute_url);
 }
 
-function print_theme_row($themeID, $view)
+function print_theme_row($themeID, $view, $absolute_url=false)
 {
-	print_item_row($themeID, 'theme', $view);
+	print_item_row($themeID, 'theme', $view, $absolute_url);
 }
 
 function get_latest_backgrounds($number)
