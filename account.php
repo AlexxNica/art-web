@@ -7,6 +7,38 @@ include "common.inc.php";
 
 ago_header("Account");
 
+
+function get_status_comment($status, $comment)
+{
+	$reject_comments = Array(
+			"not_rel" => "Not relevent, or unsuitable for art.gnome.org",
+			"bad_url" => "Invalid URL - please <a href=\"mailto:artweb-list _AT_ gnome.org\">contact admin</a>.",
+			"distro" => "Distribution Specific.",
+			"low_quality" => "Low quality or unfinished.",
+			"copyright" => "Possible use of copyright material without permission."
+			);
+
+	if ($status == "new")
+	{
+		return "Pending";
+	}elseif ($status == "rejected")
+	{
+		if ($comment == "")
+		{
+			return "Removed - Please see the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> for more information.";
+		}
+		elseif (array_key_exists($comment, $reject_comments))
+		{
+			return "Removed - " . $reject_comments[$comment] . " See the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> for more information.";
+		}else
+		{
+			return "Removed - " . html_parse_text($comment);
+		}
+	}else
+		return ucfirst($status);
+}
+
+
 if (array_key_exists('login', $_POST))
 	try_login();
 elseif (array_key_exists('logout', $_POST))
@@ -76,8 +108,15 @@ elseif (array_key_exists("register", $_POST))
 		$new_user_result = mysql_query("INSERT INTO user (username,realname,password,email) VALUES ('$username','$realname','$password','$email')");
 		if (!$new_user_result)
 		{
-			print("<p>The following error occured while trying to create a new user:</p>");
-			print("<tt>".mysql_error()."</tt>");
+			if (mysql_errno() == 1062)
+			{
+				print("<p class=\"error\">A user already exists with that username. Please <a href=\"{$_SERVER["PHP_SELF"]}\">choose another.</a></p>");
+			}
+			else
+			{
+				print("<p class=\"error\">The following error occured while trying to create a new user:</p>");
+				print("<tt>".mysql_error()."</tt>");
+			}
 		}
 		else
 		{
@@ -136,14 +175,7 @@ elseif (array_key_exists('username', $_SESSION))
 		print("<table><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
 		while (list($themeID,$theme_name,$category,$status,$comment) = mysql_fetch_row($submissions_select_result) )
 		{
-			if ($status == "new")
-				$status = "pending";
-			elseif ($status == "rejected")
-				if ($comment == "")
-					$status = "Removed from the submissions list. Please read the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> to find the possible reasons.";
-				else
-					$status = "Removed - " . html_parse_text($comment);
-
+			$status = get_status_comment($status, $comment);
 			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$theme_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td>");
 			if ($status == "added")
 				print ("<td><form action=\"/submit_theme.php\" method=\"post\"><div><input type=\"hidden\" name=\"update\" value=\"$themeID\" /><input type=\"submit\" value=\"Update\"/></div></form></td>");
@@ -163,13 +195,7 @@ elseif (array_key_exists('username', $_SESSION))
 		print("<table><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
 		while (list($backgroundID,$background_name,$category,$status,$comment) = mysql_fetch_row($submissions_select_result) )
 		{
-			if ($status == "new")
-				$status = "pending";
-			elseif ($status == "rejected")
-				if ($comment == "")
-					$status = "Removed from the submissions list. Please read the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> to find the possible reasons.";
-				else
-					$status = "Removed - " . html_parse_text($comment);
+			$status = get_status_comment($status, $comment);
 			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$background_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td></tr>");
 		}
 		print("</table>");
