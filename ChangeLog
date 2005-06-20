@@ -1,3 +1,10 @@
+2005-06-19  Thomas Wood  <thos@gnome.org>
+
+	* includes/common.inc.php:
+
+	- Fix RSS feed bug (double slash in URL causes invalid <form> action lines)
+	- Fixed sorting bug in theme lists
+
 2005-06-12  Thomas Wood  <thos@gnome.org>
 
 	* account.php:

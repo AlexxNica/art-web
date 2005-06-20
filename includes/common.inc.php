@@ -184,7 +184,9 @@ function is_logged_in($actionrequired)
 
 function print_item_row($itemID, $type, $style="list", $absolute_url=false)
 {
-	global  $background_config_array,  $theme_config_array, $site_url;
+	global  $background_config_array,  $theme_config_array;
+
+	$site_url = "http://" . $_SERVER['SERVER_NAME'];
 
 	if ($type == "theme")
 		$select = mysql_query("SELECT theme_name, category, add_timestamp, small_thumbnail_filename, rating FROM $type WHERE themeID = $itemID");
@@ -415,6 +417,26 @@ function display_search_box($search_text, $search_type, $thumbnails_per_page, $s
 	print("</form>\n");
 }
 
+function get_order_query($sort_by, $order, $type)
+{
+	if($sort_by == "popularity")
+	{
+		return "ORDER by perday $order";
+	}
+	elseif($sort_by == "date")
+	{
+		return "ORDER BY add_timestamp $order";
+	}
+	elseif($sort_by == "rating")
+	{
+		return "ORDER BY rating $order";
+	}
+	else
+	{
+		return "ORDER BY {$type}_name $order";
+	}
+}
+
 function background_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view, $order="DESC")
 {
 	$num_pages = ceil($num_backgrounds/$thumbnails_per_page);
@@ -431,23 +453,8 @@ function background_search_result($search_text, $search_type, $category, $thumbn
 		$end = $num_backgrounds;
 	}
 	print("<strong>Showing " . ($start+1) . " through " . $end . " of $num_backgrounds results.</strong><br />\n");
-
-	if($sort_by == "popularity")
-	{
-		$order_query = "ORDER by perday $order";
-	}
-	elseif($sort_by == "date")
-	{
-		$order_query = "ORDER BY add_timestamp $order";
-	}
-	elseif($sort_by == "rating")
-	{
-		$order_query = "ORDER BY (rating) $order";
-	}
-	else
-	{
-		$order_query = "ORDER BY background_name $order";
-	}
+	
+	$order_query = get_order_query ($sort_by, $order, 'background');
 
 	if($category != "")
 	{
@@ -481,19 +488,8 @@ function theme_search_result($search_text, $search_type, $category, $thumbnails_
 	}
 	print("<strong>Showing " . ($start+1) . " through " . $end . " of $num_themes results.</strong><br />\n");
 
-	if($sort_by == "popularity")
-	{
-		$order_query = "ORDER by perday $order";
-	}
-	elseif($sort_by == "date")
-	{
-		$order_query = "ORDER BY add_timestamp $order";
-	}
-	else
-	{
-		$order_query = "ORDER BY theme_name $order";
-	}
-	
+	$order_query = get_order_query ($sort_by, $order, 'theme');
+
 	if($category != "")
 	{
 		$category_query = "category='$category' AND";
