@@ -8,8 +8,18 @@ function add_vote($artID, $rating, $userID, $type)
 	if (!($type == 'theme' or $type == 'background'))
 		return -1;
 
+	/* first check if there was something changed, to prevent database lookups */
 	if ($rating != -1)
 	{
+		$result = mysql_query("SELECT userID FROM $type WHERE {$type}ID='$artID'");
+		list($authorID) = mysql_fetch_row($result);
+
+		/* prevent users from voting for their own artwork */
+		if ($_SESSION['userID'] == $authorID) {
+			/* we do not need extra feedback */
+			return -1;
+		}
+
 		$checkvote_result = mysql_query("SELECT `voteID` FROM `vote` WHERE `userID`='$userID' AND `artID`='$artID' AND type='$type'");
 		if (mysql_num_rows($checkvote_result) >= 1)
 		{

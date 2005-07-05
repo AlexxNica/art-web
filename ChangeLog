@@ -1,3 +1,16 @@
+2005-07-04  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/art.inc.php:
+	- Added a check to add_vote, so that users can not vote for their
+	  own artwork.
+
+	* backend.php:
+	- Changed the title of the rss feed so that the category is prepended.
+	  eg. [Backgrounds - GNOME] Dragonfly (Closes: #306997)
+
+	* AUTHORS:
+	- Added myself to the authors.
+
 2005-06-19  Thomas Wood  <thos@gnome.org>
 
 	* includes/common.inc.php:
