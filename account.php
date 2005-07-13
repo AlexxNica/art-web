@@ -5,14 +5,13 @@ include "mysql.inc.php";
 include "ago_headers.inc.php";
 include "common.inc.php";
 
-ago_header("Account");
 
 
 function get_status_comment($status, $comment)
 {
 	$reject_comments = Array(
 			"not_rel" => "Not relevent, or unsuitable for art.gnome.org",
-			"bad_url" => "Invalid URL - please <a href=\"mailto:artweb-list _AT_ gnome.org\">contact admin</a>.",
+			"bad_url" => "Invalid URL - please <a href=\"mailto:artweb-list@gnome.org\">contact admin</a>.",
 			"distro" => "Distribution Specific.",
 			"low_quality" => "Low quality or unfinished.",
 			"copyright" => "Possible use of copyright material without permission."
@@ -39,35 +38,25 @@ function get_status_comment($status, $comment)
 }
 
 
-if (array_key_exists('login', $_POST))
-	try_login();
-elseif (array_key_exists('logout', $_POST))
+if (array_key_exists('logout', $_POST))
 {
 	session_destroy();
 	$_SESSION = Array();
+	ago_header("Account");
 	create_title("Logout","");
 	print("<p>You have been logged out.  <a href=\"{$_SERVER["PHP_SELF"]}\">Continue...</a></p>");
 }
 elseif (array_key_exists('change_profile', $_POST))
 {
-	if (get_magic_quotes_runtime() == 1)
-	{
-		$_POST['password'] = stripslashes ($_POST['password']);
-		$_POST['info'] = stripslashes ($_POST['info']);
-		$_POST['realname'] = stripslashes ($_POST['realname']);
-		$_POST['email'] = stripslashes ($_POST['email']);
-		$_POST['homepage'] = stripslashes ($_POST['homepage']);
-		$_POST['timezone'] = stripslashes ($_POST['timezone']);
-		$_POST['location'] = stripslashes ($_POST['location']);
-	}
+	ago_header("Account");
 
-	$new_pass = mysql_real_escape_string ($_POST['password']);
-	$info = mysql_real_escape_string ($_POST['info']);
-	$realname = mysql_real_escape_string ($_POST['realname']);
-	$email = mysql_real_escape_string ($_POST['email']);
-	$homepage = mysql_real_escape_string ($_POST['homepage']);
-	$timezone = mysql_real_escape_string ($_POST['timezone']);
-	$location = mysql_real_escape_string ($_POST['location']);
+	$new_pass = escape_string ($_POST['password']);
+	$info = escape_string ($_POST['info']);
+	$realname = escape_string ($_POST['realname']);
+	$email = escape_string ($_POST['email']);
+	$homepage = escape_string ($_POST['homepage']);
+	$timezone = escape_string ($_POST['timezone']);
+	$location = escape_string ($_POST['location']);
 
 	$pass_sql = "";
 	if ($new_pass != "")
@@ -84,24 +73,18 @@ elseif (array_key_exists('change_profile', $_POST))
 	else
 	{
 		create_title("Profile update failed","");
-		print("Please contact the administrator. <br/>");
+		print("<p class=\"warning\">Please contact the administrator.</p>");
 		print(mysql_error());
 	}
 }
 elseif (array_key_exists("register", $_POST))
 {
-	if (get_magic_quotes_runtime() == 1)
-	{
-		$_POST['password'] = stripslashes ($_POST['password']);
-		$_POST['username'] = stripslashes ($_POST['username']);
-		$_POST['realname'] = stripslashes ($_POST['realname']);
-		$_POST['email'] = stripslashes ($_POST['email']);
-	}
+	ago_header("Account");
 
-	$username = mysql_real_escape_string ($_POST['username']);
-	$realname = mysql_real_escape_string ($_POST['realname']);
-	$email = mysql_real_escape_string ($_POST['email']);
-	$password = md5($_POST['password']);
+	$username = escape_string ($_POST['username']);
+	$realname = escape_string ($_POST['realname']);
+	$email = escape_string ($_POST['email']);
+	$password = md5(escape_string($_POST['password']));
 
 	if ($username && $realname && $email && $password)
 	{
@@ -131,6 +114,7 @@ elseif (array_key_exists("register", $_POST))
 }
 elseif (array_key_exists('username', $_SESSION))
 {
+	ago_header("Account");
 	create_title("My Profile","Logged in as <a href=\"/users/{$_SESSION['userID']}/\" name=\"Public Profile Page\">{$_SESSION['username']}</a>");
 	print("<ul><li><a href=\"/users/{$_SESSION['username']}/\">Public Profile Page</a></li></ul>");
 	$query_result = mysql_query("SELECT realname,email,homepage,info,timezone,location FROM user WHERE userID = '{$_SESSION['userID']}'");
@@ -204,6 +188,7 @@ elseif (array_key_exists('username', $_SESSION))
 else
 {
 
+	ago_header("Account");
 	create_title("Please log in","Log in to access your account");
 	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
 	print("<table>\n");

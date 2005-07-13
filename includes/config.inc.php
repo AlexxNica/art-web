@@ -221,7 +221,7 @@ $license_config_link_array = array (
 		"pub-dom" => "<a href=\"http://web.resource.org/cc/PublicDomain/\">Public Domain</a>");
 
 $mirror_url = "http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org";
-$site_url = "http://art.gnome.org/";
+$site_url = 'http://' . $_SERVER['SERVER_NAME'];
 
 $sys_theme_dir = "/ftp/pub/gnome/teams/art.gnome.org/themes";
 
@@ -235,5 +235,7 @@ $order_array = array("ASC"=>"Ascending", "DESC"=>"Descending");
 $sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity", "rating" => "Rating");
 $view_array = array("icons" => "Icon", "list" => "List");
 $status_array = Array("new" => "New", "approved" => "Approved", "added" => "Added", "rejected" => "Rejected");
+
+$resolution_array = Array("%" => "All", "1024x768" => "1024x768", "1280x1024" => "1280x1024", "1600x1200" => "1600x1200", "1400x1050" => "1400x1050", "1680x1050" => "1680x1050", "1920x1200" => "1920x1200");
 
 ?>

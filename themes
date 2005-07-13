@@ -8,12 +8,28 @@ require("ago_headers.inc.php");
 require("comments.inc.php");
 require("art.inc.php");
 
+function set_session_var_default($var_name, $default)
+{
+	if (!array_key_exists($var_name, $_SESSION))
+		$_SESSION[$var_name] = $default;
+}
+
+// set defaults
+set_session_var_default('sort_by', 'add_timestamp');
+set_session_var_default('thumbnails_per_page', 12);
+set_session_var_default('view', 'list');
+set_session_var_default('order', 'DESC');
+
+
+$sort_by_array = array("background_name" => "Name", "add_timestamp" => "Date", "download_count" => "Downloads", "rating" => "Rating");
+
 // superglobals stuff
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
-$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity","rating"), "date");
-$thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
-$view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
-$order = validate_input_array_default ($_GET['order'], array("ASC", "DESC"), "DESC");
+$sort_by = validate_input_array_default ($_GET["sort_by"], array_keys($sort_by_array), $_SESSION['sort_by']);
+$thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", $_SESSION['thumbnails_per_page']);
+$view = validate_input_array_default ($_GET["view"], array ("list","icons"), $_SESSION['view']);
+$order = validate_input_array_default ($_GET['order'], array("ASC","DESC"), $_SESSION['order']);
+
 list($foo, $unvalidated_category, $unvalidated_themeID) = explode("/", $_SERVER["PATH_INFO"]);
 $new_rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
 if  (get_magic_quotes_gpc() == 1)
@@ -22,6 +38,13 @@ else
 	$comment = $_POST["comment"];
 $commentID = validate_input_regexp_default ($_POST["commentID"], "^[0-9]+$", -1);
 $report = $_POST["report"];
+
+
+$_SESSION['sort_by'] = $sort_by;
+$_SESSION['thumbnails_per_page'] = $thumbnails_per_page;
+$_SESSION['view'] = $view;
+$_SESSION['order'] = $order;
+
 
 /* print out the list of theme categories */
 if ($unvalidated_category == "")
@@ -53,43 +76,41 @@ else
 	/* print out theme preview page */
 	if (array_key_exists($category,$theme_config_array) && $unvalidated_themeID == "")
 	{
-		ago_header($theme_config_array[$category]["name"]);
-		create_title($theme_config_array[$category]["name"], $theme_config_array[$category]["description"]);
 
-		$theme_select_all_result = mysql_query("SELECT * FROM theme WHERE category='$category' AND parent = 0 ORDER BY add_timestamp DESC");
-		$num_themes = mysql_num_rows($theme_select_all_result);
-		if($num_themes == 0)
-		{
-			print("No themes have been added to this section yet.");
-		}
-		else
-		{
-			print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Themes", $view, $order);
-			list($page, $num_pages) = theme_search_result("", "theme_name", $category, $thumbnails_per_page, $sort_by, $page, $num_themes, $view, $order);
-			
-			/* Page Navigation System */
-			print("<div style=\"clear:both; text-align: center;\">\n");
-			if($page > 1)
-			{
-				$prev_page = $page -1;
-				print(" <a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">&lt;</a>");
-			}
-			for($count=1;$count<=$num_pages;$count++)
-			{
-				if($count == $page)
-					print(" <strong>$count</strong> ");
-				else
-					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">$count</a>");
-			}
-			if($page < $num_pages)
-			{
-				$next_page = $page +1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">&gt;</a>");
-			}
-			print("</div>");
-		}
+		$theme_select_all_result = mysql_query("SELECT COUNT(themeID) FROM theme WHERE category='$category' AND parent = 0 ");
+		list($num_themes) = mysql_fetch_row($theme_select_all_result);
+		$num_pages = ceil($num_themes / $thumbnails_per_page);
+
+		$start = ($page-1) * $thumbnails_per_page;
+		$theme_select_result = mysql_query("SELECT '' AS BackgroundID, themeID FROM theme WHERE category='$category' AND parent = 0 ORDER BY $sort_by $order LIMIT $start, $thumbnails_per_page");
+
+		// LISTING OUTPUT /////////////////////////////////////////////
+		ago_header($theme_config_array[$category]["name"] );
+		?>
+		<h1><?php print($theme_config_array[$category]["name"]); ?></h1>
+		<div class="subtitle"><?php print($theme_config_array[$category]["description"]) ?></div>
+		<form action="/themes/<?php print($category);?>" method="get">
+		<p>
+		<label>Sort By: <?php print_select_box("sort_by", $sort_by_array, $sort_by); ?></label>
+		<label>Show:<?php print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page); ?></label>
+		<label>View: <?php print_select_box("view", $view_array, $view); ?></label>
+		<label>Order: <?php print_select_box("order", $order_array, $order); ?></label>
+		<input type="submit" value="Change" /></p></form>
+		<hr/>
+		<!-- Page Navigation System -->
+		<div style="clear:both; text-align:center">
+		<?php print_navigation($num_pages, $page); ?>
+		</div>
+		<?php print_art_query($theme_select_result, $view); ?>
+		
+		<!-- Page Navigation System -->
+		<div style="clear:both; text-align:center">
+		<?php print_navigation($num_pages, $page); ?>
+		</div>
+		<?
 		ago_footer();
 	}
+
 
 	/* print out the individual theme page */
 	else if( array_key_exists($category,$theme_config_array) && $unvalidated_themeID != "")

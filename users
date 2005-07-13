@@ -33,11 +33,7 @@ else
 	if (is_numeric($unvalidated_author))
 		$authorID = validate_input_regexp_error ($unvalidated_author, "^[0-9]+$");
 	else {
-		if (get_magic_quotes_runtime() == 1)
-		{
-			$unvalidated_author = stripslashes($unvalidated_author);
-		}
-		$authorusername = mysql_real_escape_string($unvalidated_author);
+		$authorusername = escape_string($unvalidated_author);
 	}
 	if ($authorID != "")
 	{

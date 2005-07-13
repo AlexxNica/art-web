@@ -4,9 +4,36 @@ require("config.inc.php");
 
 function create_title($title, $subtitle="")
 {
-	print("<div class=\"h1\">$title</div>\n");
+	print("<h1>$title</h1>\n");
 	if ($subtitle)
 		print("<div class=\"subtitle\">$subtitle</div>\n");
+}
+
+function print_navigation($num_pages, $page)
+{
+	global $sort_by, $thumbnails_per_page, $order, $view, $resolution;
+	print("<p>");
+	for($count=1;$count<=$num_pages;$count++)
+	{
+		if($count == $page)
+		{
+			print(" <strong>$count</strong>\n ");
+		}
+		else
+		{
+			print("<a class=\"box\" href=\"{$_SERVER["PHP_SELF"]}?page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order&amp;resolution=$resolution\">$count</a>\n");
+		}
+	}
+	print("</p>");
+}
+
+function print_art_query($query_result, $view='list')
+{
+	while ($row = mysql_fetch_array($query_result))
+	{
+		if (array_key_exists('backgroundID', $row) and $row['backgroundID'] > 0) print_background_row($row['backgroundID'], $view);
+		if (array_key_exists('themeID', $row) and $row['themeID']) print_theme_row($row['themeID'], $view);
+	}
 }
 
 function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
@@ -37,148 +64,58 @@ function get_thumbnail_url($filename, $itemID, $type, $category)
 	if ($type == "theme")
 	{
 		if ($itemID < 1000)
-			$thumbnail_url="{$site_url}images/archive/thumbnails/$category/$filename";
+			$thumbnail_url="{$site_url}/images/archive/thumbnails/$category/$filename";
 		else
-			$thumbnail_url="{$site_url}images/thumbnails/$category/$filename";
+			$thumbnail_url="{$site_url}/images/thumbnails/$category/$filename";
 	}
 	else
 	{
 		if ($itemID < 1000)
-			$thumbnail_url="{$site_url}images/archive/thumbnails/backgrounds/$filename";
+			$thumbnail_url="{$site_url}/images/archive/thumbnails/backgrounds/$filename";
 		else
-			$thumbnail_url="{$site_url}images/thumbnails/backgrounds/$filename";
+			$thumbnail_url="{$site_url}/images/thumbnails/backgrounds/$filename";
 	}
 	return $thumbnail_url;
 }
 
-function try_login($actionrequired='')
-{	
-	$username = mysql_real_escape_string($_POST['username']);
-	$password = mysql_real_escape_string($_POST['password']);
-	$query_result = mysql_query("SELECT userID, realname, password FROM user WHERE username = '$username'");
-	$referer = validate_input_regexp_default($_POST['referer'], "^[a-z0-9#\?\&\=\./]+$", "/account.php");
 
-	list($userID, $realname, $cryptpass ) = mysql_fetch_row($query_result);
 
-	if ( (md5($password) == $cryptpass)  )
-	{
-		$_SESSION['username'] = $username;
-		$_SESSION['userID'] = $userID;
-		$_SESSION['realname'] = $realname;
-		mysql_query("UPDATE user SET lastlog=NOW() WHERE userid=$userID;");
-		create_title("Login Successful", "");
-		if ($_SERVER['QUERY_STRING'])
-			$referer = $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-		else
-			$referer = $_SERVER['PHP_SELF'];
-		switch ($actionrequired)
-		{
-		case 'faq':
-			$query = "INSERT INTO `faq` (`faqID`, `question`, `answer`, `status`, `userID`) VALUES ('', '".mysql_real_escape_string($_POST['question'])."', '', 'pending', '".$_SESSION['userID']."')";
-			if(mysql_query($query))
-				print("<p>Thank you $username.  Your question has been successfully submitted.  <a href=\"$referer\">Continue...</a></p>");
-				ago_footer();
-				die();
-		break;
-		case 'comments':
-			list($f00, $unvalidated_type, $category, $artID) = explode("/", $_SERVER['PHP_SELF']);
-			if ($unvalidated_type == 'themes')
-				$type = 'theme';
-			elseif ($unvalidated_type == 'backgrounds')
-				$type = 'background';
-			else
-				++$fail;
-			if(!ereg("^[0-9]+$", $artID))
-				++$fail;
-			$comment = mysql_real_escape_string($_POST['comment']); // make sure it is safe for mysql
-			if(!$fail)
-				$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
-			if ($comment_result === False)
-			{
-				return ("<p class=\"error\">There was an error adding your comment.</p>");
-			} else
-				print("<p>Thank you $username.  Your comment was successfully entered.  <a href=\"$referer?time=".time()."#comment\">Continue...</a></p>");
-			ago_footer();
-			die();
-		break;
-		case 'vote':
-			list($f00, $unvalidated_type, $category, $artID) = explode("/", $_SERVER['PHP_SELF']);
-			if ($unvalidated_type == 'themes')
-				$type = 'theme';
-			elseif ($unvalidated_type == 'backgrounds')
-				$type = 'background';
-			else
-				$fail++;
-			if(!ereg("^[0-9]+$", $artID))
-				$fail++;
-			if(!ereg("^[1-5]+$", $_POST['rating']))
-				$fail++;
-			if(!$fail)
-			{
-				$result = mysql_query("SELECT userID FROM $type WHERE {$type}ID='$artID'");
-				list($authorID) = mysql_fetch_row($result);
-
-				if($_SESSION['userID'] != $authorID)
-				{
-					add_vote($artID, mysql_real_escape_string($_POST['rating']), $_SESSION['userID'], $type);
-					print("<p>Thanks for your vote, $username.  <a href=\"$referer?time=".time()."\">Continue...</a></p>");
-				}		
-				else
-					print("<p>Thanks for logging in, $username, but you are not allowed to vote for your own artwork.  <a href=\"$referer?time=".time()."\">Continue...</a></p>");
-
-			}
-			else
-				print("<p class=\"error\">Poop.There was an error counting your vote.  Please contact an administrator</p>");
-			ago_footer();
-			die();
-		break;
-		default:
-			print("<p>You are now logged in as $username. <a href=\"$referer\">Continue...</a></p>");
-		break;
-		}
-	}
+function get_action_url()
+{
+	if ($_SERVER['QUERY_STRING'])
+		return $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
 	else
-	{
-		create_title("Login failed","");
-		print("<p>Please <a href=\"{$_SERVER["PHP_SELF"]}\">try again</a>.</p>");
-	}
-
+		return $_SERVER['PHP_SELF'];
 }
 
-function is_logged_in($actionrequired)
+function is_logged_in()
 {
 	if ($_SESSION['userID'])
-		return true;
+		return true; /* the user is logged in, return true */
 	else
 	{
-		if ($_SERVER['QUERY_STRING'])
-			$referer = $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-		else
-			$referer = $_SERVER['PHP_SELF'];
+		$url = get_action_url();
+		
+		print('<p class="warning">');
+		print("The feature you are trying to access is for registered users only.  Please login.</p>");
+		create_title("Please log in","Log in to access your account");
 
-		if ($actionrequired == 'comments')
-			$referer = $referer."#comment";
-		if(array_key_exists('login', $_POST))
-			try_login($actionrequired);
-		else {
-			print('<p class="warning">');
-			print("The feature you are trying to access is for registered users only.  Please login.</p>");
-			create_title("Please log in","Log in to access your account");
-
-			print("<form action=\"$referer\" method=\"post\">\n");
-			print("<table>\n");
-			print("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
-			print("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
-			print("<tr><td><input type=\"hidden\" value=\"$referer\" name=\"referer\" /><input type=\"submit\" value=\"Login\" name=\"login\" /></td><td><a href=\"/account.php\" style=\"font-size:0.8em;\">(Register)</a></td></tr>\n");
-			print("<tr><td>");
-			foreach($_POST as $k => $v)
+		print("<form action=\"$url\" method=\"post\">\n");
+		print("<table>\n");
+		print("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
+		print("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
+		print("<tr><td><input type=\"submit\" value=\"Login\" name=\"login\" /></td><td><a href=\"/account.php\" style=\"font-size:0.8em;\">(Register)</a></td></tr>\n");
+		print("<tr><td>");
+		foreach($_POST as $k => $v)
+			if (($k != "username") && ($k != "password"))
 				print("<input type=\"hidden\" value=\"$v\" name=\"$k\" />");
-			print("</td></tr>\n");
-			print("</table>\n");
-			print("</form>\n");
-			ago_footer();
-			die();
-		}
+		print("</td></tr>\n");
+		print("</table>\n");
+		print("</form>\n");
+		
+		/* stop processing of the page */
+		ago_footer();
+		die();
 	}
 }
 
@@ -219,7 +156,7 @@ function print_item_row($itemID, $type, $style="list", $absolute_url=false)
 	if ($style == "icons")
 	{
 		print("<div class=\"icon_view\">\n<a href=\"$link\">");
-		print("<img src=\"$thumbnail\" alt=\"Thumbnail of $item_name\" class=\"$thumbnail_class\" />");
+		print("<img src=\"$thumbnail\" alt=\"Thumbnail of $item_name\" class=\"$thumbnail_class\" border=\"0\" />");
 		print("</a><br/>\n");
 		rating_bar($rating);
 		print("</div>\n");
@@ -545,12 +482,6 @@ function rating_bar($rating)
 	for ($i=1; $i <= $rating; $i++) print("<img src=\"/images/site/stock_about.png\" alt=\"star\"/>");
 }
 
-function is_ie() {
-	if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE") && !strstr($_SERVER['HTTP_USER_AGENT'], "Opera"))
-		return true;
-	else
-		return false;
-}
 
 function html_parse_text($comment)
 {

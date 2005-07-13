@@ -84,7 +84,7 @@ function print_comment_form($comment)
 		$show_comment = $comment;
 	}
 		
-	print("<a name=\"comment\"/>\n");
+	print("<a name=\"comment\"></a>\n");
 	print("<br /><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\">\n");
 		
 	print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br /><br />\n");

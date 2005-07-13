@@ -1,3 +1,28 @@
+2005-07-12  Thomas Wood  <thos@gnome.org>
+
+	* account.php:
+	* backend.php:
+	* backgrounds:
+	* default.css:
+	* includes/ago_headers.inc.php:
+	* includes/comments.inc.php:
+	* includes/common.inc.php:
+	* includes/config.inc.php:
+	* includes/news.inc.php:
+	* index.php:
+	* news.php:
+	* themes:
+	* users:
+
+	- Revised login system (no "login sucessful" message)
+	- Background resolution filter
+	- Page numbers at top and bottom of listings
+	- Listing preferences saved in session
+	- Links in body text use underline (fixes bug 309136)
+	- Started tidying up code (index.php/backgrounds/themes/news.php)
+	- Fixed magic quotes in account.php (use escape_string())
+	- "Icons" style for rss feed
+
 2005-07-04  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/art.inc.php:

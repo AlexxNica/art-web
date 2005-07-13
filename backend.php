@@ -1,6 +1,9 @@
 <?php
 require("mysql.inc.php");
 require("common.inc.php");
+
+$style = validate_input_array_default ($_GET['style'], Array('icons','list'), 'list');
+
 // using text/xml until firefox bug is fixed.
 //header("Content-type: application/rss+xml");
 header("Content-type: text/xml");
@@ -28,7 +31,7 @@ for($count=0;$count<$num_updates;$count++)
 		print("\t\t\t<guid>" . htmlspecialchars($site_url . "backgrounds/$category/$ID/") . " </guid>");
 		print("\t\t\t<pubDate>" . date("r", $timestamp) . "</pubDate>");
 		print("\t\t\t<description><![CDATA[");
-		print_background_row($ID, "compact", true);
+		print_background_row($ID, $style, true);
 		print("]]></description>\n");
 	}
 	else
@@ -41,7 +44,7 @@ for($count=0;$count<$num_updates;$count++)
 		print("\t\t\t<guid>" . htmlspecialchars($site_url . "themes/$category/$ID/") . "</guid>");
 		print("\t\t\t<pubDate>" . date("r", $timestamp) . "</pubDate>");
 		print("\t\t\t<description><![CDATA[");
-		print_theme_row($ID, "compact", true);
+		print_theme_row($ID, $style, true);
 		print("]]></description>\n");
 	}
 	print("\t\t</item>\n");

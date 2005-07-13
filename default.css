@@ -10,7 +10,7 @@ body {
 	margin-right: 0;
 }
 
-.h1{
+h1{
 	color: #455982;
 	font-family: sans-serif;
 	font-size: 1.4em;
@@ -29,10 +29,12 @@ body {
 	font-size: 0.9em;
 	margin-bottom: 0.7em;
 }
+
 .h2{
 	color: #444444;
 	font-family: sans-serif;
 	font-size: 1.2em;
+	text-decoration: none;
 }
 
 img.header {
@@ -100,11 +102,33 @@ p.error {
 	background-repeat: no-repeat;
 }
 
+a {
+	color: #113c53;
+	text-decoration: underline;
+}
+
+h1 a {
+	text-decoration: none;
+}
+
+.h2 a {
+	text-decoration: none;
+}
+
+div.sidebar a {
+	text-decoration: none;
+}
+
+li a {
+	text-decoration: none;
+}
+
 a.jpg {
 	padding-left:24px;
 	height: 18px;
 	background-image: url("/images/site/gnome-mime-image-jpeg.png");
 	background-repeat: no-repeat;
+	text-decoration: none;
 }
 
 a.png {
@@ -112,6 +136,7 @@ a.png {
 	height: 18px;
 	background-image: url("/images/site/gnome-mime-image-png.png");
 	background-repeat: no-repeat;
+	text-decoration: none;
 }
 
 a.tar {
@@ -119,6 +144,15 @@ a.tar {
 	height: 18px;
 	background-image: url("/images/site/stock_save.png");
 	background-repeat: no-repeat;
+	text-decoration: none;
+}
+
+a.box {
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+	text-decoration: underline;
+/*	background-color: #dedede;
+*/
 }
 
 th {
@@ -189,11 +223,6 @@ th {
 	background-color: #FFFFFF;
 }
 
-a {
-	color: #113c53;
-	text-decoration: none;
-}
-
 ul {
 	list-style-image: url("/images/site/ul-img.png");
 }
@@ -205,13 +234,6 @@ li {
 
 li.indent {
 	margin-left: 1em;
-}
-
-a.box {
-	padding-left: 0.3em;
-	padding-right: 0.3em;
-/*	background-color: #dedede;
-*/
 }
 
 input, select, textarea {
@@ -244,6 +266,7 @@ input.password {
 div.icon_view {
 	float:left;
 	padding:1em;
+	height: 100px;
 }
 
 .comment {

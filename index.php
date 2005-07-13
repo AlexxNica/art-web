@@ -5,69 +5,40 @@
 require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
+require("news.inc.php");
 
-$view_old_news = validate_input_regexp_default($_GET["view_old_news"], "^1$", "0");
+$news = new artweb_news;
+$news->select_news(1);
+
+$latest_select = mysql_query("SELECT backgroundID, 0 AS themeID, add_timestamp FROM background UNION SELECT 0 AS backgroundID, themeID, add_timestamp FROM theme ORDER BY add_timestamp DESC LIMIT 5");
+$top5_select = mysql_query("SELECT backgroundID, 0 AS themeID, rating FROM background UNION SELECT 0 AS backgroundID, themeID, rating FROM theme ORDER BY rating DESC LIMIT 5");
+
+
+// OUTPUT ///////////////////////////////////////////////////////////////////////
 
 ago_header("Artwork &amp; Themes");
-
-create_title("Latest News", "Latest news from art.gnome.org");
-if($view_old_news == 1)
-{
-	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 1,20");
-}
-else
-{
-	$news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 1");
-}
-while($news_select_row=mysql_fetch_array($news_select_result))
-{
-	$date = fix_sql_date($news_select_row["date"]);
-	$author = $news_select_row["author"];
-	$author_email = spam_proof_email($news_select_row["author_email"]);
-	$title =  $news_select_row["title"];
-	$body =  html_parse_text($news_select_row["body"]);
-	print("<div class=\"news_item\">\n");
-	print("\t<div class=\"h2\">$title</div>\n");
-	print("\t<div class=\"subtitle\">Posted by <a href=\"mailto:$author_email\">$author</a> &middot; $date </div>\n");
-	print("\t<p>$body</p>\n");
-	print("</div>\n");
-}
-
-if($view_old_news == 1)
-{
-	print("<div style=\"text-align: center\"><a href=\"" . $_SERVER["PHP_SELF"] . "\">View Recent News</a></div>\n");
-}
-else
-{
-	print("<div style=\"text-align: center\"><p><a href=\"" . $_SERVER["PHP_SELF"] . "?view_old_news=1\">View Older News</a></p></div>\n");
-
-	print("<div style=\"width:48%; float:left; clear: left;\">");
-	create_title("Recent Updates", "The latest five additions to art.gnome.org");
-
-	$select = mysql_query("SELECT backgroundID, 0 AS themeID, add_timestamp FROM background UNION SELECT 0 AS backgroundID, themeID, add_timestamp FROM theme ORDER BY add_timestamp DESC LIMIT 5");
-	while (list($backgroundID, $themeID) = mysql_fetch_row($select))
-	{
-		if ($backgroundID) print_background_row($backgroundID, 'list');
-		if ($themeID) print_theme_row($themeID, 'list');
-	}
-
-	print("<div style=\"text-align:center\"><p><a href=\"/updates.php\">More updates</a> - <a href=\"backend.php\">RSS Updates Feed</a></p></div>");
-	print("</div>");
-
-	print("<div style=\"width:48%; float:right; clear: right;\">");
-	create_title("Top Rated", "The five top rated items");
-
-	$select = mysql_query("SELECT backgroundID, 0 AS themeID, rating FROM background UNION SELECT 0 AS backgroundID, themeID, rating FROM theme ORDER BY rating DESC LIMIT 5");
-	while (list($backgroundID, $themeID) = mysql_fetch_row($select))
-	{
-		if ($backgroundID) print_background_row($backgroundID, 'list');
-		if ($themeID) print_theme_row($themeID, 'list');
-	}
-
-	print("</div>");
-
-}
-
-ago_footer();
-
 ?>
+<!-- News Section -->
+
+<h1>Latest News</h1>
+<div class="subtitle">Latest news from art.gnome.org</div>
+<?php $news->print_news(); ?>
+<div style="text-align: center"><p><a href="news.php">View Older News</a></p></div>
+
+<!-- Recent Updates -->
+<div style="width:48%; float:left; clear: left;">
+	<h1>Recent Updates</h1>
+	<div class="subtitle">The latest five additions to art.gnome.org</div>
+	<?php print_art_query($latest_select); ?>
+	<div style="text-align:center">
+		<p><a href="/updates.php">More updates</a> - <a href="backend.php">RSS Updates Feed</a></p>
+	</div>
+</div>
+
+<!-- Top 5 Rated List -->
+<div style="width:48%; float:right; clear: right;">
+	<h1>Top Rated</h1>
+	<div class="subtitle">The five top rated items</div>
+	<?php print_art_query($top5_select); ?>
+</div>
+<?php ago_footer(); ?>

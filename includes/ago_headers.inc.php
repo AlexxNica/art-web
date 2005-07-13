@@ -1,17 +1,57 @@
 <?php
-
 $time_start= microtime(true);
+ini_set("session.use_only_cookies", "1");
+ini_set("session.gc_maxlifetime", "86400"); // set session data lifetime to 48 hours
+session_set_cookie_params(86400); // Set cookie lifetime to 48 hours
+session_start();
+
+if (array_key_exists("login", $_POST))
+{
+	/* is the user trying to log in? */
+	if (array_key_exists('login', $_POST)) {
+		$username = mysql_real_escape_string($_POST['username']);
+		$password = mysql_real_escape_string($_POST['password']);
+		$query_result = mysql_query("SELECT userID, realname, password FROM user WHERE username = '$username'");
+
+		list($userID, $realname, $cryptpass ) = mysql_fetch_row($query_result);
+
+		if ( (md5($password) == $cryptpass)  )
+		{
+			$_SESSION['username'] = $username;
+			$_SESSION['userID'] = $userID;
+			$_SESSION['realname'] = $realname;
+			mysql_query("UPDATE user SET lastlog=NOW() WHERE userid=$userID;");
+		}
+		else
+		{
+			ago_header("Login error");
+			print("<h1>Login failed</h1>");
+			print('<p class="warning">Incorrect username and password. Please try again.</p>');
+			print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
+			print("<table>\n");
+			print("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
+			print("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
+			print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td></tr>\n");
+			print("</table>\n");
+			print("</form>\n");
+			ago_footer();
+			exit();
+		}
+	}
+}
+
+function is_ie() {
+	if(strstr($_SERVER['HTTP_USER_AGENT'], "MSIE") && !strstr($_SERVER['HTTP_USER_AGENT'], "Opera"))
+		return true;
+	else
+		return false;
+}
 
 function ago_header($title)
 {
-	ini_set("session.use_only_cookies", "1");
-	ini_set("session.gc_maxlifetime", "86400"); // set session data lifetime to 48 hours
-	session_set_cookie_params(86400); // Set cookie lifetime to 48 hours
-	session_start();
+
 	header("Content-Type: text/html; charset=ISO-8859-1");
 	print('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'."\n");
-//	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
-//	print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
 	print("<html lang=\"en\">\n");
 	print("<head>\n");
 	print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\" />\n");
@@ -40,7 +80,7 @@ function ago_header($title)
 	print("</div>\n");
 
 	print("<div id=\"sidebar\">\n");
-	print("\t<a href=\"/\"><img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" height=\"48\" width=\"48\" class=\"sidebar\" /> Art</a>\n");
+	print("\t<a href=\"/\" style=\"text-decoration: none;\" ><img src=\"/images/site/gnome-graphics.png\" alt=\"Art\" height=\"48\" width=\"48\" class=\"sidebar\" /> Art</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/\">News</a></li>\n");
 	//print("\t\t<li><a href=\"/updates.php\">Updates</a></li>\n");
@@ -51,7 +91,7 @@ function ago_header($title)
 	print("\t\t<li><a href=\"http://gnomesupport.org/forums/index.php?c=6\">Forums</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br />\n");
-	print("\t<a href=\"/backgrounds\">");
+	print("\t<a href=\"/backgrounds\" style=\"text-decoration: none;\"  >");
 
 	if (is_ie())
                 print("<img src=\"/images/site/spacer.gif\" alt=\"Wallpapers\" height=\"48\" width=\"48\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/wallpaper.png', sizingMethod='scale');\" /> Backgrounds");
@@ -64,13 +104,13 @@ function ago_header($title)
 	print("\t\t<li><a href=\"/backgrounds/other/\">Other</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br />\n");
-	print("\t<a href=\"/themes\"><img src=\"/images/site/theme.png\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" /> Desktop Themes</a>\n");
+	print("\t<a style=\"text-decoration: none;\" href=\"/themes\"><img src=\"/images/site/theme.png\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" /> Desktop Themes</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/themes/gtk2/\">Application</a></li>\n");
 	print("\t\t<li><a href=\"/themes/metacity/\">Window Border</a></li>\n");
 	print("\t\t<li><a href=\"/themes/icon/\">Icons</a></li>\n");
 	print("\t</ul>\n");
-	print("\t<a href=\"/themes\">");
+	print("\t<a style=\"text-decoration: none;\" href=\"/themes\">");
 	
 	if (is_ie())
 		print("<img src=\"/images/site/spacer.gif\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/Themes.png', sizingMethod='scale');\" /> Other Themes");
@@ -84,8 +124,8 @@ function ago_header($title)
 	print("\t\t<li><a href=\"/themes/gtk_engines/\">GTK+ Engines</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br /><br />\n");
-	if (!(array_key_exists("login", $_POST) or array_key_exists("logout", $_POST)))
-	{
+//	if (!(array_key_exists("login", $_POST) or array_key_exists("logout", $_POST)))
+//	{
 	if (array_key_exists("username", $_SESSION))
 	{
 		print("\t<p>Logged in as {$_SESSION['username']}</p>\n");
@@ -96,7 +136,7 @@ function ago_header($title)
 	else
 	{
 		print("<div style=\"text-align: center\">\n");
-		print("\t<form action=\"/account.php\" method=\"post\"><p>\n");
+		print("\t<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\"><p>\n");
 		print("\t<label for=\"username\">User</label> <input id=\"username\" name=\"username\" class=\"username\" size=\"10\" /><br />\n");
 		print("\t<label for=\"password\">Pass</label> <input id=\"password\" name=\"password\" type=\"password\" class=\"password\" size=\"10\" /><br />\n");
 		print("\t<input type=\"hidden\" value=\"{$_SERVER['PHP_SELF']}\" name=\"referer\" />\n");
@@ -105,7 +145,7 @@ function ago_header($title)
 		print("\t<a href=\"/account.php\" style=\"font-size:0.8em;\">(Register)</a>\n");
 		print("</div>\n");
 	}
-	}
+//	}
 
 
 	print("<br /><br /></div>\n");

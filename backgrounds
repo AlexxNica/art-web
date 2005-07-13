@@ -8,12 +8,31 @@ require("ago_headers.inc.php");
 require("comments.inc.php");
 require("art.inc.php");
 
+$sort_by_array = array("background_name" => "Name", "add_timestamp" => "Date", "download_count" => "Downloads", "rating" => "Rating");
+
+function set_session_var_default($var_name, $default)
+{
+	if (!array_key_exists($var_name, $_SESSION))
+		$_SESSION[$var_name] = $default;
+}
+
+// set defaults
+set_session_var_default('sort_by', 'add_timestamp');
+set_session_var_default('thumbnails_per_page', 12);
+set_session_var_default('view', 'list');
+set_session_var_default('order', 'DESC');
+set_session_var_default('resolution', '%');
+
+
 // superglobals stuff
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
-$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity","rating") ,"date");
-$thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
-$view = validate_input_array_default ($_GET["view"], array ("list","icons"), "list");
-$order = validate_input_array_default ($_GET['order'], array("ASC","DESC"), "DESC");
+
+$sort_by = validate_input_array_default ($_GET["sort_by"], array_keys($sort_by_array), $_SESSION['sort_by']);
+$thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", $_SESSION['thumbnails_per_page']);
+$view = validate_input_array_default ($_GET["view"], array ("list","icons"), $_SESSION['view']);
+$order = validate_input_array_default ($_GET['order'], array("ASC","DESC"), $_SESSION['order']);
+$resolution = validate_input_array_default ($_GET["resolution"], array_keys($resolution_array), $_SESSION['resolution']);
+
 list($foo, $unvalidated_category, $unvalidated_backgroundID) = explode("/", $_SERVER["PATH_INFO"]);
 $rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
 if  (get_magic_quotes_gpc() == 1)
@@ -23,12 +42,19 @@ else
 $commentID = validate_input_regexp_default ($_POST["commentID"], "^[0-9]+$", -1);
 $report = $_POST["report"];
 
+
+$_SESSION['sort_by'] = $sort_by;
+$_SESSION['thumbnails_per_page'] = $thumbnails_per_page;
+$_SESSION['view'] = $view;
+$_SESSION['order'] = $order;
+$_SESSION['resolution'] = $resolution;
+
+
 /* print out the list of background categories */
 if ($unvalidated_category == "")
 {
 	ago_header("Backgrounds");
 	create_title("Backgrounds", "Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.");
-	
 	print("<ul>\n");
 	reset($background_config_array);
 	while(list($key,$val)=each($background_config_array))
@@ -49,46 +75,40 @@ else
 	/* print out the background preview pages */
 	if (array_key_exists ($category, $background_config_array) && $unvalidated_backgroundID == "")
 	{
-		ago_header($background_config_array[$category]["name"] ." Backgrounds");
-		create_title($background_config_array[$category]["name"] ." Backgrounds", $background_config_array[$category]["description"]);
-		
-		$background_select_all_result = mysql_query("SELECT * FROM background WHERE category='$category' AND status='active'AND parent='0' ORDER BY add_timestamp $order");
+
+		$background_select_all_result = mysql_query("SELECT DISTINCT(background.backgroundID) FROM background RIGHT JOIN background_resolution ON background.backgroundID = background_resolution.backgroundID WHERE category='$category' AND status='active'AND parent='0' AND resolution LIKE '$resolution' ORDER BY add_timestamp $order");
 		$num_backgrounds = mysql_num_rows($background_select_all_result);
-		if($num_backgrounds == 0)
-		{
-			print("No backgrounds have been added to this section yet.");
-		}
-		else
-		{
-			print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, "Backgrounds", $view, $order);
-			list($page, $num_pages) = background_search_result("", "background_name", $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view, $order);
+		$num_pages = ceil($num_backgrounds / $thumbnails_per_page);
+		$start = ($page-1) * $thumbnails_per_page;
 
-			print("<div style=\"clear:both; text-align:center\">\n");
-			/* Page Navigation System */
-			if($page > 1)
-			{
-				$prev_page = $page -1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">&lt;</a>\n");
-			}
-			for($count=1;$count<=$num_pages;$count++)
-			{
-				if($count == $page)
-				{
-					print(" <strong>$count</strong>\n ");
-				}
-				else
-				{
-					print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">$count</a>\n");
-				}
-			}
-			if($page < $num_pages)
-			{
-				$next_page = $page +1;
-				print("<a class=\"box\" href=\"" . $_SERVER["PHP_SELF"] . "?page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order\">&gt;</a>\n");
-			}
-			print("</div>\n");
-		}
+		$background_select_result = mysql_query("SELECT DISTINCT(background.backgroundID) FROM background RIGHT JOIN background_resolution ON background.backgroundID = background_resolution.backgroundID WHERE category='$category' AND status='active' AND parent='0' AND resolution LIKE '$resolution' ORDER BY $sort_by $order LIMIT $start, $thumbnails_per_page");
 
+
+		// LISTING OUTPUT /////////////////////////////////////////////
+		ago_header($background_config_array[$category]["name"] ." Backgrounds");
+		?>
+		<h1><?php print($background_config_array[$category]["name"]) ?> Backgrounds</h1>
+		<!-- <div class="subtitle"><?php print($background_config_array[$category]["description"]) ?></div> -->
+		<form action="/backgrounds/<?php print($category);?>" method="get">
+		<p>
+		<label>Sort By: <?php print_select_box("sort_by", $sort_by_array, $sort_by); ?></label>
+		<label>Show:<?php print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page); ?></label>
+		<label>View: <?php print_select_box("view", $view_array, $view); ?></label>
+		<label>Order: <?php print_select_box("order", $order_array, $order); ?></label>
+		<label>Resolution: <? print_select_box("resolution", $resolution_array, $resolution); ?></label>
+		<input type="submit" value="Change" /></p></form>
+		<hr/>
+		<!-- Page Navigation System -->
+		<div style="clear:both; text-align:center">
+		<?php print_navigation($num_pages, $page); ?>
+		</div>
+		<?php print_art_query($background_select_result, $view); ?>
+		
+		<!-- Page Navigation System -->
+		<div style="clear:both; text-align:center">
+		<?php print_navigation($num_pages, $page); ?>
+		</div>
+		<?
 		ago_footer();
 	}
 
