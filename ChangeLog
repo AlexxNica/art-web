@@ -1,3 +1,10 @@
+2005-07-14  Thomas Wood  <thos@gnome.org>
+
+	* backgrounds:
+	* themes:
+
+	Fix to prevent parse error on live server
+
 2005-07-12  Thomas Wood  <thos@gnome.org>
 
 	* account.php:

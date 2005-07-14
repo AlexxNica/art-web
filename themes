@@ -86,28 +86,27 @@ else
 
 		// LISTING OUTPUT /////////////////////////////////////////////
 		ago_header($theme_config_array[$category]["name"] );
-		?>
-		<h1><?php print($theme_config_array[$category]["name"]); ?></h1>
-		<div class="subtitle"><?php print($theme_config_array[$category]["description"]) ?></div>
-		<form action="/themes/<?php print($category);?>" method="get">
-		<p>
-		<label>Sort By: <?php print_select_box("sort_by", $sort_by_array, $sort_by); ?></label>
-		<label>Show:<?php print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page); ?></label>
-		<label>View: <?php print_select_box("view", $view_array, $view); ?></label>
-		<label>Order: <?php print_select_box("order", $order_array, $order); ?></label>
-		<input type="submit" value="Change" /></p></form>
-		<hr/>
-		<!-- Page Navigation System -->
-		<div style="clear:both; text-align:center">
-		<?php print_navigation($num_pages, $page); ?>
-		</div>
-		<?php print_art_query($theme_select_result, $view); ?>
-		
-		<!-- Page Navigation System -->
-		<div style="clear:both; text-align:center">
-		<?php print_navigation($num_pages, $page); ?>
-		</div>
-		<?
+		print('<h1>'); print($theme_config_array[$category]["name"]); print('</h1>');
+		print('<form action="/themes/'.$category.'" method="get">');
+		print('<p>');
+		print('<label>Sort By: '); print_select_box("sort_by", $sort_by_array, $sort_by); print('</label>');
+		print('<label>Show: '); print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page); print('</label>');
+		print('<label>View: '); print_select_box("view", $view_array, $view); print('</label>');
+		print('<label>Order: '); print_select_box("order", $order_array, $order); print('</label>');
+		print('<input type="submit" value="Change" /></p></form>');
+		print('<hr/>');
+
+		print('<!-- Page Navigation System -->');
+		print('<div style="clear:both; text-align:center">');
+		print_navigation($num_pages, $page);
+		print('</div>');
+
+		print_art_query($theme_select_result, $view);
+
+		print('<!-- Page Navigation System -->');
+		print('<div style="clear:both; text-align:center">');
+		print_navigation($num_pages, $page);
+		print('</div>');
 		ago_footer();
 	}
 
