@@ -1,5 +1,11 @@
 2005-07-14  Thomas Wood  <thos@gnome.org>
 
+	* includes/news.inc.php: Fix first item selection
+	* news.php: Fix extra output at top of file
+	* themes: Fix sorting by name
+
+2005-07-14  Thomas Wood  <thos@gnome.org>
+
 	* backgrounds:
 	* themes:
 

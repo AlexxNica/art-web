@@ -10,7 +10,7 @@ class artweb_news
 
 	function select_news($number)
 	{
-		$this->news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 1,$number");
+		$this->news_select_result = mysql_query("SELECT * FROM news WHERE status='active' ORDER BY newsID DESC LIMIT 0,$number");
 	}
 
 	function print_news()

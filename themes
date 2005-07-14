@@ -21,7 +21,7 @@ set_session_var_default('view', 'list');
 set_session_var_default('order', 'DESC');
 
 
-$sort_by_array = array("background_name" => "Name", "add_timestamp" => "Date", "download_count" => "Downloads", "rating" => "Rating");
+$sort_by_array = array("theme_name" => "Name", "add_timestamp" => "Date", "download_count" => "Downloads", "rating" => "Rating");
 
 // superglobals stuff
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);

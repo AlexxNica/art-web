@@ -8,12 +8,9 @@ include "news.inc.php";
 $news = new artweb_news;
 
 $news->select_news(20);
-?>
 // HTML ///////////////////////////////////////////////////////////////////////
-
-<?php ago_header("Artwork &amp; Themes"); ?>
-<?php create_title("News"); ?>
-
+ago_header("Artwork &amp; Themes"); ?>
+<h1>News</h1>
 <?php $news->print_news(); ?>
 
 <?php ago_footer(); ?>
