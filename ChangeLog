@@ -1,3 +1,7 @@
+2005-07-15  Thomas Wood  <thos@gnome.org>
+
+	* backend.php: Fix links
+
 2005-07-14  Thomas Wood  <thos@gnome.org>
 
 	* includes/news.inc.php: Fix first item selection
