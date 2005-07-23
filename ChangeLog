@@ -1,3 +1,11 @@
+2005-07-22  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	reviewed by: Thomas Wood <thos@gnome.org>
+
+	* default.css: All links in lists are now underlined, except in sidebar
+	* includes/common.inc.php: Correctly encode the $_POST vars in the
+	  dynamic_login code.
+
 2005-07-15  Thomas Wood  <thos@gnome.org>
 
 	* backend.php: Fix links
@@ -41,6 +49,8 @@
 	- "Icons" style for rss feed
 
 2005-07-04  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	reviewed by: Thomas Wood <thos@gnome.org>
 
 	* includes/art.inc.php:
 	- Added a check to add_vote, so that users can not vote for their

@@ -107,8 +107,16 @@ function is_logged_in()
 		print("<tr><td><input type=\"submit\" value=\"Login\" name=\"login\" /></td><td><a href=\"/account.php\" style=\"font-size:0.8em;\">(Register)</a></td></tr>\n");
 		print("<tr><td>");
 		foreach($_POST as $k => $v)
+		{
+			/* $_POST is now always quoted */
+			$v = stripslashes($v);
+			
+			$k = htmlentities($k);
+			$v = htmlentities($v);
+			
 			if (($k != "username") && ($k != "password"))
 				print("<input type=\"hidden\" value=\"$v\" name=\"$k\" />");
+		}
 		print("</td></tr>\n");
 		print("</table>\n");
 		print("</form>\n");

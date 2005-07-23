@@ -115,11 +115,7 @@ h1 a {
 	text-decoration: none;
 }
 
-div.sidebar a {
-	text-decoration: none;
-}
-
-li a {
+div#sidebar a {
 	text-decoration: none;
 }
 
@@ -271,7 +267,7 @@ div.icon_view {
 
 .comment {
 	background-image: url('/images/site/stock_draw-callouts.png');
-//	background-image: url('/images/site/commentbd.png');
+/*	background-image: url('/images/site/commentbd.png'); */
 	background-repeat: no-repeat;
 	padding-left: 24px;
 }
