@@ -174,8 +174,8 @@ th {
 
 #header-left{
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	top: 10px;
+	left: 10px;
 	height: 82px;
 	width:118px;
 	border: none;
