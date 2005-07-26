@@ -273,9 +273,11 @@ div.icon_view {
 }
 
 div.abuse {
+	font-family: sans-serif;
 	padding-bottom: 5px;
 	margin-bottom: 10px;
-	border-bottom: dotted 2px #dedede;
+	color: #113c53;
+	border-bottom: dotted 2px #dedede;+
 }
 
 table.theme_info {

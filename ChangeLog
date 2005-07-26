@@ -1,3 +1,10 @@
+2005-07-25  James McGuire  <jamesm@bluebottle.com>
+
+	* authors: added myself
+	* default.css:
+	* includes/comments.inc.php:
+	-cleaned up comment style
+
 2005-07-24  Thomas Wood  <thos@gnome.org>
 
 	* default.css: Update for new logo

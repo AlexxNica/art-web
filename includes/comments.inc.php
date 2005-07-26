@@ -42,11 +42,11 @@ function print_comments($artID, $type)
 
 			if ($status == "reported")
 			{
-				print("\t<div style=\"text-align:right;\">Reported</div>\n");
+				print("\t<div style=\"text-align:right;\" class=\"abuse\">(Reported)</div>\n");
 			}
 			else if ($status == "approved")
 			{
-				print("\t<div style=\"text-align:right;\">Already Reviewed</div>\n");
+				print("\t<div style=\"text-align:right;\" class=\"abuse\">(Already Reviewed)</div>\n");
 			}
 			else
 			{
