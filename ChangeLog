@@ -1,3 +1,10 @@
+2005-07-27  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	reviewed by: Thomas Wood  <thos@gnome.org>
+
+	* backend.php: The title tags in the rss feed were not encoded,
+	breaking the rss feed. It is now encoded with htmlentities.
+
 2005-07-27  Thomas Wood  <thos@gnome.org>
 
 	* includes/common.inc.php: Use absolute urls for rating stars to
