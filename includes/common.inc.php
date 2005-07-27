@@ -129,9 +129,7 @@ function is_logged_in()
 
 function print_item_row($itemID, $type, $style="list", $absolute_url=false)
 {
-	global  $background_config_array,  $theme_config_array;
-
-	$site_url = "http://" . $_SERVER['SERVER_NAME'];
+	global  $background_config_array,  $theme_config_array, $site_url;
 
 	if ($type == "theme")
 		$select = mysql_query("SELECT theme_name, category, add_timestamp, small_thumbnail_filename, rating FROM $type WHERE themeID = $itemID");
@@ -484,10 +482,9 @@ function calculate_downloads_per_day($download_count, $start_timestamp)
 
 function rating_bar($rating)
 {
-	//$percent = sprintf("%.0f", $rating);
-	//$bar = "<div class=\"rating-border\"><div class=\"rating\" style=\"width:$percent%\">&nbsp;</div></div>\n";
+	global $site_url;
 	$rating = ceil($rating);
-	for ($i=1; $i <= $rating; $i++) print("<img src=\"/images/site/stock_about.png\" alt=\"star\"/>");
+	for ($i=1; $i <= $rating; $i++) print("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"star\"/>");
 }
 
 

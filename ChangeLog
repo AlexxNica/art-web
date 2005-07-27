@@ -1,3 +1,8 @@
+2005-07-27  Thomas Wood  <thos@gnome.org>
+
+	* includes/common.inc.php: Use absolute urls for rating stars to
+	prevent problems with rss feeds
+
 2005-07-25  James McGuire  <jamesm@bluebottle.com>
 
 	* authors: added myself
