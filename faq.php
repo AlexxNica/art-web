@@ -9,7 +9,7 @@ if ($_GET['mode'] == 'ask') $mode = 'ask';
 create_title("ART.GNOME.ORG FAQ", "Frequently Asked Questions");
 if($_POST['question'])
 			{
-				if(is_logged_in('faq'))
+				if(is_logged_in())
 				{
 					$query = "INSERT INTO `faq` (`faqID`, `question`, `answer`, `status`, `userID`) VALUES ('', '".$_POST['question']."', '', 'pending', '".$_SESSION['userID']."')";
 					if(mysql_query($query));

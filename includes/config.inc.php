@@ -232,7 +232,7 @@ $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 $search_type_array = array ("background_name" => "Background Name", "theme_name" => "Theme Name", "author" => "Author Name");
 $thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "1000" => "All");
 $order_array = array("ASC"=>"Ascending", "DESC"=>"Descending");
-$sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity", "rating" => "Rating");
+$sort_by_array = array("name" => "Name", "add_timestamp" => "Date", "downloads_per_day" => "Popularity", "rating" => "Rating");
 $view_array = array("icons" => "Icon", "list" => "List");
 $status_array = Array("new" => "New", "approved" => "Approved", "added" => "Added", "rejected" => "Rejected");
 

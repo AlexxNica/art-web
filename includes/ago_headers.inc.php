@@ -1,4 +1,7 @@
 <?php
+
+require_once("mysql.inc.php");
+
 $time_start= microtime(true);
 ini_set("session.use_only_cookies", "1");
 ini_set("session.gc_maxlifetime", "86400"); // set session data lifetime to 48 hours
@@ -9,8 +12,8 @@ if (array_key_exists("login", $_POST))
 {
 	/* is the user trying to log in? */
 	if (array_key_exists('login', $_POST)) {
-		$username = mysql_real_escape_string($_POST['username']);
-		$password = mysql_real_escape_string($_POST['password']);
+		$username = escape_string($_POST['username']);
+		$password = escape_string($_POST['password']);
 		$query_result = mysql_query("SELECT userID, realname, password FROM user WHERE username = '$username'");
 
 		list($userID, $realname, $cryptpass ) = mysql_fetch_row($query_result);

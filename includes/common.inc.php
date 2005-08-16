@@ -9,33 +9,6 @@ function create_title($title, $subtitle="")
 		print("<div class=\"subtitle\">$subtitle</div>\n");
 }
 
-function print_navigation($num_pages, $page)
-{
-	global $sort_by, $thumbnails_per_page, $order, $view, $resolution;
-	print("<p>");
-	for($count=1;$count<=$num_pages;$count++)
-	{
-		if($count == $page)
-		{
-			print(" <strong>$count</strong>\n ");
-		}
-		else
-		{
-			print("<a class=\"box\" href=\"{$_SERVER["PHP_SELF"]}?page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;view=$view&amp;order=$order&amp;resolution=$resolution\">$count</a>\n");
-		}
-	}
-	print("</p>");
-}
-
-function print_art_query($query_result, $view='list')
-{
-	while ($row = mysql_fetch_array($query_result))
-	{
-		if (array_key_exists('backgroundID', $row) and $row['backgroundID'] > 0) print_background_row($row['backgroundID'], $view);
-		if (array_key_exists('themeID', $row) and $row['themeID']) print_theme_row($row['themeID'], $view);
-	}
-}
-
 function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
 {
 	// Taken from Qwikiwiki
@@ -78,7 +51,46 @@ function get_thumbnail_url($filename, $itemID, $type, $category)
 	return $thumbnail_url;
 }
 
+function get_download_links($type, $category, $itemID, $download_filename)
+{
+	if ($type == "theme")
+	{
+		global $sys_theme_dir;
+		if ($itemID < 1000)
+			$file_path = $sys_theme_dir . "/../archive/theme/$category/$download_filename";
+		else
+			$file_path = $sys_theme_dir . "/$category/$download_filename";
+		
+		$filesize = get_filesize_string($file_path);
+		$result = "<a class=\"tar\" href=\"/download/themes/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
+	}
+	else
+	{
+		$result = '';
+		$resolution_select = mysql_query("SELECT background_resolutionID,filename,resolution,type FROM background_resolution WHERE backgroundID=$itemID");
+		while (list($resID,$download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
+			$result .= "<a class=\"$image_type\" href=\"/download/backgrounds/$category/$resID/$download_filename\"> $image_type - $resolution</a>&nbsp;&nbsp;";
+	}
+	return $result;
+}
 
+function get_thumbnail_class($category)
+{
+	if ($category == "metacity" || $category == "gtk_engines" || $category == "icon" )
+		return "thumbnail_no_border";
+	else
+		return "thumbnail";
+}
+
+function get_category_name($type, $category)
+{
+	global $theme_config_array, $background_config_array;
+	
+	if ($type == "theme")
+		return $theme_config_array[$category]['name'];
+	else
+		return 'Backgrounds - '.$background_config_array[$category]['name'];
+}
 
 function get_action_url()
 {
@@ -88,13 +100,15 @@ function get_action_url()
 		return $_SERVER['PHP_SELF'];
 }
 
-function is_logged_in()
+function is_logged_in($header = FALSE)
 {
 	if ($_SESSION['userID'])
 		return true; /* the user is logged in, return true */
 	else
 	{
 		$url = get_action_url();
+		
+		if ($header) ago_header($header);
 		
 		print('<p class="warning">');
 		print("The feature you are trying to access is for registered users only.  Please login.</p>");
@@ -252,8 +266,10 @@ function ago_redirect($referrer)
 
 function ago_file_not_found()
 {
-	if (!headers_sent())
+	if (!headers_sent()) {
+		header("HTTP/1.0 404 Not Found"); /* send 404 error */
 		ago_header("404 - File not found");
+	}
 	create_title("404 - File not found");
 	print("<p class=\"error\">The page you requested could not be found</p>");
 	ago_footer();
@@ -275,178 +291,6 @@ function print_select_box($name,$array,$selected)
 		};
 	}
 	print("</select>");
-}
-
-function print_thumbnails_per_page_form($thumbnails_per_page, $sort_by, $results_text, $view, $order)
-{
-	global $thumbnails_per_page_array, $sort_by_array, $view_array, $order_array;
-	
-	if($thumbnails_per_page == "")
-	{
-		$thumbnails_per_page = 12;
-	}
-	if($sort_by == "")
-	{
-		$sort_by = "name";
-	}
-	if($order == "")
-	{
-		$order = "DESC";
-	}
-
-	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"get\"><p>");
-
-	print("Sort By: ");
-	print_select_box("sort_by", $sort_by_array, $sort_by);
-
-	print(" $results_text: ");
-	print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page);
-
-	print(" View: ");
-	print_select_box("view", $view_array, $view);
-
-	print(" Order: ");
-	print_select_box("order", $order_array, $order);
-
-	print(" <input type=\"submit\" value=\"Change\" />");
-	print("</p></form>\n");
-}
-
-function display_search_box($search_text, $search_type, $thumbnails_per_page, $sort_by, $order)
-{
-	global $search_type_array, $thumbnails_per_page_array, $sort_by_array, $order_array;
-		
-	if($search_type == "")
-	{
-		$search_type = "theme_name";
-	}
-	if($thumbnails_per_page == "")
-	{
-		$thumbnails_per_page = 12;
-	}
-	if($sort_by == "")
-	{
-		$sort_by = "name";
-	}
-	if($order == "")
-	{
-		$order = "DESC";
-	}
-	
-	print("<form action=\"" . $GLOBALS["PHP_SELF"] . "\" method=\"get\">");
-	print("<table border=\"0\">\n");
-	
-	print("\t<tr><td>Search in:</td><td>");
-	print_select_box("search_type", $search_type_array, $search_type);
-	print("</td></tr>\n");
-	
-	print("\t<tr><td>For The Text:</td><td><input type=\"text\" name=\"search_text\" value=\"$search_text\"/></td></tr>\n");
-	
-	print("\t<tr><td>Sort By:</td><td>");
-	print_select_box("sort_by", $sort_by_array, $sort_by);
-	print("</td></tr>\n");
-	
-	print("\t<tr><td>Results Per Page:</td><td>");
-	print_select_box("thumbnails_per_page", $thumbnails_per_page_array, $thumbnails_per_page);
-	print("</td></tr>\n");
-
-	print("\t<tr><td>Order:</td><td>");
-	print_select_box("order", $order_array, $order);
-	print("</td></tr>\n");
-	
-	print("\t<tr><td colspan=\"2\"><input type=\"submit\" value=\"Search\"/></td></tr>");
-
-	print("</table>\n");
-	print("</form>\n");
-}
-
-function get_order_query($sort_by, $order, $type)
-{
-	if($sort_by == "popularity")
-	{
-		return "ORDER by perday $order";
-	}
-	elseif($sort_by == "date")
-	{
-		return "ORDER BY add_timestamp $order";
-	}
-	elseif($sort_by == "rating")
-	{
-		return "ORDER BY rating $order";
-	}
-	else
-	{
-		return "ORDER BY {$type}_name $order";
-	}
-}
-
-function background_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_backgrounds, $view, $order="DESC")
-{
-	$num_pages = ceil($num_backgrounds/$thumbnails_per_page);
-
-
-	if($page > $num_pages)
-	{
-		$page = $num_pages;
-	}
-	$start = (($page - 1) * $thumbnails_per_page);
-	$end = $start + $thumbnails_per_page;
-	if($end > $num_backgrounds)
-	{
-		$end = $num_backgrounds;
-	}
-	print("<strong>Showing " . ($start+1) . " through " . $end . " of $num_backgrounds results.</strong><br />\n");
-	
-	$order_query = get_order_query ($sort_by, $order, 'background');
-
-	if($category != "")
-	{
-		$category_query = "category='$category' AND";
-	}
-	else
-	{
-		$category_query = "";
-	}
-	$background_select_result = mysql_query("SELECT backgroundID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM background WHERE $category_query $search_type LIKE '%$search_text%' AND parent='0' AND status='active' $order_query LIMIT $start, $thumbnails_per_page");
-	while(list($backgroundID, $perday)=mysql_fetch_row($background_select_result))
-	{
-		print_background_row($backgroundID, $view);
-	}
-	return array($page, $num_pages);
-}
-
-function theme_search_result($search_text, $search_type, $category, $thumbnails_per_page, $sort_by, $page, $num_themes, $view, $order="DESC")
-{
-	$num_pages = ceil($num_themes/$thumbnails_per_page);
-
-	if($page > $num_pages)
-	{
-		$page = $num_pages;
-	}
-	$start = (($page - 1) * $thumbnails_per_page);
-	$end = $start + $thumbnails_per_page;
-	if($end > $num_themes)
-	{
-		$end = $num_themes;
-	}
-	print("<strong>Showing " . ($start+1) . " through " . $end . " of $num_themes results.</strong><br />\n");
-
-	$order_query = get_order_query ($sort_by, $order, 'theme');
-
-	if($category != "")
-	{
-		$category_query = "category='$category' AND";
-	}
-	else
-	{
-		$category_query = "";
-	}
-	$theme_select_result = mysql_query("SELECT themeID, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS perday FROM theme WHERE $category_query $search_type LIKE '%$search_text%' AND status='active' $order_query LIMIT $start, $thumbnails_per_page");
-	while(list($themeID)=mysql_fetch_row($theme_select_result))
-	{
-		print_theme_row($themeID, $view);
-	}
-	return array($page, $num_pages);
 }
 
 function get_filesize_string($file_path)
@@ -534,6 +378,12 @@ function html_parse_text($comment)
 	$comment = ereg_replace(":-D|:D", "<img src=\"/images/site/emoticons/stock_smiley-6.png\" alt=\":(\" />", $comment);
 
 	return $comment;
+}
+
+function set_session_var_default($var_name, $default)
+{
+	if (!array_key_exists($var_name, $_SESSION))
+		$_SESSION[$var_name] = $default;
 }
 
 ////////////////////////////////
@@ -628,7 +478,7 @@ function spam_proof_email($good_email)
 function create_select_box($name,$options,$selected)
 {
 	$select = "selected";
-	print("<select name=\"$name\">\n");
+	print("<select id=\"$name\" name=\"$name\">\n");
 	while ( list($key,$val) = each($options) )
 	{
 		if($key == $selected)

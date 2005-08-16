@@ -1,44 +1,47 @@
 <?php
 
+require_once("mysql.inc.php");
 require_once("common.inc.php");
 
-function add_vote($artID, $rating, $userID, $type)
+function add_vote($artID, $rating, $userID, $type, $header)
 {
 	// check for valid $type
 	if (!($type == 'theme' or $type == 'background'))
 		return -1;
-
-	/* first check if there was something changed, to prevent database lookups */
-	if ($rating != -1)
-	{
-		$result = mysql_query("SELECT userID FROM $type WHERE {$type}ID='$artID'");
-		list($authorID) = mysql_fetch_row($result);
-
-		/* prevent users from voting for their own artwork */
-		if ($_SESSION['userID'] == $authorID) {
-			/* we do not need extra feedback */
-			return -1;
-		}
-
-		$checkvote_result = mysql_query("SELECT `voteID` FROM `vote` WHERE `userID`='$userID' AND `artID`='$artID' AND type='$type'");
-		if (mysql_num_rows($checkvote_result) >= 1)
-		{
-			mysql_query("UPDATE vote SET rating='$rating' WHERE userID='$userID' AND artID='$artID' AND type='$type'");
-		} else {
-			mysql_query("INSERT INTO `vote` (`voteID`, `userID`, `artID`, `rating`, `type`) VALUES ('', '$userID', '$artID', '$rating', '$type')");
-		}
-		// Update cached version of rating in theme/background table
-		$rating_sel = mysql_query("SELECT SUM(rating), COUNT(rating) FROM vote WHERE type='$type' AND artID='$artID'");
-		list($rating,$count) = mysql_fetch_row($rating_sel);
-		if ($count < 5) $rating = 0; else $rating = round($rating / $count, 4);
-		mysql_query("UPDATE $type SET rating = $rating WHERE {$type}ID = $artID LIMIT 1");
+		
+	if ($rating == -1)
+		return -1;
+	
+	is_logged_in($header);
+	
+	/* prevent users from voting for their own artwork */
+	$result = mysql_query("SELECT userID FROM $type WHERE {$type}ID='$artID'");
+	list($authorID) = mysql_fetch_row($result);
+	
+	if ($_SESSION['userID'] == $authorID) {
+		/* we do not need extra feedback */
+		return -1;
 	}
+
+	$checkvote_result = mysql_query("SELECT `voteID` FROM `vote` WHERE `userID`='$userID' AND `artID`='$artID' AND type='$type'");
+	if (mysql_num_rows($checkvote_result) >= 1)
+	{
+		mysql_query("UPDATE vote SET rating='$rating' WHERE userID='$userID' AND artID='$artID' AND type='$type'");
+	} else {
+		mysql_query("INSERT INTO `vote` (`voteID`, `userID`, `artID`, `rating`, `type`) VALUES ('', '$userID', '$artID', '$rating', '$type')");
+	}
+	
+	// Update cached version of rating in theme/background table
+	$rating_sel = mysql_query("SELECT SUM(rating), COUNT(rating) FROM vote WHERE type='$type' AND artID='$artID'");
+	list($rating,$count) = mysql_fetch_row($rating_sel);
+	if ($count < 5) $rating = 0; else $rating = round($rating / $count, 4);
+	mysql_query("UPDATE $type SET rating = $rating WHERE {$type}ID = $artID LIMIT 1");
 }
 
 
 function print_detailed_view($itemID, $type)
 {
-	global $license_config_link_array, $theme_config_array, $background_config_array;
+	global $license_config_link_array;
 	global $site_url;
 
 	// check for valid $type
@@ -52,8 +55,8 @@ function print_detailed_view($itemID, $type)
 		$select_result = mysql_query("SELECT theme.*, theme.theme_name AS item_name,  user.username AS author FROM theme,user WHERE themeID='$itemID' AND theme.userID = user.userID");
 	else
 		$select_result = mysql_query("SELECT background.*, background.background_name AS item_name, thumbnail_filename AS small_thumbnail_filename, user.username AS author FROM background,user WHERE backgroundID='$itemID' AND background.userID = user.userID");
-
-	if(mysql_num_rows($select_result)==0)
+	
+	if (mysql_num_rows($select_result) == 0)
 	{
 		ago_file_not_found();
 		return -1;
@@ -61,16 +64,11 @@ function print_detailed_view($itemID, $type)
 
 	// Extract data from the database into variables
 	extract(mysql_fetch_array($select_result));
-
-	if ($type == "theme")
-		$subtitle = "Desktop Themes - " . $theme_config_array[$category]["name"];
-	else
-		$subtitle = "Backgrounds - {$background_config_array[$category]["name"]}";
-
-	if($category == "metacity" || $category == "gtk_engines" || $category == "icon" )
-		$thumbnail_class = "thumbnail_no_border";
-	else
-		$thumbnail_class = "thumbnail";
+	
+	/* XXX: This now does not have an "Gnome Theme - " for applications, icons, etc. */
+	$subtitle = get_category_name($type, $category);
+	
+	$thumbnail_class = get_thumbnail_class($type, $category);;
 
 	$rel_release_date = FormatRelativeDate(time(), strtotime($release_date));
 	$rel_update_date = FormatRelativeDate(time(), $add_timestamp);
@@ -78,29 +76,15 @@ function print_detailed_view($itemID, $type)
 
 
 	// Make download links
-	if ($type == "theme")
-	{
-		global $sys_theme_dir;
-		if ($itemID < 1000)
-			$file_path = $sys_theme_dir . "/../archive/theme/$category/$download_filename";
-		else
-			$file_path = $sys_theme_dir . "/$category/$download_filename";
-		$filesize = get_filesize_string($file_path);
-		$download = "<a class=\"tar\" href=\"/download/themes/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
-	}
-	else
-	{
-		$resolution_select = mysql_query("SELECT background_resolutionID,filename,resolution,type FROM background_resolution WHERE backgroundID=$itemID");
-		while (list($resID,$download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
-			$download .= "<a class=\"$image_type\" href=\"/download/backgrounds/$category/$resID/$download_filename\"> $image_type - $resolution</a>&nbsp;&nbsp;";
-	}
-
+	$download = get_download_links ($type, $category, $itemID, $download_filename);
+	
 	if ($rating == 0)
 		$rating_text = "5 votes required";
 	else
 		$rating_text = round($rating*20) . "%";
 
 	// Get a count of the number of votes
+	/* XXX: maybe this should also be cached? */
 	$vote_count_select = mysql_query("SELECT COUNT(rating) AS vote_count FROM vote WHERE type='$type' AND artID='$itemID'");
 	list($vote_count) = mysql_fetch_row($vote_count_select);
 

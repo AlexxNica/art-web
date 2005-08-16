@@ -93,7 +93,7 @@ function print_comment_form($comment)
 
 }
 
-function add_comment($artID, $type, $comment)
+function add_comment($artID, $type, $comment, $header)
 {
 	if ($comment)
 	{
@@ -101,13 +101,22 @@ function add_comment($artID, $type, $comment)
 		{
 			return ("<p class=\"warning\">Comments must be more than 10 letters long!</p>");
 		}
-		elseif(is_logged_in('comments'))
+		elseif(is_logged_in($header))
 		{
 			$comment = mysql_real_escape_string($comment); // make sure it is safe for mysql
 			$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
 			if ($comment_result === False)
 			{
 				return ("<p class=\"error\">There was an error adding your comment.</p>");
+			}
+			else
+			{
+				/* redirect */
+				global $server_url;
+				/* XXX: removes the jump to the anchor ... little hacky maybe :) */
+				list($file) = explode('#', $_SERVER['PHP_SELF']);
+				header('Location: '.$server_url.$file);
+				die();
 			}
 		}
 	}

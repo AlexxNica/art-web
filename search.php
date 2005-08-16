@@ -3,95 +3,29 @@
 require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
+require("art_listings.inc.php");
 
 ago_header("Search");
 create_title("Search", "Search for themes and backgrounds");
 
-// superglobals stuff
+$list = new search_result;
+$list->get_view_options();
 
-$page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
-$search_type = validate_input_array_default($_GET["search_type"], array("background_name", "theme_name", "author"), "");
-$search_text = mysql_real_escape_string(urldecode($_GET["search_text"]));
-$sort_by = validate_input_array_default ($_GET["sort_by"], array ("name","date","popularity","rating"),$valid_sort_by_array ,"date");
-$thumbnails_per_page = validate_input_regexp_default ($_GET["thumbnails_per_page"], "^[0-9]+$", 12);
-$order = validate_input_array_default($_GET['order'], array("ASC","DESC"), "ASC");
-
-display_search_box(htmlspecialchars(stripslashes($search_text)), $search_type, $thumbnails_per_page, $sort_by, $order);
-if($search_text && $search_type)
+$list->print_search_form();
+		
+if($list->search_text)
 {
 	/* background name search */
-	if ($search_type == "background_name")
-	{
-		$background_all_select_result = mysql_query("SELECT backgroundID FROM background WHERE background_name LIKE '%$search_text%' AND parent='0' ORDER BY background_name $order");
-		$num_backgrounds = mysql_num_rows($background_all_select_result);
-		if($num_backgrounds > 0)
-		{
-			list($page, $num_pages) = background_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_backgrounds, "list", $order);
-		}
-		else
-		{
-			print("<p class=\"info\">No results matched your search, please try again.</p>");
-		}
+	$list->select();
+	
+	if ($list->search_type != 'author') {
+		$list->print_page_numbers();
+		$list->print_shown_slice();
+		$list->print_listing();
+		$list->print_page_numbers();
+	} else {
+		$list->print_listing();
 	}
-	/* theme name search */
-	elseif ($search_type == "theme_name")
-	{
-		$theme_all_select_result = mysql_query("SELECT themeID FROM theme WHERE theme_name LIKE '%$search_text%' ORDER BY theme_name $order");
-		$num_themes = mysql_num_rows($theme_all_select_result);
-		if($num_themes > 0)
-		{
-			list($page, $num_pages) = theme_search_result($search_text, $search_type, "", $thumbnails_per_page, $sort_by, $page, $num_themes, "list", $order);
-		}
-		else
-		{
-			print("<p class=\"info\">No results matched your search, please try again.</p>");
-		}
-	}
-	/* Author name search */
-	elseif ($search_type == "author")
-	{
-		$user_select_query = "SELECT userID, realname FROM user WHERE realname LIKE '%$search_text%' ORDER BY realname $order";
-		$user_select_result = mysql_query($user_select_query);
-		if(mysql_num_rows($user_select_result) > 0)
-		{
-			print("<div class=\"h2\">Search Results</div><ul>");
-			while (list($userID, $realname) = mysql_fetch_row($user_select_result))
-			{
-				print("<li><a href=\"/users/$userID\">$realname</a></li>");
-			}
-			print("</ul>");
-		}
-		else
-		{
-			print("<p class=\"info\">No results matched your search, please try again.</p>");
-		}
-	}
-	/* Page Navigation System */
-	print("<p>\n<div align=\"center\">");
-	$search_text = urlencode($search_text);
-	print("<p>\n");
-	if($page > 1)
-	{
-		$prev_page = $page -1;
-		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$prev_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;order=$order\">[&lt;]</a>");
-	}
-	for($count=1;$count<=$num_pages;$count++)
-	{
-		if($count == $page)
-		{
-			print("<span class=\"bold-text\">[$count]</span> ");
-		}
-		else
-		{
-			print("<a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$count&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;order=$order\">[$count]</a> ");
-		}
-	}
-	if($page < $num_pages)
-	{
-		$next_page = $page +1;
-		print(" <a href=\"" . $_SERVER["PHP_SELF"] . "?search_type=$search_type&amp;search_text=$search_text&amp;page=$next_page&amp;sort_by=$sort_by&amp;thumbnails_per_page=$thumbnails_per_page&amp;order=$order\">[&gt;]</a>");
-	}
-	print("</div>\n");
 }
 else
 {

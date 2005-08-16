@@ -1,3 +1,44 @@
+2005-08-08  Benjamin Berg <benjamin@sipsolutions.net>
+
+	* includes/ago_headers.inc.php:
+	* admin/index.php:
+	- escape username/password correctly
+
+	* includes/art_listings.inc.php:
+	- New php file, that provides different classes for listing artwork
+
+	* includes/common.inc.php:
+	- Removed functions for listing artwork. These are replaced by
+	  art_listings.php
+	- is_logged_in will call ago_header if called with parameter.
+
+
+	* includes/comments.inc.php:
+	- After submitting a comment there is a redirection now.
+
+	* includes/art_page.inc.php:
+	* backgrounds:
+	* themes:
+	- Unified the content of themes and backgrounds in art_page.inc.php
+
+	* includes/art.inc.php:
+	- changed the order of some calls so that the redirection works.
+	  This is what the above is_logged_in change is about
+
+	* includes/config.inc.php:
+	- changed some configuration arrays
+
+	* index.php:
+	* search.php:
+	* backend.php:
+	* users:
+	- moved these to the new art listing system
+	- removed unused parameters to is_logged_in (that would break the
+	  above change to the function)
+
+	* faq.php:
+	- is_logged_in fix
+
 2005-07-27  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	reviewed by: Thomas Wood  <thos@gnome.org>

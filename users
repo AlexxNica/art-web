@@ -5,6 +5,7 @@
 require("mysql.inc.php");
 require("common.inc.php");
 require("ago_headers.inc.php");
+require("art_listings.inc.php");
 
 // superglobals stuff
 $page = validate_input_regexp_default ($_GET["page"], "^[0-9]+$", 1);
@@ -35,67 +36,13 @@ else
 	else {
 		$authorusername = escape_string($unvalidated_author);
 	}
-	if ($authorID != "")
-	{
-
-		$author_result = mysql_query ("SELECT realname,email,homepage,info,location FROM user WHERE userID = $authorID");
-		if(mysql_num_rows($author_result) == 1)
-		{
-			extract(mysql_fetch_array($author_result));
-			$email = spam_proof_email ($email);
-			ago_header($realname);
-			if ($authorID == $_SESSION['userID'])
-				create_title ($realname, "<a href=\"/account.php\">Edit</a> your profile.");
-			else
-				create_title ($realname, "");
-			if($info)
-				print ("<p>$info</p>\n");
-			if($email || $homepage || $location)
-				$table = 1;
-			if ($table)
-				print("<table>\n");
-			if($email) {
-				print("\t<tr><td><img src=\"/images/site/stock_mail.png\" alt=\"e-mail\" /></td>\n");
-				print("\t\t<td><a href=\"mailto:$email\">$email</a></td></tr>\n");
-			}	
-			if($homepage) {
-				print("\t<tr><td><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /></td>\n");
-				print("\t\t<td><a href=\"$homepage\">$homepage</a></td></tr>\n");
-			}
-			if($location) {
-				print("\t<tr><td><img src=\"/images/site/stock_home.png\" alt=\"location\" /></td>\n");
-				print("\t\t<td>$location</td></tr>\n");
-			}
-			if($table)
-				print("</table>\n");
-	
-			$author_themes_result = mysql_query ("SELECT themeID FROM theme WHERE userID = $authorID AND status='active' ORDER BY add_timestamp DESC LIMIT 40");
-
-			if (mysql_num_rows ($author_themes_result) > 0)
-			{
-				create_title ("Themes", "Themes created by $realname");
-				while (list ($themeID) = mysql_fetch_row ($author_themes_result))
-					print_theme_row($themeID, "list");
-			}
-
-			$author_background_result = mysql_query ("SELECT backgroundID FROM background WHERE userID = $authorID AND status='active' ORDER BY add_timestamp DESC LIMIT 40 ");
-			if (mysql_num_rows ($author_background_result) > 0)
-			{
-				create_title ("Backgrounds", "Backgrounds created by $realname");
-				while (list ($backgroundID) = mysql_fetch_row ($author_background_result))
-					print_background_row($backgroundID, "list");
-			}
-			ago_footer();
+	if (($authorID != "") || $authorusername != '') {
+		if ($authorID != "") {
+			$author_result = mysql_query ("SELECT realname,email,homepage,info,location FROM user WHERE userID = $authorID");
+		} else {
+			$author_result = mysql_query ("SELECT userID,realname,email,homepage,info,location FROM user WHERE `username` = '$authorusername'");
 		}
-		else {
-			ago_file_not_found();
-		}
-	}
-	elseif($authorusername !='')
-	{
-		rawurldecode($authorusername);
-		$author_result = mysql_query ("SELECT userID,realname,email,homepage,info,location FROM user WHERE `username` = '$authorusername'");
-
+		
 		if(mysql_num_rows($author_result) == 1)
 		{
 			extract(mysql_fetch_array($author_result));
@@ -124,24 +71,16 @@ else
 				print("\t\t<td>$location</td></tr>\n");
 			}
 			if($table)
-				print("</table>\n");	
-
-			$author_themes_result = mysql_query ("SELECT themeID FROM theme WHERE userID = $userID AND status='active' ORDER BY add_timestamp DESC LIMIT 40");
-
-			if (mysql_num_rows ($author_themes_result) > 0)
-			{
-				create_title ("Themes", "Themes created by $realname");
-				while (list ($themeID) = mysql_fetch_row ($author_themes_result))
-					print_theme_row($themeID, "list");
-			}
-
-			$author_background_result = mysql_query ("SELECT backgroundID FROM background WHERE userID = $userID AND status='active' ORDER BY add_timestamp DESC LIMIT 40 ");
-			if (mysql_num_rows ($author_background_result) > 0)
-			{
-				create_title ("Backgrounds", "Backgrounds created by $realname");
-				while (list ($backgroundID) = mysql_fetch_row ($author_background_result))
-					print_background_row($backgroundID, "list");
-			}
+				print("</table>\n");
+	
+			$list = new user_theme_list;
+			$list->select($userID);
+			$list->print_listing($realname);
+			
+			$list = new user_background_list;
+			$list->select($userID);
+			$list->print_listing($realname);
+			
 			ago_footer();
 		}
 		else

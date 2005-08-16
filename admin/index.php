@@ -1,8 +1,8 @@
 <?php
 
 include "mysql.inc.php";
-include "includes/headers.inc.php";
 include "common.inc.php";
+include "includes/headers.inc.php";
 
 admin_header("ART.GNOME.ORG Administration","");
 
