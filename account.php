@@ -2,8 +2,8 @@
 
 
 include "mysql.inc.php";
-include "ago_headers.inc.php";
 include "common.inc.php";
+include "ago_headers.inc.php";
 
 
 

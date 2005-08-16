@@ -1,3 +1,9 @@
+2005-08-17  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	reviewed by: <delete if not using a buddy>
+
+	* account.php: quick fix for the login by swaping the order of the includes
+
 2005-08-16  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	reviewed by: <delete if not using a buddy>
