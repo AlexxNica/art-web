@@ -1,3 +1,9 @@
+2005-08-16  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/art.inc.php: corrected call to get_thumbnail_class so
+	  that the border class is correct in the detailed view.
+	* includes/art_page.inc.php: fixed the listing of the categories.
+
 2005-08-08  Benjamin Berg <benjamin@sipsolutions.net>
 
 	* includes/ago_headers.inc.php:

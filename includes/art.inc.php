@@ -68,7 +68,7 @@ function print_detailed_view($itemID, $type)
 	/* XXX: This now does not have an "Gnome Theme - " for applications, icons, etc. */
 	$subtitle = get_category_name($type, $category);
 	
-	$thumbnail_class = get_thumbnail_class($type, $category);;
+	$thumbnail_class = get_thumbnail_class($category);
 
 	$rel_release_date = FormatRelativeDate(time(), strtotime($release_date));
 	$rel_update_date = FormatRelativeDate(time(), $add_timestamp);

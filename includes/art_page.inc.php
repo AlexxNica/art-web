@@ -40,9 +40,9 @@ if ($unvalidated_category == "")
 	{
 		if ($val['active'])
 		{
-			print('<li><a class="bold-link" href="'.$val['url'].'>');
-			print($name);
-			print('</a> - '.$description);
+			print('<li><a class="bold-link" href="'.$val['url'].'">');
+			print(get_category_name ($type, $key));
+			print('</a>');
 			print("</li>\n");
 		}
 	}
