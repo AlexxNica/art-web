@@ -1,7 +1,7 @@
 <?php
 
-require_once("mysql.inc.php");
 require_once("common.inc.php");
+require_once("art_listings.inc.php");
 
 function add_vote($artID, $rating, $userID, $type, $header)
 {
@@ -161,13 +161,11 @@ function print_detailed_view($itemID, $type)
 	print("</table>\n");
 
 	// Get any variations
-	$var_select_result = mysql_query("SELECT {$type}ID,category FROM $type WHERE parent = $itemID");
-	if (mysql_num_rows($var_select_result) > 0)
-	{
-		create_title("Variations", "This $type has one or more variations");
-		while (list($varID,$var_category) = mysql_fetch_row($var_select_result))
-			print_item_row($varID, $type, "icons");
-	}
+	$listing = new variations_list;
+	$listing->type = $type;
+	$listing->view = 'icons';
+	$listing->select($itemID);
+	$listing->print_listing();
 }
 
 

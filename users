@@ -39,6 +39,7 @@ else
 	if (($authorID != "") || $authorusername != '') {
 		if ($authorID != "") {
 			$author_result = mysql_query ("SELECT realname,email,homepage,info,location FROM user WHERE userID = $authorID");
+			$userID = $authorID;
 		} else {
 			$author_result = mysql_query ("SELECT userID,realname,email,homepage,info,location FROM user WHERE `username` = '$authorusername'");
 		}

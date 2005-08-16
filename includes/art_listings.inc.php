@@ -482,4 +482,27 @@ class user_background_list extends general_listing
 	}
 }
 
+class variations_list extends general_listing
+{
+	function print_listing()
+	{
+		if (mysql_num_rows ($this->select_result) > 0)
+		{
+			create_title("Variations", "This {$this->type} has one or more variations");
+			parent::print_listing();
+		}
+	}
+	
+	function select($parentID)
+	{
+		if ($this->type == 'theme') {
+			$sql = 'SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM theme';
+		} else {
+			$sql = 'SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename FROM background';
+		}
+	
+		$this->select_result = mysql_query($sql." WHERE parent=$parentID AND status='active'".
+		                                        ' ORDER BY add_timestamp DESC');
+	}
+}
 ?>

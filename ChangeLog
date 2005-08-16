@@ -1,5 +1,20 @@
 2005-08-16  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	reviewed by: <delete if not using a buddy>
+
+	* download: fixed possible security problem
+	* includes/art_listings.inc.php: added class for variations
+	* includes/art_page.inc.php: moved the include of
+	  ago_headers.inc.php so that login works.
+	* includes/common.inc.php: Deleted all the unused functions
+	* users: fixed bug if the userId was given, and not the user name
+
+	* includes/art.inc.php:
+	* updates.php: 
+	moved to new art listing system
+
+2005-08-16  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* includes/art.inc.php: corrected call to get_thumbnail_class so
 	  that the border class is correct in the detailed view.
 	* includes/art_page.inc.php: fixed the listing of the categories.

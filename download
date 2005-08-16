@@ -8,6 +8,9 @@ $request = $_SERVER["PATH_INFO"];
 
 list($foo,$section,$category,$download_num,$filename) = explode("/", $request);
 
+/* make sure that download_num is a number, and not some SQL command */
+$download_num = validate_input_regexp_error ($download_num, '^[0-9]+$');
+
 if ($download_num < 1000)
 	$archive = "/archive";
 else

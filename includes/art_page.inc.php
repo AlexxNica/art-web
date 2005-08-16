@@ -2,8 +2,8 @@
 /* this file is the backend for backgrounds and themes
  * It is just needs to be included with $type set correctly. */
 
-require("ago_headers.inc.php");
 require("common.inc.php");
+require("ago_headers.inc.php");
 
 list($foo, $unvalidated_category, $unvalidated_artID) = explode("/", $_SERVER["PATH_INFO"]);
 
