@@ -419,24 +419,50 @@ class search_result extends general_listing
 				$this->type = 'theme';
 			} elseif ($this->search_type == 'background_name') {
 				$this->type = 'background';
-			} else {
+			} elseif ($this->search_type == 'all') {
+				$this->type = 'all';
+			}
+			else {
 				print_error("Something impossible happend.");
 			}
 			
 			if ($this->per_page < 1000) { /* XXX: maybe change this to 'all' */
-				$this->results = mysql_fetch_array(mysql_query('SELECT count(*) FROM '. $this->type . $this->get_where_clause()));
-				
-				$this->results = $this->results[0];
+				if ($this->type == 'all') {
+					$this->type = 'theme';
+					$sql = 'SELECT count(*) FROM theme '. $this->get_where_clause();
+					$result = mysql_fetch_array(mysql_query($sql));
+					$this->results = $result[0];
+
+					$this->type = 'background';
+					$sql = 'SELECT count(*) FROM background' . $this->get_where_clause();
+					$result = mysql_fetch_array(mysql_query($sql));
+					$this->results += $result[0];
+					$this->type = 'all';
+				}
+				else {
+					$this->results = mysql_fetch_array(mysql_query('SELECT count(*) FROM '. $this->type . $this->get_where_clause()));
+					$this->results = $this->results[0];
+				}
 				$this->num_pages = ceil($this->results / $this->per_page);
 			}
 			
 			if ($this->type == 'theme') {
 				$sql = 'SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM theme';
-			} else {
+				$this->select_result = mysql_query($sql . $this->get_where_clause() . $this->get_order_by() . $this->get_limit());
+			} elseif ($this->type == 'background') {
 				$sql = 'SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM background';
+				$this->select_result = mysql_query($sql . $this->get_where_clause() . $this->get_order_by() . $this->get_limit());
+			} else {
+				$this->type = 'background';
+				$sql = 'SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM background';
+				$sql .= $this->get_where_clause();
+
+				$this->type = 'theme';
+				$sql .= ' UNION SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM theme';
+				$sql .= $this->get_where_clause() . $this->get_order_by() . $this->get_limit();
+				$this->select_result = mysql_query($sql);
 			}
 			
-			$this->select_result = mysql_query($sql . $this->get_where_clause() . $this->get_order_by() . $this->get_limit());
 		} else {
 			$this->select_result = mysql_query('SELECT userID, realname FROM user WHERE realname LIKE \'%'.mysql_real_escape_string($this->search_text)."%' ORDER BY realname $order");
 		}

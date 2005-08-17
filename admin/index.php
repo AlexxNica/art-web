@@ -40,7 +40,7 @@ if (array_key_exists('username', $_SESSION))
 	create_title("Backgrounds","");
 	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_background.php\">Add A New Background</a><br />");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_background.php\">Edit A Background</a><br />");
-	print("&nbsp;&nbsp;&nbsp;Delete A Background<br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_background.php\">Delete A Background</a><br />");
 
 	create_title("Themes", "");
 	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_theme.php\">Add A New Theme</a><br />");

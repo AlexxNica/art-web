@@ -87,13 +87,35 @@ function ago_header($title)
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/\">News</a></li>\n");
 	//print("\t\t<li><a href=\"/updates.php\">Updates</a></li>\n");
-	print("\t\t<li><a href=\"/search.php\">Search</a></li>\n");
 	//print("\t\t<li><a href=\"/users/\">Authors</a></li>\n");
 	print("\t\t<li><a href=\"/faq.php\">FAQ</a></li>\n");
 	print("\t\t<li><a href=\"http://live.gnome.org/GnomeArt_2fTutorials\">Tutorials</a></li>\n");
 	print("\t\t<li><a href=\"http://gnomesupport.org/forums/index.php?c=6\">Forums</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br />\n");
+	print("\t<a href=\"/search.php\" style=\"text-decoration: none;\" >\n");
+
+	if (is_ie())
+                print("<img src=\"/images/site/spacer.gif\" alt=\"Search\" height=\"48\" width=\"48\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/gnome-searchtool-animation-rest.png', sizingMethod='scale');\" /> Search");
+	else
+		print("<img src=\"/images/site/gnome-searchtool-animation-rest.png\" alt=\"Search\" height=\"48\" width=\"48\" class=\"sidebar\" /> Search");
+
+	?>
+	</a>
+<form action="/search.php" method="get" style="margin-left:2em; margin-top:0.8em;">
+	<table><tr><td>
+	<input type="text" name="search_text" style="width:100%;"/>
+	</td><td>
+	<input type="image" src="/images/site/stock_search.png" style="border: none" value="" /><br/>
+	<input type="hidden" name="search_type" value="all"/>
+	</td></tr></table>
+</form>
+<ul><li><a href="/search.php">Advanced Search</a></li></ul>
+<br/>
+	<?php
+
+	print("\t<br />\n");
+
 	print("\t<a href=\"/backgrounds\" style=\"text-decoration: none;\"  >");
 
 	if (is_ie())
@@ -112,16 +134,6 @@ function ago_header($title)
 	print("\t\t<li><a href=\"/themes/gtk2/\">Application</a></li>\n");
 	print("\t\t<li><a href=\"/themes/metacity/\">Window Border</a></li>\n");
 	print("\t\t<li><a href=\"/themes/icon/\">Icons</a></li>\n");
-	print("\t</ul>\n");
-	print("\t<a style=\"text-decoration: none;\" href=\"/themes\">");
-	
-	if (is_ie())
-		print("<img src=\"/images/site/spacer.gif\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" style=\"filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/site/Themes.png', sizingMethod='scale');\" /> Other Themes");
-	else
-                print("<img src=\"/images/site/Themes.png\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" /> Other Themes");
-
-	print("</a>\n");
-	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/themes/gdm_greeter/\">Login Manager</a></li>\n");
 	print("\t\t<li><a href=\"/themes/splash_screens/\">Splash Screen</a></li>\n");
 	print("\t\t<li><a href=\"/themes/gtk_engines/\">GTK+ Engines</a></li>\n");

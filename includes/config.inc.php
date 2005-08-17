@@ -229,7 +229,7 @@ $sys_icon_dir = "/usr/local/www/art-web/images/icons";
 
 $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 
-$search_type_array = array ("background_name" => "Background Name", "theme_name" => "Theme Name", "author" => "Author Name");
+$search_type_array = array ("all" => "Backgrounds and Themes", "background_name" => "Background Name", "theme_name" => "Theme Name", "author" => "Author Name");
 $thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "1000" => "All");
 $order_array = array("ASC"=>"Ascending", "DESC"=>"Descending");
 $sort_by_array = array("name" => "Name", "add_timestamp" => "Date", "downloads_per_day" => "Popularity", "rating" => "Rating");
