@@ -2,7 +2,14 @@
 
 require_once("mysql.inc.php");
 
-$time_start= microtime(true);
+
+function microtime_float()
+{
+	list($usec, $sec) = explode(" ", microtime());
+	return ((float)$usec + (float)$sec);
+}
+
+$time_start= microtime_float();
 ini_set("session.use_only_cookies", "1");
 ini_set("session.gc_maxlifetime", "86400"); // set session data lifetime to 48 hours
 session_set_cookie_params(86400); // Set cookie lifetime to 48 hours
@@ -180,7 +187,7 @@ function ago_footer()
 	print("</body>\n");
 	print("</html>");
 
-	$time_end = microtime(true);
+	$time_end = microtime_float();
 	$time = round($time_end - $time_start, 2);
 	print("<!-- Page generated in $time seconds -->\n");
 }

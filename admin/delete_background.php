@@ -23,6 +23,12 @@ if($action == "delete")
 	if($background_delete_result)
 	{
 		print("Successfully deleted background.");
+		
+		$background_resolution_delete_query = "DELETE FROM background_resolution WHERE backgroundID='$backgroundID'";
+		$background_resolution_delete_result = mysql_query($background_delete_query);
+		if ($background_resolution_delete_result === FALSE) {
+			print('<p class="error">Error deleting the resolutions of the background.</p>');
+		}
 	}
 	else
 	{

@@ -303,22 +303,29 @@ class background_list extends general_listing
 	{
 		global $background_config_array;
 		if (!array_key_exists($category, $background_config_array)) ago_file_not_found();
-		
-		return " WHERE category='$category' AND status='active' AND parent='0' AND resolution LIKE '".mysql_real_escape_string($this->resolution)."'";
+		if ($this->resolution == '%') {
+			return " WHERE category='$category' AND status='active' AND parent='0'";
+		} else {
+			return ' RIGHT JOIN background_resolution ON background.backgroundID=background_resolution.backgroundID'.
+			       " WHERE category='$category' AND status='active' AND parent='0' AND resolution='".mysql_real_escape_string($this->resolution)."'";
+		}
 	}
 	
 	function select($category)
 	{
+		if ($this->resolution == '%') {
+			$id_sql = 'backgroundID';
+		} else {
+			$id_sql = 'DISTINCT(background.backgroundID)';
+		}
 		if ($this->per_page < 1000) { /* XXX: maybe change this to 'all' */
-			$this->results = mysql_fetch_array(mysql_query('SELECT count(DISTINCT(background.backgroundID)) FROM background '.
-			                                               'RIGHT JOIN background_resolution ON background.backgroundID = background_resolution.backgroundID'.
+			$this->results = mysql_fetch_array(mysql_query("SELECT count($id_sql) FROM background ".
 			                                               $this->get_where_clause($category)));
 			$this->results = $this->results[0];
 			$this->num_pages = ceil($this->results / $this->per_page);
 		}
 		
-		$this->select_result = mysql_query('SELECT DISTINCT(background.backgroundID) AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM background '.
-		                                   'RIGHT JOIN background_resolution ON background.backgroundID = background_resolution.backgroundID'.
+		$this->select_result = mysql_query("SELECT $id_sql AS ID, 'background' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM background ".
 		                                   $this->get_where_clause($category). ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
