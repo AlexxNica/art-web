@@ -1,0 +1,6 @@
+<?php
+
+$type = 'contest';
+include("art_page.inc.php");
+
+?>

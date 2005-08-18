@@ -2,16 +2,19 @@
 /* this file is the backend for backgrounds and themes
  * It is just needs to be included with $type set correctly. */
 
-require("common.inc.php");
-require("ago_headers.inc.php");
+require_once("common.inc.php");
+require_once("ago_headers.inc.php");
 
 list($foo, $unvalidated_category, $unvalidated_artID) = explode("/", $_SERVER["PATH_INFO"]);
 
 /* get the real type */
+/* XXX: this should probably be done in the original page. */
 if ($type == 'background') {
 	$config_array = $background_config_array;
 } elseif ($type == 'theme') {
 	$config_array = $theme_config_array;
+} elseif ($type == 'contest') {
+	$config_array = $contest_config_array;
 } else ago_file_not_found();
 
 $new_rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
@@ -26,12 +29,16 @@ $report = $_POST["report"];
 /* print out the list of background categories */
 if ($unvalidated_category == "")
 {
+	/* XXX: This should really be part of the config_array! */
 	if ($type == 'background') {
 		ago_header('Backgrounds');
 		create_title('Backgrounds', 'Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.');
-	} else {
+	} elseif ($type == 'theme') {
 		ago_header('Themes');
 		create_title('Themes', 'Desktop Themes');
+	} else { /* contest*/
+		ago_header('Contests');
+		create_title('Contests', 'The different contests that are/were hosted on art.gnome.org.');
 	}
 	
 	print("<ul>\n");
@@ -52,21 +59,23 @@ if ($unvalidated_category == "")
 }
 else
 {
-	$category = validate_input_regexp_error ($unvalidated_category, "^[0-9a-z_\-]+$");
+	$category = validate_input_regexp_error ($unvalidated_category, "^[0-9a-z_\.\-]+$");
 	$header   = $config_array[$category]["name"];
 	if ($type == 'background') {
 		$header .= ' Backgrounds';
 	}
 	
-	/* print out the background preview pages */
+	/* print out the preview pages */
 	if (array_key_exists($category, $config_array) && $unvalidated_artID == "")
 	{
-		require("art_listings.inc.php");
+		require_once("art_listings.inc.php");
 		
 		if ($type == 'background') {
 			$list = new background_list;
-		} else {
+		} elseif ($type == 'theme') {
 			$list = new theme_list;
+		} else {
+			$list = new contest_list;
 		}
 		
 		$list->get_view_options();
@@ -88,7 +97,7 @@ else
 		ago_footer();
 	}
 	
-	/* print out the individual background page */
+	/* print out the individual page */
 	else if (array_key_exists($category, $config_array) && $unvalidated_artID != "")
 	{
 		require("art.inc.php");

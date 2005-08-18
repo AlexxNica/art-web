@@ -249,7 +249,7 @@ class theme_list extends general_listing
 		global $theme_config_array;
 		if (!array_key_exists($category, $theme_config_array)) ago_file_not_found(); /* needed? */
 		
-		return ' WHERE category=\'' . $category . '\' AND parent = 0 ';
+		return ' WHERE category=\'' . $category . '\' AND parent = 0 AND status="active" ';
 	}
 	
 	function select($category)
@@ -260,6 +260,28 @@ class theme_list extends general_listing
 		}
 		
 		$this->select_result = mysql_query('SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM theme '.
+		                                   $this->get_where_clause($category). ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
+	}
+}
+
+class contest_list extends theme_list
+{
+	function get_where_clause($category)
+	{
+		global $contest_config_array;
+		if (!array_key_exists($category, $contest_config_array)) ago_file_not_found(); /* needed? */
+		
+		return ' WHERE contest=\'' . $category . '\' AND parent = 0 AND status="active" ';
+	}
+	
+	function select($category)
+	{
+		if ($this->per_page < 1000) { /* XXX: maybe change this to 'all' */
+			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(contestID) FROM contest '.$this->get_where_clause($category)));
+			$this->num_pages = ceil($this->num_pages[0] / $this->per_page);
+		}
+		
+		$this->select_result = mysql_query('SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM contest '.
 		                                   $this->get_where_clause($category). ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
@@ -530,6 +552,8 @@ class variations_list extends general_listing
 	{
 		if ($this->type == 'theme') {
 			$sql = 'SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM theme';
+		} elseif ($this->type == 'contest') {
+			$sql = 'SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM contest';
 		} else {
 			$sql = 'SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename FROM background';
 		}

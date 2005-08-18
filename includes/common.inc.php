@@ -33,7 +33,6 @@ function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
 
 function get_thumbnail_url($filename, $itemID, $type, $category)
 {
-	global $site_url;
 	if ($type == "theme")
 	{
 		if ($itemID < 1000)
@@ -41,13 +40,19 @@ function get_thumbnail_url($filename, $itemID, $type, $category)
 		else
 			$thumbnail_url="{$site_url}/images/thumbnails/$category/$filename";
 	}
-	else
+	elseif ($type == "background")
 	{
 		if ($itemID < 1000)
 			$thumbnail_url="{$site_url}/images/archive/thumbnails/backgrounds/$filename";
 		else
 			$thumbnail_url="{$site_url}/images/thumbnails/backgrounds/$filename";
 	}
+	elseif ($type == "contest")
+	{
+		$thumbnail_url = "{$site_url}/images/thumbnails/contest/$filename";
+	}
+	else
+		$thumbnail_url = ''; // Need "broken image" image?
 	return $thumbnail_url;
 }
 
@@ -63,6 +68,17 @@ function get_download_links($type, $category, $itemID, $download_filename)
 		
 		$filesize = get_filesize_string($file_path);
 		$result = "<a class=\"tar\" href=\"/download/themes/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
+	}
+	elseif ($type == "contest")
+	{ /* XXX paths wrong! */
+		global $sys_theme_dir;
+		if ($itemID < 1000)
+			$file_path = $sys_theme_dir . "/../archive/contest/$category/$download_filename";
+		else
+			$file_path = $sys_theme_dir . "/$category/$download_filename";
+		
+		$filesize = get_filesize_string($file_path);
+		$result = "<a class=\"tar\" href=\"/download/contest/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
 	}
 	else
 	{
@@ -84,12 +100,15 @@ function get_thumbnail_class($category)
 
 function get_category_name($type, $category)
 {
-	global $theme_config_array, $background_config_array;
+	global $theme_config_array, $background_config_array, $contest_config_array;
 	
-	if ($type == "theme")
+	if ($type == "theme") {
 		return $theme_config_array[$category]['name'];
-	else
+	} elseif ($type == 'contest') {
+		return $contest_config_array[$category]['name'];
+	} else {
 		return 'Backgrounds - '.$background_config_array[$category]['name'];
+	}
 }
 
 function get_action_url()

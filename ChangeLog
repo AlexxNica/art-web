@@ -1,3 +1,16 @@
+2005-08-18  Thomas Wood  <thos@gnome.org>, Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* contests:
+	* download:
+	* includes/art.inc.php:
+	* includes/art_listings.inc.php:
+	* includes/art_page.inc.php:
+	* includes/common.inc.php:
+	* includes/config.inc.php:
+	* submit_contest_entry.php:
+
+	Added contest handling system
+
 2005-08-17  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/delete_background.php:

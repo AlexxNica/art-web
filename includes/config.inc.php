@@ -105,6 +105,15 @@ $theme_config_array = array (
 		)
 );
 
+$contest_config_array = array (
+	"2.12-splash" => array (
+		"name" => "2.12 Splash screens contest",
+		"url" => "/contests/2.12-splash",
+		"active" => "1",
+		"description" => "The contest for the GNOME 2.12 splash screen."
+		),
+);
+
 $pill_array = array (
 	"news" => array(
 		"icon" => "news.png",

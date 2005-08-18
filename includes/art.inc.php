@@ -31,7 +31,7 @@ function add_vote($artID, $rating, $userID, $type, $header)
 		mysql_query("INSERT INTO `vote` (`voteID`, `userID`, `artID`, `rating`, `type`) VALUES ('', '$userID', '$artID', '$rating', '$type')");
 	}
 	
-	// Update cached version of rating in theme/background table
+	// Update cached version of rating in theme/contest/background table
 	$rating_sel = mysql_query("SELECT SUM(rating), COUNT(rating) FROM vote WHERE type='$type' AND artID='$artID'");
 	list($rating,$count) = mysql_fetch_row($rating_sel);
 	if ($count < 5) $rating = 0; else $rating = round($rating / $count, 4);
@@ -45,7 +45,7 @@ function print_detailed_view($itemID, $type)
 	global $site_url;
 
 	// check for valid $type
-	if (!($type == 'theme' or $type == 'background'))
+	if (!($type == 'theme' or $type == 'background' or $type == 'contest'))
 	{
 		ago_file_not_found();
 		return -1;
@@ -53,6 +53,8 @@ function print_detailed_view($itemID, $type)
 
 	if ($type == "theme")
 		$select_result = mysql_query("SELECT theme.*, theme.theme_name AS item_name,  user.username AS author FROM theme,user WHERE themeID='$itemID' AND theme.userID = user.userID");
+	elseif ($type == "contest")
+		$select_result = mysql_query("SELECT contest.*, contest.contest AS category, contest.name AS item_name,  user.username AS author FROM contest,user WHERE contestID='$itemID' AND contest.userID = user.userID");
 	else
 		$select_result = mysql_query("SELECT background.*, background.background_name AS item_name, thumbnail_filename AS small_thumbnail_filename, user.username AS author FROM background,user WHERE backgroundID='$itemID' AND background.userID = user.userID");
 	
@@ -117,46 +119,48 @@ function print_detailed_view($itemID, $type)
 		print("\t<tr><th>Version</th><td>$version</td></tr>\n");
 	if ($license != "")
 		print("\t<tr><th>License</th><td>".$license_config_link_array[$license]."</td></tr>\n");
-	$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
-	print("\t<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day ($download_count downloads in total)</td></tr>\n");
-
-	print("\t<tr><th>Rating</th><td>\n");
-	print("\t<div class=\"subtitle\" style=\"float:left\">\n");
-	rating_bar($rating);
-	print("\t($rating_text, $vote_count votes total)\n");
-
-	if ($_SESSION['userID'] == $userID)
+	if ($type != 'contest')
 	{
-		print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Sorry, you can not vote for your own work.</i>\n");
-	}
-	else
-	{
-		$user_rating_select = mysql_query("SELECT rating FROM vote WHERE type='$type' AND artID='$itemID' AND userID='{$_SESSION['userID']}'");
-		list($user_rating) = mysql_fetch_row($user_rating_select);
-			print("\t<form class=\"subtitle\" method=\"post\" action=\"" . $_SERVER["PHP_SELF"] . "\">");
-		if ((!$user_rating) || (!$_SESSION['userID']))
-			print("Vote:\n");
+		$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
+		print("\t<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day ($download_count downloads in total)</td></tr>\n");
+		print("\t<tr><th>Rating</th><td>\n");
+		print("\t<div class=\"subtitle\" style=\"float:left\">\n");
+		rating_bar($rating);
+		print("\t($rating_text, $vote_count votes total)\n");
+
+		if ($_SESSION['userID'] == $userID)
+		{
+			print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Sorry, you can not vote for your own work.</i>\n");
+		}
 		else
-			print("\tChange Your Vote:\n");
-		print("\t[worst]");
-		print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"1\"/>\n");
-		print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"2\"/>\n");
-		print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"3\"/>\n");
-		print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"4\"/>\n");
-		print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"5\"/>\n");
-		print("\t[best]");
-		if (($user_rating) && ($_SESSION['userID']))
-			print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>You rated this a $user_rating.</i>\n");
-		print("\t</form>\n");
-	}
+		{
+			$user_rating_select = mysql_query("SELECT rating FROM vote WHERE type='$type' AND artID='$itemID' AND userID='{$_SESSION['userID']}'");
+			list($user_rating) = mysql_fetch_row($user_rating_select);
+			print("\t<form class=\"subtitle\" method=\"post\" action=\"" . $_SERVER["PHP_SELF"] . "\">");
+			if ((!$user_rating) || (!$_SESSION['userID']))
+				print("Vote:\n");
+			else
+				print("\tChange Your Vote:\n");
+			print("\t[worst]");
+			print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"1\"/>\n");
+			print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"2\"/>\n");
+			print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"3\"/>\n");
+			print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"4\"/>\n");
+			print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"5\"/>\n");
+			print("\t[best]");
+			if (($user_rating) && ($_SESSION['userID']))
+				print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>You rated this a $user_rating.</i>\n");
+			print("\t</form>\n");
+		}
 
 /*	else
 	{
 		print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Only <a href=\"/account.php\">registered users</a> may vote.</i>\n");
 	}*/
-	print("\t</div>\n");
+		print("\t</div>\n");
 
-	print("\t</td></tr>\n");
+		print("\t</td></tr>\n");
+	}
 	print("\t<tr><th>Download</th><td>$download</td></tr>\n");
 	print("</table>\n");
 

@@ -32,6 +32,12 @@ else if($section == "themes")
 	header("Location: $mirror_url$archive/themes/$category/$filename");
 	exit();
 }
+else if($section == "contest")
+{
+	$theme_update_result = mysql_query("UPDATE contest SET download_count=download_count+1 WHERE contestID='$download_num'");
+	header("Location: $mirror_url/contests/$category/$filename");
+	exit();
+}
 else
 {
 	header("Location: /index.php");
