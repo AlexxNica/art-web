@@ -3,8 +3,6 @@
 require("common.inc.php");
 require("ago_headers.inc.php");
 
-$mimetypes = array('image/png' => 'png', 'image/jpeg' => 'jpg');
-
 function create_filename($name, $category, $extra, $ext)
 {
 
@@ -53,18 +51,23 @@ if (array_key_exists('contest', $_POST))
 	}
 	
 	/* we have a file! */
-	/* check the mime type */
-	$mimetype = mime_content_type($file['tmp_name']);
-	if (!array_key_exists($mimetype, $mimetypes)) {
-		print('<p class="error">Sorry, but we only accept PNG and JPEG images.</p>');
-		ago_footer();
-		die();
-	} else {
-		$extension = $mimetypes[$mimetype];
+	/* mimetype check doesn't work on the server, so we just try to load the file.
+	 * This will result in warnings in the apache error log, but I don't know what
+	 * can be done about this. */
+	$extension = 'png'; /* assume it is a png */
+	$image = imagecreatefrompng($file['tmp_name']);
+	if (!$image) {
+		$extension = 'jpg'; /* now try jpg */
+		$image = imagecreatefromjpeg($file['tmp_name']);
+		if (!$image) {
+			/* both failed :( */
+			print('<p class="error">Could not load the image neither as png nor jpeg.');
+			ago_footer();
+			die();
+		}
 	}
-	/* check the size??? */
 	
-	/* finally ... the file itself is OK */
+	/* check the size??? */
 	
 	/* we need to create a unique file name. For this first need a sane name */
 	$file_name = create_filename($item_name, $contest, '', $extension);
@@ -79,13 +82,7 @@ if (array_key_exists('contest', $_POST))
 		die();
 	}
 	
-	/* create thumbnail image */
-	if ($extension == "jpg") {
-		$image = imagecreatefromjpeg($file['tmp_name']);
-	} else {
-		$image = imagecreatefrompng($file['tmp_name']);
-	}
-	
+	/* create the thumbnail */
 	list($width, $height) = getimagesize($file['tmp_name']); /* why can't this use $image? */
 	
 	$maxheight = 80; $maxwidth = 96; /* XXX: just random values :) */

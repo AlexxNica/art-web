@@ -1,3 +1,14 @@
+2005-08-19  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/delete_contest.php:
+	* admin/edit_contest.php:
+	* admin/index.php:
+	
+	Added administration option for the contest system.
+	
+	* submit_contest_entry.php: Added a workaround for the fact that there
+	is no mime_content_type function on the server.
+
 2005-08-18  Thomas Wood  <thos@gnome.org>, Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* contests:

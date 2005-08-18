@@ -46,6 +46,10 @@ if (array_key_exists('username', $_SESSION))
 	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_theme.php\">Add A New Theme</a><br />");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_theme.php\">Edit A Theme</a><br />");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_theme.php\">Delete A Theme</a><br />");
+	
+	create_title("Contest Items", "");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_contest.php\">Edit A Contest Item</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_contest.php\">Delete A Contest Item</a><br />");
 
 	create_title("Comments","");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"comments.php\">Moderate Comments</a><br />");
