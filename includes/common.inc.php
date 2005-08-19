@@ -49,7 +49,7 @@ function get_thumbnail_url($filename, $itemID, $type, $category)
 	}
 	elseif ($type == "contest")
 	{
-		$thumbnail_url = "{$site_url}/images/thumbnails/contest/$filename";
+		$thumbnail_url = "{$site_url}/images/thumbnails/contest/$category/$filename";
 	}
 	else
 		$thumbnail_url = ''; // Need "broken image" image?
