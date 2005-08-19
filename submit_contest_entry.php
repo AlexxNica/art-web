@@ -72,8 +72,8 @@ if (array_key_exists('contest', $_POST))
 	/* we need to create a unique file name. For this first need a sane name */
 	$file_name = create_filename($item_name, $contest, '', $extension);
 	$file_path = '/ftp/pub/gnome/teams/art.gnome.org/contests/'.$contest.'/'. $file_name;
-	$thumb_filename = create_filename($item_name, $contest, '-TH', $extension);
-	$thumb_path = 'images/thumbnails/contest/'.$thumb_filename;
+	$thumb_filename = create_filename($item_name, $contest, '-Th', $extension);
+	$thumb_path = 'images/thumbnails/contests/'.$contest.'/'.$thumb_filename;
 	
 	/* check that none of the files already exist. */
 	if (file_exists($file_path) || file_exists($thumb_path)) {

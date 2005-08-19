@@ -1,3 +1,7 @@
+2005-08-19  Thomas Wood  <thos@gnome.org>
+
+	* submit_contest_entry.php: Update location and filename of thumbnails
+
 2005-08-19  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/delete_contest.php:
