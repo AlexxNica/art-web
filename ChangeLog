@@ -1,5 +1,9 @@
 2005-08-19  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* includes/common.inc.php: corrected path again
+
+2005-08-19  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* includes/common.inc.php: Updated the path of the thumbnails
 
 2005-08-19  Thomas Wood  <thos@gnome.org>
