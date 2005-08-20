@@ -1,3 +1,10 @@
+2005-08-20  Thomas Wood  <thos@gnome.org>
+
+	* includes/art.inc.php:
+	* includes/common.inc.php:
+
+	Display relative release dates correctly (i.e. don't go lower than "today")
+
 2005-08-20  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/comments.php: added code to display the name of contest

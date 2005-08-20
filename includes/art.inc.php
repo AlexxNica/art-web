@@ -72,7 +72,7 @@ function print_detailed_view($itemID, $type)
 	
 	$thumbnail_class = get_thumbnail_class($category);
 
-	$rel_release_date = FormatRelativeDate(time(), strtotime($release_date));
+	$rel_release_date = FormatRelativeDate(time(), strtotime($release_date), true);
 	$rel_update_date = FormatRelativeDate(time(), $add_timestamp);
 	$thumbnail_url = get_thumbnail_url($small_thumbnail_filename, $itemID, $type, $category);
 

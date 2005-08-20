@@ -9,9 +9,13 @@ function create_title($title, $subtitle="")
 		print("<div class=\"subtitle\">$subtitle</div>\n");
 }
 
-function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
+function FormatRelativeDate( $nowTimestamp, $thenTimestamp, $isdate = false )
 {
 	// Taken from Qwikiwiki
+
+	/* $isdate indicates if thenTimestamp is a date (not date and time)
+	 * and therefore we shouldn't return any time interval less than a day */
+
 
 	// Compute the difference
 	$numSeconds = $nowTimestamp - $thenTimestamp;
@@ -19,7 +23,11 @@ function FormatRelativeDate( $nowTimestamp, $thenTimestamp )
 	$numHours   = round( $numSeconds / 60 / 60 );
 	$numDays    = round( $numSeconds / 60 / 60 / 24 );
 	$numWeeks   = round( $numSeconds / 60 / 60 / 24 / 7  );
-	     if( $numSeconds <  60 ) return "moments ago";
+
+
+
+	if ( $isdate && $numHours < 24 ) return "today";
+	else if( $numSeconds <  60 ) return "moments ago";
 	else if( $numMinutes ==  1 ) return "1 minute ago";
 	else if( $numMinutes <  60 ) return "$numMinutes minutes ago";
 	else if( $numHours   ==  1 ) return "1 hour ago";
