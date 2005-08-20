@@ -64,14 +64,17 @@ function upload_entry($unvalidated_item_name, $unvalidated_description)
 	/* get image info */
 	list($width, $height, $type) = getimagesize($file['tmp_name']);
 
+	if (($width > 640) or ($height > 480))
+		return "Image size must not exceed 640 pixels wide or 480 pixels high";
+
 	if ($type == IMAGETYPE_PNG)
 	{
-		$extension = 'png'; /* assume it is a png */
+		$extension = 'png';
 		$image = imagecreatefrompng($file['tmp_name']);
 	}
 	elseif ($type == IMAGETYPE_JPEG)
 	{
-		$extension = 'jpg'; /* now try jpg */
+		$extension = 'jpg';
 		$image = imagecreatefromjpeg($file['tmp_name']);
 	}
 	else

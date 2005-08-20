@@ -1,5 +1,9 @@
 2005-08-20  Thomas Wood  <thos@gnome.org>
 
+	* submit_contest_entry.php: Restrict image size to 640 x 480
+
+2005-08-20  Thomas Wood  <thos@gnome.org>
+
 	* includes/common.inc.php: Added ago_fatal_error()
 	* submit_contest_entry.php: Misc. improvements and better error
 	handling
