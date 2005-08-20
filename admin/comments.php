@@ -64,6 +64,11 @@ if($badcomment_count > 0)
 			$result = mysql_query($themecat);
 			list($category, $name) = mysql_fetch_row($result);
 		}
+		if($comment_type == "contest") {
+			$themecat = "SELECT contest, name FROM `contest` WHERE contestID = $comment_artID";
+			$result = mysql_query($themecat);
+			list($category, $name) = mysql_fetch_row($result);
+		}
 		$link = "../".$comment_type."s/$category/$comment_artID";
 		$count++;
 		// display comment header
