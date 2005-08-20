@@ -179,6 +179,17 @@ function ago_file_not_found()
 	die();
 }
 
+function ago_fatal_error($header, $title, $message)
+{
+	ago_header($header);
+	create_title($title);
+	print('<p class="error">'.$message.'</p>');
+	ago_footer();
+	exit();
+}
+
+
+
 function print_select_box($name,$array,$selected)
 {
 	print("<select name=\"$name\" id=\"$name\">\n");
