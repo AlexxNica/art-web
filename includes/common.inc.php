@@ -68,22 +68,19 @@ function get_download_links($type, $category, $itemID, $download_filename)
 {
 	if ($type == "theme")
 	{
-		global $sys_theme_dir;
+		global $sys_ftp_dir;
 		if ($itemID < 1000)
-			$file_path = $sys_theme_dir . "/../archive/theme/$category/$download_filename";
+			$file_path = $sys_ftp_dir . "/archive/themes/$category/$download_filename";
 		else
-			$file_path = $sys_theme_dir . "/$category/$download_filename";
+			$file_path = $sys_ftp_dir . "/themes/$category/$download_filename";
 		
 		$filesize = get_filesize_string($file_path);
 		$result = "<a class=\"tar\" href=\"/download/themes/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
 	}
 	elseif ($type == "contest")
-	{ /* XXX paths wrong! */
-		global $sys_theme_dir;
-		if ($itemID < 1000)
-			$file_path = $sys_theme_dir . "/../archive/contest/$category/$download_filename";
-		else
-			$file_path = $sys_theme_dir . "/$category/$download_filename";
+	{
+		global $sys_ftp_dir;
+		$file_path = $sys_ftp_dir . "/contests/$category/$download_filename";
 		
 		$filesize = get_filesize_string($file_path);
 		$result = "<a class=\"tar\" href=\"/download/contest/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";

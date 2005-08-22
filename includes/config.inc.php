@@ -232,9 +232,7 @@ $license_config_link_array = array (
 $mirror_url = "http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org";
 $site_url = 'http://' . $_SERVER['SERVER_NAME'];
 
-$sys_theme_dir = "/ftp/pub/gnome/teams/art.gnome.org/themes";
-
-$sys_icon_dir = "/usr/local/www/art-web/images/icons";
+$sys_ftp_dir = "/ftp/pub/gnome/teams/art.gnome.org/";
 
 $valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
 

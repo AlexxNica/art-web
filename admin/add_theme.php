@@ -114,7 +114,7 @@ else
 	print("</td></tr>\n");
 
 	print("<tr><td><strong>Download Filename:</strong></td><td>");
-	if (isset($theme_category)) file_chooser("download_filename", "$sys_theme_dir/$theme_category/"); 
+	if (isset($theme_category)) file_chooser("download_filename", "$sys_ftp_dir/themes/$theme_category/"); 
 	else print("<input type=\"text\" name=\"download_filename\" size=\"40\" />");
 	print("</td></tr>\n");
 
