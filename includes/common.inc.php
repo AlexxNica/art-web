@@ -41,6 +41,7 @@ function FormatRelativeDate( $nowTimestamp, $thenTimestamp, $isdate = false )
 
 function get_thumbnail_url($filename, $itemID, $type, $category)
 {
+	global $site_url;
 	if ($type == "theme")
 	{
 		if ($itemID < 1000)
