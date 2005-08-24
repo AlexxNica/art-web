@@ -543,6 +543,25 @@ class user_background_list extends general_listing
 	}
 }
 
+class user_contest_list extends general_listing
+{
+	function print_listing($realname)
+	{
+		if (mysql_num_rows ($this->select_result) > 0)
+		{
+			create_title ("Contests", "Contest entries submitted by $realname");
+			parent::print_listing();
+		}
+	}
+	
+	function select($userID)
+	{
+		$this->select_result = mysql_query('SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM contest '.
+		                                   "WHERE userID=$userID AND status='active' ".
+		                                   'ORDER BY add_timestamp DESC');
+	}
+}
+
 class variations_list extends general_listing
 {
 	function print_listing()

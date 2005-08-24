@@ -1,5 +1,10 @@
 2005-08-24  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* users: added a list of contest entries to the user page
+	* includes/art_listings.inc.php: Added class for the above change
+
+2005-08-24  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* includes/art_listings.inc.php:
 	Fixed the "Showing x trough y of z results" text, so that y cannot
 	get bigger then the overall number of results
