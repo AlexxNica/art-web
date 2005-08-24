@@ -1,3 +1,7 @@
+2005-08-24  Thomas Wood  <thos@gnome.org>
+
+	* submit_contest_entry.php: Values wheren't getting escaped for mysql!
+
 2005-08-23  Thomas Wood  <thos@gnome.org>
 
 	* includes/common.inc.php: Make sure thumbnail urls include site url
