@@ -59,7 +59,13 @@ class general_listing
 	function print_shown_slice()
 	{
 		if ($this->results > 0) {
-			print('<strong>Showing ' . (($this->page - 1) * $this->per_page + 1) . ' through ' . (($this->page) * $this->per_page) . ' of ' . $this->results . ' results.</strong><br />');
+			print('<strong>Showing ' . (($this->page - 1) * $this->per_page + 1) . ' through ');
+			if ($this->page * $this->per_page < $this->results) {
+				print($this->page * $this->per_page);
+			} else {
+				print($this->results);
+			}
+			print(' of ' . $this->results . ' results.</strong><br />');
 		}
 	}
 	

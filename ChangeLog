@@ -1,3 +1,9 @@
+2005-08-24  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/art_listings.inc.php:
+	Fixed the "Showing x trough y of z results" text, so that y cannot
+	get bigger then the overall number of results
+
 2005-08-24  Thomas Wood  <thos@gnome.org>
 
 	* submit_contest_entry.php: Values wheren't getting escaped for mysql!
