@@ -5,7 +5,7 @@ require("ago_headers.inc.php");
 
 $contest = '2.12-splash';
 
-function create_filename($name, $category, $extra, $ext)
+function create_submission_filename($name, $category, $extra, $ext)
 {
 
 	$base = ereg_replace("[_|-]", " ", $name);
@@ -84,9 +84,9 @@ function upload_entry($unvalidated_item_name, $unvalidated_description)
 
 
 	/* we need to create a unique file name. For this first need a sane name */
-	$file_name = create_filename($item_name, $contest, '', $extension);
+	$file_name = create_submission_filename($item_name, $contest, '', $extension);
 	$file_path = '/ftp/pub/gnome/teams/art.gnome.org/contests/'.$contest.'/'. $file_name;
-	$thumb_filename = create_filename($item_name, $contest, '-Th', $extension);
+	$thumb_filename = create_submission_filename($item_name, $contest, '-Th', $extension);
 	$thumb_path = 'images/thumbnails/contests/'.$contest.'/'.$thumb_filename;
 
 	/* check that none of the files already exist. */

@@ -87,17 +87,18 @@ else
 	print("<tr><td><strong>User:</strong></td><td><input type=\"hidden\" name=\"userID\" value=\"$userID\">$userID</td></tr>\n");
 	print("<tr><td><strong>Release Date:</strong></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
 	print("<tr><td><strong>Background Description:</strong></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap>$background_description</textarea></td></tr>\n");
-	print("<tr><td><strong>Thumbnail Filename:</strong></td><td>");file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/backgrounds");print("</td></tr>\n");
+	print("<tr><td><strong>Thumbnail Filename:</strong></td><td>");file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/backgrounds", $category);print("</td></tr>\n");
 	print("</table>\n<p>\n");
 
 	if ($submitID)
 	{
 		print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\"  >");
-		print("<tr><td><strong>X</strong></td><td><strong>Type/Resolution</strong></td><td><strong>Filename</strong></td></tr>\n");
+		print("<tr><td><strong>X&nbsp;&nbsp;Type/Resolution</strong></td><td><strong>Filename</strong></td></tr>\n");
 		$background_resolution_result = mysql_query("SELECT type,resolution,filename FROM incoming_background_resolution WHERE backgroundID=$submitID");
 		while (list($type,$resolution,$filename) = mysql_fetch_row($background_resolution_result))
 		{
-			print("<tr><td><input type=\"checkbox\" name=\"background_toggles[$type|$resolution]\"></td><td>$type - $resolution</td><td><input type=\"text\" name=\"backgrounds[$type|$resolution]\" value=\"$filename\" size=\"40\"></td></tr>\n");
+			$filename = create_filename($background_name, $category, $filename, '_' . $resolution);
+			print("<tr><td><label><input type=\"checkbox\" name=\"background_toggles[$type|$resolution]\" checked=\"checked\"/>$type - $resolution</label></td><td><input type=\"text\" name=\"backgrounds[$type|$resolution]\" value=\"$filename\" size=\"40\"></td></tr>\n");
 		}
 		print("</table>");
 	}

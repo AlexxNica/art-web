@@ -1,3 +1,15 @@
+2005-08-31  Thomas Wood  <thos@gnome.org>
+
+	* admin/add_background.php:
+	* admin/add_theme.php:
+	* includes/common.inc.php:
+
+	- Try and guess background filename
+	- Added filter to file chooser list
+
+	* submit_contest_entry.php: Renamed create_filename() as this function
+	now exists in common.inc.php
+
 2005-08-24  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* users: added a list of contest entries to the user page

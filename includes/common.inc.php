@@ -2,6 +2,35 @@
 
 require("config.inc.php");
 
+
+function create_filename($name, $category, $filename, $extra = '')
+{
+	$categories = Array("gnome" => "GNOME",
+                    "other" => "OTHER",
+                    "gtk2" => "GTK2",
+                    "metacity" => "MCity",
+                    "icon" => "ICON",
+                    "splash_screens" => "Splash",
+                    "desktop" => "Theme",
+                    "gdm_greeter" => "GDM");
+
+	$base = ereg_replace("[_|-]", " ", $name);
+	$base = ereg_replace('[^a-zA-Z0-9\s]', " ", $base);
+	$base = ucwords($base);
+	$base = str_replace(" ", "", $base);
+	$base = $categories[$category] . "-$base";
+	if ($extra) $base = $base . $extra;
+	if (ereg("\.tar\.gz$", $filename)) $ext=".tar.gz";
+	elseif (ereg("\.tar\.bz2$", $filename)) $ext = ".tar.bz2";
+	elseif (ereg("\.tgz$", $filename)) $ext = ".tar.gz";
+	elseif (ereg("\.png", $filename)) $ext = ".png";
+	elseif (ereg("\.jpg", $filename)) $ext = ".jpg";
+	return $base . $ext;
+
+}
+
+
+
 function create_title($title, $subtitle="")
 {
 	print("<h1>$title</h1>\n");
@@ -414,7 +443,7 @@ function create_select_box($name,$options,$selected)
 }
 
 
-function file_chooser($var_name, $dir)
+function file_chooser($var_name, $dir, $filter="")
 {
 // Open a known directory, and proceed to read its contents
 	if (is_dir($dir))
@@ -424,6 +453,9 @@ function file_chooser($var_name, $dir)
 			print("<select name=$var_name><option></option>");
 			while (($file = readdir($dh)) !== false)
 			{
+				if ($filter != '')
+					if (stristr($file, $filter) === FALSE)
+						continue;
 				if (($file != ".") and ($file != ".."))
 					echo "<option>$file</option>";
 			}

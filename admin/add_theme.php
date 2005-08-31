@@ -104,17 +104,17 @@ else
 	print("<tr><td><strong>Description:</strong></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
 
 	print("<tr><td><strong>Thumbnail Filename:</strong></td><td>");
-	if (isset($theme_category)) file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/");
+	if (isset($theme_category)) file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/", '-Shot');
 	else print("<input type=\"text\" name=\"thumbnail_filename\" size=\"40\">");
 	print("</td></tr>\n");
 
 	print("<tr><td><strong>Small Thumbnail Filename:</strong></td><td>");
-	if (isset($theme_category)) file_chooser("small_thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/");
+	if (isset($theme_category)) file_chooser("small_thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/", '-Th');
 	else print("<input type=\"text\" name=\"small_thumbnail_filename\" size=\"40\" />");
 	print("</td></tr>\n");
 
 	print("<tr><td><strong>Download Filename:</strong></td><td>");
-	if (isset($theme_category)) file_chooser("download_filename", "$sys_ftp_dir/themes/$theme_category/"); 
+	if (isset($theme_category)) file_chooser("download_filename", "$sys_ftp_dir/themes/$theme_category/");
 	else print("<input type=\"text\" name=\"download_filename\" size=\"40\" />");
 	print("</td></tr>\n");
 
