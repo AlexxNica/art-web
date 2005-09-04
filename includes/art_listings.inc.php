@@ -253,7 +253,7 @@ class theme_list extends general_listing
 	function get_where_clause($category)
 	{
 		global $theme_config_array;
-		if (!array_key_exists($category, $theme_config_array)) ago_file_not_found(); /* needed? */
+		if (!array_key_exists($category, $theme_config_array)) art_file_not_found(); /* needed? */
 		
 		return ' WHERE category=\'' . $category . '\' AND parent = 0 AND status="active" ';
 	}
@@ -275,7 +275,7 @@ class contest_list extends theme_list
 	function get_where_clause($category)
 	{
 		global $contest_config_array;
-		if (!array_key_exists($category, $contest_config_array)) ago_file_not_found(); /* needed? */
+		if (!array_key_exists($category, $contest_config_array)) art_file_not_found(); /* needed? */
 		
 		return ' WHERE contest=\'' . $category . '\' AND parent = 0 AND status="active" ';
 	}
@@ -330,7 +330,7 @@ class background_list extends general_listing
 	function get_where_clause($category)
 	{
 		global $background_config_array;
-		if (!array_key_exists($category, $background_config_array)) ago_file_not_found();
+		if (!array_key_exists($category, $background_config_array)) art_file_not_found();
 		if ($this->resolution == '%') {
 			return " WHERE category='$category' AND status='active' AND parent='0'";
 		} else {

@@ -3,7 +3,7 @@
 
 include "mysql.inc.php";
 include "common.inc.php";
-include "ago_headers.inc.php";
+include "art_headers.inc.php";
 
 
 
@@ -42,13 +42,13 @@ if (array_key_exists('logout', $_POST))
 {
 	session_destroy();
 	$_SESSION = Array();
-	ago_header("Account");
+	art_header("Account");
 	create_title("Logout","");
 	print("<p>You have been logged out.  <a href=\"{$_SERVER["PHP_SELF"]}\">Continue...</a></p>");
 }
 elseif (array_key_exists('change_profile', $_POST))
 {
-	ago_header("Account");
+	art_header("Account");
 
 	$new_pass = escape_string ($_POST['password']);
 	$info = escape_string ($_POST['info']);
@@ -68,7 +68,7 @@ elseif (array_key_exists('change_profile', $_POST))
 	{
 		create_title("Profile updated.","");
 		print("<a href=\"{$_SERVER['PHP_SELF']}\">Continue...</a>");
-		ago_footer(); die();
+		art_footer(); die();
 	}
 	else
 	{
@@ -79,7 +79,7 @@ elseif (array_key_exists('change_profile', $_POST))
 }
 elseif (array_key_exists("register", $_POST))
 {
-	ago_header("Account");
+	art_header("Account");
 
 	$username = escape_string ($_POST['username']);
 	$realname = escape_string ($_POST['realname']);
@@ -114,7 +114,7 @@ elseif (array_key_exists("register", $_POST))
 }
 elseif (array_key_exists('username', $_SESSION))
 {
-	ago_header("Account");
+	art_header("Account");
 	create_title("My Profile","Logged in as <a href=\"/users/{$_SESSION['userID']}/\" name=\"Public Profile Page\">{$_SESSION['username']}</a>");
 	print("<ul><li><a href=\"/users/{$_SESSION['username']}/\">Public Profile Page</a></li></ul>");
 	$query_result = mysql_query("SELECT realname,email,homepage,info,timezone,location FROM user WHERE userID = '{$_SESSION['userID']}'");
@@ -188,7 +188,7 @@ elseif (array_key_exists('username', $_SESSION))
 else
 {
 
-	ago_header("Account");
+	art_header("Account");
 	create_title("Please log in","Log in to access your account");
 	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
 	print("<table>\n");
@@ -213,7 +213,7 @@ else
 
 }
 
-ago_footer();
+art_footer();
 
 
 ?>

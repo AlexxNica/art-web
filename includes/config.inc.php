@@ -229,6 +229,7 @@ $license_config_link_array = array (
 		"gnu-lgpl" => "<a href=\"http://creativecommons.org/licenses/LGPL/2.1/\">GNU Lesser General Public License</a>",
 		"pub-dom" => "<a href=\"http://web.resource.org/cc/PublicDomain/\">Public Domain</a>");
 
+
 $mirror_url = "http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org";
 $site_url = 'http://' . $_SERVER['SERVER_NAME'];
 

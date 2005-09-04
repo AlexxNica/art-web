@@ -2,9 +2,9 @@
 
 require("mysql.inc.php");
 require("common.inc.php");
-require("ago_headers.inc.php");
+require("art_headers.inc.php");
 
-ago_header("LINKS");
+art_header("LINKS");
 create_middle_box_top("links");
 
 print("<table border=\"0\">\n");
@@ -65,5 +65,5 @@ print("</table>\n<p>\n");
 
 
 create_middle_box_bottom();
-ago_footer();
+art_footer();
 ?>

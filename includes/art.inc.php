@@ -47,7 +47,7 @@ function print_detailed_view($itemID, $type)
 	// check for valid $type
 	if (!($type == 'theme' or $type == 'background' or $type == 'contest'))
 	{
-		ago_file_not_found();
+		art_file_not_found();
 		return -1;
 	}
 
@@ -60,7 +60,7 @@ function print_detailed_view($itemID, $type)
 	
 	if (mysql_num_rows($select_result) == 0)
 	{
-		ago_file_not_found();
+		art_file_not_found();
 		return -1;
 	}
 

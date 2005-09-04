@@ -3,7 +3,7 @@
  * It is just needs to be included with $type set correctly. */
 
 require_once("common.inc.php");
-require_once("ago_headers.inc.php");
+require_once("art_headers.inc.php");
 
 list($foo, $unvalidated_category, $unvalidated_artID) = explode("/", $_SERVER["PATH_INFO"]);
 
@@ -15,7 +15,7 @@ if ($type == 'background') {
 	$config_array = $theme_config_array;
 } elseif ($type == 'contest') {
 	$config_array = $contest_config_array;
-} else ago_file_not_found();
+} else art_file_not_found();
 
 $new_rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
 if  (get_magic_quotes_gpc() == 1)
@@ -31,13 +31,13 @@ if ($unvalidated_category == "")
 {
 	/* XXX: This should really be part of the config_array! */
 	if ($type == 'background') {
-		ago_header('Backgrounds');
+		art_header('Backgrounds');
 		create_title('Backgrounds', 'Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.');
 	} elseif ($type == 'theme') {
-		ago_header('Themes');
+		art_header('Themes');
 		create_title('Themes', 'Desktop Themes');
 	} else { /* contest*/
-		ago_header('Contests');
+		art_header('Contests');
 		create_title('Contests', 'The different contests that are/were hosted on art.gnome.org.');
 	}
 	
@@ -55,7 +55,7 @@ if ($unvalidated_category == "")
 	}
 	print("</ul>\n");
 	
-	ago_footer();
+	art_footer();
 }
 else
 {
@@ -82,7 +82,7 @@ else
 		$list->select($category);
 		
 		// LISTING OUTPUT /////////////////////////////////////////////
-		ago_header($header);
+		art_header($header);
 		create_title($header);
 		
 		$list->print_search_form();
@@ -94,7 +94,7 @@ else
 		
 		$list->print_page_numbers();
 		
-		ago_footer();
+		art_footer();
 	}
 	
 	/* print out the individual page */
@@ -111,18 +111,18 @@ else
 		add_vote($artID, $new_rating, $_SESSION['userID'], $type, $header);
 		
 		/* OUTPUT ############# */
-		ago_header($header);
+		art_header($header);
 		
 		print_detailed_view($artID, $type);
 		print_comments($artID, $type);
 		print($comment_result);
 		print_comment_form($comment);
 		
-		ago_footer();
+		art_footer();
 	}
 	else
 	{
-		ago_file_not_found();
+		art_file_not_found();
 	}
 }
 

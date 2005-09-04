@@ -4,7 +4,7 @@
 
 require("mysql.inc.php");
 require("common.inc.php");
-require("ago_headers.inc.php");
+require("art_headers.inc.php");
 require("news.inc.php");
 require("art_listings.inc.php");
 
@@ -20,7 +20,7 @@ $top5->select();
 
 // OUTPUT ///////////////////////////////////////////////////////////////////////
 
-ago_header("Artwork &amp; Themes");
+art_header("Artwork &amp; Themes");
 ?>
 <!-- News Section -->
 
@@ -45,4 +45,4 @@ ago_header("Artwork &amp; Themes");
 	<div class="subtitle">The five top rated items</div>
 	<?php $top5->print_listing(); ?>
 </div>
-<?php ago_footer(); ?>
+<?php art_footer(); ?>

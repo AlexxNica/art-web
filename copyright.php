@@ -1,9 +1,9 @@
 <?php
 require("mysql.inc.php");
-require("includes/common.inc.php");
-require("includes/ago_headers.inc.php");
+require("common.inc.php");
+require("art_headers.inc.php");
 
-ago_header("Copyright Notice");
+art_header("Copyright Notice");
 create_title("Copyright Notice", "");
 ?>
 <div class="h2">Site Design</div>
@@ -15,5 +15,5 @@ create_title("Copyright Notice", "");
 <div class="h2">Copyright disputes</div>
 <p>If you suspect any material on art.gnome.org infringes on someone else's copyright, please <a href="contact.php">let us know</a> and we will try to rectify the situation as soon as possible.</p>
 <?php
-ago_footer();
+art_footer();
 ?>

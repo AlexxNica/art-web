@@ -2,10 +2,10 @@
 
 require("mysql.inc.php");
 require("common.inc.php");
-require("ago_headers.inc.php");
+require("art_headers.inc.php");
 require("art_listings.inc.php");
 
-ago_header("Search");
+art_header("Search");
 create_title("Search", "Search for themes and backgrounds");
 
 $list = new search_result;
@@ -33,6 +33,6 @@ else
 }
 
 
-ago_footer();
+art_footer();
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 require("common.inc.php");
-require("ago_headers.inc.php");
+require("art_headers.inc.php");
 
 $contest = '2.12-splash';
 
@@ -44,7 +44,7 @@ function upload_entry($unvalidated_item_name, $unvalidated_description)
 	$file = $_FILES['item_filename'];
 	if (!isset($file))
 	{
-		ago_fatal_error('Submit Contest Entry', 'Contest Submission', 'Something went wrong, as not all variables are set');
+		art_fatal_error('Submit Contest Entry', 'Contest Submission', 'Something went wrong, as not all variables are set');
 	}
 	else
 	{
@@ -56,7 +56,7 @@ function upload_entry($unvalidated_item_name, $unvalidated_description)
 					 UPLOAD_ERR_NO_FILE    => "No file was uploaded",
 					 UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder",
 					 UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.");
-			ago_fatal_error('Submit Contest Entry', 'Contest Submission', 'There was an error in the file upload: '.$message[$file['error']]);
+			art_fatal_error('Submit Contest Entry', 'Contest Submission', 'There was an error in the file upload: '.$message[$file['error']]);
 		}
 	}
 	
@@ -114,14 +114,14 @@ function upload_entry($unvalidated_item_name, $unvalidated_description)
 	imagecopyresampled($thumb_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 	
 	if (!imagejpeg($thumb_image, $thumb_path, 70))
-		ago_fatal_error('Submit Contest Entry', 'Contest Submission', 'An error occured, while saving the thumbnail.');
+		art_fatal_error('Submit Contest Entry', 'Contest Submission', 'An error occured, while saving the thumbnail.');
 
 	chmod($thumb_path, 0664); /* Make sure it's readable */
 	
 	if (!move_uploaded_file($file['tmp_name'], $file_path))
 	{
 		unlink($thumb_path);
-		ago_fatal_error('Submit Contest Entry', 'Contest Submission', 'An error occured, while saving the uploaded file. Will try to delete the already saved thumbnail file.');
+		art_fatal_error('Submit Contest Entry', 'Contest Submission', 'An error occured, while saving the uploaded file. Will try to delete the already saved thumbnail file.');
 	}
 	chmod($file_path, 0664);
 
@@ -134,15 +134,15 @@ function upload_entry($unvalidated_item_name, $unvalidated_description)
 	{
 		unlink($file_path);
 		unlink($thumb_path);
-		ago_fatal_error('Submit Contest Entry', 'Contest Submission', 'Error inserting data into the database: '.mysql_error().'<br/>Removing the files again.');
+		art_fatal_error('Submit Contest Entry', 'Contest Submission', 'Error inserting data into the database: '.mysql_error().'<br/>Removing the files again.');
 	}
 
 	/* Upload was successful! */
 
-	ago_header("Submit Contest Entry");
+	art_header("Submit Contest Entry");
 	create_title("Contest Submission");
 	print('<p class="info">Thank you for your entry, it will appear in the <a href="/contests/'.$contest.'">listing</a> shortly.</p>');
-	ago_footer();
+	art_footer();
 	die();
 
 }
@@ -163,7 +163,7 @@ if (array_key_exists('contest', $_POST))
 
 // OUTPUT /////////////////////////////////////////////////////////////////////
 
-ago_header("Submit Contest Entry");
+art_header("Submit Contest Entry");
 create_title("Contest Submission", "To submit an entry to this competition, please fill in the form below");
 
 /* require login earlier, to prevent problems with file upload */
@@ -205,4 +205,4 @@ if ($error_message)
 </table>
 </form>
 
-<?php ago_footer(); ?>
+<?php art_footer(); ?>

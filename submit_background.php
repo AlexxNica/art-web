@@ -2,7 +2,7 @@
 
 require("mysql.inc.php");
 require("common.inc.php");
-require("ago_headers.inc.php");
+require("art_headers.inc.php");
 
 // superglobal stuff
 $background_name = escape_string($_POST["background_name"]);
@@ -16,13 +16,14 @@ $version = validate_input_regexp_default($_POST["version"], "^[0-9\.]+$", "0");
 $background_toggles = $_POST['background_toggles']; // This is an array, which is validated later
 $backgrounds = $_POST['backgrounds']; // This is an array, which is validated later
 
-ago_header("Background Submission");
+
+art_header("Background Submission");
 create_title("Submit a background","");
 
 if (!array_key_exists('username', $_SESSION))
 {
 	print("<p class=\"error\">You need to <a href=\"/account.php\">login</a> first.</p>");
-	ago_footer();
+	art_footer();
 	die();
 }
 
@@ -66,7 +67,7 @@ if(array_key_exists("submit",$_POST))
 			{
 				print("<p class=\"error\">There were form submission errors, please try again.</p>");
 			}
-			ago_footer();
+			art_footer();
 			die();
 		}
 		else
@@ -122,6 +123,6 @@ else
 	print("</form>");
 
 
-ago_footer();
+art_footer();
 
 ?>

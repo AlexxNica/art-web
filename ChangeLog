@@ -1,3 +1,31 @@
+2005-09-04  Thomas Wood  <thos@gnome.org>
+
+	* account.php:
+	* admin/includes/headers.inc.php:
+	* contact.php:
+	* copyright.php:
+	* faq.php:
+	* includes/ago_headers.inc.php:
+	* includes/art.inc.php:
+	* includes/art_headers.inc.php:
+	* includes/art_listings.inc.php:
+	* includes/art_page.inc.php:
+	* includes/config.inc.php:
+	* index.php:
+	* links.php:
+	* news.php:
+	* search.php:
+	* submit.php:
+	* submit_background.php:
+	* submit_contest_entry.php:
+	* submit_theme.php:
+	* updates.php:
+	* users:
+
+	Patch from Henrik Nilsen Omma <henrik@ubuntu.com> to make some
+	function names more generic.
+
+
 2005-08-31  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_background.php:

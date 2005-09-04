@@ -1,7 +1,7 @@
 <?php
 
 require("common.inc.php");
-require("ago_headers.inc.php");
+require("art_headers.inc.php");
 require("art_listings.inc.php");
 
 // superglobals stuff
@@ -17,7 +17,7 @@ $latest->per_page = $num_updates;
 $latest->select();
 
 
-ago_header("Updates");
+art_header("Updates");
 create_title("Updates", "The $num_updates most recent additions to art.gnome.org");
 
 $latest->print_listing();
@@ -26,5 +26,5 @@ print("<div style=\"text-align: center\"><form action=\"{$_SERVER["PHP_SELF"]}\"
 print("Number of updates to display: <input type=\"text\" name=\"num_updates\" value=\"$num_updates\" size=\"3\" /> ");
 print("<input type=\"submit\" value=\"Show\" /></p></form></div>\n");
 
-ago_footer();
+art_footer();
 ?>

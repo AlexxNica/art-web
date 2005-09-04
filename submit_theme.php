@@ -2,7 +2,7 @@
 
 require("mysql.inc.php");
 require("common.inc.php");
-require("ago_headers.inc.php");
+require("art_headers.inc.php");
 
 // superglobal stuff
 $theme_name = escape_string($_POST["theme_name"]);
@@ -15,13 +15,13 @@ $version = validate_input_regexp_default($_POST["version"], "^[0-9\.]+$", "0");
 $update = validate_input_regexp_default($_POST["update"], "^[0-9]+$", "");
 $parentID = validate_input_regexp_default($_POST["parentID"], "^[0-9]+$", "");
 
-ago_header("Theme Submission");
+art_header("Theme Submission");
 create_title("Theme Submission", "");
 
 if (!array_key_exists('username', $_SESSION))
 {
 	print("<p class=\"error\">You need to <a href=\"/account.php\">login</a> first.</p>");
-	ago_footer();
+	art_footer();
 	die();
 }
 
@@ -45,7 +45,7 @@ if($_POST['submit'])
 			print("<li><a href=\"{$_SERVER['PHP_SELF']}\">Submit another theme</a></li>");
 			print("<li><a href=\"/account.php\">Back to account page</a></li>");
 			print("</ul>");
-			ago_footer();
+			art_footer();
 			die();
 		}
 		else
@@ -94,6 +94,6 @@ else
 
 
 
-ago_footer();
+art_footer();
 
 ?>

@@ -34,7 +34,7 @@ if (array_key_exists("login", $_POST))
 		}
 		else
 		{
-			ago_header("Login error");
+			art_header("Login error");
 			print("<h1>Login failed</h1>");
 			print('<p class="warning">Incorrect username and password. Please try again.</p>');
 			print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
@@ -44,7 +44,7 @@ if (array_key_exists("login", $_POST))
 			print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td></tr>\n");
 			print("</table>\n");
 			print("</form>\n");
-			ago_footer();
+			art_footer();
 			exit();
 		}
 	}
@@ -57,7 +57,7 @@ function is_ie() {
 		return false;
 }
 
-function ago_header($title)
+function art_header($title)
 {
 
 	header("Content-Type: text/html; charset=ISO-8859-1");
@@ -176,7 +176,7 @@ function ago_header($title)
 
 }
 
-function ago_footer()
+function art_footer()
 {
 	global $time_start;
 

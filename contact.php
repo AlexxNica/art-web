@@ -1,10 +1,10 @@
 <?php
 
 require("mysql.inc.php");
-require("includes/common.inc.php");
-require("includes/ago_headers.inc.php");
+require("common.inc.php");
+require("art_headers.inc.php");
 
-ago_header("Contact");
+art_header("Contact");
 
 create_title("Contact Information", "");
 ?>
@@ -22,6 +22,6 @@ create_title("Contact Information", "");
 <p>If you would like to submit a background or theme to art.gnome.org, please use the <a class="bold-link" href="submit_background.php">background submission</a> or <a class="bold-link" href="submit_theme.php">theme submission</a> forms.</p>
 
 <?php
-ago_footer();
+art_footer();
 
 ?>

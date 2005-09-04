@@ -4,7 +4,7 @@
 
 require("mysql.inc.php");
 require("common.inc.php");
-require("ago_headers.inc.php");
+require("art_headers.inc.php");
 require("art_listings.inc.php");
 
 // superglobals stuff
@@ -17,7 +17,7 @@ list($foo, $unvalidated_author) = explode("/", $_SERVER["PATH_INFO"]);
 /* print out the list of authors */
 if ($unvalidated_author == "")
 {
-	ago_header("Users");
+	art_header("Users");
 	create_title("Users", "The people creating the artwork");
 	$author_list_result = mysql_query("SELECT user.userID,user.username FROM user,theme,background WHERE active = 1 AND (user.userID = theme.userID OR user.userID = background.userID) GROUP BY user.userID ORDER BY username ASC");
 	print("<ul>\n");
@@ -26,7 +26,7 @@ if ($unvalidated_author == "")
 		print("\t<li><a href=\"/users/$userID\">$username</a></li>\n");
 	}
 	print("</ul>\n");
-	ago_footer();
+	art_footer();
 
 }
 else
@@ -48,7 +48,7 @@ else
 		{
 			extract(mysql_fetch_array($author_result));
 			$email = spam_proof_email ($email);
-			ago_header($realname);
+			art_header($realname);
 			if ($userID == $_SESSION['userID'])
 				create_title ($realname, "<a href=\"/account.php\">Edit</a> your profile.");
 			else
@@ -90,12 +90,12 @@ else
 		}
 		else
 		{
-			ago_file_not_found();
+			art_file_not_found();
 		}
 	}
 	else
 	{
-		ago_file_not_found();
+		art_file_not_found();
 	}
 }
 
