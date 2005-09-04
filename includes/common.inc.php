@@ -162,7 +162,7 @@ function is_logged_in($header = FALSE)
 	{
 		$url = get_action_url();
 		
-		if ($header) ago_header($header);
+		if ($header) art_header($header);
 		
 		print('<p class="warning">');
 		print("The feature you are trying to access is for registered users only.  Please login.</p>");
@@ -190,7 +190,7 @@ function is_logged_in($header = FALSE)
 		print("</form>\n");
 		
 		/* stop processing of the page */
-		ago_footer();
+		art_footer();
 		die();
 	}
 }
@@ -202,24 +202,24 @@ function fix_sql_date($sql_date)
 	return $good_date;
 }
 
-function ago_file_not_found()
+function art_file_not_found()
 {
 	if (!headers_sent()) {
 		header("HTTP/1.0 404 Not Found"); /* send 404 error */
-		ago_header("404 - File not found");
+		art_header("404 - File not found");
 	}
 	create_title("404 - File not found");
 	print("<p class=\"error\">The page you requested could not be found</p>");
-	ago_footer();
+	art_footer();
 	die();
 }
 
-function ago_fatal_error($header, $title, $message)
+function art_fatal_error($header, $title, $message)
 {
-	ago_header($header);
+	art_header($header);
 	create_title($title);
 	print('<p class="error">'.$message.'</p>');
-	ago_footer();
+	art_footer();
 	exit();
 }
 
@@ -360,7 +360,7 @@ function validate_input_regexp_error ($input, $regexp)
 	}
 	else
 	{
-		ago_file_not_found ();
+		art_file_not_found ();
 		die ();
 	}
 }
@@ -382,7 +382,7 @@ function validate_input_array_error ($input, $array)
 {
 	if (in_array ($input, $array) == FALSE)
 	{
-		ago_file_not_found ();
+		art_file_not_found ();
 		die ();
 	}
 	else

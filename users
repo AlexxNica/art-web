@@ -86,7 +86,7 @@ else
 			$list->select($userID);
 			$list->print_listing($realname);
 			
-			ago_footer();
+			art_footer();
 		}
 		else
 		{

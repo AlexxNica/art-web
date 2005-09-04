@@ -1,3 +1,10 @@
+2005-09-04  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/common.inc.php:
+	* users:
+
+	This completes the ago -> art renaming of functions.
+
 2005-09-04  Thomas Wood  <thos@gnome.org>
 
 	* account.php:
