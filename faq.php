@@ -5,7 +5,7 @@ require("common.inc.php");
 require("art_headers.inc.php");
 
 art_header("FAQ");
-art_sidebar();
+
 if ($_GET['mode'] == 'ask') $mode = 'ask';
 create_title("ART.GNOME.ORG FAQ", "Frequently Asked Questions");
 if($_POST['question'])

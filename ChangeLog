@@ -1,3 +1,8 @@
+2005-09-06  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* faq.php: deleted a call to art_sitebar which sneaked into the patch
+	by Henrik Nilsen Omma <henrik@ubuntu.com>.
+
 2005-09-04  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/common.inc.php:
