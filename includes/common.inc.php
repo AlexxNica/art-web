@@ -1,24 +1,34 @@
 <?php
 
-require("config.inc.php");
+require('config.inc.php');
 
+if (!function_exists('array_combine'))
+{
+	function array_combine($keys, $vals) {
+		$keys = array_values((array) $keys);
+		$vals = array_values((array) $vals);
+		$n = max(count($keys), count($vals));
+		$r = array();
+		for ($i=0; $i<$n; $i++)
+		{
+			$r[$keys[$i]] = $vals[$i];
+		}
+		return $r;
+	}
+}
 
 function create_filename($name, $category, $filename, $extra = '')
 {
-	$categories = Array("gnome" => "GNOME",
-                    "other" => "OTHER",
-                    "gtk2" => "GTK2",
-                    "metacity" => "MCity",
-                    "icon" => "ICON",
-                    "splash_screens" => "Splash",
-                    "desktop" => "Theme",
-                    "gdm_greeter" => "GDM");
+	$categories = Array("metacity" => "MCity", "splash_screens" => "Splash","desktop" => "Theme","gdm_greeter" => "GDM");
 
 	$base = ereg_replace("[_|-]", " ", $name);
 	$base = ereg_replace('[^a-zA-Z0-9\s]', " ", $base);
 	$base = ucwords($base);
 	$base = str_replace(" ", "", $base);
-	$base = $categories[$category] . "-$base";
+	if (in_array($category, $categories))
+		$base = $categories[$category] . "-$base";
+	else
+		$base = strtoupper($category) . "-$base";
 	if ($extra) $base = $base . $extra;
 	if (ereg("\.tar\.gz$", $filename)) $ext=".tar.gz";
 	elseif (ereg("\.tar\.bz2$", $filename)) $ext = ".tar.bz2";

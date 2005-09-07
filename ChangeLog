@@ -1,3 +1,17 @@
+2005-09-07  Thomas Wood  <thos@gnome.org>
+
+	* admin/add_background.php:
+	* admin/edit_background.php:
+	* includes/art_headers.inc.php:
+	* includes/common.inc.php:
+	* includes/config.inc.php:
+	* submit_background.php:
+
+	- Centralise the background category list
+	- Added Nature and Abstract categories
+
+	* admin/add_theme.php: Removed filename filters
+
 2005-09-06  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* faq.php: deleted a call to art_sitebar which sneaked into the patch

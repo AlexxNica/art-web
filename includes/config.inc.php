@@ -6,17 +6,29 @@
 /* backgrounds */
 
 $background_config_array = array (
-	"gnome" => array (
-		"name" => "GNOME",
-		"url" => "/backgrounds/gnome/",
-		"active" => "1",
-		"description" => "The GNOME project has built a complete, free and easy-to-use desktop environment for the user, as well as a powerful application framework for the software developer"
+	'gnome' => array (
+		'name' => 'GNOME',
+		'url' => '/backgrounds/gnome/',
+		'active' => '1',
+		'description' => 'The GNOME project has built a complete, free and easy-to-use desktop environment for the user, as well as a powerful application framework for the software developer'
 		),
-	"other" => array (
-		"name" => "Other",
-		"url" => "/backgrounds/other/",
-		"active" => "1",
-		"description" => "Backgrounds featuring other GNOME based companies such as Ximian, Codefactory, RedHat, etc."
+	'nature' => array (
+		'name' => 'Nature',
+		'url' => '/backgrounds/nature/',
+		'active' => '1',
+		'description' => 'Nature pictures'
+		),
+	'abstract' => array (
+		'name' => 'Abstract',
+		'url' => '/backgrounds/abstract/',
+		'active' => '1',
+		'description' => 'Abstract pictures'
+		),
+	'other' => array (
+		'name' => 'Other',
+		'url' => '/backgrounds/other/',
+		'active' => '1',
+		'description' => 'Backgrounds featuring other GNOME based companies such as Ximian, Codefactory, RedHat, etc.'
 		)
 
 );

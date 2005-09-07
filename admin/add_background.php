@@ -13,6 +13,7 @@ escape_gpc_array ($_POST);
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
 
+$background_category_list = array_keys($background_config_array);
 $submitID = validate_input_regexp_default($_POST['submitID'], "^[0-9]+$", "");
 
 if($add_background)
@@ -70,7 +71,7 @@ else
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
 	print("<tr><td><strong>Background Name:</strong></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\"></td></tr>\n");
-	print("<tr><td><strong>Category</strong></td><td>");print_select_box("category", Array("gnome" => "GNOME", "other" => "OTHER"), $category); print("</td></tr>\n");
+	print("<tr><td><strong>Category</strong></td><td>");print_select_box("category", array_combine($background_category_list, $background_category_list), $category); print("</td></tr>\n");
 	print("<tr><td><strong>License</strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
 	print("<tr><td><strong>Version:</strong></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
 	print("<tr><td><strong>Variation</strong></td><td><select name=\"parentID\"><option value=\"\">N/A</option>");

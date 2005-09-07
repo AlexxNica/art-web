@@ -133,7 +133,8 @@ function art_header($title)
 	print("</a>\n");
 	print("\t<ul>\n");
 	print("\t\t<li><a href=\"/backgrounds/gnome/\">GNOME</a></li>\n");
-	print("\t\t<li><a href=\"/backgrounds/other/\">Other</a></li>\n");
+	print("\t\t<li><a href=\"/backgrounds/nature/\">Nature</a></li>\n");
+	print("\t\t<li><a href=\"/backgrounds/abstract/\">Abstract</a></li>\n");
 	print("\t</ul>\n");
 	print("\t<br />\n");
 	print("\t<a style=\"text-decoration: none;\" href=\"/themes\"><img src=\"/images/site/theme.png\" alt=\"Themes\" height=\"48\" width=\"48\" class=\"sidebar\" /> Desktop Themes</a>\n");
