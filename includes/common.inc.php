@@ -33,6 +33,7 @@ function create_filename($name, $category, $filename, $extra = '')
 	if (ereg("\.tar\.gz$", $filename)) $ext=".tar.gz";
 	elseif (ereg("\.tar\.bz2$", $filename)) $ext = ".tar.bz2";
 	elseif (ereg("\.tgz$", $filename)) $ext = ".tar.gz";
+	elseif (ereg("\.svg", $filename)) $ext = ".svg";
 	elseif (ereg("\.png", $filename)) $ext = ".png";
 	elseif (ereg("\.jpg", $filename)) $ext = ".jpg";
 	return $base . $ext;
@@ -412,7 +413,7 @@ function escape_string($foo)
 
 function validate_submit_url($url)
 {
-        return ereg("^(http(s){0,1}://|ftp://).*(\.tar\.gz|\.tar\.bz2|\.tgz|\.png|\.jpg)$", $url);
+        return ereg("^(http(s){0,1}://|ftp://).*(\.tar\.gz|\.tar\.bz2|\.tgz|\.svg|\.png|\.jpg)$", $url);
 }
 
 

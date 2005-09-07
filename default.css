@@ -135,6 +135,14 @@ a.png {
 	text-decoration: none;
 }
 
+a.svg {
+	padding-left:24px;
+	height: 18px;
+	background-image: url("/images/site/gnome-mime-image-svg.png");
+	background-repeat: no-repeat;
+	text-decoration: none;
+}
+
 a.tar {
 	padding-left:18px;
 	height: 18px;

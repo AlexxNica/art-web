@@ -75,7 +75,7 @@ if(array_key_exists("submit",$_POST))
 		else
 		{
 			print("<p class=\"error\">Error, one or more of the background URLs was invalid.<br/>");
-			print("URLs must start with http or ftp, and end in .png, .jpg, .tar.gz, .tar.bz2 or .tgz.</p>");
+			print("URLs must start with http or ftp, and end in .png, .jpg, .svg, .tar.gz, .tar.bz2 or .tgz.</p>");
 		}
 	}
 	else
@@ -95,7 +95,7 @@ else
 <table border="0">
 <tr>
 	<td><strong><label for="background_name">Background Name</label>:</strong></td>
-	<td><input type="text" name="background_name" id="background_name" size="40" value="<? print($background_name); ?>" /></td>
+	<td><input type="text" name="background_name" id="background_name" size="40" value="<?php print($background_name); ?>" /></td>
 </tr>
 <tr>
 	<td><strong><label for="category">Category</label></strong></td>
@@ -184,6 +184,11 @@ else
 	<td><input type="checkbox" name="background_toggles[png|1920x1200]" id="png1920" /></td>
 	<td><label for="png1920">PNG - 1920x1200</label></td>
 	<td><input type="text" name="backgrounds[png|1920x1200]" /></td>
+</tr>
+<tr>
+	<td><input type="checkbox" name="background_toggles[svg|scalable]" id="svg" /></td>
+	<td><label for="svg">SVG</label></td>
+	<td><input type="text" name="backgrounds[svg|scalable]" /></td>
 </tr>
 <tr>
 	<td colspan="2"><input type="submit" value="Submit Background" name="submit" /></td>

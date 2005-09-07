@@ -247,7 +247,7 @@ $site_url = 'http://' . $_SERVER['SERVER_NAME'];
 
 $sys_ftp_dir = "/ftp/pub/gnome/teams/art.gnome.org/";
 
-$valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff");
+$valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff","svg");
 
 $search_type_array = array ("all" => "Backgrounds and Themes", "background_name" => "Background Name", "theme_name" => "Theme Name", "author" => "Author Name");
 $thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "1000" => "All");
@@ -256,6 +256,6 @@ $sort_by_array = array("name" => "Name", "add_timestamp" => "Date", "downloads_p
 $view_array = array("icons" => "Icon", "list" => "List");
 $status_array = Array("new" => "New", "approved" => "Approved", "added" => "Added", "rejected" => "Rejected");
 
-$resolution_array = Array("%" => "All", "1024x768" => "1024x768", "1280x1024" => "1280x1024", "1600x1200" => "1600x1200", "1400x1050" => "1400x1050", "1680x1050" => "1680x1050", "1920x1200" => "1920x1200");
+$resolution_array = Array("%" => "All", "1024x768" => "1024x768", "1280x1024" => "1280x1024", "1600x1200" => "1600x1200", "1400x1050" => "1400x1050", "1680x1050" => "1680x1050", "1920x1200" => "1920x1200", "scalable" => "Scalable (SVG)");
 
 ?>

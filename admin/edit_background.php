@@ -4,8 +4,6 @@ require("common.inc.php");
 require("includes/headers.inc.php");
 
 
-$resolution_array = Array("1024x768" => "1024x768", "1280x1024" => "1280x1024", "1400x1050" => "1400x1050", "1600x1200" => "1600x1200", "1680x1050" => "1680x1050", "1920x1200" => "1920x1200");
-
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
 

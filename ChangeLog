@@ -1,5 +1,19 @@
 2005-09-07  Thomas Wood  <thos@gnome.org>
 
+	* admin/add_background.php: Fix short php tag (long tag required)
+	* admin/edit_background.php:
+	* default.css:
+	* includes/common.inc.php:
+	* includes/config.inc.php:
+	* submit_background.php:
+
+	Added supported for SVG images based on a patch from Henrik Nilsen Omma <henrik@ubuntu.com>.
+
+
+	* includes/art_headers.inc.php: Add "Other" category back onto sidebar list
+
+2005-09-07  Thomas Wood  <thos@gnome.org>
+
 	* admin/add_background.php:
 	* admin/edit_background.php:
 	* includes/art_headers.inc.php:

@@ -98,7 +98,11 @@ else
 		$background_resolution_result = mysql_query("SELECT type,resolution,filename FROM incoming_background_resolution WHERE backgroundID=$submitID");
 		while (list($type,$resolution,$filename) = mysql_fetch_row($background_resolution_result))
 		{
-			$filename = create_filename($background_name, $category, $filename, '_' . $resolution);
+			if ($resolution != 'scalable')
+				$extra = '_' . $resolution;
+			else
+				$extra = '';
+			$filename = create_filename($background_name, $category, $filename, $extra);
 			print("<tr><td><label><input type=\"checkbox\" name=\"background_toggles[$type|$resolution]\" checked=\"checked\"/>$type - $resolution</label></td><td><input type=\"text\" name=\"backgrounds[$type|$resolution]\" value=\"$filename\" size=\"40\"></td></tr>\n");
 		}
 		print("</table>");
