@@ -24,6 +24,7 @@ function print_comments($artID, $type)
 		$msg = "Comments";
 	}
 
+	print('<a name="comments"></a>');
 	create_title("$comment_count $msg");
 
 	if($comment_count > 0)

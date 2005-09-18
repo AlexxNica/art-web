@@ -1,3 +1,15 @@
+2005-09-18  Thomas Wood  <thos@gnome.org>
+
+	* default.css:
+	- Adjust default font size
+	- Fix spacing between comments and the comment icon
+
+	* includes/art_listings.inc.php:
+	* includes/comments.inc.php:
+	* includes/common.inc.php:
+
+	- Comments count in listings
+
 2005-09-07  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_background.php: Fix short php tag (long tag required)

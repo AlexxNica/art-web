@@ -34,6 +34,15 @@ class general_listing
 	var $num_pages;
 	var $none_message = 'No art has been submitted in this category.';
 	var $format = 'html';
+
+	function get_num_comments($artID, $type)
+	{
+		$result = mysql_query('SELECT COUNT(artID) AS n FROM comment WHERE artID = '."$artID AND type='$type' AND status!='deleted'");
+
+		list($n) = mysql_fetch_row($result);
+		return $n;
+	}
+
 	
 	function get_view_options()
 	{
@@ -172,7 +181,15 @@ class general_listing
 					print("</td>\n");
 					print("\t<td><a href=\"$link\" class=\"h2\"><strong>".htmlentities($name)."</strong></a><br/>\n");
 					print("\t\t<span class=\"subtitle\">$category_name<br/>$date</span><br/>\n");
-					rating_bar($rating);
+					$rating = rating_bar($rating);
+					$comment_count = $this->get_num_comments($itemID, $type);
+					if ($comment_count > 0)
+					{
+						print('<small style="white-space: nowrap">');
+						print('<a href="'.$link.'#comments" style="text-decoration: none">');
+						print('<img src="/images/site/stock_draw-callouts-16.png" />&nbsp;&nbsp;');
+						print($comment_count . ' comments</small>');
+					}
 					print("\n\t</td>\n");
 					print("</tr></table>\n");
 				break;

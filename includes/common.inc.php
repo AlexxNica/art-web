@@ -288,7 +288,10 @@ function rating_bar($rating)
 {
 	global $site_url;
 	$rating = ceil($rating);
+	print('<div style="float:left; width: 100px;">');
 	for ($i=1; $i <= $rating; $i++) print("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"star\"/>");
+	print('</div>');
+	return $rating;
 }
 
 
