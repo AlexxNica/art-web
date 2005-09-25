@@ -1,3 +1,10 @@
+2005-09-25  Thomas Wood  <thos@gnome.org>
+
+	* admin/edit_theme.php: Fixed typo
+	* admin/show_submitted_backgrounds.php: Allow changing of item category
+	* includes/art_listings.inc.php: Remove comments indicator from rss
+	feed
+
 2005-09-18  Thomas Wood  <thos@gnome.org>
 
 	* default.css:

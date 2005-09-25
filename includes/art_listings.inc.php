@@ -182,13 +182,19 @@ class general_listing
 					print("\t<td><a href=\"$link\" class=\"h2\"><strong>".htmlentities($name)."</strong></a><br/>\n");
 					print("\t\t<span class=\"subtitle\">$category_name<br/>$date</span><br/>\n");
 					$rating = rating_bar($rating);
-					$comment_count = $this->get_num_comments($itemID, $type);
-					if ($comment_count > 0)
+					if ($this->format != 'rss')
 					{
-						print('<small style="white-space: nowrap">');
-						print('<a href="'.$link.'#comments" style="text-decoration: none">');
-						print('<img src="/images/site/stock_draw-callouts-16.png" />&nbsp;&nbsp;');
-						print($comment_count . ' comments</small>');
+						/* do not display number of comments when in the rss feed as changes to
+						 * the rss item can make some readers mark the item as new
+						 */
+						$comment_count = $this->get_num_comments($itemID, $type);
+						if ($comment_count > 0)
+						{
+							print('<small style="white-space: nowrap">');
+							print('<a href="'.$link.'#comments" style="text-decoration: none">');
+							print('<img src="/images/site/stock_draw-callouts-16.png" />&nbsp;&nbsp;');
+							print($comment_count . ' comments</small>');
+						}
 					}
 					print("\n\t</td>\n");
 					print("</tr></table>\n");

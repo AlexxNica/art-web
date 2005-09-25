@@ -56,7 +56,7 @@ elseif($action == "edit")
 		list($year,$month,$day) = explode("-",$release_date);
 		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 		print("<table border=\"0\">\n");
-		print("<tr><td><strong><label for=\"theme_name\">\"Theme Name</label>:</strong></td><td><input type=\"text\" name=\"theme_name\" id=\"theme_name\" size=\"40\" value=\"$theme_name\" /></td></tr>\n");
+		print("<tr><td><strong><label for=\"theme_name\">Theme Name</label>:</strong></td><td><input type=\"text\" name=\"theme_name\" id=\"theme_name\" size=\"40\" value=\"$theme_name\" /></td></tr>\n");
 		print("<tr><td><strong><label for=\"theme_category\">Theme Category</label>:</strong></td><td><select name=\"theme_category\" id=\"theme_category\">\n");
 		for($count=0;$count<count($theme_categories);$count++)
 		{

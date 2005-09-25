@@ -7,10 +7,12 @@ require("includes/headers.inc.php");
 $commented = validate_input_array_default($_POST['commented'], array(true, false), "false");
 $comment = mysql_real_escape_string($_POST['comment']);
 $mark_background = $_POST['mark_background'];
+$new_category_array = $_POST['category'];
 
 admin_header("Submitted Backgrounds");
 $admin_level = admin_auth(1);
 
+$background_category_list = array_keys($background_config_array);
 $reject_array = Array("rejected|not_rel" => "Not relevent", "rejected|bad_url" => "Invalid URL", "rejected|distro" => "Distro Specific", "rejected|low_quality" => "Low Quality","rejected|copyright" => "Copyright");
 $new_status_array = array_merge($status_array,$reject_array);
 unset($new_status_array["rejected"]);
@@ -19,6 +21,14 @@ if(is_array($mark_background))
 {
 	foreach($mark_background as $markID => $new_status)
 	{
+		/* update category of item */
+		$new_category = validate_input_array_default ($new_category_array[$markID], $background_category_list, 'err');
+		if ($new_category != 'err')
+			mysql_query("UPDATE incoming_background SET category='$new_category' WHERE backgroundID='$markID'");
+		if (mysql_affected_rows())
+			print("<p class=\"info\">Marked background $markID category as &quot;$new_category&quot;.</p>");
+
+		/* update status of item */
 		$rej_arr = explode("rejected|",$new_status);
 		if (!$new_status)
 		{
@@ -75,7 +85,7 @@ else
 			print("<tr $colour>");
 			print("<td>$backgroundID</td>");
 			print("<td>".html_parse_text($background_name)."</td>");
-			print("<td>$category</td>");
+			print('<td>');create_select_box("category[$backgroundID]", array_combine($background_category_list, $background_category_list), $category);print('</td>');
 			print("<td><a href=\"/users/$userID\">$username</a></td>");
 			print("<td>$date</td>");
 			$background_res_select_result = mysql_query("SELECT resolution,filename FROM incoming_background_resolution WHERE backgroundID=$backgroundID");
