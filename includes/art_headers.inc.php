@@ -155,6 +155,8 @@ function art_header($title)
 		print("\t<p>Logged in as {$_SESSION['username']}</p>\n");
 		print("\t<ul>\n");
 		print("\t\t<li><a href=\"/account.php\">My Account</a></li>\n");
+		print("\t\t<li><a href=\"/submit_theme.php\">Submit a theme</a></li>\n");
+		print("\t\t<li><a href=\"/submit_background.php\">Submit a background</a></li>\n");
 		print("\t</ul>\n");
 	}
 	else

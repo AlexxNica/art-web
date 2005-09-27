@@ -1,3 +1,8 @@
+2005-09-27  Thomas Wood  <thos@gnome.org>
+
+	* admin/add_background.php: Remove link to self in confirmation
+	* includes/art_headers.inc.php: Add submit links to user menu items
+
 2005-09-25  Thomas Wood  <thos@gnome.org>
 
 	* admin/edit_theme.php: Fixed typo
