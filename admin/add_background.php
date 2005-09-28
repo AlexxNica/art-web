@@ -41,7 +41,7 @@ if($add_background)
 		}
 		if($background_insert_result && $background_resolution_insert_result)
 		{
-			print('<p class="info">Successfully added background to the database.</p>");
+			print('<p class="info">Successfully added background to the database.</p>');
 			if ($submitID)
 			{
 				$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='added' WHERE backgroundID='$submitID'");
