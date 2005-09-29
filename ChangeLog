@@ -1,3 +1,7 @@
+2005-09-29  Thomas Wood  <thos@gnome.org>
+
+	* admin/edit_background.php: Allow adding of extra resolutions
+
 2005-09-28  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_background.php: Fix typo

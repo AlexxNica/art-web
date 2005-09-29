@@ -13,6 +13,7 @@ extract($_POST, EXTR_SKIP);
 extract($_GET, EXTR_SKIP);
 
 $background_category_list = array_keys($background_config_array);
+array_shift ($resolution_array); /* Remove 'All' from resolution list */
 
 if ($_GET)
 	$category = validate_input_array_default($_GET["category"], $background_category_list, "");
@@ -20,9 +21,31 @@ if ($_GET)
 admin_header("Edit a Background");
 admin_auth(2);
 
-// write the updated background text do the database
-if($action == "write")
+if (array_key_exists('add_resolution', $_POST))
 {
+	$backgroundID = validate_input_regexp_default ($_POST['backgroundID'], '^[0-9]+$', -1);
+	$type = validate_input_array_default ($_POST['new_res_type'], Array('jpg', 'png', 'svg'), '');
+	$resolution = validate_input_array_default ($_POST['new_res_resolution'], $resolution_array, '');
+	$filename = escape_string ($_POST['new_res_file']);
+	if (mysql_num_rows(mysql_query("SELECT * FROM background_resolution WHERE backgroundID = $backgroundID AND type = '$type' AND resolution = '$resolution'")) > 0)
+	{
+		print('<p class="error">A '.$resolution.', '.$type.' resolution for '.$background_name.' already exists</p>');
+	}
+	else
+	if ($backgroundID != '' and $type != '' and $resolution != '' and $filename != '')
+		$result = mysql_query ("INSERT INTO background_resolution(backgroundID, type, resolution, filename) VALUES ('$backgroundID', '$type', '$resolution', '$filename')");
+	
+	if ($result)
+		print('<p class="info">Added new resolution ('.$resolution.', '.$type.') to background '.$background_name.'</p>');
+	else
+		print('<p class="error">There was an error adding the new resolution</p>');
+	
+	print('<p><a href="/admin/edit_background.php?action=edit&backgroundID='.$backgroundID.'">Continue editing </a>"'.$background_name.'"</p>');
+	print("<p>\n<a href=\"" . $_SERVER["PHP_SELF"] . "\">Click Here</a> to edit another.</p>");
+}
+elseif($action == "write")
+{
+	/* write the updated background text do the database */
 	if($background_name && $userID && $month && $day && $year && $background_description && $thumbnail_filename && $license && $resolution)
 	{
 		$date = $year . "-" . $month . "-" . $day;
@@ -48,7 +71,6 @@ if($action == "write")
 		if(!$error)
 		{
 			print("Successfully edited background text in database.");
-			
 			print("<table>\n");
 			print("<tr><td>background_name</td><td>'".html_parse_text($background_name)."'</td></tr>\n");
 			print("<tr><td>license</td><td>'$license'</td></tr>\n");
@@ -66,6 +88,7 @@ if($action == "write")
 			}
 			print("</table>");
 			print("<p>\n<a href=\"" . $_SERVER["PHP_SELF"] . "\">Click Here</a> to edit another.</p>");
+			print('<p><a href="/admin/edit_background.php?action=edit&backgroundID='.$backgroundID.'">Continue editing</a> "'.$background_name.'"</p>');
 		}
 		else
 		{
@@ -136,11 +159,15 @@ elseif($action == "edit")
 			print("<input type=\"hidden\" name=\"background_resolutionID[$i]\" value=\"$background_resolutionID\" /></td></tr>\n");
 			$i++;
 		}
+		print('<tr><td><strong>New resolution</strong></td><td>');
+		print_select_box("new_res_resolution", $resolution_array, '');
+		print_select_box("new_res_type", Array("jpg" => "jpg", "png" => "png", "svg" => "svg"), '');
+		print('<input type="text" name="new_res_file"/><input type="submit" name="add_resolution" value="Add Resolution" />');
 		print("<tr><td><input type=\"checkbox\" name=\"update_timestamp_toggle\" />Update Timestamp");
 		print("<tr><td><input type=\"submit\" value=\"Update Background\" />");
 		print("<input type=\"hidden\" name=\"action\" value=\"write\" />\n");
 		print("<input type=\"hidden\" name=\"backgroundID\" value=\"$backgroundID\" /></td></tr>\n");
-		print("</table>\n");
+		print("</td></tr></table>\n");
 		print("</form>");
  	}
 }
