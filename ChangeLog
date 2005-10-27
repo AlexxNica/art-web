@@ -1,3 +1,7 @@
+2005-10-27  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/art_listings.inc.php: Fixed typo, Backrounds->Backgrounds
+
 2005-09-29  Thomas Wood  <thos@gnome.org>
 
 	* admin/edit_background.php: Allow adding of extra resolutions

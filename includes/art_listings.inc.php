@@ -553,7 +553,7 @@ class user_background_list extends general_listing
 	{
 		if (mysql_num_rows ($this->select_result) > 0)
 		{
-			create_title ("Backrounds", "Backgrounds created by $realname");
+			create_title ("Backgrounds", "Backgrounds created by $realname");
 			parent::print_listing();
 		}
 	}
