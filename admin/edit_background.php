@@ -127,9 +127,7 @@ elseif($action == "edit")
 		print("<table border=\"0\">\n");
 		print("<tr><td><strong><label for=\"background_name\">Background Name</label>:</strong></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\" id=\"background_name\" /></td></tr>\n");
 		print("<tr><td><strong><label for=\"category\">Category</label></strong></td><td>");print_select_box("category", array_combine($background_category_list, $background_category_list), $category);print("</td></tr>\n");
-		$user_select = mysql_query("SELECT userID,username FROM user");
-		while (list($uid, $uname) = mysql_fetch_row($user_select)) $user_array[$uid] = $uname;
-		print("<tr><td><strong><label for=\"userID\">UserID:</label></strong></td><td>");print_select_box("userID", $user_array, $userID);print("</td></tr>\n");
+		print('<tr><td><strong><label for=\"userID\">UserID:</label></strong></td><td><input id="userID" name="userID" value="'.$userID.'"></td></tr>');
 		print("<tr><td><strong><label for=\"license\">License</label></strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
 		print("<tr><td><strong><label for=\"version\">Version</label></strong></td><td><input type=\"text\" name=\"version\" id=\"version\" value=\"$version\" /></td></tr>\n");
 		print("<tr><td><strong><label for=\"variation\">Variation of </label></strong></td><td><select name=\"parentID\" id=\"variation\"><option value=\"0\">N/A</option>");

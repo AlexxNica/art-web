@@ -11,7 +11,7 @@ $theme_type_select_array = Array("" => "All", "metacity" => "Metacity", "Icon" =
 $mark_theme = $_POST['mark_theme'];
 $new_status = validate_input_array_default($_POST["new_status"], array_keys($status_array), "");
 $theme_type = validate_input_array_default($_GET["theme_type"], array_keys($theme_type_select_array), "");
-$reject_array = Array("rejected|not_rel" => "Not relevent", "rejected|bad_url" => "Invalid URL", "rejected|distro" => "Distro Specific", "rejected|low_quality" => "Low Quality","rejected|copyright" => "Copyright");
+$reject_array = Array("rejected|not_rel" => "Not relevent", "rejected|bad_url" => "Invalid URL", "rejected|distro" => "Distro Specific", "rejected|low_quality" => "Low Quality","rejected|copyright" => "Copyright","rejected|duplicate" => "Duplicate","rejected|badform" => "Badly Formed");
 $new_status_array = array_merge($status_array,$reject_array);
 unset($new_status_array["rejected"]);
 

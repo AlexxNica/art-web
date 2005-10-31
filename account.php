@@ -14,7 +14,9 @@ function get_status_comment($status, $comment)
 			"bad_url" => "Invalid URL - please <a href=\"mailto:artweb-list@gnome.org\">contact admin</a>.",
 			"distro" => "Distribution Specific.",
 			"low_quality" => "Low quality or unfinished.",
-			"copyright" => "Possible use of copyright material without permission."
+			"copyright" => "Possible use of copyright material without permission.",
+			"badform" => "There were problems when attempting to load the theme.",
+			"duplicate" => "Submitted multiple times."
 			);
 
 	if ($status == "new")
@@ -148,7 +150,7 @@ elseif (array_key_exists('username', $_SESSION))
 	print("<li><a href=\"/submit_theme.php\">Submit a theme</a></li>");
 	print("<li><a href=\"/submit_background.php\">Submit a background</a></li>");
 	print("</ul>");
-	print("<div class=\"h2\">Theme submissions</div><div class=\"subtitle\">Status of submitted theme</div>");
+	print("<div class=\"h2\">Theme submissions</div><div class=\"subtitle\">Status of submitted themes</div>");
 	$submissions_select_result = mysql_query("SELECT themeID,theme_name,category,status,comment FROM incoming_theme WHERE userID = '{$_SESSION['userID']}' ");
 	if (mysql_num_rows($submissions_select_result) < 1 )
 	{
