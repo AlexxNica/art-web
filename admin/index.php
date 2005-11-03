@@ -66,6 +66,8 @@ if (array_key_exists('username', $_SESSION))
 	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_faq.php\">Pending FAQ Entries</a><br />");
 	print("&nbsp;&nbsp;&nbsp;Re-Order FAQ<br />");
 
+	create_title("Users","");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_user.php\">Edit a user</a><br />");
 }
 else
 {

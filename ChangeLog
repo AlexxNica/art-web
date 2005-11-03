@@ -1,3 +1,11 @@
+2005-11-03  Thomas Wood  <thos@gnome.org>
+
+	* admin/edit_user.php:
+	* admin/index.php:
+	* default.css:
+
+	New user administration options (reset password, change user level)
+
 2005-10-31  Thomas Wood  <thos@gnome.org>
 
 	* account.php:
