@@ -1,3 +1,15 @@
+2005-11-5  James McGuire  <jamesm@bluebottle.com>
+
+	* includes/art.inc.php:
+	* includes/art_listings.inc.php:
+	* includes/comments.inc.php:
+	-xhtml fixes
+	*includes/art_listings.php:
+	*includes/art_page.inc.php:
+	*includes/common.inc.php:
+	*includes/config.inc.php:
+	-added (incomplete) backend for screenshots
+
 2005-11-03  Thomas Wood  <thos@gnome.org>
 
 	* admin/edit_user.php:

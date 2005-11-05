@@ -138,9 +138,9 @@ function print_detailed_view($itemID, $type)
 			list($user_rating) = mysql_fetch_row($user_rating_select);
 			print("\t<form class=\"subtitle\" method=\"post\" action=\"" . $_SERVER["PHP_SELF"] . "\">");
 			if ((!$user_rating) || (!$_SESSION['userID']))
-				print("Vote:\n");
+				print("<div>Vote:\n");
 			else
-				print("\tChange Your Vote:\n");
+				print("\t<div>Change Your Vote:\n");
 			print("\t[worst]");
 			print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"1\"/>\n");
 			print("\t<input type=\"submit\" class=\"link_button\" name=\"rating\" value=\"2\"/>\n");
@@ -150,7 +150,7 @@ function print_detailed_view($itemID, $type)
 			print("\t[best]");
 			if (($user_rating) && ($_SESSION['userID']))
 				print("\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>You rated this a $user_rating.</i>\n");
-			print("\t</form>\n");
+			print("\t</div></form>\n");
 		}
 
 /*	else

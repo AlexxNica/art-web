@@ -33,6 +33,17 @@ $background_config_array = array (
 
 );
 
+/* screenshots */
+
+$screenshot_config_array = array (
+	"cat1" => array (
+		"name" => "Cat1",
+		"url" => "/screenshots/cat1/",
+		"active" => "1",
+		"description" => "Test Cat1"
+		)
+);
+
 /* themes */
 
 $theme_config_array = array (
@@ -40,10 +51,10 @@ $theme_config_array = array (
 /*	"gtk" => array (
 		"name" => "GTK+ 1.0",
 		"url" => "/themes/gtk/",
-		"active" => "1",
+		"active" => "0",
 		"description" => "GTK+ 1.2 themes alter the appearance of the GTK+ 1.2 widgets. In the GNOME desktop, this means the appearance of all your GNOME applications."
-		),
-*/	"gtk2" => array (
+		), */
+	"gtk2" => array (
 		"name" => "Application Themes",
 		"url" => "/themes/gtk2/",
 		"active" => "1",

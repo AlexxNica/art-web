@@ -86,11 +86,11 @@ function print_comment_form($comment)
 	}
 		
 	print("<a name=\"comment\"></a>\n");
-	print("<br /><form name=\"comment\" action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\">\n");
+	print("<br /><form action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\"><div>\n");
 		
 	print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br /><br />\n");
 	print("<input type=\"submit\" name=\"send\" value=\"Add Comment\" />\n");
-	print("</form>\n");
+	print("</div></form>\n");
 
 }
 

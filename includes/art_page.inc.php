@@ -1,5 +1,5 @@
 <?php
-/* this file is the backend for backgrounds and themes
+/* this file is the backend for backgrounds screenshots, and themes
  * It is just needs to be included with $type set correctly. */
 
 require_once("common.inc.php");
@@ -9,13 +9,23 @@ list($foo, $unvalidated_category, $unvalidated_artID) = explode("/", $_SERVER["P
 
 /* get the real type */
 /* XXX: this should probably be done in the original page. */
-if ($type == 'background') {
+switch ($type)
+{
+case 'background':
 	$config_array = $background_config_array;
-} elseif ($type == 'theme') {
+	break;
+case 'theme':
 	$config_array = $theme_config_array;
-} elseif ($type == 'contest') {
+	break;
+case 'screenshot':
+	$config_array = $screenshot_config_array;
+	break;
+case 'contest':
 	$config_array = $contest_config_array;
-} else art_file_not_found();
+	break;
+default:
+	art_file_not_found();
+}
 
 $new_rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
 if  (get_magic_quotes_gpc() == 1)
@@ -26,7 +36,7 @@ else
 $commentID = validate_input_regexp_default ($_POST["commentID"], "^[0-9]+$", -1);
 $report = $_POST["report"];
 
-/* print out the list of background categories */
+/* print out the list of categories */
 if ($unvalidated_category == "")
 {
 	/* XXX: This should really be part of the config_array! */
@@ -36,6 +46,9 @@ if ($unvalidated_category == "")
 	} elseif ($type == 'theme') {
 		art_header('Themes');
 		create_title('Themes', 'Desktop Themes');
+	} elseif ($type == 'screenshot') {
+		art_header('Screenshots');
+		create_title('Screenshots', 'Screenshots of GNOME Desktops');
 	} else { /* contest*/
 		art_header('Contests');
 		create_title('Contests', 'The different contests that are/were hosted on art.gnome.org.');
@@ -74,6 +87,8 @@ else
 			$list = new background_list;
 		} elseif ($type == 'theme') {
 			$list = new theme_list;
+		} elseif ($type == 'screenshot') {
+			$list = new screenshot_list;
 		} else {
 			$list = new contest_list;
 		}

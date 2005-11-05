@@ -146,12 +146,14 @@ function get_thumbnail_class($category)
 
 function get_category_name($type, $category)
 {
-	global $theme_config_array, $background_config_array, $contest_config_array;
+	global $theme_config_array, $background_config_array, $contest_config_array, $screenshot_config_array;
 	
 	if ($type == "theme") {
 		return $theme_config_array[$category]['name'];
 	} elseif ($type == 'contest') {
 		return $contest_config_array[$category]['name'];
+	} elseif ($type == 'screenshot') {
+		return $screenshot_config_array[$category]['name'];
 	} else {
 		return 'Backgrounds - '.$background_config_array[$category]['name'];
 	}
