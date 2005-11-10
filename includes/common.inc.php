@@ -345,6 +345,20 @@ function html_parse_text($comment)
 	return $comment;
 }
 
+function xmlentities($text)
+{
+	$text = htmlentities($text);
+
+	$htmlEntities = array_values(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES));
+	$entitiesDecoded = array_keys(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES));
+	$num = count($entitiesDecoded);
+
+	for ($u = 0; $u < $num; $u++)
+		$utf8Entities[$u] = '&#'.ord($entitiesDecoded[$u]).';';
+	
+	return str_replace ($htmlEntities, $utf8Entities, $text);
+}
+
 function set_session_var_default($var_name, $default)
 {
 	if (!array_key_exists($var_name, $_SESSION))

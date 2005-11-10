@@ -1,3 +1,10 @@
+2005-11-10  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/common.inc.php: added xmlentities function, that
+	  outputs numeric entities instead of eg. &uuml;
+	* includes/art_listings.inc.php: use the above function for the
+	  title tag in the rss feed
+
 2005-11-5  James McGuire  <jamesm@bluebottle.com>
 
 	* includes/art.inc.php:

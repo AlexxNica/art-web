@@ -159,7 +159,7 @@ class general_listing
 			/*----*/
 			if ($this->format == 'rss') {
 				print("<item>\n");
-				print("\t<title>[$category_name] ".htmlentities($name)."</title>\n");
+				print("\t<title>[$category_name] ".xmlentities($name)."</title>\n");
 				print("\t<link>$link</link>\n");
 				print("\t<guid>$link</guid>\n");
 				print("\t<pubDate>".date("r", $add_date)."</pubDate>\n");
