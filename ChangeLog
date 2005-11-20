@@ -1,3 +1,8 @@
+2005-11-20 Thomas Wood  <thos@gnome.org>
+
+	* includes/config.inc.php: Added the "Free Art" license
+
+
 2005-11-10  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/common.inc.php: added xmlentities function, that
