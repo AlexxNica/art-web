@@ -300,3 +300,9 @@ table.theme_info {
 	clear: left;
 	margin-top:1em;
 }
+
+#footnote {
+	clear: both;
+	text-align: center;
+	font-size: small;
+}

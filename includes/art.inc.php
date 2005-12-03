@@ -75,7 +75,7 @@ function print_detailed_view($itemID, $type)
 	$rel_release_date = FormatRelativeDate(time(), strtotime($release_date), true);
 	$rel_update_date = FormatRelativeDate(time(), $add_timestamp);
 	$thumbnail_url = get_thumbnail_url($small_thumbnail_filename, $itemID, $type, $category);
-
+	$preview_image = get_thumbnail_url($thumbnail_filename, $itemID, $type, $category, true);
 
 	// Make download links
 	$download = get_download_links ($type, $category, $itemID, $download_filename);
@@ -99,7 +99,12 @@ function print_detailed_view($itemID, $type)
 
 	create_title(htmlentities($item_name) . " by <a href=\"/users/$author\">$author</a>", $subtitle);
 	if ($category == "icon" || $category == "gtk2" || $category == "gdm_greeter" )
-		print("<a href=\"".get_thumbnail_url($thumbnail_filename, $itemID, $type, $category) . "\">");
+	{
+		list ($image_width, $image_height, $image_type, $image_attr) = getimagesize ('images/'.$preview_image);
+		$ww = min($image_width + 100, 640);
+		$wh = min($image_height + 100, 640);
+		print('<a href="/preview.php?image='.$preview_image.'" onClick="window.open(\'/preview.php?image='.$preview_image.'\', \'Art Preview\', \'width='.$ww.',height='.$wh.',resizable=no,scrollbars=yes,status=no\'); return false;" rel="external">');
+	}
 
 	print("<img src=\"$thumbnail_url\" alt=\"Thumbnail\" class=\"$thumbnail_class\" style=\"float:left;\" />");
 

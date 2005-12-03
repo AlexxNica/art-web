@@ -79,30 +79,31 @@ function FormatRelativeDate( $nowTimestamp, $thenTimestamp, $isdate = false )
 	else                         return date( "j F Y", $thenTimestamp );
 }
 
-function get_thumbnail_url($filename, $itemID, $type, $category)
+function get_thumbnail_url($filename, $itemID, $type, $category, $relative=false)
 {
 	global $site_url;
 	if ($type == "theme")
 	{
 		if ($itemID < 1000)
-			$thumbnail_url="{$site_url}/images/archive/thumbnails/$category/$filename";
+			$thumbnail_url="archive/thumbnails/$category/$filename";
 		else
-			$thumbnail_url="{$site_url}/images/thumbnails/$category/$filename";
+			$thumbnail_url="thumbnails/$category/$filename";
 	}
 	elseif ($type == "background")
 	{
 		if ($itemID < 1000)
-			$thumbnail_url="{$site_url}/images/archive/thumbnails/backgrounds/$filename";
+			$thumbnail_url="archive/thumbnails/backgrounds/$filename";
 		else
-			$thumbnail_url="{$site_url}/images/thumbnails/backgrounds/$filename";
+			$thumbnail_url="thumbnails/backgrounds/$filename";
 	}
 	elseif ($type == "contest")
 	{
-		$thumbnail_url = "{$site_url}/images/thumbnails/contests/$category/$filename";
+		$thumbnail_url = "thumbnails/contests/$category/$filename";
 	}
 	else
 		$thumbnail_url = ''; // Need "broken image" image?
-	return $thumbnail_url;
+
+	return ($relative) ? $thumbnail_url : $site_url . '/images/' . $thumbnail_url;
 }
 
 function get_download_links($type, $category, $itemID, $download_filename)
@@ -291,7 +292,7 @@ function rating_bar($rating)
 	global $site_url;
 	$rating = ceil($rating);
 	print('<div style="float:left; width: 100px;">');
-	for ($i=1; $i <= $rating; $i++) print("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"star\"/>");
+	for ($i=1; $i <= $rating; $i++) print("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
 	print('</div>');
 	return $rating;
 }

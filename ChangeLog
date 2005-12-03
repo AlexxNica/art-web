@@ -1,3 +1,19 @@
+2005-12-03  Thomas Wood  <thos@gnome.org>
+
+	* default.css:
+	* includes/art.inc.php:
+	* includes/art_headers.inc.php:
+	* includes/common.inc.php:
+	* includes/templates.inc.php:
+	* preview.php:
+	* templates/en/main.html:
+	* templates/en/main/login.html:
+	* templates/en/main/usermenu.html:
+	* templates/en/preview.html:
+
+	- Add a simple template system to seperate html from php
+	- Add popup preview window
+
 2005-11-20 Thomas Wood  <thos@gnome.org>
 
 	* includes/config.inc.php: Added the "Free Art" license
