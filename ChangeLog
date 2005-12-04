@@ -1,3 +1,13 @@
+2005-12-04  James McGuire  <jamesm@bluebottle.com>
+
+	* includes/art.inc.php:
+	* includes/art_listings.inc.php:
+	* includes/common.inc.php:
+	* includes/config.inc.php:
+		screenshots
+	* includes/art_page.inc.php:
+		minor xhtml fix
+
 2005-12-04  Thomas Wood  <thos@gnome.org>
 
 	* templates/en/main.html: Add link button (english)

@@ -45,19 +45,27 @@ function print_detailed_view($itemID, $type)
 	global $site_url;
 
 	// check for valid $type
-	if (!($type == 'theme' or $type == 'background' or $type == 'contest'))
+	if (!($type == 'theme' or $type == 'background' or $type == 'contest' or $type == 'screenshot'))
 	{
 		art_file_not_found();
 		return -1;
 	}
 
-	if ($type == "theme")
+	switch ($type) {
+	case 'theme':
 		$select_result = mysql_query("SELECT theme.*, theme.theme_name AS item_name,  user.username AS author FROM theme,user WHERE themeID='$itemID' AND theme.userID = user.userID");
-	elseif ($type == "contest")
+	break;
+	case 'contest':
 		$select_result = mysql_query("SELECT contest.*, contest.contest AS category, contest.name AS item_name,  user.username AS author FROM contest,user WHERE contestID='$itemID' AND contest.userID = user.userID");
-	else
+	break;
+	case 'background':
 		$select_result = mysql_query("SELECT background.*, background.background_name AS item_name, thumbnail_filename AS small_thumbnail_filename, user.username AS author FROM background,user WHERE backgroundID='$itemID' AND background.userID = user.userID");
-	
+	break;
+	case 'screenshot':
+		$select_result = mysql_query("SELECT screenshot.*, screenshot.name AS item_name, user.username AS author FROM screenshot,user WHERE screenshotID='$itemID' AND screenshot.userID = user.userID");
+	break;
+	}
+
 	if (mysql_num_rows($select_result) == 0)
 	{
 		art_file_not_found();

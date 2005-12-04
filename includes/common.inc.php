@@ -108,31 +108,36 @@ function get_thumbnail_url($filename, $itemID, $type, $category, $relative=false
 
 function get_download_links($type, $category, $itemID, $download_filename)
 {
-	if ($type == "theme")
-	{
-		global $sys_ftp_dir;
+	global $sys_ftp_dir;
+	switch ($type) {
+	case 'theme':
 		if ($itemID < 1000)
-			$file_path = $sys_ftp_dir . "/archive/themes/$category/$download_filename";
+			$file_path = $sys_ftp_dir . '/archive/themes/$category/$download_filename';
 		else
-			$file_path = $sys_ftp_dir . "/themes/$category/$download_filename";
+			$file_path = $sys_ftp_dir . '/themes/$category/$download_filename';
 		
 		$filesize = get_filesize_string($file_path);
 		$result = "<a class=\"tar\" href=\"/download/themes/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
-	}
-	elseif ($type == "contest")
-	{
-		global $sys_ftp_dir;
+	break;
+
+	case 'contest':
 		$file_path = $sys_ftp_dir . "/contests/$category/$download_filename";
 		
 		$filesize = get_filesize_string($file_path);
 		$result = "<a class=\"tar\" href=\"/download/contest/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
-	}
-	else
-	{
+
+	case 'background':
 		$result = '';
 		$resolution_select = mysql_query("SELECT background_resolutionID,filename,resolution,type FROM background_resolution WHERE backgroundID=$itemID");
 		while (list($resID,$download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
 			$result .= "<a class=\"$image_type\" href=\"/download/backgrounds/$category/$resID/$download_filename\"> $image_type - $resolution</a>&nbsp;&nbsp;";
+	break;
+	
+	case 'screenshot':
+		$file_path = $sys_ftp_dir . "/screenshots/$category/$download_filename";
+		
+		$filesize = get_filesize_string($file_path);
+		$result = "<a class=\"tar\" href=\"/download/screenshots/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
 	}
 	return $result;
 }

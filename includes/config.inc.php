@@ -36,11 +36,29 @@ $background_config_array = array (
 /* screenshots */
 
 $screenshot_config_array = array (
-	"cat1" => array (
-		"name" => "Cat1",
-		"url" => "/screenshots/cat1/",
+	"gnome210" => array (
+		"name" => "GNOME 2.10",
+		"url" => "/screenshots/gnome210/",
 		"active" => "1",
-		"description" => "Test Cat1"
+		"description" => "Screenshots of GNOME 2.10"
+		),
+	"gnome212" => array (
+		"name" => "GNOME 2.12",
+		"url" => "/screenshots/gnome212/",
+		"active" => "1",
+		"description" => "Screenshots of GNOME 2.12"
+		),
+	"gnome213" => array (
+		"name" => "GNOME 2.13",
+		"url" => "/screenshots/gnome213/",
+		"active" => "1",
+		"description" => "Screenshots of GNOME 2.13"
+		),
+	"gnome214" => array (
+		"name" => "GNOME 2.14",
+		"url" => "/screenshots/gnome214/",
+		"active" => "1",
+		"description" => "Screenshots of GNOME 2.14"
 		)
 );
 

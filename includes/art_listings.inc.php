@@ -321,18 +321,16 @@ class screenshot_list extends theme_list
 	{
 		global $screenshot_config_array;
 		if (!array_key_exists($category, $screenshot_config_array)) art_file_not_found(); /* needed? */
-		
-		return ' WHERE screenshot=\'' . $category . '\' AND parent = 0 AND status="active" ';
+		return ' WHERE category=\'' . $category . '\' AND status="active" ';
 	}
 	
 	function select($category)
 	{
 		if ($this->per_page < 1000) { /* XXX: maybe change this to 'all' */
-			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(screenshotID) FROM screenshot '.$this->get_where_clause($category)));
+			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(screenshotID) FROM screenshot'));
 			$this->num_pages = ceil($this->num_pages[0] / $this->per_page);
 		}
-		
-		$this->select_result = mysql_query('SELECT screenshotID AS ID, \'screenshot\' AS type, name, rating, screenshot AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM screenshot '.
+		$this->select_result = mysql_query('SELECT screenshotID AS ID, \'screenshot\' AS type, name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM screenshot '.
 		                                   $this->get_where_clause($category). ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }

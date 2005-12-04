@@ -101,7 +101,7 @@ else
 		create_title($header);
 		
 		$list->print_search_form();
-		print('<hr/>');
+		print('<hr />');
 		
 		$list->print_page_numbers();
 		
