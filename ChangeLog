@@ -1,3 +1,15 @@
+2005-12-04  Thomas Wood  <thos@gnome.org>
+
+	* admin/show_submitted_backgrounds.php:
+	* admin/show_submitted_themes.php:
+	* includes/common.inc.php:
+	* includes/templates.inc.php:
+	* submit_background.php:
+	* templates/en/submit_background.html:
+
+	- Created submit_background template
+	- Allow language switching with a GET variable
+
 2005-12-04  Vincent Untz  <vuntz@gnome.org>
 
 	* includes/art_headers.inc.php: (art_footer): really show login box

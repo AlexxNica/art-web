@@ -102,7 +102,7 @@ else
 			print("<tr $colour>");
 			print("<td>$backgroundID</td>");
 			print("<td><input name=\"background_name[$backgroundID]\" value=\"".$background_name."\"/></td>");
-			print('<td>');create_select_box("category[$backgroundID]", array_combine($background_category_list, $background_category_list), $category);print('</td>');
+			print('<td>');print_select_box("category[$backgroundID]", array_combine($background_category_list, $background_category_list), $category);print('</td>');
 			print("<td><a href=\"/users/$userID\">$username</a></td>");
 			print("<td>$date</td>");
 			print('<td><textarea name="background_description['.$backgroundID.']" cols="20" rows="3">'.$background_description.'</textarea></td>');
@@ -113,7 +113,7 @@ else
 				print("<a href=\"$url\">$res</a>&nbsp; ");
 			}
 			print("</td>");
-			print("<td>");create_select_box("mark_background[$backgroundID]",$new_status_array,$status);print("</td>");
+			print("<td>");print_select_box("mark_background[$backgroundID]",$new_status_array,$status);print("</td>");
 			print("</tr>\n");
 
 			$alt = 2 - $alt + 1;

@@ -238,22 +238,28 @@ function art_fatal_error($header, $title, $message)
 }
 
 
-
-function print_select_box($name,$array,$selected)
+function create_select_box ($name, $array, $selected)
 {
-	print("<select name=\"$name\" id=\"$name\">\n");
+	$result = "<select name=\"$name\" id=\"$name\">\n";
 	while(list($key,$val) = each($array))
 	{
 		if($key == $selected)
 		{
-			print("<option value=\"$key\" selected=\"selected\">$val</option>");
+			$result .= "<option value=\"$key\" selected=\"selected\">$val</option>";
 		}
 		else
 		{
-			print("<option value=\"$key\">$val</option>");
+			$result .= "<option value=\"$key\">$val</option>";
 		};
 	}
-	print("</select>");
+	$result .= '</select>';
+
+	return $result;
+}
+
+function print_select_box($name,$array,$selected)
+{
+	echo create_select_box ($name, $array, $selected);
 }
 
 function get_filesize_string($file_path)
@@ -452,25 +458,6 @@ function spam_proof_email($good_email)
 {
 	$spam_protected_email = ereg_replace("@"," _AT_ ",$good_email);
 	return $spam_protected_email;
-}
-
-
-function create_select_box($name,$options,$selected)
-{
-	$select = "selected";
-	print("<select id=\"$name\" name=\"$name\">\n");
-	while ( list($key,$val) = each($options) )
-	{
-		if($key == $selected)
-		{
-			print("<option value=\"$key\" $select>$val</option>\n");
-		}
-		else
-		{
-			print("<option value=\"$key\">$val</option>\n");
-		}
-	}
-	print("</select>\n");
 }
 
 

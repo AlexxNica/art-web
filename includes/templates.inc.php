@@ -14,6 +14,13 @@ class template
 	{
 		$this->filename = $filename;
 		$this->_variables = array ('{SELF}' => $_SERVER['PHP_SELF']);
+		if (array_key_exists ('lang', $_GET))
+		{
+			$this->language = validate_input_regexp_default ( $_GET['lang'], '^[a-z][a-z]$', 'en');
+			$_SESSION['lang'] = $this->language;
+		}
+		elseif (array_key_exists ('lang', $_SESSION))
+			$this->language = $_SESSION['lang'];
 	}
 
 	/* constructor for php4 */
@@ -43,7 +50,10 @@ class template
 		 * Parse template file and return the result
 		 */
 		global $template_root;
-		$template = file_get_contents ($template_root . $this->language .'/'. $this->filename);
+		$filename = $template_root . $this->language .'/'. $this->filename;
+		if (!file_exists ($filename)) /* if can't find the localised template, load the english one */
+			$filename = $template_root . 'en/'. $this->filename;
+		$template = file_get_contents ($filename);
 		$output = str_replace (
 			array_keys ($this->_variables),
 			array_values ($this->_variables),

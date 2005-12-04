@@ -41,7 +41,7 @@ if(is_array($mark_theme))
 else
 {
 	print("<form method=\"get\" action=\"" . $_SERVER["PHP_SELF"] . "\"><div>Show only ");
-	create_select_box("theme_type", $theme_type_select_array, $theme_type);
+	print_select_box("theme_type", $theme_type_select_array, $theme_type);
 	print("themes <input type=\"submit\" value=\"Go\" /></div></form>");
 
 	if($theme_type)
@@ -88,7 +88,7 @@ else
 			print("<td><a href=\"/users/$userID\">$username</a></td>");
 			print("<td>$date</td>");
 			print("<td><a href=\"".html_parse_text($theme_url)."\">Download</a></td>");
-			print("<td>");create_select_box("mark_theme[$themeID]",$new_status_array,$status);print("</td>");
+			print("<td>");print_select_box("mark_theme[$themeID]",$new_status_array,$status);print("</td>");
 			print("</tr>");
 
 			$alt = 2 - $alt + 1;
