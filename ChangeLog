@@ -1,3 +1,9 @@
+2005-12-04  Vincent Untz  <vuntz@gnome.org>
+
+	* includes/art_headers.inc.php: (art_footer): really show login box
+	when the user is not logged in (Thomas asked me to commit this)
+	* templates/fr/: french version of the templates
+
 2005-12-03  Thomas Wood  <thos@gnome.org>
 
 	* default.css:

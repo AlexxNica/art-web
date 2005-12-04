@@ -70,7 +70,7 @@ function art_footer ()
 {
 	global $time_start, $page_title;
 
-	if (isset($_SESSION))
+	if (array_key_exists ('username', $_SESSION))
 	{
 		$t_usermenu = new template ('main/usermenu.html');
 		$t_usermenu->add_var ('username', $_SESSION['username']);
