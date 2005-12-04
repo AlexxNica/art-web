@@ -1,5 +1,10 @@
 2005-12-04  Thomas Wood  <thos@gnome.org>
 
+	* templates/en/main.html: Add link button (english)
+	* templates/fr/main.html: Remove CSS title localisation
+
+2005-12-04  Thomas Wood  <thos@gnome.org>
+
 	* admin/show_submitted_backgrounds.php:
 	* admin/show_submitted_themes.php:
 	* includes/common.inc.php:
