@@ -1,5 +1,10 @@
 2005-12-04  James McGuire  <jamesm@bluebottle.com>
 
+	* account.php: password reset
+	* submit_screenshot.php: initial import
+
+2005-12-04  James McGuire  <jamesm@bluebottle.com>
+
 	* screenshots: initial import
 
 2005-12-04  James McGuire  <jamesm@bluebottle.com>

@@ -39,8 +39,66 @@ function get_status_comment($status, $comment)
 		return ucfirst($status);
 }
 
+if($_GET['mode'] == "lostpassword") {
+	art_header('Reset password');
+	create_title('Reset password', 'This will generate a new password');
+	if(!$_POST['lusername'] && !$_POST['lemail']) {
+		print("<form action=\"account?mode=lostpassword\" method=\"post\">\n");
+		print("<table>\n");
+		print("<tr><td><label for=\"lusername\">Username</label>:</td><td><input name=\"lusername\" class=\"username\" id=\"lusername\" /></td></tr>\n");
+		print("<tr><td><label for=\"lemail\">Email Address</label>:</td><td><input name=\"lemail\" class=\"username\" id=\"lemail\" /></td></tr>\n");
+		print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Reset\" name=\"reset\" /></td></tr>\n");
+		print("</table>\n");
+		print("</form>\n");
+	}
 
-if (array_key_exists('logout', $_POST))
+	if($_POST['lusername'] && $_POST['lemail']) {
+		/* test to see if user is full of crap */
+		$_SESSION['lusername'] = mysql_real_escape_string($_POST['lusername']);
+		$_SESSION['lemail'] = mysql_real_escape_string($_POST['lemail']);
+	
+		$query = 'SELECT userID FROM user WHERE username = \''.$_SESSION['lusername'].'\' AND email = \''.$_SESSION['lemail'].'\'';
+		$result = mysql_query($query);
+	
+		if (mysql_num_rows($result) != 1) {
+			// sleep('5')
+			session_destroy();
+			art_fatal_error('Lost Password', 'Wrong username/email combination', 'We\'re sorry, but the username and email address does not match our records, pleases try again.');
+		} else {
+			$_SESSION['reset'] = 1;
+		}
+	}
+
+	if($_SESSION['reset']) {
+		$username = $_SESSION['lusername'];
+		$email = $_SESSION['lemail'];
+		session_destroy();
+		$password = '';
+		srand((double)microtime()*1000000);
+		for ($rand = 0; $rand <= 8; $rand++)
+		{
+			$random = rand(97, 122);
+			$password .= chr($random);
+		}
+
+		$password_enc = md5 ($password);
+
+		$result = mysql_query ("UPDATE user SET password='$password_enc' WHERE username='$username' LIMIT 1");
+		if ($result === FALSE || mysql_affected_rows() == 0) {
+			print ('<p class="error">There was an error resetting the password for user "'.$username.'  Please contact an admin for help"</p>');
+		} else {
+			$message = "Your password has been reset to $password.\n  Thank you for using art.gnome.org!\n";
+			$headers = 'From: art-web-admin@gnome.org' . "\r\n".'X-Mailer: PHP/' . phpversion();;
+			if(mail($email, "New password for $username at Art.gnome.org", $message, $headers)) {
+				print ('<p class="info">Password was reset.  The new password has been emailed to "'.$email.'"</p>');
+			} else {
+				print('<p class="info">Password was reset.  However, there was difficulty in sending the new password to your email address.  Please contact an administrator for assistance.</p>');
+			}
+		}
+	}
+
+}
+elseif (array_key_exists('logout', $_POST))
 {
 	session_destroy();
 	$_SESSION = Array();
