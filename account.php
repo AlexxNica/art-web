@@ -11,7 +11,7 @@ function get_status_comment($status, $comment)
 {
 	$reject_comments = Array(
 			"not_rel" => "Not relevent, or unsuitable for art.gnome.org",
-			"bad_url" => "Invalid URL - please <a href=\"mailto:artweb-list@gnome.org\">contact admin</a>.",
+			"bad_url" => "Invalid URL - please <a href=\"mailto:art-web-admin@gnome.org\">contact admin</a>.",
 			"distro" => "Distribution Specific.",
 			"low_quality" => "Low quality or unfinished.",
 			"copyright" => "Possible use of copyright material without permission.",
@@ -43,7 +43,7 @@ if($_GET['mode'] == "lostpassword") {
 	art_header('Reset password');
 	create_title('Reset password', 'This will generate a new password');
 	if(!$_POST['lusername'] && !$_POST['lemail']) {
-		print("<form action=\"account?mode=lostpassword\" method=\"post\">\n");
+		print("<form action=\"account.php?mode=lostpassword\" method=\"post\">\n");
 		print("<table>\n");
 		print("<tr><td><label for=\"lusername\">Username</label>:</td><td><input name=\"lusername\" class=\"username\" id=\"lusername\" /></td></tr>\n");
 		print("<tr><td><label for=\"lemail\">Email Address</label>:</td><td><input name=\"lemail\" class=\"username\" id=\"lemail\" /></td></tr>\n");
