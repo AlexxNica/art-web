@@ -11,7 +11,7 @@ function get_status_comment($status, $comment)
 {
 	$reject_comments = Array(
 			"not_rel" => "Not relevent, or unsuitable for art.gnome.org",
-			"bad_url" => "Invalid URL - please <a href=\"mailto:art-web-admin@gnome.org\">contact admin</a>.",
+			"bad_url" => "Invalid URL - please <a href=\"mailto:$admin_email\">contact admin</a>.",
 			"distro" => "Distribution Specific.",
 			"low_quality" => "Low quality or unfinished.",
 			"copyright" => "Possible use of copyright material without permission.",
@@ -39,10 +39,12 @@ function get_status_comment($status, $comment)
 		return ucfirst($status);
 }
 
+
+
 if($_GET['mode'] == "lostpassword") {
 	art_header('Reset password');
 	create_title('Reset password', 'This will generate a new password');
-	if(!$_POST['lusername'] && !$_POST['lemail']) {
+	if(!$_POST['lusername'] && !$_POST['lemail'] && !$_SESSION['username']) {
 		print("<form action=\"account.php?mode=lostpassword\" method=\"post\">\n");
 		print("<table>\n");
 		print("<tr><td><label for=\"lusername\">Username</label>:</td><td><input name=\"lusername\" class=\"username\" id=\"lusername\" /></td></tr>\n");
@@ -50,12 +52,14 @@ if($_GET['mode'] == "lostpassword") {
 		print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Reset\" name=\"reset\" /></td></tr>\n");
 		print("</table>\n");
 		print("</form>\n");
+	} elseif ($_SESSION['username']) {
+		print ('<p class="warning">You are already logged in as '.$_SESSION['username'].'.  To change your password, please visit <a href="account.php">your account page</a>.</p>');
 	}
 
 	if($_POST['lusername'] && $_POST['lemail']) {
 		/* test to see if user is full of crap */
-		$_SESSION['lusername'] = mysql_real_escape_string($_POST['lusername']);
-		$_SESSION['lemail'] = mysql_real_escape_string($_POST['lemail']);
+		$_SESSION['lusername'] = escape_string($_POST['lusername']);
+		$_SESSION['lemail'] = escape_string($_POST['lemail']);
 	
 		$query = 'SELECT userID FROM user WHERE username = \''.$_SESSION['lusername'].'\' AND email = \''.$_SESSION['lemail'].'\'';
 		$result = mysql_query($query);
@@ -63,7 +67,7 @@ if($_GET['mode'] == "lostpassword") {
 		if (mysql_num_rows($result) != 1) {
 			// sleep('5')
 			session_destroy();
-			art_fatal_error('Lost Password', 'Wrong username/email combination', 'We\'re sorry, but the username and email address does not match our records, pleases try again.');
+			printf('<p class="error">Wrong username/email combination.  We\'re sorry, but the username and email address does not match our records, please <a href="account.php?mode=lostpassword">try again</a>.</p>');
 		} else {
 			$_SESSION['reset'] = 1;
 		}
@@ -87,10 +91,10 @@ if($_GET['mode'] == "lostpassword") {
 		if ($result === FALSE || mysql_affected_rows() == 0) {
 			print ('<p class="error">There was an error resetting the password for user "'.$username.'  Please contact an admin for help"</p>');
 		} else {
-			$message = "Your password has been reset to $password.\n  Thank you for using art.gnome.org!\n";
-			$headers = 'From: art-web-admin@gnome.org' . "\r\n".'X-Mailer: PHP/' . phpversion();;
-			if(mail($email, "New password for $username at Art.gnome.org", $message, $headers)) {
-				print ('<p class="info">Password was reset.  The new password has been emailed to "'.$email.'"</p>');
+			$message = "Your password has been reset to $password.\nTo change your password, please login and update your profile.\nThe URL is $site_url\nThank you for using art.gnome.org!";
+			$headers = 'From: $admin_email' . "\r\n".'X-Mailer: PHP/' . phpversion();;
+			if(mail($email, "New password for $username at $site_name", $message, $headers)) {
+				print ('<p class="info">Password was reset.  The new password has been emailed to "'.$email.'".  If you do not recieve the password in five minutes, please contact an administrator for assistance.</p>');
 			} else {
 				print('<p class="info">Password was reset.  However, there was difficulty in sending the new password to your email address.  Please contact an administrator for assistance.</p>');
 			}
@@ -254,7 +258,7 @@ else
 	print("<table>\n");
 	print("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
 	print("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
-	print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td></tr>\n");
+	print("<tr><td colspan=\"1\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td><td><a href=\"/account.php?mode=lostpassword\" style=\"font-size:0.8em;\">(Lost your password?)</a></td></tr>\n");
 	print("</table>\n");
 	print("</form>\n");
 

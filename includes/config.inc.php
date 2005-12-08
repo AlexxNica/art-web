@@ -273,8 +273,10 @@ $license_config_link_array = array (
 		'free-art' => '<a href="http://artlibre.org/licence/lal/en/">Free Art License</a>');
 
 
-$mirror_url = "http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org";
+$mirror_url = 'http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org';
 $site_url = 'http://' . $_SERVER['SERVER_NAME'];
+$site_name = $_SERVER['SERVER_NAME'];
+$admin_email = 'art-web-admin@gnome.org';
 
 $sys_ftp_dir = "/ftp/pub/gnome/teams/art.gnome.org/";
 

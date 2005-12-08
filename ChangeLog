@@ -1,3 +1,9 @@
+2005-12-08  James McGuire  <jamesm@bluebottle.com>
+
+	* account.php: softcoded emails and site url, made redirect page for logged in users trying to reset password, added link "Lost your password?"
+	* includes/art_headers.inc.php: added reset password links.
+	* includes/config.inc.php: added $site_name, $admin_email variables.
+
 2005-12-07  James McGuire  <jamesm@bluebottle.com>
 
 	* account.php: password reset fix, update email address in error message
