@@ -1,3 +1,8 @@
+2005-12-10  Thomas Wood  <thos@gnome.org>
+
+	* admin/add_theme.php: Fix category errors
+	* admin/show_submitted_themes.php: Allow changing of category
+
 2005-12-08  James McGuire  <jamesm@bluebottle.com>
 
 	* account.php: softcoded emails and site url, made redirect page for logged in users trying to reset password, added link "Lost your password?"

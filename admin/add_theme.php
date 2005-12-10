@@ -3,6 +3,7 @@
 require("mysql.inc.php");
 require("common.inc.php");
 require("includes/headers.inc.php");
+require('config.inc.php');
 
 admin_header("Add a Theme");
 admin_auth(2);
@@ -18,6 +19,8 @@ if($_POST["add_theme"])
 	$year = validate_input_regexp_default ($_POST["year"], "^[0-9]+$", "0");
 	$theme_name = escape_string($_POST["theme_name"]);
 	$category = validate_input_array_default($_POST["category"], array_keys($theme_config_array), "");
+	if ($category == '')
+		ago_fatal_error ('Invalid category');
 	$description = escape_string($_POST["description"]);
 	$thumbnail_filename = escape_string($_POST["thumbnail_filename"]);
 	$small_thumbnail_filename = escape_string($_POST["small_thumbnail_filename"]);
@@ -55,18 +58,6 @@ if($_POST["add_theme"])
 }
 else
 {
-	$category_array = array(
-	"gdm_greeter" => "gdm_greeter",
-	"gtk" => "gtk",
-	"gtk2" => "gtk2",
-	"icon" => "icon",
-	"metacity" => "metacity",
-	"sounds" => "sounds",
-	"splash_screens" => "splash_screens",
-	"other" => "other",
-	"gtk_engines" => "gtk_engines",
-	"desktop" => "desktop"
-	);
 	$date = date("m/d/Y");
 
 	if ($submitID != "")
@@ -79,9 +70,7 @@ else
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
 	print("<tr><td><strong>Theme Name:</strong></td><td><input type=\"text\" name=\"theme_name\" size=\"40\" value=\"$theme_name\"></td></tr>\n");
-	print("<tr><td><strong>Category</strong></td><td>");
-	create_select_box("category",$category_array,$theme_category);
-	print("</td></tr>\n");
+	print("<tr><td><strong>Category</strong></td><td><input type=\"hidden\" name=\"category\" value=\"$theme_category\" />{$theme_config_array[$theme_category]['name']} ($theme_category)</td></tr>\n");
 	print("<tr><td><strong>UserID:</strong></td><td><input type=\"text\" name=\"userID\" size=\"40\" value=\"$userID\"></td></tr>\n");
 	print("<tr><td><strong>Release Date:</strong></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
 	print("<tr><td><strong>License</strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
