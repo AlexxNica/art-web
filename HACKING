@@ -1,2 +1,48 @@
 This is the art-web cvs module, the php code that runs art.gnome.org.  If you need to make a change to
 the site, please let me <thos@gnome.org> know first before you check anything in.  Thanks.
+
+Setup Guide
+---------------------------------
+1. Checkout the art-web cvs module.
+     cvs -d :pserver:anonymous@anoncvs.gnome.org:/cvs/gnome login
+     # Hit enter when prompted for a password
+     cvs -d :pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co art-web
+
+2. Create the images/ directory
+     cd art-web
+     mkdir images/
+
+3. Download the images archive.
+     cd images
+     wget -c http://www.gnome.org/~thos/art-web/ago-images.tar.bz2
+     tar xvjf art-images.tar.bz2
+
+4. Create the MySQL database, download and import the initial schema.
+     wget http://www.gnome.org/~thos/art-web/art-web-structure.sql
+     mysql # You may need -u <username>, and -p options to authenticate.
+     > CREATE DATABASE artweb;
+     > QUIT
+     mysql < art-web-structure.sql
+
+5. Create includes/mysql.inc.php to provide connection details, with the 
+   following contents.
+     <?php
+      mysql_connect("localhost","user","password");
+      mysql_select_db("artweb");
+     ?>
+
+6. Setup Apache with the following options - this varies depending on
+   distribution, so I can't provide definitive locations. It'll probably
+   be somewhere around /etc/apache2/
+
+   <Directory /path/to/art-web/>
+     AllowOverride None
+     order allow,deny
+     allow from all
+
+     php_value include_path .:/path/to/art-web/includes:/usr/share/php
+     DirectoryIndex index.html index.php
+     <FilesMatch "(backgrounds|themes|gtk_engines|art-icons|download|users|contest)">
+       ForceType application/x-httpd-php
+     </FilesMatch>
+   </Directory>

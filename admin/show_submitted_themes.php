@@ -6,8 +6,8 @@ require("includes/headers.inc.php");
 admin_header("Submitted Themes");
 $admin_level = admin_auth(1);
 
-$theme_type_select_array = Array("metacity" => "Metacity", "Icon" => "Icon", "gtk2" => "GTK 2", "gdm_greeter" => "GDM Greeter", "splash_screens" => "Splash Screens", "desktop" => "Desktop");
 $theme_category_list = array_keys ($theme_config_array);
+$theme_type_select_array = array_combine ($theme_category_list, $theme_category_list);
 
 $mark_theme = $_POST['mark_theme'];
 $new_status = validate_input_array_default($_POST["new_status"], array_keys($status_array), "");

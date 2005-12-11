@@ -62,7 +62,7 @@ function print_detailed_view($itemID, $type)
 		$select_result = mysql_query("SELECT background.*, background.background_name AS item_name, thumbnail_filename AS small_thumbnail_filename, user.username AS author FROM background,user WHERE backgroundID='$itemID' AND background.userID = user.userID");
 	break;
 	case 'screenshot':
-		$select_result = mysql_query("SELECT screenshot.*, screenshot.name AS item_name, user.username AS author FROM screenshot,user WHERE screenshotID='$itemID' AND screenshot.userID = user.userID");
+		$select_result = mysql_query("SELECT screenshot.*, screenshot.name AS item_name, thumbnail_filename AS small_thumbnail_filename, user.username AS author FROM screenshot,user WHERE screenshotID='$itemID' AND screenshot.userID = user.userID");
 	break;
 	}
 
@@ -106,17 +106,20 @@ function print_detailed_view($itemID, $type)
 	// Start output ///////////////////////////////////////////////////////
 
 	create_title(htmlentities($item_name) . " by <a href=\"/users/$author\">$author</a>", $subtitle);
-	if ($category == "icon" || $category == "gtk2" || $category == "gdm_greeter" )
+	if ($category == 'icon' || $category == 'gtk2' || $category == 'gdm_greeter' || $type == 'screenshot' )
 	{
+		if ($type == 'screenshot')
+			$preview_image = "screenshots/$category/$download_filename";
 		list ($image_width, $image_height, $image_type, $image_attr) = getimagesize ('images/'.$preview_image);
 		$ww = min($image_width + 100, 640);
 		$wh = min($image_height + 100, 640);
 		print('<a href="/preview.php?image='.$preview_image.'" onClick="window.open(\'/preview.php?image='.$preview_image.'\', \'Art Preview\', \'width='.$ww.',height='.$wh.',resizable=no,scrollbars=yes,status=no\'); return false;" rel="external">');
 	}
 
+
 	print("<img src=\"$thumbnail_url\" alt=\"Thumbnail\" class=\"$thumbnail_class\" style=\"float:left;\" />");
 
-	if ($category == "icon" || $category == "gtk2" || $category == "gdm_greeter" )
+	if ($category == 'icon' || $category == 'gtk2' || $category == 'gdm_greeter' || $type == 'screenshot' )
 		print("</a>");
 
 	print("<p>" . html_parse_text($description) . "</p>");
@@ -135,7 +138,8 @@ function print_detailed_view($itemID, $type)
 	if ($type != 'contest')
 	{
 		$downloads_per_day = calculate_downloads_per_day($download_count, $download_start_timestamp);
-		print("\t<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day ($download_count downloads in total)</td></tr>\n");
+		if ($type != 'screenshot')
+			print("\t<tr><th>Popularity</th><td>$downloads_per_day Downloads per Day ($download_count downloads in total)</td></tr>\n");
 		print("\t<tr><th>Rating</th><td>\n");
 		print("\t<div class=\"subtitle\" style=\"float:left\">\n");
 		rating_bar($rating);
@@ -174,7 +178,8 @@ function print_detailed_view($itemID, $type)
 
 		print("\t</td></tr>\n");
 	}
-	print("\t<tr><th>Download</th><td>$download</td></tr>\n");
+	if ($type != 'screenshot')
+		print("\t<tr><th>Download</th><td>$download</td></tr>\n");
 	print("</table>\n");
 
 	// Get any variations

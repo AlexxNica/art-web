@@ -1,5 +1,5 @@
 <?php
-/* this file is the backend for backgrounds screenshots, and themes
+/* this file is the backend for backgrounds, screenshots, and themes
  * It is just needs to be included with $type set correctly. */
 
 require_once("common.inc.php");

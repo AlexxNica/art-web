@@ -138,7 +138,7 @@ $theme_config_array = array (
 		"active" => "1",
 		"description" => "GTK+ Engines are pieces of code that draw your theme."
 		),
-	"desktop_themes" => array (
+	"desktop" => array (
 		"name" => "Desktop Themes",
 		"url" => "/themes/desktop_themes/",
 		"active" => "1",

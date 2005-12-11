@@ -96,12 +96,10 @@ function get_thumbnail_url($filename, $itemID, $type, $category, $relative=false
 		else
 			$thumbnail_url="thumbnails/backgrounds/$filename";
 	}
-	elseif ($type == "contest")
-	{
-		$thumbnail_url = "thumbnails/contests/$category/$filename";
-	}
 	else
-		$thumbnail_url = ''; // Need "broken image" image?
+	{
+		$thumbnail_url = "thumbnails/{$type}s/$category/$filename";
+	}
 
 	return ($relative) ? $thumbnail_url : $site_url . '/images/' . $thumbnail_url;
 }
@@ -134,7 +132,7 @@ function get_download_links($type, $category, $itemID, $download_filename)
 	break;
 	
 	case 'screenshot':
-		$file_path = $sys_ftp_dir . "/screenshots/$category/$download_filename";
+		$file_path = "images/screenshots/$category/$download_filename";
 		
 		$filesize = get_filesize_string($file_path);
 		$result = "<a class=\"tar\" href=\"/download/screenshots/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";

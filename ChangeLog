@@ -1,3 +1,19 @@
+2005-12-11  Thomas Wood  <thos@gnome.org>
+
+	* HACKING: Added more detail - closes bug 316112
+	* admin/show_submitted_themes.php: Correct select list
+
+	* includes/art.inc.php:
+	* includes/art_page.inc.php:
+	* includes/comments.inc.php:
+	* includes/common.inc.php:
+	* includes/config.inc.php:
+	* submit_screenshot.php:
+	* templates/en/main.html:
+	* templates/en/main/usermenu.html:
+
+	- Finishing touches to screenshot code. Functions are now available to users
+
 2005-12-10  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_theme.php: Fix category errors
