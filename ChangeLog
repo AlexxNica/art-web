@@ -1,5 +1,9 @@
 2005-12-12  Thomas Wood  <thos@gnome.org>
 
+	* templates/en/submit_screenshot.html: Corrections
+
+2005-12-12  Thomas Wood  <thos@gnome.org>
+
 	* includes/art_headers.inc.php:
 	* includes/common.inc.php:
 	 - Use a common validate_login() function
