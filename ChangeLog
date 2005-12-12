@@ -1,5 +1,9 @@
 2005-12-12  Thomas Wood  <thos@gnome.org>
 
+	* includes/templates.inc.php: Prevent warnings of unset $_SESSION
+
+2005-12-12  Thomas Wood  <thos@gnome.org>
+
 	* templates/en/submit_screenshot.html: Corrections
 
 2005-12-12  Thomas Wood  <thos@gnome.org>

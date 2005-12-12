@@ -19,7 +19,7 @@ class template
 			$this->language = validate_input_regexp_default ( $_GET['lang'], '^[a-z][a-z]$', 'en');
 			$_SESSION['lang'] = $this->language;
 		}
-		elseif (array_key_exists ('lang', $_SESSION))
+		elseif (isset ($_SESSION) && array_key_exists ('lang', $_SESSION))
 			$this->language = $_SESSION['lang'];
 	}
 
