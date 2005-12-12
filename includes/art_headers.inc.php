@@ -26,15 +26,7 @@ if (array_key_exists ("login", $_POST))
 		$query_result = mysql_query ("SELECT userID, realname, password FROM user WHERE username = '$username'");
 
 		list ($userID, $realname, $cryptpass ) = mysql_fetch_row ($query_result);
-
-		if ( (md5 ($password) == $cryptpass)  )
-		{
-			$_SESSION['username'] = $username;
-			$_SESSION['userID'] = $userID;
-			$_SESSION['realname'] = $realname;
-			mysql_query ("UPDATE user SET lastlog=NOW () WHERE userid=$userID;");
-		}
-		else
+		if (!validate_login ($username, $password))
 		{
 			art_header ("Login error");
 			print ("<h1>Login failed</h1>");

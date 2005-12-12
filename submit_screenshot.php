@@ -169,14 +169,12 @@ if (array_key_exists ('category', $_POST))
 // OUTPUT /////////////////////////////////////////////////////////////////////
 
 art_header ("Submit Screenshot");
-create_title ("Screenshot Submission", "To submit an entry to this competition, please fill in the form below");
+create_title ("Screenshot Submission", "To submit a screenshot, please fill in the form below");
 
 /* require login earlier, to prevent problems with file upload */
 is_logged_in ();
 if ($error_message)
 	print ('<p class="error">'.$error_message.'</p>');
-
-
 
 $category_list = create_select_box ('category', array_combine($screenshot_category_list, $screenshot_category_list), $category);
 

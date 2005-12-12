@@ -1,0 +1,33 @@
+
+<form method="POST" enctype="multipart/form-data" action="{SELF}">
+<table>
+<tr>
+<td><label for="category">Category:</label></td>
+<td><select id="category" name="category">
+{category-list}
+</td>
+</tr>
+<tr>
+<td><label for="item_name">Screenshot Name:</label></td>
+<td> <input type="text" id="item_name" name="item_name" size="40" value="{name}" /></td>
+</tr>
+<tr>
+<td><label>Author:</label></td>
+<td>{username}</td>
+</tr>
+<tr>
+<td><label for="item_filename">Filename:</label></td>
+<td><input type="file" id="item_filename" name="item_filename" size="40" /></td>
+</tr>
+<tr>
+<td><label for="description">Description:</label></td>
+<td><textarea name="description" id="description" cols="40" rows="5" wrap="true">{description}</textarea></td>
+</tr>
+<tr>
+<td><input type="submit" value="Submit" /></td>
+<td></td>
+</tr>
+</table>
+</form>
+
+

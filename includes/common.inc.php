@@ -446,6 +446,28 @@ function validate_submit_url($url)
 }
 
 
+function validate_login ($username, $password, $session = true)
+{
+	/* validate login and set up user's session if required */
+
+	$query_result = mysql_query ("SELECT userID, realname, password FROM user WHERE username = '$username'");
+	list ($userID, $realname, $cryptpass) = mysql_fetch_row ($query_result);
+
+	if ( md5 ($password) == $cryptpass )
+	{
+		if ($session)
+		{
+			$_SESSION['username'] = $username;
+			$_SESSION['userID'] = $userID;
+			$_SESSION['realname'] = $realname;
+			mysql_query ("UPDATE user SET lastlog=NOW () WHERE userid=$userID;");
+		}
+		return true; /* user validated! */
+	}
+
+	return false; /* user didn't validate */
+}
+
 /* escape_gpc_array() - ensures special characters are escaped in gpc variables */
 function escape_gpc_array (&$array)
 {
