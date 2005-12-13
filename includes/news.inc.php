@@ -7,6 +7,7 @@ class artweb_news
 {
 
 	var $news_select_result;
+	var $heading = 'h2';
 
 	function select_news($number)
 	{
@@ -23,9 +24,9 @@ class artweb_news
 			$title =  $news_select_row["title"];
 			$body =  html_parse_text($news_select_row["body"]);
 
-			print("<div class=\"news_item\">\n");
-			print("\t<div class=\"h2\">$title</div>\n");
+			print("\t<{$this->heading}>$title</{$this->heading}>\n");
 			print("\t<div class=\"subtitle\">Posted by <a href=\"mailto:$author_email\">$author</a> &middot; $date </div>\n");
+			print("<div class=\"news_item\">\n");
 			print("\t<p>$body</p>\n");
 			print("</div>\n");
 		}

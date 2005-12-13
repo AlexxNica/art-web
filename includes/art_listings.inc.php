@@ -192,7 +192,7 @@ class general_listing
 						{
 							print('<small style="white-space: nowrap">');
 							print('<a href="'.$link.'#comments" style="text-decoration: none">');
-							print('<img src="/images/site/stock_draw-callouts-16.png" alt="*" />&nbsp;&nbsp;');
+							print('<img src="/images/site/stock_draw-callouts-16.png" alt="" style="margin-right: 1em"/>');
 							print($comment_count . ' comments</a></small>');
 						}
 					}

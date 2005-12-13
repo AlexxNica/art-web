@@ -1,3 +1,15 @@
+2005-12-13  Thomas Wood  <thos@gnome.org>
+
+	* default.css:
+	* includes/art_listings.inc.php:
+	* includes/news.inc.php:
+	* index.php:
+	Layout improvements
+
+	* templates/en/main.html:
+	* templates/en/main/usermenu.html:
+	Disable screenshot links while there are problems with upload on art.gnome.org
+
 2005-12-12  Thomas Wood  <thos@gnome.org>
 
 	* includes/templates.inc.php: Prevent warnings of unset $_SESSION
