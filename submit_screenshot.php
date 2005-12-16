@@ -68,18 +68,13 @@ function upload_entry ($unvalidated_item_name, $unvalidated_description)
 	/* get image info */
 	list ($width, $height, $type) = getimagesize ($file['tmp_name']);
 
-	if (($width > 1600) or ($height > 1200))
-		return "Image size must not exceed 1600 pixels wide or 120 pixels high";
-
 	if ($type == IMAGETYPE_PNG)
 	{
 		$extension = 'png';
-		$image = imagecreatefrompng ($file['tmp_name']);
 	}
 	elseif ($type == IMAGETYPE_JPEG)
 	{
 		$extension = 'jpg';
-		$image = imagecreatefromjpeg ($file['tmp_name']);
 	}
 	else
 	{
@@ -100,34 +95,22 @@ function upload_entry ($unvalidated_item_name, $unvalidated_description)
 	}
 
 
-	$maxheight = 80; $maxwidth = 96; /* XXX: just random values :) */
-	$ratio=$width/$height;
-
-	if ($ratio > ($maxwidth/$maxheight))
-	{
-		$newwidth  = $maxwidth;
-		$newheight = round ($maxwidth/$ratio);
-	}
-	else
-	{
-		$newheight = $maxheight;
-		$newwidth  = round ($maxheight*$ratio);
-	}
-
-	$thumb_image = ImageCreateTrueColor ($newwidth,$newheight);
-	imagecopyresampled ($thumb_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
-	if (!imagejpeg ($thumb_image, $thumb_path, 70))
-		art_fatal_error ('Submit Screenshot', 'Screenshot Submission', 'An error occured, while saving the thumbnail.');
-
-	chmod ($thumb_path, 0664); /* Make sure it's readable */
-
 	if (!move_uploaded_file ($file['tmp_name'], $file_path))
 	{
-		unlink ($thumb_path);
-		art_fatal_error ('Submit Screenshot', 'Screenshot Submission', 'An error occured, while saving the uploaded file. Will try to delete the already saved thumbnail file.');
+		art_fatal_error ('Submit Screenshot', 'Screenshot Submission', 'An error occured, while saving the uploaded file.');
 	}
 	chmod ($file_path, 0664);
+
+	copy ($file_path, $thumb_path);
+	exec ('convert -scale 96 '.$thumb_path.' '.$thumb_path, $output, $return_var);
+	if ($return_var != 0)
+	{
+		unlink ($file_path);
+		unlink ($thumb_path);
+		art_fatal_error ('Submit Screenshot', 'Screenshot Submission', 'An error occured, while saving the thumbnail.');
+	}
+
+	chmod ($thumb_path, 0664); /* Make sure it's readable */
 
 	/* FILES DONE, now insert it into the DB */
 	$time = time ();

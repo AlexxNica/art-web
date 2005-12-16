@@ -1,3 +1,8 @@
+2005-12-16  Thomas Wood  <thos@gnome.org>
+
+	* submit_screenshot.php: Use ImageMagick 'convert' tool rather than
+	GD library functions
+
 2005-12-13  Thomas Wood  <thos@gnome.org>
 
 	* default.css:
