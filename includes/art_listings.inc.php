@@ -32,8 +32,9 @@ class general_listing
 	var $date_type = 'relative';
 	var $results;
 	var $num_pages;
-	var $none_message = 'No art has been submitted in this category.';
+	var $none_message = 'No items to display';
 	var $format = 'html';
+	var $where = array ();
 
 	function get_num_comments($artID, $type)
 	{
@@ -43,6 +44,13 @@ class general_listing
 		return $n;
 	}
 
+	function get_where_clause ()
+	{
+		$wq = ''; $i = 0;
+		foreach ($this->where as $key => $value)
+			$wq .= ($i++ == 0) ? "WHERE $key='$value'" : " AND $key='$value'";
+		return $wq;
+	}
 	
 	function get_view_options()
 	{
@@ -104,7 +112,9 @@ class general_listing
 		
 	function print_page_numbers()
 	{
-		if (isset($this->num_pages)) {
+		if (isset($this->num_pages))
+		{
+			if ($this->num_pages == 1) return;
 			print('<!-- Page Navigation System -->');
 			print('<div style="clear:both; text-align:center"><p>');
 
@@ -216,14 +226,26 @@ class top_rated_list extends general_listing
 {
 	function top_rated_list()
 	{
-		$this->per_page = 5;
+		$this->per_page = 8;
 	}
 	
-	function select()
+	function select($userID = '')
 	{
 		$this->select_result = mysql_query('SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename FROM background UNION '.
 		                                   'SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM theme '.
 		                                   'ORDER BY rating DESC '.$this->get_limit());
+
+		if ($userID)
+			$this->select_result = mysql_query (
+			"SELECT backgroundID AS ID, 'background' AS type, background_name AS name, vote.rating, category, add_timestamp, thumbnail_filename
+			FROM background INNER JOIN vote ON vote.artID = background.backgroundID
+			WHERE vote.userID = $userID
+			UNION 
+			SELECT themeID AS ID, 'theme' AS type, theme_name AS name, vote.rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename
+			FROM theme INNER JOIN vote ON vote.artID = theme.themeID
+			WHERE vote.userID = $userID ORDER BY rating DESC ".$this->get_limit()
+			);
+		print (mysql_error());
 	}
 }
 
@@ -246,6 +268,7 @@ class theme_list extends general_listing
 {
 	var $sort_by;
 	var $order;
+	var $where = array ('parent' => '0', 'status' => 'active');
 	
 	function get_view_options()
 	{
@@ -273,65 +296,60 @@ class theme_list extends general_listing
 		print('</p></form>');
 	}
 	
-	function get_where_clause($category)
-	{
-		global $theme_config_array;
-		if (!array_key_exists($category, $theme_config_array)) art_file_not_found(); /* needed? */
-		
-		return ' WHERE category=\'' . $category . '\' AND parent = 0 AND status="active" ';
-	}
 	
 	function select($category)
 	{
+		global $theme_config_array;
+
+		if (($category != '%') && !(array_key_exists ($category, $theme_config_array)))
+			$this->where['category'] = $category;
+		$wq = $this->get_where_clause ();
+
 		if ($this->per_page < 1000) { /* XXX: maybe change this to 'all' */
-			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(themeID) FROM theme '.$this->get_where_clause($category)));
+			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(themeID) FROM theme '.$wq));
 			$this->num_pages = ceil($this->num_pages[0] / $this->per_page);
 		}
-		
-		$this->select_result = mysql_query('SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM theme '.
-		                                   $this->get_where_clause($category). ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
+
+		$this->select_result = mysql_query('SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM theme '.$wq.' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
 
 class contest_list extends theme_list
 {
-	function get_where_clause($category)
-	{
-		global $contest_config_array;
-		if (!array_key_exists($category, $contest_config_array)) art_file_not_found(); /* needed? */
-		
-		return ' WHERE contest=\'' . $category . '\' AND parent = 0 AND status="active" ';
-	}
-	
+
 	function select($category)
 	{
+		global $contest_config_array;
+		if ($category != '%' && !array_key_exists($category, $contest_config_array)) art_file_not_found(); /* needed? */
+		if ($category != '%')
+			$this->where['category'] = $category;
+		$wq = $this->get_where_clause ();
 		if ($this->per_page < 1000) { /* XXX: maybe change this to 'all' */
-			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(contestID) FROM contest '.$this->get_where_clause($category)));
+			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(contestID) FROM contest '.$wq));
 			$this->num_pages = ceil($this->num_pages[0] / $this->per_page);
 		}
 		
 		$this->select_result = mysql_query('SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM contest '.
-		                                   $this->get_where_clause($category). ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
+		                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
 
 class screenshot_list extends theme_list
 {
-	function get_where_clause($category)
-	{
-		global $screenshot_config_array;
-		if (!array_key_exists($category, $screenshot_config_array)) art_file_not_found(); /* needed? */
-		return ' WHERE category=\'' . $category . '\' AND status="active" ';
-	}
-	
+	var $where = array ('status' => 'active');
 	function select($category)
 	{
+		global $screenshot_config_array;
+		if ($category != '%' &&  !array_key_exists($category, $screenshot_config_array)) art_file_not_found(); /* needed? */
+		
+		if ($category != '%') $this->where['category'] = $category;
+		$wq = $this->get_where_clause ();
 		if ($this->per_page < 1000) { /* XXX: maybe change this to 'all' */
-			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(screenshotID) FROM screenshot'));
+			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(screenshotID) FROM screenshot '.$wq));
 			$this->num_pages = ceil($this->num_pages[0] / $this->per_page);
 		}
 		$this->select_result = mysql_query('SELECT screenshotID AS ID, \'screenshot\' AS type, name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM screenshot '.
-		                                   $this->get_where_clause($category). ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
+		                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
 
@@ -340,6 +358,7 @@ class background_list extends general_listing
 	var $sort_by;
 	var $order;
 	var $resolution;
+	var $where = array ('parent' => '0', 'status' => 'active');
 	
 	function get_view_options()
 	{
@@ -373,12 +392,22 @@ class background_list extends general_listing
 	function get_where_clause($category)
 	{
 		global $background_config_array;
-		if (!array_key_exists($category, $background_config_array)) art_file_not_found();
-		if ($this->resolution == '%') {
-			return " WHERE category='$category' AND status='active' AND parent='0'";
-		} else {
-			return ' RIGHT JOIN background_resolution ON background.backgroundID=background_resolution.backgroundID'.
-			       " WHERE category='$category' AND status='active' AND parent='0' AND resolution='".mysql_real_escape_string($this->resolution)."'";
+		if ($category != '%' && !array_key_exists($category, $background_config_array)) art_file_not_found();
+		
+		if ($category != '%')
+			$this->where['category'] = $category;
+
+
+		if ($this->resolution == '%')
+		{
+			$wq = parent::get_where_clause();
+			return $wq;
+		}
+		else
+		{
+			$this->where['resolution'] = mysql_real_escape_string($this->resolution);
+			$wq = parent::get_where_clause();
+			return ' RIGHT JOIN background_resolution ON background.backgroundID=background_resolution.backgroundID '.$wq;
 		}
 	}
 	
@@ -389,15 +418,16 @@ class background_list extends general_listing
 		} else {
 			$id_sql = 'DISTINCT(background.backgroundID)';
 		}
+		$wq = $this->get_where_clause($category);
+		
 		if ($this->per_page < 1000) { /* XXX: maybe change this to 'all' */
-			$this->results = mysql_fetch_array(mysql_query("SELECT count($id_sql) FROM background ".
-			                                               $this->get_where_clause($category)));
+			$this->results = mysql_fetch_array(mysql_query("SELECT count($id_sql) FROM background ".$wq));
 			$this->results = $this->results[0];
 			$this->num_pages = ceil($this->results / $this->per_page);
 		}
 		
 		$this->select_result = mysql_query("SELECT $id_sql AS ID, 'background' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM background ".
-		                                   $this->get_where_clause($category). ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
+		                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
 
@@ -548,41 +578,38 @@ class search_result extends general_listing
 }
 
 
-class user_theme_list extends general_listing
+class user_theme_list extends theme_list
 {
 	function print_listing($realname)
 	{
-		if (mysql_num_rows ($this->select_result) > 0)
-		{
-			create_title ("Themes", "Themes created by $realname");
-			parent::print_listing();
-		}
+		create_title ("Themes", "Themes created by $realname");
+		$this->print_page_numbers();
+		parent::print_listing();
 	}
 	
 	function select($userID)
 	{
-		$this->select_result = mysql_query('SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM theme '.
-		                                   "WHERE userID=$userID AND status='active' ".
-		                                   'ORDER BY add_timestamp DESC');
+		$this->where['userID'] = $userID;
+		parent::get_view_options();
+		parent::select('%');
 	}
 }
 
-class user_background_list extends general_listing
+class user_background_list extends background_list
 {
 	function print_listing($realname)
 	{
-		if (mysql_num_rows ($this->select_result) > 0)
-		{
-			create_title ("Backgrounds", "Backgrounds created by $realname");
-			parent::print_listing();
-		}
+		create_title ("Backgrounds", "Backgrounds created by $realname");
+		$this->print_page_numbers();
+		parent::print_listing ();
 	}
 	
 	function select($userID)
 	{
-		$this->select_result = mysql_query('SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename FROM background '.
-		                                   "WHERE userID=$userID AND status='active' ".
-		                                   'ORDER BY add_timestamp DESC');
+		$this->where['userID'] = $userID;
+		parent::get_view_options();
+		$this->resolution = '%';
+		parent::select('%');
 	}
 }
 
@@ -590,11 +617,9 @@ class user_contest_list extends general_listing
 {
 	function print_listing($realname)
 	{
-		if (mysql_num_rows ($this->select_result) > 0)
-		{
-			create_title ("Contests", "Contest entries submitted by $realname");
-			parent::print_listing();
-		}
+		create_title ("Contests", "Contest entries submitted by $realname");
+		$this->print_page_numbers();
+		parent::print_listing();
 	}
 	
 	function select($userID)
@@ -605,11 +630,28 @@ class user_contest_list extends general_listing
 	}
 }
 
+class user_screenshot_list extends screenshot_list
+{
+	function print_listing($realname)
+	{
+		create_title ("Screenshots", "Screenshots by $realname");
+		$this->print_page_numbers();
+		parent::print_listing ();
+	}
+
+	function select($userID)
+	{
+		$this->where['userID'] = $userID;
+		$this->get_view_options();
+		parent::select('%');
+	}
+}
+
 class variations_list extends general_listing
 {
 	function print_listing()
 	{
-		if (mysql_num_rows ($this->select_result) > 0)
+		if ($this->select_result != null && mysql_num_rows ($this->select_result) > 0)
 		{
 			create_title("Variations", "This {$this->type} has one or more variations");
 			parent::print_listing();
@@ -622,11 +664,13 @@ class variations_list extends general_listing
 			$sql = 'SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM theme';
 		} elseif ($this->type == 'contest') {
 			$sql = 'SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM contest';
-		} else {
+		} elseif ($this->type == 'background'){
 			$sql = 'SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename FROM background';
 		}
-	
-		$this->select_result = mysql_query($sql." WHERE parent=$parentID AND status='active'".
+		if ($sql == '')
+			$this->select_result = null;
+		else
+			$this->select_result = mysql_query($sql." WHERE parent=$parentID AND status='active'".
 		                                        ' ORDER BY add_timestamp DESC');
 	}
 }

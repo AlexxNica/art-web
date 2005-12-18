@@ -1,3 +1,13 @@
+2005-12-18  Thomas Wood  <thos@gnome.org>
+
+	* contact.php: Update contact e-mail address
+	* default.css: Set default font for the site (sans)
+	* templates/en/main.html: Fix for Safari browser
+
+	* includes/art_listings.inc.php:
+	* users:
+	 - Updated user info page
+
 2005-12-16  Thomas Wood  <thos@gnome.org>
 
 	* submit_screenshot.php: Use ImageMagick 'convert' tool rather than

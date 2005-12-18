@@ -9,7 +9,7 @@ art_header("Contact");
 create_title("Contact Information", "");
 ?>
 
-<p>If you have queries regarding the site content or layout, please contact us by e-mail through <a href="mailto:thos _AT_ gnome.org">thos _AT_ gnome.org</a>.</p>
+<p>If you have queries regarding the site content or layout, please contact us <a href="mailto:art-web-admin_AT_gnome.org">by e-mail</a>.</p>
 
 <p>You can also catch us on the channel <a href="irc://irc.gnome.org/#gnome-art">#gnome-art</a> on <span class="bold-text">irc.gimp.org</span>.</p>
 
