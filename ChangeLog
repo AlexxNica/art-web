@@ -1,5 +1,10 @@
 2005-12-20  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* includes/common.inc.php: Removed the debug statement again that
+	found its way into the last patch
+
+2005-12-20  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* includes/art.inc.php: Allow voting for screenshots
 	* includes/art_listings.inc.php: Fixed SQL for the contest listings
 	* includes/common.inc.php: Fixed some quotes

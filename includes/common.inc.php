@@ -113,7 +113,7 @@ function get_download_links($type, $category, $itemID, $download_filename)
 			$file_path = $sys_ftp_dir . "/archive/themes/$category/$download_filename";
 		else
 			$file_path = $sys_ftp_dir . "/themes/$category/$download_filename";
-		print("\n$file_path\n");
+		
 		$filesize = get_filesize_string($file_path);
 		$result = "<a class=\"tar\" href=\"/download/themes/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
 	break;
