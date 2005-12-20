@@ -301,7 +301,7 @@ class theme_list extends general_listing
 	{
 		global $theme_config_array;
 
-		if (($category != '%') && !(array_key_exists ($category, $theme_config_array)))
+		if (($category != '%') && array_key_exists ($category, $theme_config_array))
 			$this->where['category'] = $category;
 		$wq = $this->get_where_clause ();
 
