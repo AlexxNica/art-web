@@ -1,3 +1,9 @@
+2005-12-19  Thomas Wood  <thos@gnome.org>
+
+	* includes/art_listings.inc.php:
+	* users:
+	- Fixes
+
 2005-12-18  Thomas Wood  <thos@gnome.org>
 
 	* contact.php: Update contact e-mail address

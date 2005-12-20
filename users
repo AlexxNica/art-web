@@ -105,8 +105,8 @@ else
 			else
 			{
 				$username = ucfirst ($username);
-				print ("<h1>$username's Top Ratings</h1>");
-				print ('<div class="subtitle">The top items '.$username.' has rated</div>');
+				print ("<h1>$username's Favourite Items</h1>");
+				print ('<div class="subtitle">'.$username.'\' top rated items</div>');
 				$listing = new top_rated_list;
 				$listing->select ($userID);
 				$listing->print_listing ();

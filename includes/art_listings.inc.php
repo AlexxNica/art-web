@@ -231,21 +231,21 @@ class top_rated_list extends general_listing
 	
 	function select($userID = '')
 	{
-		$this->select_result = mysql_query('SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename FROM background UNION '.
+		$sql = ('SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename FROM background UNION '.
 		                                   'SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM theme '.
 		                                   'ORDER BY rating DESC '.$this->get_limit());
 
 		if ($userID)
-			$this->select_result = mysql_query (
-			"SELECT backgroundID AS ID, 'background' AS type, background_name AS name, vote.rating, category, add_timestamp, thumbnail_filename
+			$sql = "SELECT backgroundID AS ID, 'background' AS type, background_name AS name, background.rating AS rating, vote.rating AS userrating, category, add_timestamp, thumbnail_filename
 			FROM background INNER JOIN vote ON vote.artID = background.backgroundID
-			WHERE vote.userID = $userID
-			UNION 
-			SELECT themeID AS ID, 'theme' AS type, theme_name AS name, vote.rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename
+			WHERE vote.userID = $userID AND vote.type = 'background'
+			UNION
+			SELECT themeID AS ID, 'theme' AS type, theme_name AS name, theme.rating AS  rating, vote.rating AS userrating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename
 			FROM theme INNER JOIN vote ON vote.artID = theme.themeID
-			WHERE vote.userID = $userID ORDER BY rating DESC ".$this->get_limit()
-			);
-		print (mysql_error());
+			WHERE vote.userID = $userID AND vote.type = 'theme'
+			ORDER BY userrating DESC ".$this->get_limit();
+
+		$this->select_result = mysql_query ($sql);
 	}
 }
 
