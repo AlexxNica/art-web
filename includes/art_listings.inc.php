@@ -322,7 +322,7 @@ class contest_list extends theme_list
 		global $contest_config_array;
 		if ($category != '%' && !array_key_exists($category, $contest_config_array)) art_file_not_found(); /* needed? */
 		if ($category != '%')
-			$this->where['category'] = $category;
+			$this->where['contest'] = $category;
 		$wq = $this->get_where_clause ();
 		if ($this->per_page < 1000) { /* XXX: maybe change this to 'all' */
 			$this->num_pages = mysql_fetch_array(mysql_query('SELECT count(contestID) FROM contest '.$wq));

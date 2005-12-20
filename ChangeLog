@@ -1,5 +1,11 @@
 2005-12-20  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* includes/art.inc.php: Allow voting for screenshots
+	* includes/art_listings.inc.php: Fixed SQL for the contest listings
+	* includes/common.inc.php: Fixed some quotes
+
+2005-12-20  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* includes/art_listings.inc.php: Fix a wrong if statement
 
 2005-12-19  Thomas Wood  <thos@gnome.org>

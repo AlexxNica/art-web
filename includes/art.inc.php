@@ -6,7 +6,7 @@ require_once("art_listings.inc.php");
 function add_vote($artID, $rating, $userID, $type, $header)
 {
 	// check for valid $type
-	if (!($type == 'theme' or $type == 'background'))
+	if (!($type == 'theme' or $type == 'background' or $type == 'screenshot'))
 		return -1;
 		
 	if ($rating == -1)
