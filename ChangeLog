@@ -1,3 +1,12 @@
+2005-12-21  Thomas Wood  <thos@gnome.org>
+
+	* includes/art_listings.inc.php: Improved paging scheme
+	* includes/art_page.inc.php: Root item type urls will now list all
+	categories
+	* includes/common.inc.php: Fix contest download links
+	* includes/config.inc.php: Disable "desktop theme" item type, fixes
+	bug 322732
+
 2005-12-20  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/common.inc.php: Removed the debug statement again that

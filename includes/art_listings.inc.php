@@ -112,28 +112,42 @@ class general_listing
 		
 	function print_page_numbers()
 	{
-		if (isset($this->num_pages))
-		{
-			if ($this->num_pages == 1) return;
-			print('<!-- Page Navigation System -->');
-			print('<div style="clear:both; text-align:center"><p>');
+		if (!isset($this->num_pages))
+			return false;
+		if ($this->num_pages == 1)
+			return false;
 
-			/* currently there are no arows on a.g.o. So commented it out again
-			 * Also this prevents the page numbers to 'jump' around. */
-			/*if ($this->page > 1) {
-				$this->create_page_link ($this->page - 1, '<<');
-			}*/
+		$num_links = 9; // Must be an odd number
+		$offset = ($num_links - 1) / 2;
 
-			for ($page=1; $page <= $this->num_pages; $page++)
-			{
-				$this->create_page_link($page);
-			}
-			/* if($this->page < $this->num_pages) {
-				$this->create_page_link ($this->page + 1, '>>');
-			}*/
-			
-			print('</p></div>');
+		print('<!-- Page Navigation System -->');
+		print('<div style="clear:both; text-align:center"><p>');
+
+		if ($this->page > 1) {
+			$this->create_page_link ($this->page - 1, '<img src="/images/site/stock_left.png" />');
 		}
+
+		$start = max (1, $this->page - ($num_links - 1));
+		$start = max ($start, $this->page - $offset);
+
+		$end = max ($this->page + $offset, $num_links);
+		$end = min($end, $this->num_pages);
+		
+		if ($start > 1)
+			$this->create_page_link ($this->page - $num_links, '...');
+			
+			
+		for ($page=$start; $page <= $end; $page++)
+		{
+			$this->create_page_link($page);
+		}
+		if ($end < $this->num_pages)
+			$this->create_page_link ($this->page + $num_links, '...');
+
+		if($this->page < $this->num_pages)
+			$this->create_page_link ($this->page + 1, '<img src="/images/site/stock_right.png" />');
+		print('</p></div>');
+
 	}
 	
 	function print_listing()

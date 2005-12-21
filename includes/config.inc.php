@@ -138,12 +138,13 @@ $theme_config_array = array (
 		"active" => "1",
 		"description" => "GTK+ Engines are pieces of code that draw your theme."
 		),
-	"desktop" => array (
+/*	"desktop" => array (
 		"name" => "Desktop Themes",
 		"url" => "/themes/desktop_themes/",
 		"active" => "1",
 		"description" => "Desktop themes are complete themes that cover all aspects of your desktop environment."
 		)
+*/
 );
 
 $contest_config_array = array (

@@ -123,6 +123,7 @@ function get_download_links($type, $category, $itemID, $download_filename)
 		
 		$filesize = get_filesize_string($file_path);
 		$result = "<a class=\"tar\" href=\"/download/contest/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
+	break;
 
 	case 'background':
 		$result = '';
@@ -130,12 +131,6 @@ function get_download_links($type, $category, $itemID, $download_filename)
 		while (list($resID,$download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
 			$result .= "<a class=\"$image_type\" href=\"/download/backgrounds/$category/$resID/$download_filename\"> $image_type - $resolution</a>&nbsp;&nbsp;";
 	break;
-	
-	case 'screenshot':
-		$file_path = "images/screenshots/$category/$download_filename";
-		
-		$filesize = get_filesize_string($file_path);
-		$result = "<a class=\"tar\" href=\"/download/screenshots/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
 	}
 	return $result;
 }

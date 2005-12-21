@@ -36,39 +36,10 @@ else
 $commentID = validate_input_regexp_default ($_POST["commentID"], "^[0-9]+$", -1);
 $report = $_POST["report"];
 
-/* print out the list of categories */
-if ($unvalidated_category == "")
+if ($unvalidated_category == '')
 {
-	/* XXX: This should really be part of the config_array! */
-	if ($type == 'background') {
-		art_header('Backgrounds');
-		create_title('Backgrounds', 'Backgrounds are images for use on your desktop as the desktop background, sometimes known as wallpapers.');
-	} elseif ($type == 'theme') {
-		art_header('Themes');
-		create_title('Themes', 'Desktop Themes');
-	} elseif ($type == 'screenshot') {
-		art_header('Screenshots');
-		create_title('Screenshots', 'Screenshots of GNOME Desktops');
-	} else { /* contest*/
-		art_header('Contests');
-		create_title('Contests', 'The different contests that are/were hosted on art.gnome.org.');
-	}
-	
-	print("<ul>\n");
-	
-	foreach ($config_array as $key => $val)
-	{
-		if ($val['active'])
-		{
-			print('<li><a class="bold-link" href="'.$val['url'].'">');
-			print(get_category_name ($type, $key));
-			print('</a>');
-			print("</li>\n");
-		}
-	}
-	print("</ul>\n");
-	
-	art_footer();
+	$category = '%';
+	$header = 'All ' . ucfirst($type) . 's';
 }
 else
 {
@@ -77,9 +48,10 @@ else
 	if ($type == 'background') {
 		$header .= ' Backgrounds';
 	}
+}
 	
-	/* print out the preview pages */
-	if (array_key_exists($category, $config_array) && $unvalidated_artID == "")
+	/* print out the listings pages */
+	if ($unvalidated_artID == "")
 	{
 		require_once("art_listings.inc.php");
 		
@@ -139,6 +111,5 @@ else
 	{
 		art_file_not_found();
 	}
-}
 
 ?>
