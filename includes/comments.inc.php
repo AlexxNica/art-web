@@ -36,7 +36,7 @@ function print_comments($artID, $type)
 		{
 			$count++;
 			print("<div class=\"comment\">\n");
-			print("\t<div class=\"h2\">From <a href=\"/users/".urlencode("$username")."\">".htmlentities($username)."</a></div>\n");
+			print("\t<div class=\"h2\">From <a href=\"/users/".rawurlencode("$username")."\">".htmlentities($username)."</a></div>\n");
 			print("\t\t<div class=\"subtitle\">Posted ".FormatRelativeDate(time(), $comment_time ) . date(" - H:i", ($comment_time + (3600 * ($timezone + 5))))."</div>\n");
 
 			print("\t\t<p>". html_parse_text($user_comment) . "</p>\n");
