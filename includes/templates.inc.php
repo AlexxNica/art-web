@@ -8,6 +8,7 @@ class template
 	var $_variables = array ();
 	var $filename;
 	var $language = 'en';
+	var $template_data = '';
 
 	/* consutrctor for php5 */
 	function __construct ($filename)
@@ -27,6 +28,15 @@ class template
 	function template ($filename)
 	{
 		$this->__construct ($filename);
+	}
+
+	function load_template ()
+	{
+		global $template_root;
+		$filename = $template_root . $this->language .'/'. $this->filename;
+		if (!file_exists ($filename)) /* if can't find the localised template, load the english one */
+			$filename = $template_root . 'en/'. $this->filename;
+		$this->template_data = file_get_contents ($filename);
 	}
 
 	function add_var ($name, $value)
@@ -49,15 +59,15 @@ class template
 		/*
 		 * Parse template file and return the result
 		 */
-		global $template_root;
-		$filename = $template_root . $this->language .'/'. $this->filename;
-		if (!file_exists ($filename)) /* if can't find the localised template, load the english one */
-			$filename = $template_root . 'en/'. $this->filename;
-		$template = file_get_contents ($filename);
+
+		/* load template if not already loaded */
+		if ($this->template_data == '')
+			$this->load_template ();
+
 		$output = str_replace (
 			array_keys ($this->_variables),
 			array_values ($this->_variables),
-			$template
+			$this->template_data
 		);
 		return $output;
 	}

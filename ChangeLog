@@ -1,3 +1,23 @@
+2005-12-29  Thomas Wood  <thos@gnome.org>
+
+	* includes/art_headers.inc.php: Fix bug in forgot password link
+	* includes/templates.inc.php: Optimisations for recurring templates
+
+	* submit_screenshot.php:
+	* templates/en/submit_screenshot.html:
+	Finish screenshot submission template
+
+	* default.css:
+	* includes/comments.inc.php:
+	* templates/en/comments/add.html:
+	* templates/en/comments/display.html:
+	* templates/en/comments/edit.html:
+	Use templates for comment items
+
+	* templates/en/main.html:
+	* templates/en/main/usermenu.html:
+	Re-enable screenshot list and submission links
+
 2005-12-27  Thomas Wood  <thos@gnome.org>
 
 	* includes/comments.inc.php: Fix username links with spaces

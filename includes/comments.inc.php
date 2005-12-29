@@ -32,33 +32,36 @@ function print_comments($artID, $type)
 		print("<br />");
 		$count = 0;
 
+		$template = new template ('comments/display.html');
 		while(list($commentID, $status, $userID, $username, $user_comment, $comment_time)=mysql_fetch_row($comment_select_result))
 		{
 			$count++;
-			print("<div class=\"comment\">\n");
-			print("\t<div class=\"h2\">From <a href=\"/users/".rawurlencode("$username")."\">".htmlentities($username)."</a></div>\n");
-			print("\t\t<div class=\"subtitle\">Posted ".FormatRelativeDate(time(), $comment_time ) . date(" - H:i", ($comment_time + (3600 * ($timezone + 5))))."</div>\n");
-
-			print("\t\t<p>". html_parse_text($user_comment) . "</p>\n");
+			$template->add_var ('username-url', '/users/'.rawurlencode ($username));
+			$template->add_var ('username', $username);
+			$template->add_var ('post-date', FormatRelativeDate(time(), $comment_time ) . date(" - H:i", ($comment_time + (3600 * ($timezone + 5)))));
+			$template->add_var ('comment', html_parse_text ($user_comment));
 
 			if ($status == "reported")
 			{
-				print("\t<div style=\"text-align:right;\" class=\"abuse\">(Reported)</div>\n");
+				$template->add_var ('status', '(Reported)');
 			}
 			else if ($status == "approved")
 			{
-				print("\t<div style=\"text-align:right;\" class=\"abuse\">(Already Reviewed)</div>\n");
+				$template->add_var ('status', '(Already Reviewed)');
 			}
 			else
 			{
-				print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
-				print("\t<div style=\"text-align:right;\" class=\"abuse\">\n");
-				print("\t<input type=\"hidden\" name=\"commentID\" value=\"$commentID\" />\n");
-				print("\t<input type=\"submit\" name=\"report\" value=\"(Report Abuse)\" class=\"link_button\" style=\"font-size: 0.8em;\" />\n");
-				print("\t</div>\n");
-				print("\t</form>\n");
+			
+				$form = ("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
+				$form .= ("\t<div style=\"text-align:right;\" class=\"abuse\">\n");
+				$form .= ("\t<input type=\"hidden\" name=\"commentID\" value=\"$commentID\" />\n");
+				$form .= ("\t<input type=\"submit\" name=\"report\" value=\"(Report Abuse)\" class=\"link_button\" style=\"font-size: 0.8em;\" />\n");
+				$form .= ("\t</div>\n");
+				$form .= ("\t</form>\n");
+			
+				$template->add_var ('status', $form);
 			}
-			print("</div>\n");
+			$template->write ();
 		}
 
 	}
@@ -75,22 +78,16 @@ function report_comment($report, $commentID)
 
 function print_comment_form($comment)
 {
-
-	print("<div class=\"h2\">Add a new comment</div>");
 	$show_comment = "";
-
 	if (strlen($comment) < 10 && strlen($comment) != 0) 
 	{
 		$comment_msg = "You comment is too short!<br />\n";
 		$show_comment = $comment;
 	}
-		
-	print("<a name=\"comment\"></a>\n");
-	print("<br /><form action=\"" . $_SERVER["PHP_SELF"] . "#comment\" method=\"post\"><div>\n");
-		
-	print("<textarea cols=\"60\" rows=\"10\" name=\"comment\">$show_comment</textarea><br /><br />\n");
-	print("<input type=\"submit\" name=\"send\" value=\"Add Comment\" />\n");
-	print("</div></form>\n");
+
+	$template = new template ('comments/add.html');
+	$template->add_var ('show-comment', $show_comment);
+	$template->write ();
 
 }
 

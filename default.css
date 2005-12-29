@@ -290,12 +290,10 @@ div.icon_view {
 	padding-left: 28px;
 }
 
-div.abuse {
-	font-family: sans-serif;
-	padding-bottom: 5px;
-	margin-bottom: 10px;
-	color: #113c53;
-	border-bottom: dotted 2px #dedede;+
+div.comment_status {
+	text-align: right;
+	font-size: small;
+	margin-bottom: 1em;
 }
 
 table.theme_info {

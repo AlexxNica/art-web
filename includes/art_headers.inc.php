@@ -30,7 +30,7 @@ if (array_key_exists ("login", $_POST))
 		{
 			art_header ("Login error");
 			print ("<h1>Login failed</h1>");
-			print ('<p class="warning">Incorrect username and password. Please try again.  To reset your password, click <a href="account?mode=lostpassword">here</a></p>');
+			print ('<p class="warning">Incorrect username and password. Please try again.  To reset your password, click <a href="/account.php?mode=lostpassword">here</a></p>');
 			print ("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
 			print ("<table>\n");
 			print ("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");

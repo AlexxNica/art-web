@@ -5,7 +5,10 @@ require ('art_headers.inc.php');
 require ('config.inc.php');
 
 $screenshot_category_list = array_keys ($screenshot_config_array);
+foreach ($screenshot_config_array as $id => $config)
+	$screenshot_category_select[$id] = $config['name'];
 $category = validate_input_array_default ($_POST['category'], $screenshot_category_list, '');
+$error_message = '';
 
 function create_submission_filename ($name, $category, $extra, $ext)
 {
@@ -152,20 +155,18 @@ if (array_key_exists ('category', $_POST))
 // OUTPUT /////////////////////////////////////////////////////////////////////
 
 art_header ("Submit Screenshot");
-create_title ("Screenshot Submission", "To submit a screenshot, please fill in the form below");
 
 /* require login earlier, to prevent problems with file upload */
 is_logged_in ();
-if ($error_message)
-	print ('<p class="error">'.$error_message.'</p>');
 
-$category_list = create_select_box ('category', array_combine($screenshot_category_list, $screenshot_category_list), $category);
+$category_list = create_select_box ('category', $screenshot_category_select, $category);
 
 $template = new template ('submit_screenshot.html');
 $template->add_var ('category-list', $category_list);
 $template->add_var ('name', htmlspecialchars ($unvalidated_item_name));
 $template->add_var ('description',htmlspecialchars ($unvalidated_description));
 $template->add_var ('username', $_SESSION['username']);
+$template->add_var ('message', '<p class="error">'.$error_message.'</p>');
 $template->write ();
 
 art_footer ();

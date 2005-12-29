@@ -1,5 +1,8 @@
-
+<h1>Screenshot Submission</h1>
+<div class="subtitle">To submit a screenshot, please fill in the form below</div>
+{message}
 <form method="POST" enctype="multipart/form-data" action="{SELF}">
+<input type="hidden" name="MAX_FILE_SIZE" value="500000" />
 <table>
 <tr>
 <td><label for="category">Category:</label></td>
@@ -23,7 +26,7 @@
 </tr>
 <tr>
 <td><input type="submit" value="Submit" /></td>
-<td></td>
+<td><p class="info">Please note, the file size must not be more than 500KB</p></td>
 </tr>
 </table>
 </form>
