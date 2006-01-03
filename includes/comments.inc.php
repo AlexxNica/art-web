@@ -37,7 +37,7 @@ function print_comments($artID, $type)
 		{
 			$count++;
 			$template->add_var ('username-url', '/users/'.rawurlencode ($username));
-			$template->add_var ('username', $username);
+			$template->add_var ('username', htmlentities ($username));
 			$template->add_var ('post-date', FormatRelativeDate(time(), $comment_time ) . date(" - H:i", ($comment_time + (3600 * ($timezone + 5)))));
 			$template->add_var ('comment', html_parse_text ($user_comment));
 

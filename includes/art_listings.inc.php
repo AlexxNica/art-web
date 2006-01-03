@@ -469,7 +469,9 @@ class search_result extends general_listing
 		print_select_box("search_type", $search_type_array, $this->search_type);
 		print("</td></tr>\n");
 		
-		print("\t<tr><td>For The Text:</td><td><input type=\"text\" name=\"search_text\" value=\"".$this->search_text."\"/></td></tr>\n");
+		print("\t<tr><td>For The Text:</td><td>");
+		print("<input type=\"text\" name=\"search_text\" value=\"".htmlentities ($this->search_text)."\"/>");
+		print("</td></tr>\n");
 		
 		print("\t<tr><td>Sort By:</td><td>");
 		print_select_box("sort_by", $sort_by_array, $this->sort_by);
@@ -524,7 +526,9 @@ class search_result extends general_listing
 			
 				print("<div class=\"h2\">Search Results</div><ul>");
 				while (list($userID, $realname) = mysql_fetch_row($this->select_result)) {
-					print("\t<li><a href=\"/users/$userID\">$realname</a></li>");
+					print("\t<li><a href=\"/users/$userID\">");
+					print(htmlentities($realname));
+					print("</a></li>");
 				}
 				print("</ul>");
 				

@@ -1,3 +1,13 @@
+2006-01-03  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/art_listings.inc.php:
+	* includes/comments.inc.php:
+	* includes/news.inc.php:
+	* users:
+	some escaping fixes
+
+	* users: ensure homepage starts with http://
+
 2005-12-29  Thomas Wood  <thos@gnome.org>
 
 	* includes/art_headers.inc.php: Fix bug in forgot password link

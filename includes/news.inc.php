@@ -19,9 +19,9 @@ class artweb_news
 		while($news_select_row=mysql_fetch_array($this->news_select_result))
 		{
 			$date = fix_sql_date($news_select_row["date"]);
-			$author = $news_select_row["author"];
+			$author = htmlentities($news_select_row["author"]);
 			$author_email = spam_proof_email($news_select_row["author_email"]);
-			$title =  $news_select_row["title"];
+			$title =  html_parse_text($news_select_row["title"]);
 			$body =  html_parse_text($news_select_row["body"]);
 
 			print("\t<{$this->heading}>$title</{$this->heading}>\n");

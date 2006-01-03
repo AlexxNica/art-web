@@ -51,6 +51,8 @@ else
 		{
 			extract(mysql_fetch_array($author_result));
 			$email = spam_proof_email ($email);
+			$realname = htmlentities ($realname);
+			
 			art_header($realname);
 			if ($userID == $_SESSION['userID'])
 				create_title ($realname, "<a href=\"/account.php\">Edit</a> your profile.");
@@ -67,6 +69,8 @@ else
 				print("\t\t<td><a href=\"mailto:$email\">$email</a></td></tr>\n");
 			}	
 			if($homepage) {
+				if (!preg_match ('/^http:\/\/.*$/', $homepage))
+					$homepage = 'http://'.$homepage;
 				print("\t<tr><td><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /></td>\n");
 				print("\t\t<td><a href=\"$homepage\">$homepage</a></td></tr>\n");
 			}
@@ -104,7 +108,7 @@ else
 			}
 			else
 			{
-				$username = ucfirst ($username);
+				$username = htmlentities (ucfirst ($username));
 				print ("<h1>$username's Favourite Items</h1>");
 				print ('<div class="subtitle">'.$username.'\' top rated items</div>');
 				$listing = new top_rated_list;
