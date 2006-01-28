@@ -1,0 +1,24 @@
+<h1>{name} By <a href="/users/{username}">{username}</a></h1>
+<div class="subtitle">Screenshots - {category-name}</div>
+<a href="/preview.php?images=screenshots/{category}/{download_filename}" onClick="window.open('/preview.php?image=screenshots/{category}/{download_filename}', 'Art Preview', 'width=640,height=640,resizable=no,scrollbars=yes,status=no'); return false;" rel="external">
+<img src="/images/thumbnails/screenshots/{category}/{thumbnail_filename}" alt="Preview" class="{thumbnail-class}" />
+</a>
+{description}
+<br style="clear:both" />
+<table style="margin-top: 1em;">
+<tr>
+    <th>Release</th><td>{release-date}</td>
+</tr>
+<tr>
+    <th>Rating</th><td style="white-space:nowrap;">{rating-bar}<br/><small>My rating: {user-rating}</small></td>
+</tr>
+<tr>
+    <th>Popularity</th><td>{download_count} views</td>
+</tr>
+</table>
+
+<h1>User Comments</h1>
+<br/>
+{comments}
+<hr/>
+{comment-form}

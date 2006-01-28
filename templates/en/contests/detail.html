@@ -1,0 +1,27 @@
+<h1>{name} By <a href="/users/{username}">{username}</a></h1>
+<div class="subtitle">{category-name}</div>
+<img src="/images/thumbnails/contests/{contest}/{small_thumbnail_filename}" alt="Preview" class="{thumbnail-class}" />
+<div class="download_box">
+<strong style="line-height:2em;">Download</strong> <br/>
+<a href="/download/contest/{contest}/{contestID}/{download_filename}" class="tar">{name} ({file-size})</a>
+<p class="info" style="line-height:1em;font-size:small;">{install-instructions}</p>
+</div>
+{description}
+<br style="clear:both" />
+<table style="margin-top: 1em;">
+<tr>
+    <th>Release</th><td>{release-date}</td>
+</tr>
+<tr>
+    <th>Popularity</th><td>{download_count} downloads</td>
+</tr>
+<tr>
+    <th>License</th><td>{license-link}</td>
+</tr>
+</table>
+
+<h1>User Comments</h1>
+<br/>
+{comments}
+<hr/>
+{comment-form}

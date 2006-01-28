@@ -1,0 +1,31 @@
+<h1>{theme_name} By <a href="/users/{username}">{username}</a></h1>
+<div class="subtitle">{category-name}</div>
+<a href="/preview.php?images=thumbnails/{category}/{thumbnail_filename}" onClick="window.open('/preview.php?image=thumbnails/{category}/{thumbnail_filename}', 'Art Preview', 'width=640,height=640,resizable=no,scrollbars=yes,status=no'); return false;" rel="external">
+<img src="/images/thumbnails/{category}/{small_thumbnail_filename}" alt="Preview" class="{thumbnail-class}" />
+</a>
+<div class="download_box">
+<strong style="line-height:2em;">Download</strong> <br/>
+<a href="/download/themes/{category}/{themeID}/{download_filename}" class="tar">{theme_name} ({file-size})</a>
+<p class="info" style="line-height:1em;font-size:small;">{install-instructions}</p>
+</div>
+{description}
+<br style="clear:both" />
+<table style="margin-top: 1em;">
+<tr>
+    <th>Release</th><td>{release-date}</td>
+    <th>License</th><td>{license-link}</td>
+</tr>
+<tr>
+    <th>Version</th><td>{version}</td>
+</tr>
+<tr>
+    <th>Rating</th><td style="white-space:nowrap;">{rating-bar}<br/><small>My rating: {user-rating}</small></td>
+    <th>Popularity</th><td>{download_count} downloads</td>
+</tr>
+</table>
+
+<h1>User Comments</h1>
+<br/>
+{comments}
+<hr/>
+{comment-form}

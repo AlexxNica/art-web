@@ -1,6 +1,6 @@
 <?php
 
-require('config.inc.php');
+require ('config.inc.php');
 
 if (!function_exists('array_combine'))
 {
@@ -291,16 +291,36 @@ function calculate_downloads_per_day($download_count, $start_timestamp)
 	return $popularity;
 }
 
-function rating_bar($rating)
+function rating_bar($rating, $count = 5)
 {
 	global $site_url;
-	$rating = ceil($rating);
-	print('<div style="float:left; width: 100px;">');
-	for ($i=1; $i <= $rating; $i++) print("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
-	print('</div>');
-	return $rating;
+	if ($count < 5)
+		return "(5 votes required, $count votes total)";
+	$result = ('<small>');
+	for ($i=1; $i <= $rating; $i++) 
+		$result .= ("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
+	$result .= (' ('.$count.' votes total)</small>');
+	return $result;
 }
 
+function user_rating_bar($rating)
+{
+	global $site_url;
+	$active_star = '<img src="/images/site/stock_about.png" alt="*" />';
+	$inactive_star = '<img src="/images/site/stock_about_disabled.png" alt="*" />';
+
+	$result = '';
+	$i = 0;
+	while (++$i <= 5)
+	{
+		if ($i <= $rating)
+			$star = $active_star;
+		else
+			$star = $inactive_star;
+		$result .= '<a href="?rating='.$i.'">'.$star.'</a>';
+	}
+	return $result;
+}
 
 function html_parse_text($comment)
 {
@@ -374,6 +394,21 @@ function set_session_var_default($var_name, $default)
 // Input Validation Functions //
 ////////////////////////////////
 
+function POST ($var)
+{
+	if (array_key_exists ($var, $_POST))
+		return $_POST[$var];
+	else
+		return null;
+}
+
+function GET ($var)
+{
+	if (array_key_exists ($var, $_GET))
+		return $_GET[$var];
+	else
+		return null;
+}
 function validate_input_regexp_default ($input, $regexp, $default)
 {
 	if (ereg ($regexp, $input))

@@ -33,9 +33,7 @@ if($HTTP_POST_VARS)
 	{
 		print("<p class=\"error\">Please fill in all of the form fields and resumbit the form.</p>");
 	}
-}
-else
-{
+
 	// get today's month, day and year
 	$todays_date = date("m-d-Y");
 	list($todays_month,$todays_day,$todays_year) = explode("-",$todays_date);
@@ -49,7 +47,6 @@ else
 	print("<tr><td><input type=\"submit\" value=\"Add News Item\" /></td></tr>\n");
 	print("</table>\n");
 	print("</form>\n");
-}
 
 admin_footer();
 

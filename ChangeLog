@@ -1,3 +1,18 @@
+2006-01-28  Thomas Wood  <thos@gnome.org>
+
+	* admin/add_news_item.php: Don't clear the form if there was a mistake
+	* default.css:
+	* includes/art_page.inc.php:
+	* includes/comments.inc.php:
+	* includes/common.inc.php:
+	* templates/en/backgrounds/detail.html:
+	* templates/en/comments/add.html:
+	* templates/en/contests/detail.html:
+	* templates/en/screenshots/detail.html:
+	* templates/en/themes/detail.html:
+
+	New templates for 'detail' pages
+
 2006-01-03  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/art_listings.inc.php:

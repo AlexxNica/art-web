@@ -2,8 +2,11 @@
 
 require_once ("common.inc.php");
 
-function print_comments($artID, $type)
+
+function get_comments ($artID, $type)
 {
+	$result = '';
+
 	$comment_select_result = mysql_query("SELECT comment.commentID, comment.status, comment.userID, user.username, comment.comment, comment.timestamp FROM comment, user WHERE user.userID=comment.userID AND type='$type' and artID='$artID' and comment.status!='deleted' ORDER BY comment.timestamp DESC");
 
 	if($_SESSION['userID']) {
@@ -24,12 +27,12 @@ function print_comments($artID, $type)
 		$msg = "Comments";
 	}
 
+/*
 	print('<a name="comments"></a>');
 	create_title("$comment_count $msg");
-
+*/
 	if($comment_count > 0)
 	{
-		print("<br />");
 		$count = 0;
 
 		$template = new template ('comments/display.html');
@@ -61,10 +64,11 @@ function print_comments($artID, $type)
 			
 				$template->add_var ('status', $form);
 			}
-			$template->write ();
+			$result .= $template->parse ();
 		}
 
 	}
+	return $result;
 }
 
 function report_comment($report, $commentID) 
@@ -76,7 +80,7 @@ function report_comment($report, $commentID)
 	}
 }
 
-function print_comment_form($comment)
+function get_comment_form ($comment)
 {
 	$show_comment = "";
 	if (strlen($comment) < 10 && strlen($comment) != 0) 
@@ -87,8 +91,12 @@ function print_comment_form($comment)
 
 	$template = new template ('comments/add.html');
 	$template->add_var ('show-comment', $show_comment);
-	$template->write ();
+	return $template->parse ();
+}
 
+function print_comment_form ($comment)
+{
+	print (get_comment_form ($comment));
 }
 
 function add_comment($artID, $type, $comment, $header)
@@ -101,7 +109,7 @@ function add_comment($artID, $type, $comment, $header)
 		}
 		elseif(is_logged_in($header))
 		{
-			$comment = mysql_real_escape_string($comment); // make sure it is safe for mysql
+			$comment = escape_string ($comment); // make sure it is safe for mysql
 			$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
 			if ($comment_result === False)
 			{
@@ -119,6 +127,26 @@ function add_comment($artID, $type, $comment, $header)
 		}
 	}
 }
+
+
+
+// Run any pending comment functions
+$comment_message = '';
+
+// Report Comment
+$report = POST ('report');
+$commentID = POST ('commentID');
+
+if ($report && is_numeric ($commentID))
+	report_comment($report, $commentID);
+
+// Add Comment
+$comment = POST ('comment'); // this is made safe later
+list ($foo, $type, $category, $item) = explode ('/', $_SERVER['PHP_SELF']);
+$type = substr ($type, 0, strlen ($type) -1 ); // Remove plural 's'
+
+if ($comment)
+	$comment_message = add_comment($item, $type, $comment, $header);
 
 
 
