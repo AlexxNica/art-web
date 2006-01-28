@@ -1,5 +1,9 @@
 2006-01-28  Thomas Wood  <thos@gnome.org>
 
+	* includes/art_page.inc.php: Fix dates
+
+2006-01-28  Thomas Wood  <thos@gnome.org>
+
 	* admin/add_news_item.php: Don't clear the form if there was a mistake
 	* default.css:
 	* includes/art_page.inc.php:
