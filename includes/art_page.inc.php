@@ -115,7 +115,7 @@ else
 
 		$rate_count_result = mysql_query ("SELECT COUNT(voteID) FROM vote WHERE artID = $artID AND type='{$type}'");
 		list ($rate_count) = mysql_fetch_row ($rate_count_result);
-		$template->add_var ('rating-bar', rating_bar ($info['rating'], $rate_count));
+		$template->add_var ('rating-bar', rating_bar (ceil ($info['rating']), $rate_count));
 
 		if ($_SESSION['userID'] == $info['userID'])
 			$user_rating_bar = 'Sorry, you may not vote for your own work!';
@@ -126,7 +126,12 @@ else
 			$user_rating_bar = user_rating_bar ($user_rating);
 		}
 		$template->add_var ('user-rating', $user_rating_bar);
+
+		$download_filename = "${type}s/$category/". $info['download_filename'];
+		if (($type == 'background' || $type == 'theme') && $artID < 1000)
+			$download_filename = 'archive/' . $download_filename;
 		$template->add_var ('file-size', get_filesize_string ($sys_ftp_dir . $download_filename));
+
 		if (in_array ($category, array('gtk2', 'icon', 'metacity')))
 			$install_instructions = 'Drag and drop this theme into the theme manager to install';
 		else

@@ -1,5 +1,13 @@
 2006-01-29  Thomas Wood  <thos@gnome.org>
 
+	* includes/art_listings.inc.php:
+	* includes/art_page.inc.php:
+
+	Fix ratings
+	Fix filesizes
+
+2006-01-29  Thomas Wood  <thos@gnome.org>
+
 	* includes/art_page.inc.php:
 	* templates/en/backgrounds/detail.html:
 	* templates/en/themes/detail.html:

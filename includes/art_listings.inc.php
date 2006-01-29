@@ -163,7 +163,7 @@ class general_listing
 			$itemID = $row['ID'];
 			$type   = $row['type']; /* Has to be set in the SQL statement. */
 			$name   = $row['name'];
-			$rating = $row['rating'];
+			$rating = ceil ($row['rating']);
 			$category  = $row['category'];
 			$add_date  = $row['add_timestamp'];
 			
