@@ -132,6 +132,11 @@ else
 		else
 			$install_instructions = '';
 
+		if (($type == 'background' || $type == 'theme') && $artID < 1000)
+			$template->add_var ('archive', 'archive/');
+		else
+			$template->add_var ('archive', '');
+
 		if (in_array ($category, array ('metacity', 'icon')))
 			$template->add_var ('thumbnail-class', 'thumbnail_no_border');
 		else
