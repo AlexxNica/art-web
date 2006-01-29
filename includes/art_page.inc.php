@@ -113,7 +113,7 @@ else
 		$template->add_vars ($info);
 		$template->add_var ('release-date', FormatRelativeDate (time(), strtotime ($info ['release_date']), true));
 
-		$rate_count_result = mysql_query ("SELECT COUNT(voteID) FROM vote WHERE artID = $artID AND type='theme'");
+		$rate_count_result = mysql_query ("SELECT COUNT(voteID) FROM vote WHERE artID = $artID AND type='{$type}'");
 		list ($rate_count) = mysql_fetch_row ($rate_count_result);
 		$template->add_var ('rating-bar', rating_bar ($info['rating'], $rate_count));
 

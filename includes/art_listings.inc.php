@@ -194,7 +194,8 @@ class general_listing
 					print("<div class=\"icon_view\">\n<a href=\"$link\">");
 					print("\t<img src=\"$thumbnail\" alt=\"Thumbnail of $item_name\" class=\"$thumbnail_class\" />");
 					print("</a><br/>\n");
-					rating_bar($rating);
+					for ($i=1; $i <= $rating; $i++)
+						print ("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
 					print("</div>\n");
 				break;
 				
@@ -205,7 +206,8 @@ class general_listing
 					print("</td>\n");
 					print("\t<td><a href=\"$link\" class=\"h2\"><strong>".htmlentities($name)."</strong></a><br/>\n");
 					print("\t\t<span class=\"subtitle\">$category_name<br/>$date</span><br/>\n");
-					$rating = rating_bar($rating);
+					for ($i=1; $i <= $rating; $i++)
+						print ("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
 					if ($this->format != 'rss')
 					{
 						/* do not display number of comments when in the rss feed as changes to
