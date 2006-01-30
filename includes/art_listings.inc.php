@@ -6,7 +6,7 @@ require_once("common.inc.php");
 /* helper for create_page_link */
 function add_var_if_set($var_name, $value) {
 	if (isset($value))
-		print('&amp;'.$var_name.'='.htmlentities($value));
+		return '&amp;'.$var_name.'='.htmlentities($value);
 }
 
 function print_select_box_with_label ($label, $name, $array, $value)
@@ -90,27 +90,33 @@ class general_listing
 	function create_page_link ($page, $label = FALSE) {
 		if($page == $this->page)
 		{
-			print(" <strong>$page</strong>\n ");
+			$result .= " <strong>$page</strong>\n ";
 		}
 		else
 		{
 			if ($label === FALSE) $label = $page;
 			
-			print('<a class="box" href="'.$_SERVER['PHP_SELF'].'?page='.$page);
+			$result .= '<a class="box" href="'.$_SERVER['PHP_SELF'].'?page='.$page;
 			
-			add_var_if_set('sort_by', $this->sort_by);
-			add_var_if_set('thumbnails_per_page', $this->per_page);
-			add_var_if_set('view', $this->view);
-			add_var_if_set('resolution', $this->resolution);
-			add_var_if_set('order', $this->order);
-			add_var_if_set('search_text', $this->search_text);
-			add_var_if_set('search_type', $this->search_type);
+			$result .= add_var_if_set('sort_by', $this->sort_by);
+			$result .= add_var_if_set('thumbnails_per_page', $this->per_page);
+			$result .= add_var_if_set('view', $this->view);
+			$result .= add_var_if_set('resolution', $this->resolution);
+			$result .= add_var_if_set('order', $this->order);
+			$result .= add_var_if_set('search_text', $this->search_text);
+			$result .= add_var_if_set('search_type', $this->search_type);
 			
-			print("\">$label</a>\n");
+			$result .= "\">$label</a>\n";
 		}
+		return $result;
 	}
-		
+	
 	function print_page_numbers()
+	{
+		print ($this->return_page_numbers ());
+	}
+	
+	function return_page_numbers()
 	{
 		if (!isset($this->num_pages))
 			return false;
@@ -120,41 +126,49 @@ class general_listing
 		$num_links = 9; // Must be an odd number
 		$offset = ($num_links - 1) / 2;
 
-		print('<!-- Page Navigation System -->');
-		print('<div style="clear:both; text-align:center"><p>');
+		$result .= '<!-- Page Navigation System -->';
+		$result .= '<div style="clear:both; text-align:center"><p>';
 
 		if ($this->page > 1) {
-			$this->create_page_link ($this->page - 1, '<img src="/images/site/stock_left.png" />');
+			$result .= $this->create_page_link ($this->page - 1, '<img src="/images/site/stock_left.png" />');
 		}
 
 		$start = max (1, $this->page - ($num_links - 1));
 		$start = max ($start, $this->page - $offset);
 
 		$end = max ($this->page + $offset, $num_links);
-		$end = min($end, $this->num_pages);
-		
+		$end = min ($end, $this->num_pages);
+
 		if ($start > 1)
-			$this->create_page_link ($this->page - $num_links, '...');
-			
-			
+			$result .= $this->create_page_link ($this->page - $num_links, '...');
+
 		for ($page=$start; $page <= $end; $page++)
 		{
-			$this->create_page_link($page);
+			$result .= $this->create_page_link($page);
 		}
 		if ($end < $this->num_pages)
-			$this->create_page_link ($this->page + $num_links, '...');
+			$result .= $this->create_page_link ($this->page + $num_links, '...');
 
 		if($this->page < $this->num_pages)
-			$this->create_page_link ($this->page + 1, '<img src="/images/site/stock_right.png" />');
-		print('</p></div>');
+			$result .= $this->create_page_link ($this->page + 1, '<img src="/images/site/stock_right.png" />');
+		$result .= '</p></div>';
 
+		return $result;
 	}
-	
-	function print_listing()
+
+	function print_listing ()
+	{
+		print ($this->return_listing ());
+	}
+
+	function return_listing()
 	{
 		global $theme_config_array;
 		global $background_config_array;
 		global $site_url;
+
+		$result = '';
+
 		while($row = mysql_fetch_assoc($this->select_result))
 		{
 			$any_result = TRUE;
@@ -182,32 +196,32 @@ class general_listing
 			
 			/*----*/
 			if ($this->format == 'rss') {
-				print("<item>\n");
-				print("\t<title>[$category_name] ".xmlentities($name)."</title>\n");
-				print("\t<link>$link</link>\n");
-				print("\t<guid>$link</guid>\n");
-				print("\t<pubDate>".date("r", $add_date)."</pubDate>\n");
-				print("\t<description><![CDATA[\n");
+				$result .= "<item>\n";
+				$result .= "\t<title>[$category_name] ".xmlentities($name)."</title>\n";
+				$result .= "\t<link>$link</link>\n";
+				$result .= "\t<guid>$link</guid>\n";
+				$result .= "\t<pubDate>".date("r", $add_date)."</pubDate>\n";
+				$result .= "\t<description><![CDATA[\n";
 			}
 			switch ($this->view) {
 				case 'icons':
-					print("<div class=\"icon_view\">\n<a href=\"$link\">");
-					print("\t<img src=\"$thumbnail\" alt=\"Thumbnail of $item_name\" class=\"$thumbnail_class\" />");
-					print("</a><br/>\n");
+					$result .= "<div class=\"icon_view\">\n<a href=\"$link\">";
+					$result .= "\t<img src=\"$thumbnail\" alt=\"Thumbnail of $item_name\" class=\"$thumbnail_class\" />";
+					$result .= "</a><br/>\n";
 					for ($i=1; $i <= $rating; $i++)
-						print ("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
-					print("</div>\n");
+						$result .=  ("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
+					$result .= "</div>\n";
 				break;
 				
 				case 'list':
 				default:
-					print("<table border=\"0\" style=\"margin-bottom:1em;\"><tr>\n");
-					print("\t<td style=\"width:120px\"><a href=\"$link\"><img src=\"$thumbnail\" alt=\"Thumbnail\" class=\"$thumbnail_class\"/></a>");
-					print("</td>\n");
-					print("\t<td><a href=\"$link\" class=\"h2\"><strong>".htmlentities($name)."</strong></a><br/>\n");
-					print("\t\t<span class=\"subtitle\">$category_name<br/>$date</span><br/>\n");
+					$result .= "<table border=\"0\" style=\"margin-bottom:1em;\"><tr>\n";
+					$result .= "\t<td style=\"width:120px\"><a href=\"$link\"><img src=\"$thumbnail\" alt=\"Thumbnail\" class=\"$thumbnail_class\"/></a>";
+					$result .= "</td>\n";
+					$result .= "\t<td><a href=\"$link\" class=\"h2\"><strong>".htmlentities($name)."</strong></a><br/>\n";
+					$result .= "\t\t<span class=\"subtitle\">$category_name<br/>$date</span><br/>\n";
 					for ($i=1; $i <= $rating; $i++)
-						print ("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
+						$result .=  ("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
 					if ($this->format != 'rss')
 					{
 						/* do not display number of comments when in the rss feed as changes to
@@ -216,25 +230,26 @@ class general_listing
 						$comment_count = $this->get_num_comments($itemID, $type);
 						if ($comment_count > 0)
 						{
-							print('<small style="white-space: nowrap">');
-							print('<a href="'.$link.'#comments" style="text-decoration: none">');
-							print('<img src="/images/site/stock_draw-callouts-16.png" alt="" style="margin-right: 1em"/>');
-							print($comment_count . ' comments</a></small>');
+							$result .= '<small style="white-space: nowrap">';
+							$result .= '<a href="'.$link.'#comments" style="text-decoration: none">';
+							$result .= '<img src="/images/site/stock_draw-callouts-16.png" alt="" style="margin-right: 1em"/>';
+							$result .= $comment_count . ' comments</a></small>';
 						}
 					}
-					print("\n\t</td>\n");
-					print("</tr></table>\n");
+					$result .= "\n\t</td>\n";
+					$result .= "</tr></table>\n";
 				break;
 			}
 			if ($this->format == 'rss') {
-				print("]]>\n\t</description>\n");
-				print("</item>\n");
+				$result .= "]]>\n\t</description>\n";
+				$result .= "</item>\n";
 			}
 		}
 		
 		if ($any_result != TRUE) {
-			print('<p class="info">'.$this->none_message.'</p>');
+			$result .= '<p class="info">'.$this->none_message.'</p>';
 		}
+		return $result;
 	}
 }
 
@@ -284,7 +299,7 @@ class theme_list extends general_listing
 {
 	var $sort_by;
 	var $order;
-	var $where = array ('parent' => '0', 'status' => 'active');
+	var $where = array ('status' => 'active');
 	
 	function get_view_options()
 	{
@@ -374,7 +389,7 @@ class background_list extends general_listing
 	var $sort_by;
 	var $order;
 	var $resolution;
-	var $where = array ('parent' => '0', 'status' => 'active');
+	var $where = array ('status' => 'active');
 	
 	function get_view_options()
 	{
@@ -669,12 +684,29 @@ class user_screenshot_list extends screenshot_list
 
 class variations_list extends general_listing
 {
+
+	function variations_list ($parentID, $type)
+	{
+		$this->type = $type;
+		$this->select ($parentID);
+	}
+
 	function print_listing()
 	{
 		if ($this->select_result != null && mysql_num_rows ($this->select_result) > 0)
 		{
 			create_title("Variations", "This {$this->type} has one or more variations");
 			parent::print_listing();
+		}
+	}
+
+	function return_listing ()
+	{
+		if ($this->select_result != null && mysql_num_rows ($this->select_result) > 0)
+		{
+			$result = "<h1>Variations</h1>\n<div class=\"subtitle\">This {$this->type} has one or more variations</div>\n";
+			$result .= parent::return_listing();
+			return $result;
 		}
 	}
 	

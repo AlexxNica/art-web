@@ -164,6 +164,9 @@ else
 		}
 
 
+		$variations = new variations_list ($artID, $type);
+		$template->add_var ('variations', $variations->return_listing ());
+
 		$template->write ();
 		art_footer ();
 
