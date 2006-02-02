@@ -54,21 +54,28 @@ if($badcomment_count > 0)
 	
 	while(list($commentID, $status, $userID, $username, $comment, $comment_time, $comment_type, $comment_artID)=mysql_fetch_row($badcomment_result))
 	{
-		if($comment_type == "background") {
-			$backgroundcat = "SELECT category, background_name FROM `background` WHERE backgroundID = $comment_artID";
-			$result = mysql_query($backgroundcat);
-			list($category, $name) = mysql_fetch_row($result);
+		switch ($comment_type) {
+			case "background":
+				$sql = "SELECT category, background_name FROM `background` WHERE backgroundID = $comment_artID";
+				break;
+			case "theme":
+				$sql = "SELECT category, theme_name FROM `theme` WHERE themeID = $comment_artID";
+				break;
+			case "contest":
+				$sql = "SELECT contest, name FROM `contest` WHERE contestID = $comment_artID";
+				break;
+			case  "screenshot":
+				$sql = "SELECT category, name FROM `screenshot` WHERE screenshotID = $comment_artID";
+				break;
+			default:
+				if (!$warned_unkown_type === True)
+					print ('<p class="warning">Got an unknown art type! Expect weird things to happen.</p>');
+				$warned_unkown_type = True;
 		}
-		if($comment_type == "theme") {
-			$themecat = "SELECT category, theme_name FROM `theme` WHERE themeID = $comment_artID";
-			$result = mysql_query($themecat);
-			list($category, $name) = mysql_fetch_row($result);
-		}
-		if($comment_type == "contest") {
-			$themecat = "SELECT contest, name FROM `contest` WHERE contestID = $comment_artID";
-			$result = mysql_query($themecat);
-			list($category, $name) = mysql_fetch_row($result);
-		}
+		
+		$result = mysql_query($sql);
+		list($category, $name) = mysql_fetch_row($result);
+		
 		$link = "../".$comment_type."s/$category/$comment_artID";
 		$count++;
 		// display comment header
