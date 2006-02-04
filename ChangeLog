@@ -1,3 +1,11 @@
+2006-02-04  Thomas Wood  <thos@gnome.org>
+
+	* default.css:
+	* includes/art_page.inc.php:
+
+	- New download icon
+	- Better css for download links
+
 2006-02-02  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/comments.php: Added correct support for screenshots.

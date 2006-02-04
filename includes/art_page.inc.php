@@ -159,7 +159,7 @@ else
 		{
 			$resolution_result = mysql_query ("SELECT * FROM background_resolution WHERE backgroundID = $artID");
 			while ($res = mysql_fetch_array ($resolution_result))
-				$download_list .= '<a href="/download/backgrounds/'.$info['category'].'/'.$res['background_resolutionID'].'/'.$res['filename'].'" class="'.$res['type'].'" >'.$res['resolution'].'</a><br/>';
+				$download_list .= '<a href="/download/backgrounds/'.$info['category'].'/'.$res['background_resolutionID'].'/'.$res['filename'].'" class="'.$res['type'].'" >'.$res['resolution'].'</a>';
 			$template->add_var ('download-list', $download_list);
 		}
 

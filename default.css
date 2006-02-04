@@ -140,35 +140,40 @@ div#sidebar a {
 }
 
 a.jpg {
-	padding-left:24px;
-	padding-bottom: 4px;
+	display: block;
+	padding-left: 24px;
+	line-height: 18px;
+	margin: 4px;
 	background-image: url("/images/site/gnome-mime-image-jpeg.png");
 	background-repeat: no-repeat;
 	text-decoration: none;
 }
 
 a.png {
-	padding-left:24px;
-	padding-bottom: 4px;
+	display: block;
+	padding-left: 24px;
 	line-height: 18px;
+	margin: 4px;
 	background-image: url("/images/site/gnome-mime-image-png.png");
 	background-repeat: no-repeat;
 	text-decoration: none;
 }
 
 a.svg {
-	padding-left:24px;
-	padding-bottom: 4px;
+	display: block;
+	padding-left: 24px;
 	line-height: 18px;
+	margin: 4px;
 	background-image: url("/images/site/gnome-mime-image-svg.png");
 	background-repeat: no-repeat;
 	text-decoration: none;
 }
 
 a.tar {
-	padding-left:18px;
-	padding-bottom: 4px;
-	background-image: url("/images/site/stock_save.png");
+	display: block;
+	padding-left: 28px;
+	line-height: 24px;
+	background-image: url("/images/site/emblem-downloads.png");
 	background-repeat: no-repeat;
 	text-decoration: none;
 }
