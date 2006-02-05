@@ -3,26 +3,28 @@
 require("common.inc.php");
 require("art_headers.inc.php");
 
-$contest = '2.12-splash';
+$contest = '2.14-artwork';
 
-function create_submission_filename($name, $category, $extra, $ext)
+function create_submission_filename($name, $contest, $extra, $ext)
 {
-
-	$base = ereg_replace("[_|-]", " ", $name);
+	$base = stripslashes ($name);
+	$base = ereg_replace('[_|-]', ' ', $base);
 	$base = ereg_replace('[^a-zA-Z0-9\s]', " ", $base);
 	$base = ucwords($base);
 	$base = str_replace(" ", "", $base);
-	$base = 'Splash-' . $base;
-	
+
 	return $base . $extra . '.' . $ext;
 }
 
-function upload_entry($unvalidated_item_name, $unvalidated_description)
+function upload_entry ($unvalidated_item_name, $unvalidated_description)
 {
 	global $contest;
 
 	$remote_filename = $_FILES['item_filename']['name'];
 	$userID = $_SESSION['userID'];
+
+	if ($contest == '')
+		return "Invalid category. Please try again";
 
 	if ($unvalidated_item_name == '')
 		return "Please enter a name for your submission";
@@ -33,49 +35,44 @@ function upload_entry($unvalidated_item_name, $unvalidated_description)
 	if ($remote_filename == '')
 		return "Please select a file to upload";
 
-	$item_name = mysql_escape_string($unvalidated_item_name);
-	$description = mysql_escape_string($unvalidated_description);
+	$item_name = mysql_escape_string ($unvalidated_item_name);
+	$description = mysql_escape_string ($unvalidated_description);
 
 
 	/* make sure user is logged in */
-	is_logged_in();
+	is_logged_in ();
 
 	/* get the uploaded file */
 	$file = $_FILES['item_filename'];
-	if (!isset($file))
+	if (!isset ($file))
 	{
-		art_fatal_error('Submit Contest Entry', 'Contest Submission', 'Something went wrong, as not all variables are set');
+		art_fatal_error ('Submit Contest Entry', 'Contest Submission', 'Something went wrong, as not all variables are set');
 	}
 	else
 	{
 		if ($file['error'] != UPLOAD_ERR_OK)
 		{
-			$message = array(UPLOAD_ERR_INI_SIZE   => "The uploaded file exceeds the upload_max_filesize directive in php.ini",
-					 UPLOAD_ERR_FORM_SIZE  => "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form",
-					 UPLOAD_ERR_PARTIAL    => "The uploaded file was only partially uploaded",
-					 UPLOAD_ERR_NO_FILE    => "No file was uploaded",
-					 UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder",
-					 UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.");
-			art_fatal_error('Submit Contest Entry', 'Contest Submission', 'There was an error in the file upload: '.$message[$file['error']]);
+			$message = array (UPLOAD_ERR_INI_SIZE   => "The uploaded file exceeds the upload_max_filesize directive in php.ini",
+					UPLOAD_ERR_FORM_SIZE  => "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form",
+					UPLOAD_ERR_PARTIAL    => "The uploaded file was only partially uploaded",
+					UPLOAD_ERR_NO_FILE    => "No file was uploaded",
+					UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder",
+					UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.");
+			art_fatal_error ('Submit Screenshot', 'Screenshot Submission', 'There was an error in the file upload: '.$message[$file['error']]);
 		}
 	}
-	
+
 	/* we have a file! */
 	/* get image info */
-	list($width, $height, $type) = getimagesize($file['tmp_name']);
-
-	if (($width > 640) or ($height > 480))
-		return "Image size must not exceed 640 pixels wide or 480 pixels high";
+	list ($width, $height, $type) = getimagesize ($file['tmp_name']);
 
 	if ($type == IMAGETYPE_PNG)
 	{
 		$extension = 'png';
-		$image = imagecreatefrompng($file['tmp_name']);
 	}
 	elseif ($type == IMAGETYPE_JPEG)
 	{
 		$extension = 'jpg';
-		$image = imagecreatefromjpeg($file['tmp_name']);
 	}
 	else
 	{
@@ -84,66 +81,55 @@ function upload_entry($unvalidated_item_name, $unvalidated_description)
 
 
 	/* we need to create a unique file name. For this first need a sane name */
-	$file_name = create_submission_filename($item_name, $contest, '', $extension);
-	$file_path = '/ftp/pub/gnome/teams/art.gnome.org/contests/'.$contest.'/'. $file_name;
-	$thumb_filename = create_submission_filename($item_name, $contest, '-Th', $extension);
+	$file_name = create_submission_filename ($item_name, $contest, '', $extension);
+	$file_path = 'images/thumbnails/contests/'.$contest.'/'. $file_name;
+	$thumb_filename = create_submission_filename ($item_name, $contest, '-Th', $extension);
 	$thumb_path = 'images/thumbnails/contests/'.$contest.'/'.$thumb_filename;
 
 	/* check that none of the files already exist. */
-	if (file_exists($file_path) || file_exists($thumb_path))
+	if (file_exists ($file_path) || file_exists ($thumb_path))
 	{
 		return 'There are already files with the same file name. Please change the name of your theme, so that there is no collision';
 	}
 
 
-	$maxheight = 80; $maxwidth = 96; /* XXX: just random values :) */
-	$ratio=$width/$height;
-
-	if ($ratio > ($maxwidth/$maxheight))
+	if (!move_uploaded_file ($file['tmp_name'], $file_path))
 	{
-		$newwidth  = $maxwidth;
-		$newheight = round($maxwidth/$ratio);
+		art_fatal_error ('Submit Contest Entry', 'Contest Submission', 'An error occured, while saving the uploaded file.');
 	}
-	else
+	chmod ($file_path, 0664);
+
+	copy ($file_path, $thumb_path);
+	exec ('convert -scale 96 '.$thumb_path.' '.$thumb_path, $output, $return_var);
+	if ($return_var != 0)
 	{
-		$newheight = $maxheight;
-		$newwidth  = round($maxheight*$ratio);
+		unlink ($file_path);
+		unlink ($thumb_path);
+		art_fatal_error ('Submit Contest Entry', 'Contest Entry Submission', 'An error occured, while saving the thumbnail.');
 	}
 
-	$thumb_image = ImageCreateTrueColor($newwidth,$newheight);
-	imagecopyresampled($thumb_image, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-	
-	if (!imagejpeg($thumb_image, $thumb_path, 70))
-		art_fatal_error('Submit Contest Entry', 'Contest Submission', 'An error occured, while saving the thumbnail.');
-
-	chmod($thumb_path, 0664); /* Make sure it's readable */
-	
-	if (!move_uploaded_file($file['tmp_name'], $file_path))
-	{
-		unlink($thumb_path);
-		art_fatal_error('Submit Contest Entry', 'Contest Submission', 'An error occured, while saving the uploaded file. Will try to delete the already saved thumbnail file.');
-	}
-	chmod($file_path, 0664);
+	chmod ($thumb_path, 0664); /* Make sure it's readable */
 
 	/* FILES DONE, now insert it into the DB */
-	$sql  = "INSERT INTO contest (status,name,contest,license,userID,parent,add_timestamp,release_date,version,description,thumbnail_filename,small_thumbnail_filename, download_start_timestamp, download_filename) ";
-	$sql .= "VALUES ('uploaded','$item_name','$contest','gnu-gpl','{$_SESSION['userID']}',0,".time().",now(),'','$description','','$thumb_filename',".time().",'$file_name')";
-	
-	$sql_result = mysql_query($sql);
-	if(!$sql_result)
+	$time = time ();
+	$sql  = "INSERT INTO contest (status,name,contest,userID,add_timestamp,description,small_thumbnail_filename, download_start_timestamp, thumbnail_filename, license) ";
+	$sql .= "VALUES ('active','$item_name','$contest','{$_SESSION['userID']}','$time','$description','$thumb_filename','$time','$file_name', '$license')";
+
+	$sql_result = mysql_query ($sql);
+	if (!$sql_result)
 	{
-		unlink($file_path);
-		unlink($thumb_path);
-		art_fatal_error('Submit Contest Entry', 'Contest Submission', 'Error inserting data into the database: '.mysql_error().'<br/>Removing the files again.');
+		unlink ($file_path);
+		unlink ($thumb_path);
+		art_fatal_error ('Submit Contest Entry', 'Contest Submission', 'Error inserting data into the database: '.mysql_error ().'<br/>Removing the files again.');
 	}
 
 	/* Upload was successful! */
 
-	art_header("Submit Contest Entry");
-	create_title("Contest Submission");
-	print('<p class="info">Thank you for your entry, it will appear in the <a href="/contests/'.$contest.'">listing</a> shortly.</p>');
-	art_footer();
-	die();
+	art_header ("Submit Contest Entry");
+	create_title ("Contest Submission");
+	print ('<p class="info">Thank you for your entry, it will appear in the <a href="/contests/'.$contest.'">listing</a> shortly.</p>');
+	art_footer ();
+	die ();
 
 }
 

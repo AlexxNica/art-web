@@ -162,6 +162,18 @@ else
 				$download_list .= '<a href="/download/backgrounds/'.$info['category'].'/'.$res['background_resolutionID'].'/'.$res['filename'].'" class="'.$res['type'].'" >'.$res['resolution'].'</a>';
 			$template->add_var ('download-list', $download_list);
 		}
+		
+		if ($type == 'contest')
+		{
+			if ($category == '2.14-artwork')
+			{
+				$template->add_var ('file-size', 'screenshot');
+				$template->add_var ('download-url',"/images/thumbnails/contests/$category/{$info['thumbnail_filename']}");
+			}
+			else
+				$template->add_var ('download-url',"/download/$download_filename");
+			$template->add_var ('release-date', FormatRelativeDate (time(), $info ['add_timestamp'], true));
+		}
 
 
 		$variations = new variations_list ($artID, $type);

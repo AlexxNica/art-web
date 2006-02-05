@@ -154,6 +154,12 @@ $contest_config_array = array (
 		"active" => "1",
 		"description" => "The contest for the GNOME 2.12 splash screen."
 		),
+	"2.14-artwork" => array (
+		"name" => "GNOME 2.14 artwork contest",
+		"url" => "/contests/2.14-artwork",
+		"active" => "1",
+		"description" => "The contest for a GDM Greeter, Splash and Background for GNOME 2.14."
+		)
 );
 
 $pill_array = array (
