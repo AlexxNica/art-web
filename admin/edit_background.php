@@ -47,7 +47,7 @@ if (array_key_exists('add_resolution', $_POST))
 elseif($action == "write")
 {
 	/* write the updated background text do the database */
-	if($background_name && $userID && $month && $day && $year && $background_description && $thumbnail_filename && $license && $resolution)
+	if($background_name && $userID && $month && $day && $year && $background_description && $thumbnail_filename && $resolution)
 	{
 		$date = $year . "-" . $month . "-" . $day;
 		$background_update_query  = "UPDATE background SET background.background_name='$background_name', background.license='$license', background.version='$version', background.category='$category', background.userID='$userID', background.parent='$parentID', background.release_date='$date', background.background_description='$background_description', background.thumbnail_filename='$thumbnail_filename'";

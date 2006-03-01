@@ -1,6 +1,11 @@
 2006-03-01  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/edit_background.php:
+	- allow the empty license to be saved to the database.
+
+2006-03-01  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/edit_background.php:
 	- added 'unknown license' option
 
 2006-03-01  Benjamin Berg  <benjamin@sipsolutions.net>
