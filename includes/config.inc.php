@@ -287,7 +287,7 @@ $admin_email = 'art-web-admin@gnome.org';
 
 $sys_ftp_dir = "/ftp/pub/gnome/teams/art.gnome.org/";
 
-$valid_image_ext = array ("png","xpm","gif","jpg","jpeg","tiff","svg");
+$background_image_types = array ("png", "jpg", "svg");
 
 $search_type_array = array ("all" => "Backgrounds and Themes", "background_name" => "Background Name", "theme_name" => "Theme Name", "author" => "Author Name");
 $thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "1000" => "All");

@@ -14,6 +14,7 @@ extract($_GET, EXTR_SKIP);
 
 $background_category_list = array_keys($background_config_array);
 array_shift ($resolution_array); /* Remove 'All' from resolution list */
+$resolution_array['delete'] = 'Delete';
 
 if ($_GET)
 	$category = validate_input_array_default($_GET["category"], $background_category_list, "");
@@ -24,7 +25,7 @@ admin_auth(2);
 if (array_key_exists('add_resolution', $_POST))
 {
 	$backgroundID = validate_input_regexp_default ($_POST['backgroundID'], '^[0-9]+$', -1);
-	$type = validate_input_array_default ($_POST['new_res_type'], Array('jpg', 'png', 'svg'), '');
+	$type = validate_input_array_default ($_POST['new_res_type'], $background_image_types, '');
 	$resolution = validate_input_array_default ($_POST['new_res_resolution'], $resolution_array, '');
 	$filename = escape_string ($_POST['new_res_file']);
 	if (mysql_num_rows(mysql_query("SELECT * FROM background_resolution WHERE backgroundID = $backgroundID AND type = '$type' AND resolution = '$resolution'")) > 0)
@@ -61,7 +62,11 @@ elseif($action == "write")
 		
 		$i=0;
 		while($resID = $background_resolutionID[$i]) {
-			$background_res_update_query[$i] = "UPDATE background_resolution SET resolution='{$resolution[$i]}',filename='{$filename[$i]}' WHERE background_resolutionID=$resID";
+			if ($resolution[$i] != 'delete') {
+				$background_res_update_query[$i] = "UPDATE background_resolution SET resolution='{$resolution[$i]}',filename='{$filename[$i]}',type='{$type[$i]}' WHERE background_resolutionID=$resID";
+			} else {
+				$background_res_update_query[$i] = "DELETE FROM background_resolution WHERE background_resolutionID=$resID";
+			}
 			if(!$background_res_update_result = mysql_query($background_res_update_query[$i])) {
 			$error++;
 			}
@@ -82,8 +87,8 @@ elseif($action == "write")
 			print("<tr><td>background_description</td><td>'$background_description'</td></tr>\n");
 			print("<tr><td>thumbnail_filename</td><td>'$thumbnail_filename'</td></tr>\n");
 			$i=0;
-			while($resID = $background_resolution[$i]) {
-				print("<tr><td>resolution ($resID) </td><td>$resolution[$i]</td></tr>");
+			while($resID = $background_resolutionID[$i]) {
+				print("<tr><td>resolution ($resID) </td><td>{$resolution[$i]}, {$type[$i]}, '{$filename[$i]}'</td></tr>");
 				$i++;
 			}
 			print("</table>");
@@ -139,7 +144,7 @@ elseif($action == "edit")
 				$selected = "selected=\"true\"";
 			else
 				$selected = "";
-			print("<option $selected value=\"$var_themeID\">".html_parse_text($var_theme_name)." ($var_category)</option>");
+			print("<option $selected value=\"$var_themeID\">$var_themeID: ".html_parse_text($var_theme_name)." ($var_category)</option>");
 		}
 		print("</select></td></tr>");
 
@@ -147,19 +152,20 @@ elseif($action == "edit")
 		print("<tr><td><strong><label for=\"background_description\">Background Description</label>:</strong></td><td><textarea name=\"background_description\" id=\"background_description\" cols=\"40\" rows=\"5\" wrap>$background_description</textarea></td></tr>\n");
 		print("<tr><td><strong><label for=\"thumbnail_filename\">Thumbnail Filename</label>:</strong></td><td><input type=\"text\" name=\"thumbnail_filename\" id=\"thumbnail_filename\" size=\"40\" value=\"$thumbnail_filename\" /></td></tr>\n");
 
-		$background_resolution_result = mysql_query("SELECT background_resolutionID,resolution,filename FROM background_resolution WHERE backgroundID=$backgroundID");
+		$background_resolution_result = mysql_query("SELECT background_resolutionID,resolution,filename,type FROM background_resolution WHERE backgroundID=$backgroundID");
 		$i = 0;
 		while($resolution_row = mysql_fetch_array($background_resolution_result)) {
 			extract($resolution_row);
 			print("<tr><td><strong><label for=\"resolution[$i]\">Resolution #$i</label>:</strong></td>");
 			print("<td>");print_select_box("resolution[$i]", $resolution_array, $resolution);
+			print("&nbsp;");print_select_box("type[$i]", array_combine($background_image_types, $background_image_types), $type);
 			print("&nbsp;<input type=\"text\" name=\"filename[$i]\" size=\"40\" value=\"$filename\" />");
 			print("<input type=\"hidden\" name=\"background_resolutionID[$i]\" value=\"$background_resolutionID\" /></td></tr>\n");
 			$i++;
 		}
 		print('<tr><td><strong>New resolution</strong></td><td>');
 		print_select_box("new_res_resolution", $resolution_array, '');
-		print_select_box("new_res_type", Array("jpg" => "jpg", "png" => "png", "svg" => "svg"), '');
+		print_select_box("new_res_type", array_combine($background_image_types, $background_image_types), '');
 		print('<input type="text" name="new_res_file"/><input type="submit" name="add_resolution" value="Add Resolution" />');
 		print("<tr><td><input type=\"checkbox\" name=\"update_timestamp_toggle\" />Update Timestamp");
 		print("<tr><td><input type=\"submit\" value=\"Update Background\" />");
