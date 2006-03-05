@@ -1,3 +1,11 @@
+2006-03-05  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* backend.php:
+	- Send ETag and Last-Modified headers. Send "304 Not Modified" if
+	no new item was added to the feed since the last request.
+	* includes/art_listings.inc.php:
+	- Do not include rating stars in rss feed.
+
 2006-03-01  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/edit_background.php:

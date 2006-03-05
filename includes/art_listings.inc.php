@@ -195,6 +195,7 @@ class general_listing
 			$category_name = get_category_name($type, $category);
 			
 			/*----*/
+			/* NOTE: If you change the format of the rss feed, the etag needs to be changed in backend.php */
 			if ($this->format == 'rss') {
 				$result .= "<item>\n";
 				$result .= "\t<title>[$category_name] ".xmlentities($name)."</title>\n";
@@ -220,13 +221,15 @@ class general_listing
 					$result .= "</td>\n";
 					$result .= "\t<td><a href=\"$link\" class=\"h2\"><strong>".htmlentities($name)."</strong></a><br/>\n";
 					$result .= "\t\t<span class=\"subtitle\">$category_name<br/>$date</span><br/>\n";
-					for ($i=1; $i <= $rating; $i++)
-						$result .=  ("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
 					if ($this->format != 'rss')
 					{
-						/* do not display number of comments when in the rss feed as changes to
-						 * the rss item can make some readers mark the item as new
+						/* Do not display number of comments and the rating, because some readers will mark
+						 * items as new then.
+						 * Also needed for bandwidth saving (last modified information only extracted from
+						 * from the age of the latest addition)
 						 */
+						for ($i=1; $i <= $rating; $i++)
+							$result .=  ("<img src=\"{$site_url}/images/site/stock_about.png\" alt=\"*\"/>");
 						$comment_count = $this->get_num_comments($itemID, $type);
 						if ($comment_count > 0)
 						{
