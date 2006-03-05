@@ -211,6 +211,7 @@ elseif (array_key_exists('username', $_SESSION))
 	print("<ul>");
 	print("<li><a href=\"/submit_theme.php\">Submit a theme</a></li>");
 	print("<li><a href=\"/submit_background.php\">Submit a background</a></li>");
+	print("<li><a href=\"/submit_screenshot.php\">Submit a screenshot</a></li>");
 	print("</ul>");
 	print("<div class=\"h2\">Theme submissions</div><div class=\"subtitle\">Status of submitted themes</div>");
 	$submissions_select_result = mysql_query("SELECT themeID,theme_name,category,status,comment FROM incoming_theme WHERE userID = '{$_SESSION['userID']}' ");

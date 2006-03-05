@@ -1,5 +1,12 @@
 2006-03-05  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* account.php:
+	- Display link to submit_screenshot.php (Fixes bug #333500)
+	* includes/config.inc.php:
+	- Reverse the order of the screenshot categories (Fixes bug #333499)
+
+2006-03-05  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* backend.php:
 	- Send ETag and Last-Modified headers. Send "304 Not Modified" if
 	no new item was added to the feed since the last request.

@@ -36,17 +36,11 @@ $background_config_array = array (
 /* screenshots */
 
 $screenshot_config_array = array (
-	"gnome210" => array (
-		"name" => "GNOME 2.10",
-		"url" => "/screenshots/gnome210/",
+	"gnome214" => array (
+		"name" => "GNOME 2.14",
+		"url" => "/screenshots/gnome214/",
 		"active" => "1",
-		"description" => "Screenshots of GNOME 2.10"
-		),
-	"gnome212" => array (
-		"name" => "GNOME 2.12",
-		"url" => "/screenshots/gnome212/",
-		"active" => "1",
-		"description" => "Screenshots of GNOME 2.12"
+		"description" => "Screenshots of GNOME 2.14"
 		),
 	"gnome213" => array (
 		"name" => "GNOME 2.13",
@@ -54,12 +48,18 @@ $screenshot_config_array = array (
 		"active" => "1",
 		"description" => "Screenshots of GNOME 2.13"
 		),
-	"gnome214" => array (
-		"name" => "GNOME 2.14",
-		"url" => "/screenshots/gnome214/",
+	"gnome212" => array (
+		"name" => "GNOME 2.12",
+		"url" => "/screenshots/gnome212/",
 		"active" => "1",
-		"description" => "Screenshots of GNOME 2.14"
-		)
+		"description" => "Screenshots of GNOME 2.12"
+		),
+	"gnome210" => array (
+		"name" => "GNOME 2.10",
+		"url" => "/screenshots/gnome210/",
+		"active" => "1",
+		"description" => "Screenshots of GNOME 2.10"
+		),
 );
 
 /* themes */
