@@ -51,6 +51,10 @@ if (array_key_exists('username', $_SESSION))
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_contest.php\">Edit A Contest Item</a><br />");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_contest.php\">Delete A Contest Item</a><br />");
 
+	create_title("Screenshots", "");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_screenshot.php\">Edit A Screenshot</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_screenshot.php\">Delete A Screenshot</a><br />");
+
 	create_title("Comments","");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"comments.php\">Moderate Comments</a><br />");
 

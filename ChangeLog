@@ -1,5 +1,12 @@
 2006-03-05  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* admin/delete_screenshot.php: new file to delete screenshots
+	* admin/edit_screenshot.php: new file to edit screenshots
+	* admin/index.php:
+	- added links to delete_ and edit_screenshot
+
+2006-03-05  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* account.php:
 	- Display link to submit_screenshot.php (Fixes bug #333500)
 	* includes/config.inc.php:
