@@ -1,6 +1,6 @@
 <h1>{name} By <a href="/users/{username}">{username}</a></h1>
 <div class="subtitle">Screenshots - {category-name}</div>
-<a href="/preview.php?images=screenshots/{category}/{download_filename}" onClick="window.open('/preview.php?image=screenshots/{category}/{download_filename}', 'Art Preview', 'width=640,height=640,resizable=no,scrollbars=yes,status=no'); return false;" rel="external">
+<a href="/preview.php?image=screenshots/{category}/{download_filename}" onClick="window.open('/preview.php?image=screenshots/{category}/{download_filename}', 'Art Preview', 'width=640,height=640,resizable=no,scrollbars=yes,status=no'); return false;" rel="external">
 <img src="/images/thumbnails/screenshots/{category}/{thumbnail_filename}" alt="Preview" class="{thumbnail-class}" />
 </a>
 {description}
