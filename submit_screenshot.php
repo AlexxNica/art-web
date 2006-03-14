@@ -14,7 +14,7 @@ function create_submission_filename ($name, $category, $extra, $ext)
 {
 
 	$base = ereg_replace ("[_|-]", " ", $name);
-	$base = ereg_replace ('[^a-zA-Z0-9\s]', " ", $base);
+	$base = ereg_replace ('[^a-zA-Z0-9:space:]', " ", $base);
 	$base = ucwords ($base);
 	$base = str_replace (" ", "", $base);
 
@@ -86,9 +86,9 @@ function upload_entry ($unvalidated_item_name, $unvalidated_description)
 
 
 	/* we need to create a unique file name. For this first need a sane name */
-	$file_name = create_submission_filename ($item_name, $category, '', $extension);
+	$file_name = create_submission_filename ($unvalidated_item_name, $category, '', $extension);
 	$file_path = 'images/screenshots/'.$category.'/'. $file_name;
-	$thumb_filename = create_submission_filename ($item_name, $category, '-Th', $extension);
+	$thumb_filename = create_submission_filename ($unvalidated_item_name, $category, '-Th', $extension);
 	$thumb_path = 'images/thumbnails/screenshots/'.$category.'/'.$thumb_filename;
 
 	/* check that none of the files already exist. */
