@@ -25,7 +25,8 @@ function create_filename($name, $category, $filename, $extra = '')
 	$base = ereg_replace('[^a-zA-Z0-9\s]', " ", $base);
 	$base = ucwords($base);
 	$base = str_replace(" ", "", $base);
-	if (in_array($category, $categories))
+	
+	if (array_key_exists($category, $categories))
 		$base = $categories[$category] . "-$base";
 	else
 		$base = strtoupper($category) . "-$base";

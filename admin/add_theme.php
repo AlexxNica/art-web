@@ -22,33 +22,53 @@ if($_POST["add_theme"])
 	if ($category == '')
 		ago_fatal_error ('Invalid category');
 	$description = escape_string($_POST["description"]);
-	$thumbnail_filename = escape_string($_POST["thumbnail_filename"]);
-	$small_thumbnail_filename = escape_string($_POST["small_thumbnail_filename"]);
 	$download_filename = escape_string($_POST["download_filename"]);
+	$uploaded_thumbnail = $_FILES['thumbnail_filename']['tmp_name'];
+	$uploaded_screenshot = $_FILES['screenshot_filename']['tmp_name'];
 	$license = escape_string($_POST["license"]);
 
-	if($theme_name && $userID && $month && $day && $year && $description && $thumbnail_filename && $small_thumbnail_filename && $download_filename )
+	if($theme_name && $userID && $month && $day && $year && $description && $uploaded_thumbnail && $uploaded_screenshot && $download_filename )
 	{
-		$date = $year . "-" . $month . "-" . $day;
-		$timestamp = time();
-		$theme_insert_query  = "INSERT INTO theme(themeID,status,theme_name,category,license,userID,parent,add_timestamp,release_date,version,description,thumbnail_filename,small_thumbnail_filename, download_start_timestamp, download_filename) ";
-		$theme_insert_query .= "VALUES('','active','$theme_name','$category','$license','$userID','$parentID','$timestamp','$date','$version','$description','$thumbnail_filename','$small_thumbnail_filename', UNIX_TIMESTAMP(), '$download_filename')";
-		$theme_insert_result = mysql_query($theme_insert_query);
-		$themeID = mysql_insert_id();
-		if($theme_insert_result)
+		$thumbnail_filename = "../images/thumbnails/$category/" . create_filename ($theme_name, $category, $_FILES['thumbnail_filename']['name'], '-Th');
+		$screenshot_filename = "../images/thumbnails/$category/" . create_filename ($theme_name, $category, $_FILES['screenshot_filename']['name'], '-Shot');
+
+		if (file_exists ($thumbnail_filename) || file_exists ($screenshot_filename))
 		{
-			print("Successed added theme to the database.<br/>");
-			if($submitID)
-			{
-				$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='added' WHERE themeID='$submitID'");
-				print("Successfully marked submitted theme as added in incoming themes list.");
-			}
-			print("<p><a href=\"/admin/show_submitted_themes.php\">Return</a> to incoming themes list.</p>");
+			print ('<p class="error">One or more of the screenshot files already exist!</p>');
 		}
 		else
 		{
-			print("<p>There were database errors adding theme into database.</p>");
-			print("<tt>".mysql_error()."</tt>");
+			if (move_uploaded_file($uploaded_thumbnail, $thumbnail_filename)
+				&& move_uploaded_file($uploaded_screenshot, $screenshot_filename))
+				{
+					/* Now we've uploaded the files, we don't need the path information in the database */
+					$screenshot_filename = basename ($screenshot_filename);
+					$thumbnail_filename = basename ($thumbnail_filename);
+
+					$date = $year . "-" . $month . "-" . $day;
+					$timestamp = time();
+					$theme_insert_query  = "INSERT INTO theme(themeID,status,theme_name,category,license,userID,parent,add_timestamp,release_date,version,description,thumbnail_filename,small_thumbnail_filename, download_start_timestamp, download_filename) ";
+					$theme_insert_query .= "VALUES('','active','$theme_name','$category','$license','$userID','$parentID','$timestamp','$date','$version','$description','$thumbnail_filename','$screenshot_filename', UNIX_TIMESTAMP(), '$download_filename')";
+					$theme_insert_result = mysql_query($theme_insert_query);
+					$themeID = mysql_insert_id();
+					if($theme_insert_result)
+					{
+						print("Successed added theme to the database.<br/>");
+						if($submitID)
+						{
+							$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='added' WHERE themeID='$submitID'");
+							print("Successfully marked submitted theme as added in incoming themes list.");
+						}
+						print("<p><a href=\"/admin/show_submitted_themes.php\">Return</a> to incoming themes list.</p>");
+					}
+					else
+					{
+						print("<p>There were database errors adding theme into database.</p>");
+						print("<tt>".mysql_error()."</tt>");
+					}
+				}
+				else
+					print ('There was an error uploading the screenshots');
 		}
 	}
 	else
@@ -67,7 +87,7 @@ else
 	}
 
 	list($month,$day,$year) = explode("/",$date);
-	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
+	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"  enctype=\"multipart/form-data\" >\n");
 	print("<table border=\"0\">\n");
 	print("<tr><td><strong>Theme Name:</strong></td><td><input type=\"text\" name=\"theme_name\" size=\"40\" value=\"$theme_name\"></td></tr>\n");
 	print("<tr><td><strong>Category</strong></td><td><input type=\"hidden\" name=\"category\" value=\"$theme_category\" />{$theme_config_array[$theme_category]['name']} ($theme_category)</td></tr>\n");
@@ -92,15 +112,9 @@ else
 
 	print("<tr><td><strong>Description:</strong></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
 
-	print("<tr><td><strong>Thumbnail Filename:</strong></td><td>");
-	if (isset($theme_category)) file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/");
-	else print("<input type=\"text\" name=\"thumbnail_filename\" size=\"40\">");
-	print("</td></tr>\n");
+	print("<tr><td><strong>Thumbnail Filename:</strong></td><td><input type=\"file\" name=\"screenshot_filename\" /></td></tr>\n");
 
-	print("<tr><td><strong>Small Thumbnail Filename:</strong></td><td>");
-	if (isset($theme_category)) file_chooser("small_thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/$theme_category/");
-	else print("<input type=\"text\" name=\"small_thumbnail_filename\" size=\"40\" />");
-	print("</td></tr>\n");
+	print("<tr><td><strong>Small Thumbnail Filename:</strong></td><td><input type=\"file\" name=\"thumbnail_filename\" /></td></tr>\n");
 
 	print("<tr><td><strong>Download Filename:</strong></td><td>");
 	if (isset($theme_category)) file_chooser("download_filename", "$sys_ftp_dir/themes/$theme_category/");
