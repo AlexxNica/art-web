@@ -8,7 +8,9 @@ header("Content-type: text/plain; charset=ISO-8859-1");
 //The Art:
 //10 = Backgrounds Gnome
 //11 = Backgrounds Other
-//12 = backgrounds All
+//12 = Backgrounds All
+//13 = Backgrounds Nature
+//14 = Backgrounds Abstract
 
 //20 = Desktop Themes Application
 //21 = Desktop Themes Window Border
@@ -151,6 +153,12 @@ case 11:
 	break;
 case 12: 
 	list_backgrounds(0, "all");
+	break;
+case 13:
+	list_backgrounds(0, "nature");
+	break;
+case 14:
+	list_backgrounds(0, "abstract");
 	break;
 case 20:
 	list_themes(0, "gtk2");

@@ -5,10 +5,10 @@ require("common.inc.php");
 require("art_headers.inc.php");
 
 // superglobal stuff
-$theme_name = escape_string($_POST["theme_name"]);
-$theme_author = escape_string($_POST["theme_author"]);
-$theme_url = escape_string($_POST["theme_url"]);
-$theme_description = escape_string($_POST["theme_description"]);
+$theme_name = strip_string ($_POST["theme_name"]);
+$theme_author = strip_string ($_POST["theme_author"]);
+$theme_url = strip_string ($_POST["theme_url"]);
+$theme_description = strip_string ($_POST["theme_description"]);
 $category = validate_input_array_default($_POST["category"], array_keys($theme_config_array), "");
 $license = validate_input_array_default($_POST["license"], array_keys($license_config_array), "");
 $version = validate_input_regexp_default($_POST["version"], "^[0-9\.]+$", "0");
@@ -35,6 +35,10 @@ if($_POST['submit'])
 	elseif($theme_name && $category && $theme_url && $theme_description && $license)
 	{
 		$date = date("Y-m-d");
+		$theme_name = mysql_real_escape_string ($theme_name);
+		$theme_author = mysql_real_escape_string ($theme_author);
+		$theme_url = mysql_real_escape_string ($theme_url);
+		$theme_description = mysql_real_escape_string ($theme_description);
 		$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,userID,status,date,theme_name,version,license,parentID,category,theme_url,theme_description,updateID) ";
 		$incoming_theme_insert_query .= "VALUES('','{$_SESSION['userID']}','new','$date','$theme_name','$version','$license','$parentID','$category','$theme_url','$theme_description','$update')";
 		$incoming_theme_insert_result = mysql_query("$incoming_theme_insert_query");

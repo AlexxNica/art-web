@@ -470,6 +470,13 @@ function escape_string($foo)
 		return $foo;
 }
 
+function strip_string ($foo)
+{
+	if (!get_magic_quotes_gpc())
+		return $foo;
+	else
+		return stripslashes ($foo);
+}
 
 function validate_submit_url($url)
 {
