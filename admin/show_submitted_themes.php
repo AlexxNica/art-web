@@ -30,7 +30,7 @@ if(is_array($mark_theme))
 		{
 			$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='rejected', comment='{$rej_arr[1]}' WHERE themeID='$markID'");
 			print("<p class=\"info\">Rejected theme $markID with \"{$reject_array[$new_status]}\".</p>");
-		}elseif ($new_status != 'new')
+		}elseif ($new_status != 'new' || $admin_level > 1)
 		{
 			$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='$new_status' WHERE themeID='$markID'");
 			// Only print message if status has actually changed

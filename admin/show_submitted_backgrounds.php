@@ -54,7 +54,7 @@ if(is_array($mark_background))
 		{
 			$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='rejected', comment='{$rej_arr[1]}' WHERE backgroundID='$markID'");
 			print("<p class=\"info\">Rejected background $markID with \"{$reject_array[$new_status]}\".</p>");
-		}elseif ($new_status != 'new')
+		}elseif ($new_status != 'new' || $admin_level > 1)
 		{
 			$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='$new_status' WHERE backgroundID='$markID'");
 			// Only print message if status has actually changed

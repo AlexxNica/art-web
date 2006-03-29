@@ -5,33 +5,7 @@ include "common.inc.php";
 include "includes/headers.inc.php";
 
 admin_header("ART.GNOME.ORG Administration","");
-
-
-if (array_key_exists('login', $_POST))
-{
-	$username = mysql_real_escape_string($_POST['username']);
-	$password = mysql_real_escape_string($_POST['password']);
-	$query_result = mysql_query("SELECT userID, password, level FROM user WHERE username = '$username'");
-
-	list($userID, $cryptpass, $level) = mysql_fetch_row($query_result);
-
-	if ( (md5($password) == $cryptpass) && ($level) )
-	{
-		$_SESSION['username'] = $username;
-		$_SESSION['userID'] = $userID;
-	}
-	else
-	{
-		print("Login failed");
-	}
-
-}
-elseif (array_key_exists('logout', $_POST))
-{
-	session_destroy();
-	$_SESSION = Array();
-}
-if (array_key_exists('username', $_SESSION))
+$admin_level = admin_auth (1);
 {
 	create_title("Submissions","");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_backgrounds.php\">Submitted Backgrounds</a><br />");
@@ -72,18 +46,6 @@ if (array_key_exists('username', $_SESSION))
 
 	create_title("Users","");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_user.php\">Edit a user</a><br />");
-}
-else
-{
-
-	create_title("Please log in","");
-	print("<p>");
-	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"POST\">");
-	print("<table><tr><td>Username:</td><td><input name=\"username\" class=\"username\" /></td></tr>");
-	print("<tr><td>Password:</td><td><input name=\"password\" type=\"password\" class=\"password\" /></td></tr>");
-	print("<tr><td><input type=\"submit\" value=\"Login\" name=\"login\" /></td></tr>");
-	print("</table></form>");
-	print("</p>");
 }
 
 admin_footer();

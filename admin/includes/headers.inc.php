@@ -11,6 +11,8 @@ function admin_header($title, $subtitle='Back to <a href="/admin/">admin panel</
 
 function admin_auth($reqlevel)
 {
+	is_logged_in (); /* make sure user is logged in */
+	
 	$authcheck_query = "SELECT userID, level FROM user WHERE username = '".mysql_real_escape_string($_SESSION['username'])."'";
 	$authcheck_result = mysql_query($authcheck_query);
 	list($userID, $level) = mysql_fetch_row($authcheck_result);

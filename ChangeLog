@@ -1,3 +1,14 @@
+2006-03-29  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/includes/headers.inc.php:
+	- always require users to be logged in.
+
+	* admin/index.php: - removed a lot of junk that we now get for free
+	because of the above change.
+	* admin/show_submitted_backgrounds.php:
+	* admin/show_submitted_themes.php:
+	- allow users with admin_level > 1 to mark themes as 'new' again
+
 2006-03-24  Thomas Wood  <thos@gnome.org>
 
 	* includes/common.inc.php:
