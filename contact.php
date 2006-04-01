@@ -13,7 +13,7 @@ create_title("Contact Information", "");
 
 <p>You can also catch us on the channel <a href="irc://irc.gnome.org/#gnome-art">#gnome-art</a> on <span class="bold-text">irc.gimp.org</span>.</p>
 
-<p>To report bugs or request enhancements for art.gnome.org, please put them in the <a class="bold-link" href="http://bugzilla.gnome.org/enter_bug.cgi?product=website&amp;component=art">GNOME bugzilla</a> (art component of website)</p>
+<p>To report bugs or request enhancements for art.gnome.org, please put them in the <a class="bold-link" href="http://bugzilla.gnome.org/enter_bug.cgi?product=website&amp;component=art.gnome.org">GNOME bugzilla</a> (art.gnome.org component of website)</p>
 
 <p>There is also a discussion board for art.gnome.org relevant stuff at <a class="bold-link" href="http://gnomesupport.org/forums/index.php?c=6"><strong>http://gnomesupport.org/forums/index.php?c=6</strong></a>.</p>
 

@@ -66,7 +66,7 @@ if($_POST['submit'])
 else
 {
 	print("<p>If you would like to submit your theme to art.gnome.org, please fill out the form below and provide a web address where we can download your theme.\n</p>\n");
-	print("<p class=\"info\">To help speed up your submission, please take a look at the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">Submission Policy</a> first.</p>");
+	print("<p class=\"info\">To help speed up your submission, please take a look at the <a href=\"http://live.gnome.org/GnomeArt/SubmissionPolicy\">Submission Policy</a> first.</p>");
 }
 	if ($update)
 	{

@@ -26,11 +26,11 @@ function get_status_comment($status, $comment)
 	{
 		if ($comment == "")
 		{
-			return "Removed - Please see the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> for more information.";
+			return "Removed - Please see the <a href=\"http://live.gnome.org/GnomeArt/SubmissionPolicy\">submission guidelines</a> for more information.";
 		}
 		elseif (array_key_exists($comment, $reject_comments))
 		{
-			return "Removed - " . $reject_comments[$comment] . " See the <a href=\"http://live.gnome.org/GnomeArt_2fSubmissionPolicy\">submission guidelines</a> for more information.";
+			return "Removed - " . $reject_comments[$comment] . " See the <a href=\"http://live.gnome.org/GnomeArt/SubmissionPolicy\">submission guidelines</a> for more information.";
 		}else
 		{
 			return "Removed - " . html_parse_text($comment);

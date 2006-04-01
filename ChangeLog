@@ -1,3 +1,16 @@
+2006-04-01  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* account.php:
+	* contact.php:
+	* copyright.php:
+	* submit_theme.php:
+	* templates/en/main.html:
+	* templates/en/submit_background.html:
+	* templates/fr/main.html:
+	- corrected links to the submission policy
+	- corrected link to the gnome bugzilla.
+	- updated date of copyright notice to 2006
+
 2006-03-29  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/includes/headers.inc.php:
