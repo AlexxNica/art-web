@@ -434,7 +434,7 @@ class contest_list extends theme_list
 		}
 		/* XXX: release_date is not set .... */
 		if ($this->format != 'atom')
-			$this->select_result = mysql_query('SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, DATE(FROM_UNIXTIME(add_timestamp)) AS release_date FROM contest '.
+			$this->select_result = mysql_query('SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM contest '.
 			                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 		else
 			$this->select_result = mysql_query('SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, DATE(FROM_UNIXTIME(add_timestamp)) AS release_date, user.username FROM contest RIGHT JOIN user ON user.userID=contest.userID '.
@@ -472,7 +472,7 @@ class screenshot_list extends theme_list
 		}
 		/* XXX: date is not set in the db ... */
 		if ($this->format != 'atom')
-			$this->select_result = mysql_query('SELECT screenshotID AS ID, \'screenshot\' AS type, name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, DATE(FROM_UNIXTIME(add_timestamp)) AS release_date FROM screenshot '.
+			$this->select_result = mysql_query('SELECT screenshotID AS ID, \'screenshot\' AS type, name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM screenshot '.
 			                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 		else
 			$this->select_result = mysql_query('SELECT screenshotID AS ID, \'screenshot\' AS type, name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, DATE(FROM_UNIXTIME(add_timestamp)) AS release_date, user.username FROM screenshot RIGHT JOIN user ON user.userID=screenshot.userID '.

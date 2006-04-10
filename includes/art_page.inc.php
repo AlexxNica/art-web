@@ -106,7 +106,7 @@ else
 			$last_updated = $list->last_updated();
 			
 			/* we don't need to think about the session here ... */
-			$etag = hash('MD5', $_SERVER['REQUEST_URI']."-1.".$last_updated);
+			$etag = md5($_SERVER['REQUEST_URI']."-1.".$last_updated);
 			conditional_get($etag, $last_updated);
 			
 			if ($format == 'atom')

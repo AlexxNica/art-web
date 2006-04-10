@@ -1,6 +1,13 @@
 2006-04-11  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/art_listings.inc.php:
+	- small modifications to some sql queries
+	* includes/art_page.inc.php:
+	- use md5() instead of hash()
+
+2006-04-11  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/art_listings.inc.php:
 	- only join on the user if we generate an atom feed
 
 2006-04-10  Benjamin Berg  <benjamin@sipsolutions.net>
