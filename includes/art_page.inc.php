@@ -3,7 +3,6 @@
  * It is just needs to be included with $type set correctly. */
 
 require_once("common.inc.php");
-require_once("art_headers.inc.php");
 
 list($foo, $unvalidated_category, $unvalidated_artID) = explode("/", $_SERVER["PATH_INFO"]);
 
@@ -32,6 +31,12 @@ default:
 }
 
 $new_rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
+$format = validate_input_array_default($_GET['format'], array('rss', 'atom', 'html'), 'html');
+if ($format != 'html') /* XXX: just hope that noone gets the idea to access format=atom on pages */
+	$prevent_session = TRUE;
+
+require_once("art_headers.inc.php");
+
 if  (get_magic_quotes_gpc() == 1)
 	$comment = stripslashes($_POST["comment"]); // This is validated later
 else
@@ -69,23 +74,53 @@ else
 			$list = new contest_list;
 		}
 		
+		$list->format = $format;
 		$list->get_view_options();
 		$list->select($category);
 		
+		
 		// LISTING OUTPUT /////////////////////////////////////////////
-		art_header($header);
-		create_title($header);
-		
-		$list->print_search_form();
-		print('<hr />');
-		
-		$list->print_page_numbers();
-		
-		$list->print_listing();
-		
-		$list->print_page_numbers();
-		
-		art_footer();
+		if ($format == "html")
+		{
+			art_header($header);
+			create_title($header);
+			
+			$list->print_search_form();
+			print('<hr />');
+			
+			$list->print_page_numbers();
+			
+			$list->print_listing();
+			
+			$list->print_page_numbers();
+			
+			art_footer();
+		}
+		else
+		{
+			/* handle atom/rss case */
+			header("Content-type: text/xml");
+			$header = new template("$format/header.xml");
+			$header->add_var('site_name', $site_name);
+			$header->add_var('site_url', $site_url);
+			$last_updated = $list->last_updated();
+			
+			/* we don't need to think about the session here ... */
+			$etag = hash('MD5', $_SERVER['REQUEST_URI']."-1.".$last_updated);
+			conditional_get($etag, $last_updated);
+			
+			if ($format == 'atom')
+			{
+				$header->add_var('request_uri', xmlentities($_SERVER['REQUEST_URI']));
+				$header->add_var('update_time', gmdate('Y-m-d\TH:i:s\Z', $last_updated));
+			}
+			
+			$footer = new template("$format/footer.xml");
+			
+			$header->write();
+			$list->print_listing();
+			$footer->write();
+		}
 	}
 	
 	/* print out the individual page */

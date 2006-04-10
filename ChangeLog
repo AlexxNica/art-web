@@ -1,3 +1,18 @@
+2006-04-10  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* atom.php:
+	* backend.php:
+	* includes/art_headers.inc.php:
+	* includes/art_listings.inc.php:
+	* includes/art_page.inc.php:
+	* includes/common.inc.php:
+	* templates/en/atom/footer.xml:
+	* templates/en/atom/header.xml:
+	* templates/en/rss/footer.xml:
+	* templates/en/rss/header.xml:
+	- Support for atom feeds.
+	- Support to generate feeds for /themes, /backgrounds, etc.
+
 2006-04-01  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* account.php:

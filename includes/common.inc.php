@@ -25,7 +25,6 @@ function create_filename($name, $category, $filename, $extra = '')
 	$base = ereg_replace('[^a-zA-Z0-9\s]', " ", $base);
 	$base = ucwords($base);
 	$base = str_replace(" ", "", $base);
-	
 	if (array_key_exists($category, $categories))
 		$base = $categories[$category] . "-$base";
 	else
@@ -105,9 +104,9 @@ function get_thumbnail_url($filename, $itemID, $type, $category, $relative=false
 	return ($relative) ? $thumbnail_url : $site_url . '/images/' . $thumbnail_url;
 }
 
-function get_download_links($type, $category, $itemID, $download_filename)
+function get_download_links($type, $category, $itemID, $download_filename, $format = 'html')
 {
-	global $sys_ftp_dir;
+	global $sys_ftp_dir, $site_url;
 	switch ($type) {
 	case 'theme':
 		if ($itemID < 1000)
@@ -115,22 +114,48 @@ function get_download_links($type, $category, $itemID, $download_filename)
 		else
 			$file_path = $sys_ftp_dir . "/themes/$category/$download_filename";
 		
-		$filesize = get_filesize_string($file_path);
-		$result = "<a class=\"tar\" href=\"/download/themes/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
+		switch ($format)
+		{
+			case 'html':
+				$filesize = get_filesize_string($file_path);
+				$result = "<a class=\"tar\" href=\"/download/themes/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
+			break;
+			case 'atom':
+				$result = "<link rel=\"enclosure\" title=\"Download\" theme:relation=\"download\" href=\"$site_url/download/themes/$category/$itemID/$download_filename\" />\n";
+			break;
+		}
 	break;
 
 	case 'contest':
 		$file_path = $sys_ftp_dir . "/contests/$category/$download_filename";
 		
-		$filesize = get_filesize_string($file_path);
-		$result = "<a class=\"tar\" href=\"/download/contest/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
+		switch ($format)
+		{
+			case 'html':
+				$filesize = get_filesize_string($file_path);
+				$result = "<a class=\"tar\" href=\"/download/contest/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
+			break;
+			case 'atom':
+				$result = "<link rel=\"enclosure\" title=\"Download\" theme:relation=\"download\" href=\"$site_url/download/themes/$category/$itemID/$download_filename\" />\n";
+			break;
+		}
 	break;
 
 	case 'background':
 		$result = '';
 		$resolution_select = mysql_query("SELECT background_resolutionID,filename,resolution,type FROM background_resolution WHERE backgroundID=$itemID");
-		while (list($resID,$download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
-			$result .= "<a class=\"$image_type\" href=\"/download/backgrounds/$category/$resID/$download_filename\"> $image_type - $resolution</a>&nbsp;&nbsp;";
+		
+		switch ($format)
+		{
+			case 'html':
+				while (list($resID,$download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
+					$result .= "<a class=\"$image_type\" href=\"/download/backgrounds/$category/$resID/$download_filename\"> $image_type - $resolution</a>&nbsp;&nbsp;";
+			break;
+			case 'atom':
+				while (list($resID,$download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
+					$result .= "<link rel=\"enclosure\" title=\"Download $resolution ".strtoupper($image_type)."\" theme:relation=\"download\" theme:resolution=\"$resolution\" href=\"$site_url/download/backgrounds/$category/$resID/$download_filename\" />\n";
+			break;
+		}
 	break;
 	}
 	return $result;
@@ -387,8 +412,12 @@ function xmlentities($text)
 
 function set_session_var_default($var_name, $default)
 {
+	if (!isset($_SESSION))
+		return $default;
+	
 	if (!array_key_exists($var_name, $_SESSION))
 		$_SESSION[$var_name] = $default;
+	return $_SESSION[$var_name];
 }
 
 ////////////////////////////////
@@ -544,6 +573,35 @@ function file_chooser($var_name, $dir, $filter="")
 			closedir($dh);
 		}
 	}
+}
+
+function conditional_get($etag, $update_time)
+{
+	$time = gmdate('D, d M Y H:i:s', $update_time) . ' GMT';
+	
+	$header = apache_request_headers ();
+	if (!$header)
+		return;
+
+	if (array_key_exists ('If-Modified-Since', $header) || array_key_exists ('If-None-Match', $header))
+	{
+		$modified = 0;
+		if (array_key_exists ('If-Modified-Since', $header))
+			$modified = $header['If-Modified-Since'] != $time;
+		if (!$modified && array_key_exists ('If-None-Match', $header))
+			$modified = $header['If-None-Match'] != $etag;
+		
+		if (!$modified)
+		{
+			/* nothing was modified */
+			header('HTTP/1.0 304 Not Modified');
+			header("ETag: $etag");
+			
+			exit;
+		}
+	}
+	header("Last-Modified: $time");
+	header("ETag: $etag");
 }
 
 ?>
