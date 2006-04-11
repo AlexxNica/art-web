@@ -332,8 +332,8 @@ class latest_updates_list extends general_listing
 			                                   'SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename FROM theme '.
 			                                   'ORDER BY add_timestamp DESC '.$this->get_limit());
 		else
-			$this->select_result = mysql_query('SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, release_date, thumbnail_filename, "" AS download_filename, user.username FROM background RIGHT JOIN user ON user.userID=background.userID UNION '.
-			                                   'SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, release_date, small_thumbnail_filename AS thumbnail_filename, download_filename, user.username FROM theme JOIN user ON user.userID=theme.userID '.
+			$this->select_result = mysql_query('SELECT backgroundID AS ID, \'background\' AS type, background_name AS name, rating, category, add_timestamp, release_date, thumbnail_filename, "" AS download_filename, user.username FROM background LEFT JOIN user ON user.userID=background.userID UNION '.
+			                                   'SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, release_date, small_thumbnail_filename AS thumbnail_filename, download_filename, user.username FROM theme LEFT JOIN user ON user.userID=theme.userID '.
 			                                   'ORDER BY add_timestamp DESC '.$this->get_limit());
 	}
 }
@@ -401,7 +401,7 @@ class theme_list extends general_listing
 		if ($this->format != 'atom')
 			$this->select_result = mysql_query('SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM theme '.$wq.' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 		else
-			$this->select_result = mysql_query('SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, release_date, user.username FROM theme RIGHT JOIN user ON user.userID=theme.userID '.$wq.' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
+			$this->select_result = mysql_query('SELECT themeID AS ID, \'theme\' AS type, theme_name AS name, rating, category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, release_date, user.username FROM theme LEFT JOIN user ON user.userID=theme.userID '.$wq.' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
 
@@ -437,7 +437,7 @@ class contest_list extends theme_list
 			$this->select_result = mysql_query('SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM contest '.
 			                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 		else
-			$this->select_result = mysql_query('SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, DATE(FROM_UNIXTIME(add_timestamp)) AS release_date, user.username FROM contest RIGHT JOIN user ON user.userID=contest.userID '.
+			$this->select_result = mysql_query('SELECT contestID AS ID, \'contest\' AS type, name, rating, contest AS category, add_timestamp, small_thumbnail_filename AS thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, DATE(FROM_UNIXTIME(add_timestamp)) AS release_date, user.username FROM contest LEFT JOIN user ON user.userID=contest.userID '.
 			                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
@@ -475,7 +475,7 @@ class screenshot_list extends theme_list
 			$this->select_result = mysql_query('SELECT screenshotID AS ID, \'screenshot\' AS type, name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM screenshot '.
 			                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 		else
-			$this->select_result = mysql_query('SELECT screenshotID AS ID, \'screenshot\' AS type, name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, DATE(FROM_UNIXTIME(add_timestamp)) AS release_date, user.username FROM screenshot RIGHT JOIN user ON user.userID=screenshot.userID '.
+			$this->select_result = mysql_query('SELECT screenshotID AS ID, \'screenshot\' AS type, name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, DATE(FROM_UNIXTIME(add_timestamp)) AS release_date, user.username FROM screenshot LEFT JOIN user ON user.userID=screenshot.userID '.
 			                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
@@ -548,7 +548,7 @@ class background_list extends general_listing
 		{
 			$this->where['resolution'] = mysql_real_escape_string($this->resolution);
 			$wq = parent::get_where_clause();
-			return ' RIGHT JOIN background_resolution ON background.backgroundID=background_resolution.backgroundID '.$wq;
+			return ' INNER JOIN background_resolution ON background.backgroundID=background_resolution.backgroundID '.$wq;
 		}
 	}
 	
@@ -570,7 +570,7 @@ class background_list extends general_listing
 			$this->select_result = mysql_query("SELECT $id_sql AS ID, 'background' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day FROM background ".
 			                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 		else
-			$this->select_result = mysql_query("SELECT $id_sql AS ID, 'background' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, release_date, user.username FROM background RIGHT JOIN user ON user.userID=background.userID ".
+			$this->select_result = mysql_query("SELECT $id_sql AS ID, 'background' AS type, background_name AS name, rating, category, add_timestamp, thumbnail_filename, (download_count / ((UNIX_TIMESTAMP() - download_start_timestamp)/(60*60*24))) AS downloads_per_day, release_date, user.username FROM background LEFT JOIN user ON user.userID=background.userID ".
 			                                   $wq. ' ORDER BY '. $this->sort_by. ' '. $this->order. $this->get_limit());
 	}
 }
