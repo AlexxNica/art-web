@@ -290,12 +290,14 @@ $sys_ftp_dir = "/ftp/pub/gnome/teams/art.gnome.org/";
 $background_image_types = array ("png", "jpg", "svg");
 
 $search_type_array = array ("all" => "Backgrounds and Themes", "background_name" => "Background Name", "theme_name" => "Theme Name", "author" => "Author Name");
-$thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "1000" => "All");
+$thumbnails_per_page_array = array("12" => "12", "24" => "24", "48" => "48", "all" => "All");
 $order_array = array("ASC"=>"Ascending", "DESC"=>"Descending");
-$sort_by_array = array("name" => "Name", "add_timestamp" => "Date", "downloads_per_day" => "Popularity", "rating" => "Rating");
+$sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popularity", "rating" => "Rating");
+/* XXX: add_timestamp and downloads_per_day kept for compatibility. Please remove at some point. */
+$sort_by_convert = array("name" => "name", "date" => "add_timestamp", "popularity" => "downloads_per_day", "rating" => "rating", "add_timestamp" => "add_timestamp", "downloads_per_day" => "downloads_per_day");
 $view_array = array("icons" => "Icon", "list" => "List");
 $status_array = Array("new" => "New", "approved" => "Approved", "added" => "Added", "rejected" => "Rejected");
 
-$resolution_array = Array("%" => "All", "1024x768" => "1024x768", "1280x1024" => "1280x1024", "1600x1200" => "1600x1200", "1400x1050" => "1400x1050", "1680x1050" => "1680x1050", "1920x1200" => "1920x1200", "scalable" => "Scalable (SVG)");
+$resolution_array = Array("all" => "All", "1024x768" => "1024x768", "1280x1024" => "1280x1024", "1600x1200" => "1600x1200", "1400x1050" => "1400x1050", "1680x1050" => "1680x1050", "1920x1200" => "1920x1200", "scalable" => "Scalable (SVG)");
 
 ?>

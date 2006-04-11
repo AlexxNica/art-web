@@ -1,3 +1,20 @@
+2006-04-12  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* atom.php: removed as one can use updates.php?format=atom
+	* includes/common.inc.php: add a generate_feed function.
+	* includes/config.inc.php: some constant changes
+	* includes/art_page.inc.php:
+	* backend.php:
+	use generate_feed.
+
+	* includes/art_listings.inc.php:
+	- changed query string
+	- add page count calculation to latest_updates_list
+
+	* updates.php:
+	- make it look more like the other listings
+	- added rss/atom support
+
 2006-04-11  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/art_listings.inc.php:

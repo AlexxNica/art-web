@@ -98,28 +98,7 @@ else
 		}
 		else
 		{
-			/* handle atom/rss case */
-			header("Content-type: text/xml");
-			$header = new template("$format/header.xml");
-			$header->add_var('site_name', $site_name);
-			$header->add_var('site_url', $site_url);
-			$last_updated = $list->last_updated();
-			
-			/* we don't need to think about the session here ... */
-			$etag = md5($_SERVER['REQUEST_URI']."-1.".$last_updated);
-			conditional_get($etag, $last_updated);
-			
-			if ($format == 'atom')
-			{
-				$header->add_var('request_uri', xmlentities($_SERVER['REQUEST_URI']));
-				$header->add_var('update_time', gmdate('Y-m-d\TH:i:s\Z', $last_updated));
-			}
-			
-			$footer = new template("$format/footer.xml");
-			
-			$header->write();
-			$list->print_listing();
-			$footer->write();
+			generate_feed($list, $format);
 		}
 	}
 	
