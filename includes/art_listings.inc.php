@@ -210,7 +210,7 @@ class general_listing
 			{
 				$result .= "<entry>\n";
 				$result .= "\t<id>tag:$site_name,".$row['release_date'].":$type:$category:$itemID</id>\n";
-				$result .= "\t<title>[$category_name] ".xmlentities($name)."</title>\n";
+				$result .= "\t<title>".xmlentities($name)."</title>\n";
 				$result .= "\t<link rel=\"alternate\" href=\"$link\" />\n";
 				$result .= "\t<link rel=\"enclosure\" title=\"Thumbnail File\" theme:relation=\"thumbnail\" href=\"$thumbnail\" />\n";
 				/* XXX: themes have previews! */

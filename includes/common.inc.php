@@ -153,7 +153,7 @@ function get_download_links($type, $category, $itemID, $download_filename, $form
 			break;
 			case 'atom':
 				while (list($resID,$download_filename,$resolution,$image_type) = mysql_fetch_row($resolution_select))
-					$result .= "<link rel=\"enclosure\" title=\"Download $resolution ".strtoupper($image_type)."\" theme:relation=\"download\" theme:resolution=\"$resolution\" href=\"$site_url/download/backgrounds/$category/$resID/$download_filename\" />\n";
+					$result .= "<link rel=\"enclosure\" title=\"Download $resolution ".strtoupper($image_type)."\" theme:relation=\"background\" theme:resolution=\"$resolution\" href=\"$site_url/download/backgrounds/$category/$resID/$download_filename\" />\n";
 			break;
 		}
 	break;

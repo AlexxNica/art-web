@@ -1,3 +1,9 @@
+2006-04-17  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/art_listings.inc.php:
+	* includes/common.inc.php:
+	- small changes to the atom feed (Alberto Ruiz)
+
 2006-04-12  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* atom.php: removed as one can use updates.php?format=atom
