@@ -54,13 +54,13 @@ function get_comments ($artID, $type)
 			}
 			else
 			{
-			
-				$form = ("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
-				$form .= ("\t<div style=\"text-align:right;\" class=\"abuse\">\n");
-				$form .= ("\t<input type=\"hidden\" name=\"commentID\" value=\"$commentID\" />\n");
-				$form .= ("\t<input type=\"submit\" name=\"report\" value=\"(Report Abuse)\" class=\"link_button\" style=\"font-size: 0.8em;\" />\n");
-				$form .= ("\t</div>\n");
-				$form .= ("\t</form>\n");
+				$form  = "\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n";
+				$form .= "\t<div style=\"text-align:right;\" class=\"abuse\">\n";
+				if ($_SESSION['userID'] == $userID) $form .= '	<a href="/edit_comment.php?commentID='.$commentID.'">Edit</a>';
+				$form .= "\t<input type=\"hidden\" name=\"commentID\" value=\"$commentID\" />\n";
+				$form .= "\t<input type=\"submit\" name=\"report\" value=\"(Report Abuse)\" class=\"link_button\" style=\"font-size: 0.8em;\" />\n";
+				$form .= "\t</div>\n";
+				$form .= "\t</form>\n";
 			
 				$template->add_var ('status', $form);
 			}
