@@ -2,9 +2,10 @@
 
 	* includes/comments.inc.php:
 	* templates/en/edit_comment.html:
-	* templates/en/main.html:
-
 	Implement editing comments
+
+	* templates/en/main.html: Fix Tutorials link
+
 
 2006-04-17  Benjamin Berg  <benjamin@sipsolutions.net>
 
