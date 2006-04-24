@@ -6,12 +6,19 @@ include "art_headers.inc.php";
 
 
 $redirect = false;
+is_logged_in('Edit Comment');
 
 if (POST ('save'))
 {
 	$commentID = validate_input_regexp_default ($_POST['commentID'], '^[0-9]+$', -1);
 	if ($commentID == -1)
 		art_fatal_error ('Edit Comment', 'Save Comment', 'Invalid comment ID');
+	
+	$comment_result = mysql_query ("SELECT userID FROM comment WHERE commentID = $commentID");
+	$comment_array = mysql_fetch_array ($comment_result);
+
+	if ($_SESSION['userID'] != $comment_array['userID'])
+		art_fatal_error ('Edit Comment', 'Edit Comment', 'Go away! You cannot edit other people\'s comments');
 	$comment_text = escape_string ($_POST['comment_text']);
 	$time = time ();
 	mysql_query ("UPDATE comment SET comment = '$comment_text', edit_time = '$time' WHERE commentID = $commentID");

@@ -1,3 +1,9 @@
+2006-04-24  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* edit_comment.php:
+	- Make sure users have to log in before eding any comments.
+	- Only allow modifying own comments.
+
 2006-04-24  Thomas Wood  <thos@gnome.org>
 
 	* edit_comment.php: Actually add the file!
