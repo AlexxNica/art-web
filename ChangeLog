@@ -1,3 +1,7 @@
+2006-04-24  Thomas Wood  <thos@gnome.org>
+
+	* edit_comment.php: Actually add the file!
+
 2006-04-23  Thomas Wood  <thos@gnome.org>
 
 	* includes/comments.inc.php:
