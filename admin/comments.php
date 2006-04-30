@@ -54,25 +54,7 @@ if($badcomment_count > 0)
 	
 	while(list($commentID, $status, $userID, $username, $comment, $comment_time, $comment_type, $comment_artID)=mysql_fetch_row($badcomment_result))
 	{
-		switch ($comment_type) {
-			case "background":
-				$sql = "SELECT category, background_name FROM `background` WHERE backgroundID = $comment_artID";
-				break;
-			case "theme":
-				$sql = "SELECT category, theme_name FROM `theme` WHERE themeID = $comment_artID";
-				break;
-			case "contest":
-				$sql = "SELECT contest, name FROM `contest` WHERE contestID = $comment_artID";
-				break;
-			case  "screenshot":
-				$sql = "SELECT category, name FROM `screenshot` WHERE screenshotID = $comment_artID";
-				break;
-			default:
-				if (!$warned_unkown_type === True)
-					print ('<p class="warning">Got an unknown art type! Expect weird things to happen.</p>');
-				$warned_unkown_type = True;
-		}
-		
+		$sql = "SELECT category, name FROM $comment_type WHERE {$comment_type}ID = $comment_artID";
 		$result = mysql_query($sql);
 		list($category, $name) = mysql_fetch_row($result);
 		
@@ -82,7 +64,7 @@ if($badcomment_count > 0)
 		print("<table class=\"comment\">\n");
 		print("<tr><td class=\"comment_head\">");
 		print("<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\">\n");
-		print("<i>$count: <a href=\"/users/$username\">$username</a> posted on " . date("Y-m-d - H:i", ($comment_time + (3600 * ($timezone + 5)))) . " to <a href=\"$link\">$name</a> </i>\n");
+		print("<i>$count: <a href=\"/users/$username\">$username</a> posted on " . date("Y-m-d - H:i", ($comment_time + (3600 * ($timezone + 5)))) . " to <a href=\"$link\">".htmlentities($name)."</a> </i>\n");
 		print("</td><td align=\"right\">\n");
 		// mod stuff here.
 		print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
