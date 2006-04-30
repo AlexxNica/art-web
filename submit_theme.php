@@ -39,7 +39,7 @@ if($_POST['submit'])
 		$theme_author = mysql_real_escape_string ($theme_author);
 		$theme_url = mysql_real_escape_string ($theme_url);
 		$theme_description = mysql_real_escape_string ($theme_description);
-		$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,userID,status,date,theme_name,version,license,parentID,category,theme_url,theme_description,updateID) ";
+		$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,userID,status,date,name,version,license,parentID,category,theme_url,description,updateID) ";
 		$incoming_theme_insert_query .= "VALUES('','{$_SESSION['userID']}','new','$date','$theme_name','$version','$license','$parentID','$category','$theme_url','$theme_description','$update')";
 		$incoming_theme_insert_result = mysql_query("$incoming_theme_insert_query");
 		if(mysql_affected_rows()==1)
@@ -70,8 +70,10 @@ else
 }
 	if ($update)
 	{
-		$theme_select_result = mysql_query("SELECT theme_name,category,license,version,theme_description,parentID FROM incoming_theme WHERE themeID=$update AND userID={$_SESSION['userID']}");
+		$theme_select_result = mysql_query("SELECT name,category,license,version,description,parentID FROM incoming_theme WHERE themeID=$update AND userID={$_SESSION['userID']}");
 		extract(mysql_fetch_array($theme_select_result));
+		$theme_name = $name;
+		$theme_description = $description;
 	}
 	
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
@@ -79,7 +81,7 @@ else
 	print("<tr><td><strong><label for=\"theme_name\">Theme Name</label>:</strong></td><td><input type=\"text\" name=\"theme_name\" value=\"$theme_name\" id=\"theme_name\" size=\"40\" /></td></tr>\n");
 	print("<tr><td><strong><label for=\"category\">Category</label></strong></td><td>"); print_select_box("category", Array(""=>"Choose", "gtk2"=>"Applications (gtk+)", "desktop"=>"Desktop Theme", "gtk_engines"=>"GTK+ Engines", "icon"=>"Icon", "gdm_greeter" => "Login Manager (gdm)", "splash_screens"=>"Splash Screens", "metacity"=>"Window Borders (metacity)"), $category); print("</td></tr>\n");
 	print("<tr><td><strong><label for=\"variation\">Variation of</label>:</strong></td><td><select name=\"parentID\" id=\"variation\"><option value=\"0\">N/A</option>\n");
-	$theme_select_result = mysql_query("SELECT themeID,theme_name,category FROM theme WHERE userID = {$_SESSION['userID']}");
+	$theme_select_result = mysql_query("SELECT themeID,name,category FROM theme WHERE userID = {$_SESSION['userID']}");
 	while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($theme_select_result))
 	{
 		if ($var_themeID == $parentID) $selected = "selected=\"true\""; else $selected = "";

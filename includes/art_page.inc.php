@@ -124,7 +124,13 @@ else
 		$info_result = mysql_query ("SELECT * FROM $type INNER JOIN user ON $type.userID = user.userID WHERE {$type}ID = $artID");
 
 		$info = mysql_fetch_array ($info_result);
+		
+		/* encode things correctly */
+		$info['name'] = htmlentities ($info['name']);
+		$info['username'] = htmlentities ($info['username']);
+		$info['description'] = html_parse_text ($info['description']);
 		$template->add_vars ($info);
+		
 		$template->add_var ('release-date', FormatRelativeDate (time(), strtotime ($info ['release_date']), true));
 
 		$rate_count_result = mysql_query ("SELECT COUNT(voteID) FROM vote WHERE artID = $artID AND type='{$type}'");

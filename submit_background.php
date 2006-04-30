@@ -43,7 +43,7 @@ if(array_key_exists("submit",$_POST))
 		if ($valid_urls)
 		{
 			$date = date("Y-m-d");
-			$incoming_background_insert_query = "INSERT INTO incoming_background(backgroundID,status,date,version,license,background_name,category,userID,parentID,background_description) ";
+			$incoming_background_insert_query = "INSERT INTO incoming_background(backgroundID,status,date,version,license,name,category,userID,parentID,description) ";
 			$incoming_background_insert_query .= "VALUES('','new','$date','$version','$license','$background_name','$category','{$_SESSION['userID']}','$parentID','$background_description')";
 			$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
 			$backgroundID = mysql_insert_id();
@@ -90,7 +90,7 @@ $template->add_var ('message', $message);
 $template->add_var ('background-name', $background_name);
 $template->add_var ('category-list', create_select_box("category", array_combine($background_category_list, $background_category_list), $category));
 $variation_list = '<select name="parentID" id="variation"><option value="0">N/A</option>';
-$background_select_result = mysql_query("SELECT backgroundID,background_name,category FROM background WHERE userID = {$_SESSION['userID']} AND parentID=0");
+$background_select_result = mysql_query("SELECT backgroundID,name,category FROM background WHERE userID = {$_SESSION['userID']} AND parent=0");
 while(list($backID,$back_name) = mysql_fetch_row($background_select_result))
 {
 	if ($backID == $parentID)

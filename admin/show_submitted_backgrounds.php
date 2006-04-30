@@ -32,13 +32,13 @@ if(is_array($mark_background))
 
 		/* update name of item */
 		$new_name = escape_string ($new_background_name_array[$markID]);
-		mysql_query("UPDATE incoming_background SET background_name='$new_name' WHERE backgroundID='$markID'");
+		mysql_query("UPDATE incoming_background SET name='$new_name' WHERE backgroundID='$markID'");
 		if (mysql_affected_rows())
 			print("<p class=\"info\">Updated name of background $markID as &quot;$new_name&quot;.</p>");
 
 		/* update description of item */
 		$new_description = escape_string ($new_background_description_array[$markID]);
-		mysql_query("UPDATE incoming_background SET background_description='$new_description' WHERE backgroundID='$markID'");
+		mysql_query("UPDATE incoming_background SET description='$new_description' WHERE backgroundID='$markID'");
 		if (mysql_affected_rows())
 			print("<p class=\"info\">Updated description of background $markID.</p>");
 
@@ -75,7 +75,7 @@ else
 	{
 		if ($admin_level > 1)
 		{
-			$approved_list_select = mysql_query("SELECT backgroundID, background_name FROM incoming_background WHERE status='approved'");
+			$approved_list_select = mysql_query("SELECT backgroundID, name FROM incoming_background WHERE status='approved'");
 			print("<form action=\"add_background.php\" method=\"post\">");
 			print("Approved items: <select name=\"submitID\">");
 			while ($row = mysql_fetch_row($approved_list_select))
@@ -93,8 +93,8 @@ else
 		{
 			if ($alt == 1) $colour = "style=\"background: #dedede\""; else $colour = "";
 			extract($incoming_background_select_row);
-			$background_description = htmlspecialchars($incoming_background_select_row["background_description"]);
-			$background_name = htmlspecialchars($background_name);
+			$background_description = htmlspecialchars($incoming_background_select_row["description"]);
+			$background_name = htmlspecialchars($name);
 			if($background_screenshot_url != "")
 			{
 				$screenshot_link = "<a href=\"$background_screenshot_url\">Screenshot</a>";

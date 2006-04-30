@@ -69,7 +69,7 @@ else
 	{
 		if ($admin_level > 1)
 		{
-			$approved_list_select = mysql_query("SELECT themeID, theme_name, category FROM incoming_theme WHERE status='approved'");
+			$approved_list_select = mysql_query("SELECT themeID, name, category FROM incoming_theme WHERE status='approved'");
 			print("<form action=\"add_theme.php\" method=\"post\">");
 			print("Approved items: <select name=\"submitID\">");
 			while ($row = mysql_fetch_row($approved_list_select))
@@ -90,7 +90,7 @@ else
 			if ($alt == 1) $colour = "style=\"background: #dedede\""; else $colour = "";
 			extract($incoming_theme_select_row);
 			print("<tr $colour><td>$themeID</td>");
-			print("<td>".html_parse_text($theme_name)."</td>");
+			print("<td>".html_parse_text($name)."</td>");
 			print ('<td>');print_select_box ("category[$themeID]", $theme_type_select_array, $category);print ('</td>');
 			print("<td><a href=\"/users/$userID\">$username</a></td>");
 			print("<td>$date</td>");

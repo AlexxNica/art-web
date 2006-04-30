@@ -11,23 +11,11 @@ $admin_level = admin_auth (1);
 	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_backgrounds.php\">Submitted Backgrounds</a><br />");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"show_submitted_themes.php\">Submitted Themes</a><br />");
 
-	create_title("Backgrounds","");
-	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_background.php\">Add A New Background</a><br />");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_background.php\">Edit A Background</a><br />");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_background.php\">Delete A Background</a><br />");
-
-	create_title("Themes", "");
-	//print("&nbsp;&nbsp;&nbsp;<a href=\"add_theme.php\">Add A New Theme</a><br />");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_theme.php\">Edit A Theme</a><br />");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_theme.php\">Delete A Theme</a><br />");
-	
-	create_title("Contest Items", "");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_contest.php\">Edit A Contest Item</a><br />");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_contest.php\">Delete A Contest Item</a><br />");
-
-	create_title("Screenshots", "");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_screenshot.php\">Edit A Screenshot</a><br />");
-	print("&nbsp;&nbsp;&nbsp;<a href=\"delete_screenshot.php\">Delete A Screenshot</a><br />");
+	create_title("Edit/Delete Artwork","");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_art.php?type=background\">Background</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_art.php?type=theme\">Theme</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_art.php?type=screenshot\">Screenshot</a><br />");
+	print("&nbsp;&nbsp;&nbsp;<a href=\"edit_art.php?type=contest\">Contest Item</a><br />");
 
 	create_title("Comments","");
 	print("&nbsp;&nbsp;&nbsp;<a href=\"comments.php\">Moderate Comments</a><br />");

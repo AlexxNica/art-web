@@ -37,7 +37,7 @@ function list_backgrounds($parent, $category)
 	while ($row = mysql_fetch_assoc($background_select_result))
 	{
 		$background_id = $row['backgroundID'];
-		$background_name = $row['background_name'];
+		$background_name = $row['name'];
 		$background_description = $row['background_description'];
 		$background_category = $row['category'];
 		$background_license = $row['license'];
@@ -99,7 +99,7 @@ function list_themes($parent, $category)
 	while ($row = mysql_fetch_assoc($theme_select_result))
 	{
 		$theme_id = $row['themeID'];
-		$theme_name = $row['theme_name'];
+		$theme_name = $row['name'];
 		$theme_description = $row['description'];
 		$theme_category = $row['category'];
 		$username = $row['username'];
@@ -110,8 +110,8 @@ function list_themes($parent, $category)
 		$theme_download_count = $row['download_count'];
 		$theme_release_date = $row['release_date'];
 		
-		$thumbnail = $row['thumbnail_filename'];
-		$small_thumbnail = $row['small_thumbnail_filename'];
+		$thumbnail = $row['preview_filename'];
+		$small_thumbnail = $row['thumbnail_filename'];
 
 		$archive = "";
 

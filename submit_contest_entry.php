@@ -112,7 +112,7 @@ function upload_entry ($unvalidated_item_name, $unvalidated_description)
 
 	/* FILES DONE, now insert it into the DB */
 	$time = time ();
-	$sql  = "INSERT INTO contest (status,name,contest,userID,add_timestamp,description,small_thumbnail_filename, download_start_timestamp, thumbnail_filename, license) ";
+	$sql  = "INSERT INTO contest (status,name,contest,userID,add_timestamp,description,thumbnail_filename, download_start_timestamp, preview_filename, license) ";
 	$sql .= "VALUES ('active','$item_name','$contest','{$_SESSION['userID']}','$time','$description','$thumb_filename','$time','$file_name', '$license')";
 
 	$sql_result = mysql_query ($sql);

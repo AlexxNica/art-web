@@ -26,7 +26,7 @@ if($add_background)
 		{
 			$parentID = "0";
 		}
-		$background_insert_query  = "INSERT INTO background(backgroundID,status,userID,background_name,parent,version,license,category,add_timestamp,release_date,background_description,thumbnail_filename, download_start_timestamp) ";
+		$background_insert_query  = "INSERT INTO background(backgroundID,status,userID,name,parent,version,license,category,add_timestamp,release_date,description,thumbnail_filename, download_start_timestamp) ";
 		$background_insert_query .= "VALUES('','active','$userID','$background_name','$parentID','$version','$license','$category','$timestamp','$date','$background_description','$thumbnail_filename', UNIX_TIMESTAMP())";
 		print(mysql_error());
 		$background_insert_result = mysql_query($background_insert_query);
@@ -70,12 +70,12 @@ else
 	list($month,$day,$year) = explode("/",$date);
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<table border=\"0\">\n");
-	print("<tr><td><strong>Background Name:</strong></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$background_name\"></td></tr>\n");
+	print("<tr><td><strong>Background Name:</strong></td><td><input type=\"text\" name=\"background_name\" size=\"40\" value=\"$name\"></td></tr>\n");
 	print("<tr><td><strong>Category</strong></td><td>");print_select_box("category", array_combine($background_category_list, $background_category_list), $category); print("</td></tr>\n");
 	print("<tr><td><strong>License</strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
 	print("<tr><td><strong>Version:</strong></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
 	print("<tr><td><strong>Variation</strong></td><td><select name=\"parentID\"><option value=\"\">N/A</option>");
-	$background_select_result = mysql_query("SELECT backgroundID,background_name FROM background WHERE userID=$userID AND parent=0");
+	$background_select_result = mysql_query("SELECT backgroundID,name FROM background WHERE userID=$userID AND parent=0");
 	while(list($backID,$back_name)=mysql_fetch_row($background_select_result))
 	{
 		if ($backID == $parentID)
@@ -87,7 +87,7 @@ else
 	print("</select></td></tr>\n");
 	print("<tr><td><strong>User:</strong></td><td><input type=\"hidden\" name=\"userID\" value=\"$userID\">$userID</td></tr>\n");
 	print("<tr><td><strong>Release Date:</strong></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
-	print("<tr><td><strong>Background Description:</strong></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap>$background_description</textarea></td></tr>\n");
+	print("<tr><td><strong>Background Description:</strong></td><td><textarea name=\"background_description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
 	print("<tr><td><strong>Thumbnail Filename:</strong></td><td>");file_chooser("thumbnail_filename", "/usr/local/www/art-web/images/thumbnails/backgrounds", $category);print("</td></tr>\n");
 	print("</table>\n<p>\n");
 

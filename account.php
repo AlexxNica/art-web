@@ -214,7 +214,7 @@ elseif (array_key_exists('username', $_SESSION))
 	print("<li><a href=\"/submit_screenshot.php\">Submit a screenshot</a></li>");
 	print("</ul>");
 	print("<div class=\"h2\">Theme submissions</div><div class=\"subtitle\">Status of submitted themes</div>");
-	$submissions_select_result = mysql_query("SELECT themeID,theme_name,category,status,comment FROM incoming_theme WHERE userID = '{$_SESSION['userID']}' ");
+	$submissions_select_result = mysql_query("SELECT themeID,name,category,status,comment FROM incoming_theme WHERE userID = '{$_SESSION['userID']}' ");
 	if (mysql_num_rows($submissions_select_result) < 1 )
 	{
 		print("<p>(None)</p>");
@@ -234,7 +234,7 @@ elseif (array_key_exists('username', $_SESSION))
 	}
 	print("<br />");
 	print("<div class=\"h2\">Background submissions</div><div class=\"subtitle\">Status of submitted backgrounds</div>");
-	$submissions_select_result = mysql_query("SELECT backgroundID,background_name,category,status,comment FROM incoming_background WHERE userID = '{$_SESSION['userID']}' ");
+	$submissions_select_result = mysql_query("SELECT backgroundID,name,category,status,comment FROM incoming_background WHERE userID = '{$_SESSION['userID']}' ");
 	if (mysql_num_rows($submissions_select_result) < 1 )
 	{
 		print("<p>(None)</p>");

@@ -1,3 +1,42 @@
+2006-04-29  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/art.inc.php:
+	- removed unused print_detailed_view function
+
+	* admin/edit_art.php:
+	- new file to handle editing and deletion of all types
+
+	* admin/delete_background.php:
+	* admin/delete_contest.php:
+	* admin/delete_screenshot.php:
+	* admin/delete_theme.php:
+	* admin/edit_background.php:
+	* admin/edit_contest.php:
+	* admin/edit_screenshot.php:
+	* admin/edit_theme.php:
+	- removed, as it is handled by edit_art.php now
+
+	* admin/index.php:
+	- updated to point to edit_art.php
+
+	* includes/art_page.inc.php:
+	- encode the name and description correctly
+
+	* account.php:
+	* admin/add_background.php:
+	* admin/add_theme.php:
+	* admin/show_submitted_backgrounds.php:
+	* admin/show_submitted_themes.php:
+	* includes/art_listings.inc.php:
+	* submit_background.php:
+	* submit_contest_entry.php:
+	* submit_theme.php:
+	* templates/en/backgrounds/detail.html:
+	* templates/en/contests/detail.html:
+	* templates/en/themes/detail.html:
+	* xml.php:
+	- changed names in the database
+
 2006-04-24  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* edit_comment.php:
