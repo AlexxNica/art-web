@@ -21,6 +21,7 @@ if (POST ('save'))
 		art_fatal_error ('Edit Comment', 'Edit Comment', 'Go away! You cannot edit other people\'s comments');
 	$comment_text = escape_string ($_POST['comment_text']);
 	$time = time ();
+	
 	mysql_query ("UPDATE comment SET comment = '$comment_text', edit_time = '$time' WHERE commentID = $commentID");
 	$redirect = true;
 }
@@ -55,7 +56,7 @@ if ($comment_type == 'background')
 else
 	$name_field = 'name';
 
-$art_result = mysql_query ("SELECT {$comment_type}_name AS name, category FROM {$comment_type} WHERE {$comment_type}ID = $comment_artID");
+$art_result = mysql_query ("SELECT name, category FROM {$comment_type} WHERE {$comment_type}ID = $comment_artID");
 list ($art_name, $art_category) = mysql_fetch_array ($art_result);
 
 $art_link = "http://{$_SERVER['SERVER_NAME']}/{$comment_type}s/$art_category/$comment_artID";

@@ -1,5 +1,9 @@
 2006-04-30  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* edit_comment.php: fix sql
+
+2006-04-30  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* admin/comments.php:
 	- Fix up sql statements.
 	- encode the name with htmlentities
