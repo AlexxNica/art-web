@@ -12,11 +12,15 @@ if (array_key_exists('type', $_REQUEST))
 {
 	$type = validate_input_array_default($_REQUEST['type'], array_keys($types), FALSE);
 	$type_name = ucfirst($type);
+	if ($type == 'contest')
+		$item_name = 'Contest Item';
+	else
+		$item_name = $type_name;
 }
 
 if ($type !== FALSE)
 {
-	admin_header("Edit ". $type_name);
+	admin_header("Edit ". $item_name);
 	$config_array = $types[$type];
 }
 else
@@ -85,7 +89,7 @@ if($action == "init")
 	}
 	else
 	{
-		create_title('Choose a Category');
+		create_title('Choose a '.$type_name.' Category');
 		print('<ul>');
 		foreach ($config_array as $category => $value)
 			print('<li><a href="'. $_SERVER['self'].'?type='.$type.'&category='.$category.'">'.$value['name'].'</a></li>');
@@ -106,7 +110,7 @@ elseif ($action == 'choose_category')
 	$result = mysql_query($sql);
 	if ($result && mysql_num_rows($result) > 0)
 	{
-		create_title('Choose a '. $type_name.' from the Category "'. $config_array[$category]['name'].'".');
+		create_title('Choose a '. $item_name.' from the Category "'. $config_array[$category]['name'].'".');
 		print('<form action="'.$_SERVER['PHP_SELF'].'" method="get">');
 		print('<select name="ID" size="24" id="ID">');
 		
@@ -137,8 +141,8 @@ elseif ($action == 'edit')
 		
 		print('<form action="'. $_SERVER["PHP_SELF"]. '" method="post">');
 		print('<table border="0">');
-		print('<tr><td><strong><label for="name">'. $type_name. ' Name</label>:</strong></td><td><input type="text" name="name" id="name" size="40" value="'. htmlentities($row['name']). '" /></td></tr>');
-		print('<tr><td><strong><label for="category">'. $type_name.' Category</label>:</strong></td><td><select name="category" id="category">');
+		print('<tr><td><strong><label for="name">'. $item_name. ' Name</label>:</strong></td><td><input type="text" name="name" id="name" size="40" value="'. htmlentities($row['name']). '" /></td></tr>');
+		print('<tr><td><strong><label for="category">'. $item_name.' Category</label>:</strong></td><td><select name="category" id="category">');
 		foreach ($config_array as $cat => $value)
 		{
 			print('<option value="'. $cat. '"');
@@ -215,7 +219,7 @@ elseif ($action == 'edit')
 		print('<input type="hidden" name="ID" value="'.$ID.'" />');
 		print('</td></tr>');
 		
-		print('<tr><td><input type="submit" value="Update '. $type_name. '" /></td></tr>');
+		print('<tr><td><input type="submit" value="Update '. $item_name. '" /></td></tr>');
 		print('</table>');
 		print('</form>');
 		
@@ -226,7 +230,7 @@ elseif ($action == 'edit')
 		print('<input type="hidden" name="type" value="'. $type. '" />');
 		print('<input type="hidden" name="ID" value="'.$ID.'" />');
 		print('<input type="checkbox" name="sure" id="sure" /><label for="sure">Check to delete this work.</label><br/>');
-		print('<input type="submit" value="Delete '. $type_name. '" />');
+		print('<input type="submit" value="Delete '. $item_name. '" />');
 		print('</table>');
 		print('</form>');
 	}
@@ -235,7 +239,7 @@ elseif ($action == 'edit')
 		if (!$result)
 			print('<p class="error">SQL query was not successfull</p>');
 		elseif (mysql_num_rows($result) == 0)
-			print('<p class="info">No such '.$type_name.'.');
+			print('<p class="info">No such '.$item_name.'.');
 		else
 			print('<p class="error">Something just went really, really wrong. There are '.mysql_num_rows($result).' Items with the same ID!</p>');
 	}
@@ -379,7 +383,14 @@ elseif ($action == 'write')
 		$result = mysql_query($sql);
 		
 		if ($result)
-			print('<p class="info">'.$type_name.' updated.</p>');
+		{
+			print('<p class="info">'.$item_name.' updated.</p>');
+			print('<p><ul>');
+			print('<li><a href="/admin/">Return to admin panel</a></li>');
+			print('<li><a href="'.$_SERVER["PHP_SELF"].'?action=edit&type='.$type.'">Return to edit another '.$item_name.'</a></li>');
+			print('<li><a href="'.$_SERVER["PHP_SELF"].'?action=edit&type='.$type.'&ID='.$ID.'">Return to edit this '.$item_name.'</a></li>');
+			print('</ul></p>');
+		}
 		else
 			print('<p class="error">Something went wrong :\'(. (SQL executed was: "'.$sql.'")</p>');
 	}
@@ -409,7 +420,13 @@ elseif ($action == 'delete')
 		else
 		{
 			if ($result)
+			{
 				print('<p class="info">Item deleted.</p>');
+				print('<p><ul>');
+				print('<li><a href="/admin/">Return to admin panel</a></li>');
+				print('<li><a href="'.$_SERVER["PHP_SELF"].'?action=edit&type='.$type.'">Return to edit another '.$item_name.'</a></li>');
+				print('</ul></p>');
+			}
 			else
 				print('<p class="error">Error deleting the item.</p>');
 		}
