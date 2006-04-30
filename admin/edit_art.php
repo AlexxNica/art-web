@@ -397,10 +397,22 @@ elseif ($action == 'delete')
 		$ID = validate_input_regexp_error ($ID, '^[0-9]+$');
 		$sql = 'DELETE FROM '. $type. " WHERE {$type}ID=$ID";
 		$result = mysql_query($sql);
-		if ($result)
-			print('<p class="info">Item deleted.</p>');
+		
+		if ($type == 'background' && $result)
+		{
+			$result = mysql_query('DELETE FROM background_resolution WHERE backgroundID='. $ID);
+			if ($result)
+				print('<p class="info">Item deleted.</p>');
+			else
+				print('<p class="error">Error deleting the resolution (background itself is deleted).</p>');
+		}
 		else
-			print('<p class="error">Error deleting the item.</p>');
+		{
+			if ($result)
+				print('<p class="info">Item deleted.</p>');
+			else
+				print('<p class="error">Error deleting the item.</p>');
+		}
 	}
 	else
 	{

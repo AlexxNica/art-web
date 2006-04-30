@@ -1,3 +1,13 @@
+2006-04-30  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/edit_art.php:
+	- remove background resolutions
+	* includes/art_page.inc.php:
+	- Show error messages if the theme does not exists,
+	  or status != 'active'
+	* templates/en/themes/detail.html:
+	- forgot to rename some variables
+
 2006-04-29  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/art.inc.php:

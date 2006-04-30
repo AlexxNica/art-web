@@ -123,7 +123,13 @@ else
 		$template = new template ($detail_template);
 		$info_result = mysql_query ("SELECT * FROM $type INNER JOIN user ON $type.userID = user.userID WHERE {$type}ID = $artID");
 
+		if (!$info_result)
+			art_file_not_found();
+		
 		$info = mysql_fetch_array ($info_result);
+		
+		if ($info['status'] != 'active')
+			art_file_not_found();
 		
 		/* encode things correctly */
 		$info['name'] = htmlentities ($info['name']);
