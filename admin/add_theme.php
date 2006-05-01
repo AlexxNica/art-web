@@ -47,7 +47,7 @@ if($_POST["add_theme"])
 
 					$date = $year . "-" . $month . "-" . $day;
 					$timestamp = time();
-					$theme_insert_query  = "INSERT INTO theme(themeID,status,theme_name,category,license,userID,parent,add_timestamp,release_date,version,description,preview_filename,thumbnail_filename, download_start_timestamp, download_filename) ";
+					$theme_insert_query  = "INSERT INTO theme(themeID,status,name,category,license,userID,parent,add_timestamp,release_date,version,description,preview_filename,thumbnail_filename, download_start_timestamp, download_filename) ";
 					$theme_insert_query .= "VALUES('','active','$theme_name','$category','$license','$userID','$parentID','$timestamp','$date','$version','$description','$thumbnail_filename','$screenshot_filename', UNIX_TIMESTAMP(), '$download_filename')";
 					$theme_insert_result = mysql_query($theme_insert_query);
 					$themeID = mysql_insert_id();
@@ -99,7 +99,7 @@ else
 
 	print("<tr><td><strong>Variation of</strong></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>");
 
-	$background_select_result = mysql_query("SELECT themeID,theme_name,category FROM theme WHERE userID=$userID ORDER BY category");
+	$background_select_result = mysql_query("SELECT themeID,name,category FROM theme WHERE userID=$userID ORDER BY category");
 	while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($background_select_result))
 	{
 		if ($var_themeID == $parentID)

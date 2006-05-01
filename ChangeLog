@@ -1,3 +1,7 @@
+2006-05-02  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/add_theme.php: theme_name -> name
+
 2006-04-30  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* templates/en/themes/detail.html: forgot to rename a variable
