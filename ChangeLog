@@ -1,3 +1,7 @@
+2006-05-04  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/edit_art.php: fix derivation editing
+
 2006-05-02  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/add_theme.php: theme_name -> name

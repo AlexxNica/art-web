@@ -151,7 +151,7 @@ elseif ($action == 'edit')
 			print('>'. $value['name']. "</option>\n");
 		}
 		
-		print('<tr><td><strong><label for="userID">UserID</label>:</strong></td><td><input id="userID" name="userID" value="'. $row['userID']. '"</td></tr>');
+		print('<tr><td><strong><label for="userID">UserID</label>:</strong></td><td><input id="userID" name="userID" value="'. $row['userID']. '"></td></tr>');
 		if ($type == 'theme' || $type == 'background')
 		{
 			print('<tr><td><strong><label for="license">License</label>:</strong></td><td>');
@@ -163,13 +163,13 @@ elseif ($action == 'edit')
 			print('<tr><td><strong><label for="version">Version</label></strong></td><td><input type="text" name="version" id="version" value="'. $row['version']. '" /></td></tr>');
 			print('<tr><td><strong><label for="variation">Variation of</label> </strong></td><td><select name="parentID" id="variation"><option value="0">N/A</option>');
 			
-			$result = mysql_query("SELECT themeID,name,category FROM theme WHERE userID=$userID AND parent=0 ORDER BY category");
+			$result = mysql_query("SELECT {$type}ID,name,category FROM $type WHERE userID=".$row['userID']." AND parent=0 AND {$type}ID!=$ID ORDER BY category");
 			while($sub_row = mysql_fetch_assoc($result))
 			{
-				print('<option value="'. $sub_row['themeID']. '"');
-				if ($sub_row['themeID'] == $row['parent'])
+				print('<option value="'. $sub_row[$type.'ID']. '"');
+				if ($sub_row[$type.'ID'] == $row['parent'])
 					print(' selected="true"');
-				print('>'. html_parse_text($sub_row['theme_name']).' ('.$sub_row['category']. ')</option>');
+				print('>'. html_parse_text($sub_row['name']).' ('.$sub_row['category']. ')</option>');
 			}
 			print('</select></td></tr>');
 
