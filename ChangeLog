@@ -1,3 +1,7 @@
+2006-05-05  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/add_theme.php: fix order of preview and thumbnail
+
 2006-05-04  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/edit_art.php: fix derivation editing
