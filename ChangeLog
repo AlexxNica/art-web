@@ -1,3 +1,13 @@
+2006-05-06  Thomas Wood  <thos@gnome.org>
+
+	* edit_theme.php:
+	* includes/art_page.inc.php:
+	* includes/templates.inc.php:
+	* templates/en/edit_theme.html:
+	* templates/en/themes/detail.html:
+
+	Allow theme authors to edit details of their themes
+
 2006-05-05  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* admin/add_theme.php: fix order of preview and thumbnail

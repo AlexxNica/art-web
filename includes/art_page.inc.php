@@ -144,6 +144,11 @@ else
 		$template->add_var ('rating-bar', rating_bar (ceil ($info['rating']), $rate_count));
 
 		if ($_SESSION['userID'] == $info['userID'])
+			$template->add_var ('edit-link', "<br/><div><a href=\"/edit_$type.php?{$type}ID={$info[$type.'ID']}\">Edit theme details</a></div>");
+		else
+			$template->add_var ('edit-link', '');
+
+		if ($_SESSION['userID'] == $info['userID'])
 			$user_rating_bar = 'Sorry, you may not vote for your own work!';
 		else
 		{

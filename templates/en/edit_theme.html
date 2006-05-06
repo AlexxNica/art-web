@@ -1,0 +1,20 @@
+
+
+<h1>Edit Theme</h1>
+<form action="{SELF}" method="post">
+<input type="hidden" name="themeID" value="{theme_themeID}"/>
+<input type="hidden" name="theme_category" value="{theme_category}"/>
+<table>
+<tr><td>Name:</td><td><input type="text" name="theme_name" value="{theme_name}"/></td></tr>
+<tr><td>Version:</td><td><input type="text" name="theme_version" value="{theme_version}"/></td></tr>
+<tr><td>Description:</td><td><textarea rows="5" cols="50" name="theme_description">{theme_description}</textarea></td></tr>
+<tr><td>License:</td><td>{license_box}</td></tr>
+<tr><td>Variation Of:</td><td>{variation_box}</td></tr>
+<tr><td colspan="2">
+<br/>
+<input type="submit" name="save" value="Save"/>
+<input type="submit" name="cancel" value="Cancel"/>
+</td></tr>
+</table>
+</form>
+<br/><br/>

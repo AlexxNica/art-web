@@ -39,8 +39,11 @@ class template
 		$this->template_data = file_get_contents ($filename);
 	}
 
-	function add_var ($name, $value)
+	function add_var ($name, $value = False)
 	{
+		// if no value is passed, try looking in a global variable
+		if ($value === False)
+			$value = $GLOBALS[$name];
 		$this->_variables['{'.$name.'}'] = $value;
 	}
 
