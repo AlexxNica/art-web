@@ -144,7 +144,7 @@ else
 		$template->add_var ('rating-bar', rating_bar (ceil ($info['rating']), $rate_count));
 
 		if ($_SESSION['userID'] == $info['userID'])
-			$template->add_var ('edit-link', "<br/><div><a href=\"/edit_$type.php?{$type}ID={$info[$type.'ID']}\">Edit theme details</a></div>");
+			$template->add_var ('edit-link', "<br/><div><a href=\"/edit_$type.php?{$type}ID={$info[$type.'ID']}\">Edit details</a></div>");
 		else
 			$template->add_var ('edit-link', '');
 
