@@ -393,6 +393,9 @@ function html_parse_text($comment)
 	$comment = ereg_replace(":\(|:-\(", "<img src=\"/images/site/emoticons/stock_smiley-4.png\" alt=\":(\" />", $comment);
 	$comment = ereg_replace(":-D|:D", "<img src=\"/images/site/emoticons/stock_smiley-6.png\" alt=\":(\" />", $comment);
 
+	$comment = preg_replace('(http://\S+)', '<a href="\0">\0</a> ', $comment);
+	$comment = preg_replace('(www\.\S+)', '<a href="http://\0">\0</a> ', $comment);
+
 	return $comment;
 }
 

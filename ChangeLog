@@ -1,5 +1,10 @@
 2006-05-07  Thomas Wood  <thos@gnome.org>
 
+	* admin/add_news_item.php: Add preview function
+	* includes/common.inc.php: Detect URLs in html_parse_text ()
+
+2006-05-07  Thomas Wood  <thos@gnome.org>
+
 	* edit_background.php:
 	* includes/art_page.inc.php:
 	* templates/en/backgrounds/detail.html:
