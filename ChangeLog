@@ -1,3 +1,8 @@
+2006-05-07  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/show_submitted_themes.php: Don't run html_parse_text over
+	the download url (causing nested links).
+
 2006-05-07  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_news_item.php: Don't quote the strings twice!

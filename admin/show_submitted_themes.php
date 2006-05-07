@@ -94,7 +94,7 @@ else
 			print ('<td>');print_select_box ("category[$themeID]", $theme_type_select_array, $category);print ('</td>');
 			print("<td><a href=\"/users/$userID\">$username</a></td>");
 			print("<td>$date</td>");
-			print("<td><a href=\"".html_parse_text($theme_url)."\">Download</a></td>");
+			print("<td><a href=\"".htmlentities($theme_url)."\">Download</a></td>");
 			print("<td>");print_select_box("mark_theme[$themeID]",$new_status_array,$status);print("</td>");
 			print("</tr>");
 
