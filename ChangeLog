@@ -1,5 +1,11 @@
 2006-05-07  Thomas Wood  <thos@gnome.org>
 
+	* admin/add_news_item.php: Don't quote the strings twice!
+	* includes/common.inc.php: Improvements to URL detection in
+	html_parse_text ()
+
+2006-05-07  Thomas Wood  <thos@gnome.org>
+
 	* admin/add_news_item.php: Add preview function
 	* includes/common.inc.php: Detect URLs in html_parse_text ()
 

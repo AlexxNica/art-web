@@ -21,12 +21,6 @@ if(POST ('add'))
 	if($month && $day && $year && $title && $news_body)
 	{
 		$date = $year . "-" . $month . "-" . $day;
-		$author = mysql_real_escape_string($author);
-		$author_email = mysql_real_escape_string($author_email);
-		$title = mysql_real_escape_string($title);
-		$news_body = mysql_real_escape_string($news_body);
-		$author = mysql_real_escape_string($author);
-		
 		$news_insert_result = mysql_query("INSERT INTO news(newsID,status,date,author,author_email,title,body) VALUES('','active','$date','$author','$author_email','$title','$news_body')");
 		$newsID = mysql_insert_id();
 		
