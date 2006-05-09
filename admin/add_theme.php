@@ -24,108 +24,158 @@ if($_POST["add_theme"])
 	$description = escape_string($_POST["description"]);
 	$download_filename = escape_string($_POST["download_filename"]);
 	$uploaded_thumbnail = $_FILES['thumbnail_filename']['tmp_name'];
-	$uploaded_screenshot = $_FILES['screenshot_filename']['tmp_name'];
+	$uploaded_preview = $_FILES['preview_filename']['tmp_name'];
 	$license = escape_string($_POST["license"]);
 
-	if($theme_name && $userID && $month && $day && $year && $description && $uploaded_thumbnail && $uploaded_screenshot && $download_filename )
+	if($theme_name && $userID && $month && $day && $year && $description && $uploaded_thumbnail && $uploaded_preview && $download_filename )
 	{
 		$thumbnail_filename = "../images/thumbnails/$category/" . create_filename ($theme_name, $category, $_FILES['thumbnail_filename']['name'], '-Th');
-		$screenshot_filename = "../images/thumbnails/$category/" . create_filename ($theme_name, $category, $_FILES['screenshot_filename']['name'], '-Shot');
+		$preview_filename = "../images/thumbnails/$category/" . create_filename ($theme_name, $category, $_FILES['preview_filename']['name'], '-Shot');
 
-		if (file_exists ($thumbnail_filename) || file_exists ($screenshot_filename))
+		if (file_exists ($thumbnail_filename) || file_exists ($preview_filename))
 		{
 			print ('<p class="error">One or more of the screenshot files already exist!</p>');
 		}
 		else
 		{
 			if (move_uploaded_file($uploaded_thumbnail, $thumbnail_filename)
-				&& move_uploaded_file($uploaded_screenshot, $screenshot_filename))
-				{
-					/* Now we've uploaded the files, we don't need the path information in the database */
-					$screenshot_filename = basename ($screenshot_filename);
-					$thumbnail_filename = basename ($thumbnail_filename);
+				&& move_uploaded_file($uploaded_preview, $preview_filename))
+			{
+				/* Make sure someone other than the httpd user can access these ... */
+				chmod ($thumbnail_filename, 0664);
+				chmod ($preview_filename, 0664);
 
-					$date = $year . "-" . $month . "-" . $day;
-					$timestamp = time();
-					$theme_insert_query  = "INSERT INTO theme(themeID,status,name,category,license,userID,parent,add_timestamp,release_date,version,description,thumbnail_filename,preview_filename, download_start_timestamp, download_filename) ";
-					$theme_insert_query .= "VALUES('','active','$theme_name','$category','$license','$userID','$parentID','$timestamp','$date','$version','$description','$thumbnail_filename','$screenshot_filename', UNIX_TIMESTAMP(), '$download_filename')";
-					$theme_insert_result = mysql_query($theme_insert_query);
-					$themeID = mysql_insert_id();
-					if($theme_insert_result)
+				/* Now we've uploaded the files, we don't need the path information in the database */
+				$preview_filename = basename ($preview_filename);
+				$thumbnail_filename = basename ($thumbnail_filename);
+
+				$date = $year . "-" . $month . "-" . $day;
+				$timestamp = time();
+				$theme_insert_query  = "
+					INSERT INTO theme(status,name,category,license,userID,parent,add_timestamp,release_date,version,description,thumbnail_filename,preview_filename, download_start_timestamp, download_filename)
+					VALUES('active','$theme_name','$category','$license','$userID','$parentID','$timestamp','$date','$version','$description','$thumbnail_filename','$preview_filename', UNIX_TIMESTAMP(), '$download_filename')";
+				$theme_insert_result = mysql_query($theme_insert_query);
+				$themeID = mysql_insert_id();
+				if($theme_insert_result)
+				{
+					print('<p class="info</p>Successed added theme to the database.</p>');
+					if($submitID)
 					{
-						print("Successed added theme to the database.<br/>");
-						if($submitID)
-						{
-							$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='added' WHERE themeID='$submitID'");
-							print("Successfully marked submitted theme as added in incoming themes list.");
-						}
-						print("<p><a href=\"/admin/show_submitted_themes.php\">Return</a> to incoming themes list.</p>");
+						$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='added' WHERE themeID='$submitID'");
+						print('<p class="info">Successfully marked submitted theme as added in incoming themes list.</p>');
 					}
-					else
-					{
-						print("<p>There were database errors adding theme into database.</p>");
-						print("<tt>".mysql_error()."</tt>");
-					}
+					print("<p><a href=\"/admin/show_submitted_themes.php\">Return</a> to incoming themes list.</p>");
+					art_footer ();
+					exit ();
 				}
 				else
-					print ('There was an error uploading the screenshots');
+				{
+					print("<p>There were database errors adding theme into database.</p><hr/>");
+					print("<tt>".mysql_error()."</tt><hr/>");
+				}
+			}
+			else
+				print ('<p class="error">There was an error uploading the screenshots</p><hr/>');
 		}
 	}
 	else
 	{
-		print("Error, all of the form fields are not filled in.");
+		print('<p class="error">Error, all of the form fields are not filled in.</p>');
 	}
 }
-else
+
+$date = date("m/d/Y");
+
+if ($submitID = POST ('submitID'))
 {
-	$date = date("m/d/Y");
-
-	if ($submitID != "")
-	{
-		$theme_select_result = mysql_query("SELECT name,userID,category,license,description,version,depends,parentID FROM incoming_theme WHERE themeID=$submitID");
+	$theme_select_result = mysql_query("SELECT name,userID,category,license,description,version,depends,parentID FROM incoming_theme WHERE themeID=$submitID");
 	list($theme_name,$userID,$theme_category,$license,$description,$version,$depends,$parentID) = mysql_fetch_row($theme_select_result);
-	}
+}
+else
+	art_fatal_error ('Add Theme', 'Add Theme',"No theme selected to add!");
 
-	list($month,$day,$year) = explode("/",$date);
-	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\"  enctype=\"multipart/form-data\" >\n");
-	print("<table border=\"0\">\n");
-	print("<tr><td><strong>Theme Name:</strong></td><td><input type=\"text\" name=\"theme_name\" size=\"40\" value=\"$theme_name\"></td></tr>\n");
-	print("<tr><td><strong>Category</strong></td><td><input type=\"hidden\" name=\"category\" value=\"$theme_category\" />{$theme_config_array[$theme_category]['name']} ($theme_category)</td></tr>\n");
-	print("<tr><td><strong>UserID:</strong></td><td><input type=\"text\" name=\"userID\" size=\"40\" value=\"$userID\"></td></tr>\n");
-	print("<tr><td><strong>Release Date:</strong></td><td><input type=\"text\" name=\"month\" value=\"$month\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"day\" value=\"$day\" size=\"2\" maxlenght=\"2\">/<input type=\"text\" name=\"year\" value=\"$year\" size=\"4\" maxlenght=\"4\"></td></tr>\n");
-	print("<tr><td><strong>License</strong></td><td>");print_select_box("license",$license_config_array, $license); print("</td></tr>\n");
-	print("<tr><td><strong>Version:</strong></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\"></td></tr>\n");
-	print("<tr><td><strong>Depends:</strong></td><td><input type=\"text\" name=\"depends\" size=\"40\" value=\"$depends\"></td></tr>\n");
+list($month,$day,$year) = explode("/",$date);
 
-	print("<tr><td><strong>Variation of</strong></td><td><select name=\"parentID\"><option value=\"0\">N/A</option>");
+?>
 
+<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post"  enctype="multipart/form-data" >
+<table border="0">
+<tr>
+	<td><strong>Theme Name:</strong></td>
+	<td><input type="text" name="theme_name" size="40" value="<?php echo $theme_name; ?>"></td>
+</tr>
+<tr>
+	<td><strong>Category</strong></td>
+	<td><input type="hidden" name="category" value="<?php echo $theme_category; ?>" /><?php echo $theme_config_array[$theme_category]['name'].' '.$theme_category; ?>)</td>
+</tr>
+<tr>
+	<td><strong>UserID:</strong></td>
+	<td><input type="text" name="userID" size="40" value="<?php echo $userID; ?>"></td>
+</tr>
+<tr>
+	<td><strong>Release Date:</strong></td>
+	<td><input type="text" name="month" value="<?php echo $month; ?>" size="2" maxlenght="2">/<input type="text" name="day" value="<?php echo $day; ?>" size="2" maxlenght="2">/<input type="text" name="year" value="<?php echo $year; ?>" size="4" maxlenght="4"></td>
+</tr>
+<tr>
+	<td><strong>License</strong></td>
+	<td><?php print_select_box("license",$license_config_array, $license); ?></td>
+</tr>
+<tr>
+	<td><strong>Version:</strong></td>
+	<td><input type="text" name="version" size="40" value="<?php echo $version; ?>"></td>
+</tr>
+<tr>
+	<td><strong>Depends:</strong></td>
+	<td><input type="text" name="depends" size="40" value="<?php echo $depends; ?>"></td>
+</tr>
+
+<tr>
+	<td><strong>Variation of</strong></td>
+	<td><select name="parentID"><option value="0">N/A</option>
+	<?php
 	$background_select_result = mysql_query("SELECT themeID,name,category FROM theme WHERE userID=$userID ORDER BY category");
 	while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($background_select_result))
 	{
 		if ($var_themeID == $parentID)
-			$selected = "selected=\"true\"";
+			$selected = 'selected="true"';
 		else
-			$selected = "";
+			$selected = '';
 		print("<option $selected value=\"$var_themeID\">$var_theme_name ($var_category)</option>");
 	}
-	print("</td></tr>");
+	?>
+		</td>
+</tr>
 
-	print("<tr><td><strong>Description:</strong></td><td><textarea name=\"description\" cols=\"40\" rows=\"5\" wrap>$description</textarea></td></tr>\n");
+<tr>
+	<td><strong>Description:</strong></td>
+	<td><textarea name="description" cols="40" rows="5" wrap><?php echo $description; ?></textarea></td>
+</tr>
+<tr>
+	<td><strong>Large Preview Filename:</strong></td>
+	<td><input type="file" name="preview_filename" /></td>
+</tr>
+<tr>
+	<td><strong>Small Thumbnail Filename:</strong></td>
+	<td><input type="file" name="thumbnail_filename" /></td>
+</tr>
+<tr>
+	<td><strong>Download Filename:</strong></td>
+	<td>
+	<?php
+	if (isset($theme_category))
+		file_chooser("download_filename", "$sys_ftp_dir/themes/$theme_category/");
+	else
+		print ('<p class="error">Error: No theme category set!</p>');
+	?>
+	</td>
+</tr>
 
-	print("<tr><td><strong>Thumbnail Filename:</strong></td><td><input type=\"file\" name=\"screenshot_filename\" /></td></tr>\n");
+</table>
 
-	print("<tr><td><strong>Small Thumbnail Filename:</strong></td><td><input type=\"file\" name=\"thumbnail_filename\" /></td></tr>\n");
+<input type="hidden" name="submitID" value="<?php echo $submitID;?>">
+<input type="submit" value="Add Theme" name="add_theme" />
 
-	print("<tr><td><strong>Download Filename:</strong></td><td>");
-	if (isset($theme_category)) file_chooser("download_filename", "$sys_ftp_dir/themes/$theme_category/");
-	else print("<input type=\"text\" name=\"download_filename\" size=\"40\" />");
-	print("</td></tr>\n");
-
-	print("</table>\n");
-
-	print("<input type=\"hidden\" name=\"submitID\" value=\"$submitID\">\n");
-	print("<input type=\"submit\" value=\"Add Theme\" name=\"add_theme\" />\n");
-	print("</form>\n");
-}
+</form>
+<?php
 admin_footer();
 ?>
