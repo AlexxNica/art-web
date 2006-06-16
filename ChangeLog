@@ -1,3 +1,7 @@
+2006-06-16  Thomas Wood  <thos@gnome.org>
+
+	* templates/en/themes/detail.html: Allow popup windows to be resizable
+
 2006-05-09  Thomas Wood  <thos@gnome.org>
 
 	* admin/add_theme.php: Clean up code a bit & make labels clearer

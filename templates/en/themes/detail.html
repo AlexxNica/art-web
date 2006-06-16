@@ -1,6 +1,6 @@
 <h1>{name} By <a href="/users/{username}">{username}</a></h1>
 <div class="subtitle">{category-name}</div>
-<a href="/preview.php?image={archive}thumbnails/{category}/{preview_filename}" onClick="window.open('/preview.php?image={archive}thumbnails/{category}/{preview_filename}', 'Art Preview', 'width=640,height=640,resizable=no,scrollbars=yes,status=no'); return false;" rel="external">
+<a href="/preview.php?image={archive}thumbnails/{category}/{preview_filename}" onClick="window.open('/preview.php?image={archive}thumbnails/{category}/{preview_filename}', 'Art Preview', 'width=640,height=640,resizable=yes,scrollbars=yes,status=no'); return false;" rel="external">
 <img src="/images/{archive}thumbnails/{category}/{thumbnail_filename}" alt="Preview" class="{thumbnail-class}" />
 </a>
 <div class="download_box">
@@ -13,10 +13,11 @@
 <table style="margin-top: 1em;">
 <tr>
     <th>Release</th><td>{release-date}</td>
-    <th>License</th><td>{license-link}</td>
+    <th>Version</th><td>{version}</td>
 </tr>
 <tr>
-    <th>Version</th><td>{version}</td>
+    <th>Last Updated</th><td>{update-date}</td>
+    <th>License</th><td>{license-link}</td>
 </tr>
 <tr>
     <th>Rating</th><td style="white-space:nowrap;">{rating-bar}<br/><small>My rating: {user-rating}</small></td>
