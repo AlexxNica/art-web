@@ -200,7 +200,7 @@ elseif (array_key_exists('username', $_SESSION))
 	print("<tr><th><label for=\"email\">E-mail</label></th><td><input value=\"$email\" name=\"email\" id=\"email\" size=\"20\" maxlength=\"50\" /></td></tr>\n");
 	print("<tr><th><label for=\"homepage\">Homepage</label></th><td><input value=\"$homepage\" name=\"homepage\" id=\"homepage\" size=\"20\" maxlength=\"100\" /></td></tr>\n");
 	print("<tr><th><label for=\"location\">Location</label></th><td><input value=\"$location\" name=\"location\" id=\"location\" size=\"20\" maxlength=\"50\" /></td></tr>\n");
-	print("<tr><th><label for=\"timezone\">Timezone</label></th><td>");print_select_box("timezone",$timezone_array,$timezone);print(" (Current adjusted time: ".date("h:i a", mktime()+(($timezone+5) *3600)).")</td></tr>\n");
+	print("<tr><th><label for=\"timezone\">Timezone</label></th><td>");print_select_box("timezone",$timezone_array,$timezone);print(" (Current adjusted time: ".date("h:i a", mktime()+(($timezone) *3600)).")</td></tr>\n");
 	print("<tr><th><label for=\"info\">Info</label></th><td><textarea name=\"info\" rows=\"2\" cols=\"20\" id=\"info\">$info</textarea></td></tr>\n");
 	print("<tr><td colspan=\"2\"><br /><input type=\"submit\" value=\"Change\" name=\"change_profile\" /></td></tr>");
 	print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Logout\" name=\"logout\" /></td></tr>");
