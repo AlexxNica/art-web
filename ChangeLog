@@ -1,3 +1,7 @@
+2006-07-26  Thomas Wood  <thos@gnome.org>
+
+	* includes/art_page.inc.php: set the update-date template variable
+
 2006-07-14  James McGuire  <jamesm@bluebottle.com>
 
 	* account.php: Fix time zone

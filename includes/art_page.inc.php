@@ -138,6 +138,7 @@ else
 		$template->add_vars ($info);
 		
 		$template->add_var ('release-date', FormatRelativeDate (time(), strtotime ($info ['release_date']), true));
+		$template->add_var ('update-date', FormatRelativeDate (time(), $info ['add_timestamp'], true));
 
 		$rate_count_result = mysql_query ("SELECT COUNT(voteID) FROM vote WHERE artID = $artID AND type='{$type}'");
 		list ($rate_count) = mysql_fetch_row ($rate_count_result);
