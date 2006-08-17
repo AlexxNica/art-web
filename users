@@ -109,13 +109,28 @@ else
 			else
 			{
 				$username = htmlentities (ucfirst ($username));
-				print ("<h1>$username's Favourite Items</h1>");
+				print ('<div style="float: left; width: 49%;">');
+				print ('<h1>'.$username.'\'s Favourite Items</h1>');
 				print ('<div class="subtitle">'.$username.'\' top rated items</div>');
 				$listing = new top_rated_list;
 				$listing->select ($userID);
 				$listing->print_listing ();
-			}
+				print ('</div>');
 
+				print ('<div style="float: right; width: 49%;">');
+				print ('<h1>'.$username.'\'s Comments</h1>');
+				print ('<div class="subtitle">'.$username.'\' Latest Comments</div>');
+				$comment_select_result = mysql_query ("SELECT commentID, artID, type, timestamp, comment FROM comment WHERE userID = $userID ORDER BY timestamp DESC LIMIT 10");
+				$template = new template ('comments/display.html');
+				while(list ($commentID, $comment_artID, $comment_type, $comment_time, $comment) = mysql_fetch_row($comment_select_result))
+				{
+					$result = mysql_query ("SELECT category, name FROM $comment_type WHERE {$comment_type}ID = $comment_artID");
+					list ($comment_art_category, $comment_art_name) = mysql_fetch_row ($result);
+					print ("<strong>Comment for <a href=\"/{$comment_type}s/$comment_art_category/$comment_artID\">$comment_art_name</a></strong><br/>");
+					print ('<span class="subtitle">'.FormatRelativeDate (time (), $comment_time) .'</span>');
+					print ('<p style="margin:0px 0px 1em 0px;">'.$comment.'</p>');
+				}
+			}
 			art_footer();
 		}
 		else

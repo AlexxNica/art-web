@@ -1,3 +1,7 @@
+2006-08-17  Thomas Wood  <thos@gnome.org>
+
+	* users: Add a list of the users' recent comments
+
 2006-07-27  Thomas Wood  <thos@gnome.org>
 
 	* includes/common.inc.php: Don't auto parse urls that are surrounded
