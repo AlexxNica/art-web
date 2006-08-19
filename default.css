@@ -23,7 +23,6 @@ h1{
 	border-bottom: solid 2px #dedede;
 	margin-top: 1em;
 	margin-bottom: 0.2em;
-	clear: left;
 }
 
 hr {
@@ -195,14 +194,10 @@ th {
 }
 
 #header{
-	position: absolute;
-	margin: 0px;
-	top: 0px;
-	left: 0px;
-	right: 0px;
 	height: 82px;
 	width: 100%;
 	background-image:url("/images/site/header-repeat.png");
+	margin-bottom: 5px;
 }
 
 #header-left{
@@ -231,17 +226,12 @@ th {
 }
 
 #content{
-	margin-top: 106px;
-	left:0px;
-	margin-right: 230px;
 	padding-left: 1em;
-	padding-right: 1em;
+	padding-right: 220px;
 }
 
 #sidebar{
-	position: absolute;
-	right: 0px;
-	top: 84px;
+	float: right;
 	width: 180px;
 	height:100%;
 	border-left: #bfbfbf 1px dashed;

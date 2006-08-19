@@ -129,10 +129,10 @@ class general_listing
 		$offset = ($num_links - 1) / 2;
 
 		$result .= '<!-- Page Navigation System -->';
-		$result .= '<div style="clear:both; text-align:center"><p>';
+		$result .= '<div style="text-align:center"><p>';
 
 		if ($this->page > 1) {
-			$result .= $this->create_page_link ($this->page - 1, '<img src="/images/site/stock_left.png" />');
+			$result .= $this->create_page_link ($this->page - 1, '<img src="/images/site/stock_left.png" alt="Previous" />');
 		}
 
 		$start = max (1, $this->page - ($num_links - 1));
@@ -152,7 +152,7 @@ class general_listing
 			$result .= $this->create_page_link ($this->page + $num_links, '...');
 
 		if($this->page < $this->num_pages)
-			$result .= $this->create_page_link ($this->page + 1, '<img src="/images/site/stock_right.png" />');
+			$result .= $this->create_page_link ($this->page + 1, '<img src="/images/site/stock_right.png" alt="Next" />');
 		$result .= '</p></div>';
 
 		return $result;

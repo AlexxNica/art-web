@@ -385,16 +385,19 @@ function html_parse_text($comment)
                 "<table width=100% bgcolor=lightgray><tr><td bgcolor=white>", "</td></tr></table>",
                 '">');
 	$comment = str_replace($bbcode, $htmlcode, $comment);
+
+	$comment = preg_replace ('/([^\"]|^)(http:[\S]*)/i', '\1<a href="\2">\2</a> ', $comment);
+	$comment = preg_replace ('/([^\"\S]|^)(www[\S]*)/i', '\1<a href="http://\2">\2</a> ', $comment);
+
 	$comment = nl2br($comment);
 	$comment = str_replace(">(NL)", ">\n", $comment);
+
 	$comment = ereg_replace(":-\)|:\)", "<img src=\"/images/site/emoticons/stock_smiley-1.png\" alt=\":)\" />", $comment);
 	$comment = ereg_replace(";\)|;-\)", "<img src=\"/images/site/emoticons/stock_smiley-3.png\" alt=\":)\" />", $comment);
 	$comment = ereg_replace(":-P|:-p|:P|:p", "<img src=\"/images/site/emoticons/stock_smiley-10.png\" alt=\":-P\" />", $comment);
 	$comment = ereg_replace(":\(|:-\(", "<img src=\"/images/site/emoticons/stock_smiley-4.png\" alt=\":(\" />", $comment);
 	$comment = ereg_replace(":-D|:D", "<img src=\"/images/site/emoticons/stock_smiley-6.png\" alt=\":(\" />", $comment);
 
-	$comment = preg_replace ('/([^\"]|^)(http:[\S]*)/i', '\1<a href="\2">\2</a> ', $comment);
-	$comment = preg_replace ('/([^\"\S]|^)(www[\S]*)/i', '\1<a href="http://\2">\2</a> ', $comment);
 
 	return $comment;
 }

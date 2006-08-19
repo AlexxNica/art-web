@@ -1,25 +1,13 @@
 @import url(default.css);
 
 #content{
-	margin-top:106px;
-	margin-left:230px;
-	right: 0px;
-	padding-left: 1em;
+	padding-left:230px;
 	padding-right: 1em;
 }
 
 #sidebar{
-	position: absolute;
-	left: 0px;
-	top: 84px;
-	width: 200px;
-	height:100%;
+	float: left;
 	border-right: #bfbfbf 1px dashed;
 	border-left: none;
-	padding: 1em;
-	font-family: sans-serif;
-	font-size: 1em;
-	color: #333333;
-	background-color: #FFFFFF;
 }
 

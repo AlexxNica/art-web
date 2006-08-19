@@ -1,5 +1,18 @@
 2006-08-19  Thomas Wood  <thos@gnome.org>
 
+	* default.css: Cleaner CSS rules (less fixed positions)
+	* includes/art_listings.inc.php: (Validation fix for arrow img's)
+	* left-sidebar.css:
+	* templates/en/backgrounds/detail.html:
+	* templates/en/themes/detail.html:
+	Alterations for the new cleaner CSS rules
+
+	* includes/common.inc.php: Switch around URL parsing to before nl2br to
+	prevent problems with urls at the end of lines
+	* index.php: Add introductory text; reduce News item space
+
+2006-08-19  Thomas Wood  <thos@gnome.org>
+
 	* includes/common.inc.php: Updated regexp for URL detection
 
 2006-08-17  Thomas Wood  <thos@gnome.org>
