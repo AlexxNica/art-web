@@ -1,3 +1,7 @@
+2006-08-19  Thomas Wood  <thos@gnome.org>
+
+	* includes/common.inc.php: Updated regexp for URL detection
+
 2006-08-17  Thomas Wood  <thos@gnome.org>
 
 	* users: Add a list of the users' recent comments
