@@ -242,6 +242,13 @@ th {
 	background-color: #FFFFFF;
 }
 
+.search_button {
+	background-color: #ffffff;
+	border: none;
+	width: 30px;
+	cursor: pointer;
+}
+
 ul {
 	list-style-image: url("/images/site/ul-img.png");
 }

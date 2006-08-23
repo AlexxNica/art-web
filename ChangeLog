@@ -1,3 +1,11 @@
+2006-08-23  Thomas Wood  <thos@gnome.org>
+
+	* default.css:
+	* templates/en/main.html:
+	a11y fix from Lucas Lommer
+
+	* index.php: Remove clear=left to make left-sidebar css work
+
 2006-08-19  Thomas Wood  <thos@gnome.org>
 
 	* default.css: Cleaner CSS rules (less fixed positions)

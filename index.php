@@ -33,15 +33,13 @@ art_header("Artwork &amp; Themes");
 <p>
 Welcome to art.gnome.org - a place for high quality artwork and themes for the <a href="http://www.gnome.org/">GNOME desktop</a>. All themes and artwork on art.gnome.org are tested and moderated (see the <a href="http://live.gnome.org/GnomeArt/SubmissionPolicy">Submission Policy</a>) to ensure a high standard of quality and to make certain they work with your GNOME desktop.</p>
 
+<!-- News Section -->
 <div>
 <img src="/images/site/stock_dnd_32.png" style="float:left;margin-right: 0.3em;" alt="News"/>
 <a href="news.php">Latest News</a><br/>
 <?php echo $latest_news_title ?>
-</div><br clear="left"/>
+</div><br/>
 
-<!-- News Section -->
-<!--<div class="subtitle">Posted by Foo Bar - 2006-09-09</div>
-<div class="subtitle"><a href="news.php">Read More...</a></div>-->
 
 <!-- Recent Updates -->
 <div style="width:48%; float:left;">
