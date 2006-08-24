@@ -1,34 +1,34 @@
-<h1>Screenshot Submission</h1>
-<div class="subtitle">To submit a screenshot, please fill in the form below</div>
+	<h1>Screenshot Submission</h1>
+	<div class="subtitle">To submit a screenshot, please fill in the form below</div>
 {message}
-<form method="POST" enctype="multipart/form-data" action="{SELF}">
-<input type="hidden" name="MAX_FILE_SIZE" value="500000" />
-<table>
-<tr>
-<td><label for="category">Category:</label></td>
-<td>{category-list}</td>
-</tr>
-<tr>
-<td><label for="item_name">Screenshot Name:</label></td>
-<td> <input type="text" id="item_name" name="item_name" size="40" value="{name}" /></td>
-</tr>
-<tr>
-<td><label>Author:</label></td>
-<td>{username}</td>
-</tr>
-<tr>
-<td><label for="item_filename">Filename:</label></td>
-<td><input type="file" id="item_filename" name="item_filename" size="40" /></td>
-</tr>
-<tr>
-<td><label for="description">Description:</label></td>
-<td><textarea name="description" id="description" cols="40" rows="5" wrap="true">{description}</textarea></td>
-</tr>
-<tr>
-<td><input type="submit" value="Submit" /></td>
-<td><p class="info">Please note, the file size must not be more than 500KB</p></td>
-</tr>
-</table>
-</form>
+	<form method="POST" enctype="multipart/form-data" action="{SELF}">
+		<input type="hidden" name="MAX_FILE_SIZE" value="500000" />
+		<table>
+			<tr>
+				<td><label for="category">Category:</label></td>
+				<td>{category-list}</td>
+			</tr>
+			<tr>
+				<td><label for="item_name">Screenshot Name:</label></td>
+				<td> <input type="text" id="item_name" name="item_name" size="40" value="{name}" /></td>
+			</tr>
+			<tr>
+				<td><label>Author:</label></td>
+				<td>{username}</td>
+			</tr>
+			<tr>
+				<td><label for="item_filename">Filename:</label></td>
+				<td><input type="file" id="item_filename" name="item_filename" size="40" /></td>
+			</tr>
+			<tr>
+				<td><label for="description">Description:</label></td>
+				<td><textarea name="description" id="description" cols="40" rows="5" wrap="true">{description}</textarea></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Submit" /></td>
+				<td><p class="info">Please note, the file size must not be more than 500KB</p></td>
+			</tr>
+		</table>
+	</form>
 
 

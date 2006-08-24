@@ -1,73 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<meta name="description" content="Themes and backgrounds for use with the GNOME desktop environment" />
-<meta name="author" content="The art.gnome.org team" />
-<meta name="keywords" content="art.gnome.org art backgrounds wallpapers images icons gdm linux artwork splash screens download screen metacity gtk login manager engines themes gnome desktop environment" />
-<link type="text/css" rel="stylesheet" title="Default" href="/default.css" />
-<link rel="icon" type="image/png" href="http://www.gnome.org/img/logo/foot-16.png" />
-<link rel="alternate" href="/backend.php" type="application/rss+xml" title="art.gnome.org" />
-<title>GNOME Art - Preview</title>
-<style type="text/css">
-#preview-header{
-	position: absolute;
-margin: 0px;
-top: 0px;
-left: 0px;
-right: 0px;
-height: 32px;
-width: 100%;
-background: #f0f0f0;
-border-bottom: 1px solid black;
-}
-#preview-right{
-position: absolute;
-right:0px;
-top: 0px;
-height: 32px;
-width:315px;
-}
-#preview-left{
-position: absolute;
-top: 10px;
-left: 10px;
-height: 32px;
-width: 118px;
-border: none;
-}
-#preview-container {
-	margin-top: 40px;
-position: absolute;
-left: 0px;
-right: 0px;
-width: 100%;
-       text-align: center;
-}
-#preview-image {
-border: 1px solid gray;
-}
-#preview-broken {
-padding: 10px;
-border: 1px solid red;
-width: 200px;
-color: red;
-margin-left: auto;
-margin-right: auto;
-margin-top: 10px;
-}
-#preview-link {
-	text-decoration: none;
-}
-#preview-text-link {
-	text-decoration: underline;
-}
-#preview-close {
-border: none;
-	vertical-align: middle;
-}
-</style>
-<script type="text/javascript">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="Cache-Control" content="Public" />
+
+	<meta name="description" content="Themes and backgrounds for use with the GNOME desktop environment" />
+	<meta name="author" content="The art.gnome.org team" />
+	<meta name="keywords" content="art.gnome.org art backgrounds wallpapers images icons gdm linux artwork splash screens download screen metacity gtk login manager engines themes gnome desktop environment" />
+	<meta name="resource-type" content="document" />
+
+	<link type="text/css" rel="stylesheet" title="Default" href="/default.css" />
+	<link type="text/css" rel="alternate stylesheet" title="Left sidebar" href="/left-sidebar.css" />
+
+	<meta name="robots" content="index,follow,noarchive" />
+	<meta name="googlebot" content="index,follow,noarchive,snippet" />
+	<meta name="revisit" content="3 days" />
+
+	<link rel="icon" type="image/png" href="http://www.gnome.org/img/logo/foot-16.png" />
+	<link rel="alternate" href="/backend.php" type="application/rss+xml" title="art.gnome.org" />
+
+	<script language="javascript" type="text/javascript" src="/styleswitcher.js"></script>
+	<script language="javascript" type="text/javascript">
 //<![CDATA[
 var actualWidth = {image-width};
 
@@ -139,16 +92,79 @@ function highlight (field) {
 	field.select ();
 }
 //]]>
-</script>
+	</script>
+
+	<title>GNOME Art - Preview</title>
+
+	<style type="text/css">
+		#preview-header {
+				position: absolute;
+				margin: 0px;
+				top: 0px;
+				left: 0px;
+				right: 0px;
+				height: 32px;
+				width: 100%;
+				background: #f0f0f0;
+				border-bottom: 1px solid black;
+				}
+		#preview-right {
+				position: absolute;
+				right:0px;
+				top: 0px;
+				height: 32px;
+				width:315px;
+				}
+		#preview-left {
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				height: 32px;
+				width: 118px;
+				border: none;
+				}
+		#preview-container {
+				margin-top: 40px;
+				position: absolute;
+				left: 0px;
+				right: 0px;
+				width: 100%;
+				text-align: center;
+				}
+		#preview-image {
+				border: 1px solid gray;
+				}
+		#preview-broken {
+				padding: 10px;
+				border: 1px solid red;
+				width: 200px;
+				color: red;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 10px;
+				}
+		#preview-link {
+				text-decoration: none;
+				}
+		#preview-text-link {
+				text-decoration: underline;
+				}
+		#preview-close {
+				border: none;
+				vertical-align: middle;
+				}
+	</style>
 </head>
 
 <body>
 <div id="preview-header">
-<div id="preview-left"></div><div id="preview-right"><a href="/"><img class="header" src="/images/site/preview-header-right.png" alt="art.gnome.org" /></a></div>
+	<div id="preview-left"></div>
+	<div id="preview-right"><a href="/"><img class="header" src="/images/site/preview-header-right.png" alt="art.gnome.org" /></a></div>
 </div>
+
 <div id="preview-container">
 {image}
-<a id="preview-link" href="javascript: window.close ();" title="Close this window"><img id="preview-close" src="/images/site/close.png" alt="[X]" /> <span id="preview-text-link">Close this window</span></a>
+	<a id="preview-link" href="javascript: window.close ();" title="Close this window"><img id="preview-close" src="/images/site/close.png" alt="[X]" /> <span id="preview-text-link">Close this window</span></a>
 </div>
 
 </body>

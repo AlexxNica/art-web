@@ -1,3 +1,24 @@
+2006-08-24  Thomas Wood  <thos@gnome.org>
+
+	* templates/en/backgrounds/detail.html:
+	* templates/en/comments/add.html:
+	* templates/en/comments/display.html:
+	* templates/en/comments/edit.html:
+	* templates/en/contests/detail.html:
+	* templates/en/edit_background.html:
+	* templates/en/edit_comment.html:
+	* templates/en/edit_theme.html:
+	* templates/en/main.html:
+	* templates/en/main/login.html:
+	* templates/en/main/usermenu.html:
+	* templates/en/preview.html:
+	* templates/en/screenshots/detail.html:
+	* templates/en/submit_background.html:
+	* templates/en/submit_screenshot.html:
+	* templates/en/themes/detail.html:
+
+	Formatting improvements from Lucas Lommer
+
 2006-08-23  Thomas Wood  <thos@gnome.org>
 
 	* default.css:
