@@ -44,9 +44,9 @@ function create_filename($name, $category, $filename, $extra = '')
 
 function create_title($title, $subtitle="")
 {
-	print("<h1>$title</h1>\n");
+	print("\t<h1>$title</h1>\n");
 	if ($subtitle)
-		print("<div class=\"subtitle\">$subtitle</div>\n");
+		print("\t<div class=\"subtitle\">$subtitle</div>\n");
 }
 
 function FormatRelativeDate( $nowTimestamp, $thenTimestamp, $isdate = false )

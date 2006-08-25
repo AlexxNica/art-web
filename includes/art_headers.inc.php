@@ -32,15 +32,26 @@ if (!$prevent_session)
 			if (!validate_login ($username, $password))
 			{
 				art_header ("Login error");
-				print ("<h1>Login failed</h1>");
-				print ('<p class="warning">Incorrect username and password. Please try again.  To reset your password, click <a href="/account.php?mode=lostpassword">here</a></p>');
-				print ("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
-				print ("<table>\n");
-				print ("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
-				print ("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
-				print ("<tr><td colspan=\"1\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td><td><a href=\"/account.php?mode=lostpassword\" style=\"font-size:0.8em;\">(Lost your password?)</a></td></tr>\n");
-				print ("</table>\n");
-				print ("</form>\n");
+?>
+	<h1>Login failed</h1>
+	<p class="warning">Incorrect username and password. Please try again.  To reset your password, click <a href="/account.php?mode=lostpassword">here</a></p>
+	<form action="{<?php echo $_SERVER['PHP_SELF']; ?>}" method="post">
+		<table>
+			<tr>
+				<td><label for="musername">Username</label>:</td>
+				<td><input name="username" class="username" id="musername" /></td>
+			</tr>
+			<tr>
+				<td><label for="mpassword">Password</label>:</td>
+				<td><input name="password" type="password" class="password" id="mpassword" /></td>
+			</tr>
+			<tr>
+				<td colspan="1"><input type="submit" value="Login" name="login" /></td>
+				<td><a href="/account.php?mode=lostpassword" style="font-size:0.8em;">(Lost your password?)</a></td>
+			</tr>
+		</table>
+	</form>
+<?php
 				art_footer ();
 				exit ();
 			}

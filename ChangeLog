@@ -1,5 +1,14 @@
 2006-08-25  Thomas Wood  <thos@gnome.org>
 
+	* includes/art_headers.inc.php:
+	* includes/comments.inc.php:
+	* includes/common.inc.php:
+	More formatting cleanup and typo fixes from Lucas
+
+	* templates/en/screenshots/detail.html: Fix float issues
+
+2006-08-25  Thomas Wood  <thos@gnome.org>
+
 	* includes/config.inc.php: Add 2.15 screenshots category
 
 2006-08-24  Thomas Wood  <thos@gnome.org>

@@ -85,7 +85,7 @@ function get_comment_form ($comment)
 	$show_comment = "";
 	if (strlen($comment) < 10 && strlen($comment) != 0) 
 	{
-		$comment_msg = "You comment is too short!<br />\n";
+		$comment_msg = "Your comment is too short!<br />\n";
 		$show_comment = $comment;
 	}
 
