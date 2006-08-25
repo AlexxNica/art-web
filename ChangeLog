@@ -1,3 +1,7 @@
+2006-08-25  Thomas Wood  <thos@gnome.org>
+
+	* includes/config.inc.php: Add 2.15 screenshots category
+
 2006-08-24  Thomas Wood  <thos@gnome.org>
 
 	* templates/en/backgrounds/detail.html:
