@@ -20,7 +20,15 @@
 	<link rel="icon" type="image/png" href="http://www.gnome.org/img/logo/foot-16.png" />
 	<link rel="alternate" href="/backend.php" type="application/rss+xml" title="art.gnome.org" />
 
-	<script language="javascript" type="text/javascript" src="/styleswitcher.js"></script>
+	<link rel="top" href="/" title="Main page" />
+	<link rel="first" href="/" title="Main page" />
+	<link rel="home" href="/" title="Main page" />
+	<link rel="author" href="/contact.php" title="Contact" />
+	<link rel="copyright" href="/copyright.php" title="Copyright" />
+	<link rel="help" href="http://gnomesupport.org/forums/index.php?c=6" title="Help forum" />
+	<link rel="search" href="/search.php" title="Search" />
+
+	<script type="text/javascript" src="/styleswitcher.js"></script>
 
 	<title>GNOME Art - {page-title}</title>
 </head>
@@ -28,7 +36,7 @@
 <body>
 <div id="header">
 	<div id="header-left">
-		<a href="/"><img class="header" src="/images/site/header-left.png" alt="art.gnome.org" /></a></div><div id="header-right"><a href="/"><img class="header" src="/images/site/header-right.png" alt="art.gnome.org" /></a>
+		<a href="/"><img class="header" src="/images/site/header-left.png" alt="Art.Gnome.org logo" /></a></div><div id="header-right"><a href="/"><img class="header" src="/images/site/header-right.png" alt="Art.Gnome.org" /></a>
 	</div>
 	<div id="header-links">
 		<a href="http://www.gnome.org/about/">About GNOME</a> &middot;
@@ -42,7 +50,7 @@
 </div>
 
 <div id="sidebar">
-	<a href="/" style="text-decoration: none;" ><img src="/images/site/gnome-graphics.png" alt="Art" height="48" width="48" class="sidebar" /> Art</a>
+	<a href="/" style="text-decoration: none;" accesskey="A"><img src="/images/site/gnome-graphics.png" alt="Art icon" height="48" width="48" class="sidebar" /> <span class="page_shortcut">A</span>rt</a>
 	<ul>
 		<li><a href="/news.php">News</a></li>
 		<li><a href="/faq.php">FAQ</a></li>
@@ -51,17 +59,19 @@
 		<li><a href="/screenshots/">Screenshots</a></li>
 	</ul>
 	<br />
-	<a href="/search.php" style="text-decoration: none;" ><img src="/images/site/gnome-searchtool-animation-rest.png" alt="Search" height="48" width="48" class="sidebar" /> Search</a>
-	<form action="/search.php" method="get" style="margin-left:2em; margin-top:0.8em;">
-		<input type="text" name="search_text" style="width: 70%;" alt="Enter keyword here" /> <button class="search_button"><img src="/images/site/stock_search.png" style="border: none" alt="Search!" /></button><br />
-		<input type="hidden" name="search_type" value="all"/>
+	<form action="/search.php" method="get">
+		<div style="margin: 0px;"><a href="/search.php" style="text-decoration: none;" accesskey="S"><img src="/images/site/gnome-searchtool-animation-rest.png" alt="Search icon" height="48" width="48" class="sidebar" /> <label for="search_input" style="cursor: pointer;"><span class="page_shortcut">S</span>earch</label></a></div>
+		<div style="margin-left:2em; margin-top:0.8em;">
+			<input type="text" name="search_text" style="width: 70%;" alt="Enter keyword here" id="search_input" tabindex="1" /> <button class="search_button" tabindex="2"><img src="/images/site/stock_search.png" style="border: none" alt="Search!" /></button><br />
+			<input type="hidden" name="search_type" value="all"/>
+		</div>
 	</form>
 	<ul>
 		<li><a href="/search.php">Advanced Search</a></li>
 	</ul>
 	<br/>
 	<br />
-	<a href="/backgrounds" style="text-decoration: none;"><img src="/images/site/wallpaper.png" alt="Wallpapers" height="48" width="48" class="sidebar" /> Backgrounds</a>
+	<a href="/backgrounds" style="text-decoration: none;" accesskey="B"><img src="/images/site/wallpaper.png" alt="Wallpapers icon" height="48" width="48" class="sidebar" /> <span class="page_shortcut">B</span>ackgrounds</a>
 	<ul>
 		<li><a href="/backgrounds/gnome/">GNOME</a></li>
 		<li><a href="/backgrounds/nature/">Nature</a></li>
@@ -69,7 +79,7 @@
 		<li><a href="/backgrounds/other/">Other</a></li>
 	</ul>
 	<br />
-	<a style="text-decoration: none;" href="/themes"><img src="/images/site/theme.png" alt="Themes" height="48" width="48" class="sidebar" /> Desktop Themes</a>
+	<a style="text-decoration: none;" href="/themes" accesskey="T"><img src="/images/site/theme.png" alt="Themes icon" height="48" width="48" class="sidebar" /> D<span class="page_shortcut">e</span>sktop Themes</a>
 	<ul>
 		<li><a href="/themes/gtk2/">Application</a></li>
 		<li><a href="/themes/metacity/">Window Border</a></li>

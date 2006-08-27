@@ -249,6 +249,10 @@ th {
 	cursor: pointer;
 }
 
+.page_shortcut {
+	text-decoration: underline;
+}
+
 ul {
 	list-style-image: url("/images/site/ul-img.png");
 }

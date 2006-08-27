@@ -1,3 +1,11 @@
+2006-08-27  Thomas Wood  <thos@gnome.org>
+
+	* default.css:
+	* templates/en/main.html:
+	* templates/en/main/login.html:
+
+	a11y patch from Lucas. Adds some tabindex and accesskeys.
+
 2006-08-25  Thomas Wood  <thos@gnome.org>
 
 	* includes/art_headers.inc.php:
