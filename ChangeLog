@@ -1,5 +1,14 @@
 2006-08-29  Thomas Wood  <thos@gnome.org>
 
+	* includes/art.inc.php:
+	* includes/art_page.inc.php:
+	* includes/common.inc.php:
+
+	- Implements removing votes, and prevents votes for more than 5 being
+	registered. (Patch from Lucas)
+
+2006-08-29  Thomas Wood  <thos@gnome.org>
+
 	* admin/show_submitted_backgrounds.php:
 	* admin/show_submitted_themes.php:
 	* includes/common.inc.php:
