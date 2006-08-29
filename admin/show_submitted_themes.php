@@ -24,18 +24,18 @@ if(is_array($mark_theme))
 		$rej_arr = explode("rejected|",$new_status);
 		if (!$new_status)
 		{
-			print("<p class=\"error\">Invalid Status for $markID</p>");
-			print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Click here</a> to return to incoming themes list.");
+			print("\t<p class=\"error\">Invalid Status for $markID</p>\n");
+			print("\t<p><a href=\"{$_SERVER["PHP_SELF"]}\">Click here</a> to return to incoming themes list.\n");
 		}elseif (count($rej_arr) > 1)
 		{
 			$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='rejected', comment='{$rej_arr[1]}' WHERE themeID='$markID'");
-			print("<p class=\"info\">Rejected theme $markID with \"{$reject_array[$new_status]}\".</p>");
+			print("\t<p class=\"info\">Rejected theme $markID with \"{$reject_array[$new_status]}\".</p>\n");
 		}elseif ($new_status != 'new' || $admin_level > 1)
 		{
 			$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='$new_status' WHERE themeID='$markID'");
 			// Only print message if status has actually changed
 			if (mysql_affected_rows())
-				print("<p class=\"info\">Marked theme $markID as \"{$new_status}\".</p>");
+				print("\t<p class=\"info\">Marked theme $markID as \"{$new_status}\".</p>\n");
 		}
 
 		/* update category of item */
@@ -44,12 +44,12 @@ if(is_array($mark_theme))
 		{
 			mysql_query("UPDATE incoming_theme SET category='$new_category' WHERE themeID='$markID'");
 			if (mysql_affected_rows())
-				print("<p class=\"info\">Marked theme $markID category as &quot;$new_category&quot;.</p>");
+				print("\t<p class=\"info\">Marked theme $markID category as &quot;$new_category&quot;.</p>\n");
 		}
 
 
 	}
-	print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Return to incoming themes list</a></p>");
+	print("\t<p><a href=\"{$_SERVER["PHP_SELF"]}\">Return to incoming themes list</a></p>\n");
 }
 else
 {
@@ -60,48 +60,49 @@ else
 	}
 	$query = "SELECT incoming_theme.*, user.username FROM incoming_theme,user WHERE (status='new' OR status='approved') $query_extra AND user.userID = incoming_theme.userID ORDER BY date ASC";
 	$incoming_theme_select_result = mysql_query($query);
-	print("<hr />");
+	print("\t<hr />\n");
 	if(mysql_num_rows($incoming_theme_select_result)==0)
 	{
-		print("There are no theme submissions.");
+		print("\tThere are no theme submissions.\n");
 	}
 	else
 	{
 		if ($admin_level > 1)
 		{
-			$approved_list_select = mysql_query("SELECT themeID, name, category FROM incoming_theme WHERE status='approved'");
-			print("<form action=\"add_theme.php\" method=\"post\">");
-			print("Approved items: <select name=\"submitID\">");
+			$approved_list_select = mysql_query("SELECT themeID, name, category, description FROM incoming_theme WHERE status='approved'");
+			print("\t<form action=\"add_theme.php\" method=\"post\">\n");
+			print("\t\tApproved items: <select name=\"submitID\">\n");
 			while ($row = mysql_fetch_row($approved_list_select))
-				print("<option value={$row[0]}>{$row[1]} ({$row[2]})</option>");
-			print("</select><input type=\"submit\" value=\"Add\" />");
-			print("</form><hr/>");
+				print("\t\t\t<option value={$row[0]}>{$row[1]} ({$row[2]})</option>\n");
+			print("\t\t</select><input type=\"submit\" value=\"Add\" />\n");
+			print("\t</form>\n\t<hr/>\n");
 		}
 
-
-		print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">");
-		print("<input type=\"submit\" value=\"Update\" />");
-		print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\">");
-		print("<tr><th>ID</th><th>Theme Name</th><th>Category</th><th>Author</th><th>Date</th><th>Download</th><th>Action</th></tr>\n");
+		print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
+		print("\t\t<input type=\"submit\" value=\"Update\" />\n");
+		print("\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\">\n");
+		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Theme Name</th>\n\t\t\t\t<th>Category</th>\n\t\t\t\t<th>Author</th>\n\t\t\t\t<th>Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Action</th>\n\t\t\t</tr>\n");
 
 		$alt = 1;
 		while($incoming_theme_select_row = mysql_fetch_array($incoming_theme_select_result))
 		{
 			if ($alt == 1) $colour = "style=\"background: #dedede\""; else $colour = "";
 			extract($incoming_theme_select_row);
-			print("<tr $colour><td>$themeID</td>");
-			print("<td>".html_parse_text($name)."</td>");
-			print ('<td>');print_select_box ("category[$themeID]", $theme_type_select_array, $category);print ('</td>');
-			print("<td><a href=\"/users/$userID\">$username</a></td>");
-			print("<td>$date</td>");
-			print("<td><a href=\"".htmlentities($theme_url)."\">Download</a></td>");
-			print("<td>");print_select_box("mark_theme[$themeID]",$new_status_array,$status);print("</td>");
-			print("</tr>");
+			$theme_description = htmlspecialchars($incoming_theme_select_row["description"]);
+			print("\t\t\t<tr $colour><td>$themeID</td>\n");
+			print("\t\t\t\t<td>".html_parse_text($name)."</td>\n");
+			print ("\t\t\t\t<td>");print_select_box ("category[$themeID]", $theme_type_select_array, $category);print ("</td>\n");
+			print("\t\t\t\t<td><a href=\"/users/$userID\">$username</a></td>\n");
+			print("\t\t\t\t<td>$date</td>\n");
+			print("\t\t\t\t<td>".$theme_description."</td>\n");
+			print("\t\t\t\t<td><a href=\"".htmlentities($theme_url)."\">Download</a></td>\n");
+			print("\t\t\t\t<td>");print_select_box("mark_theme[$themeID]",$new_status_array,$status);print("</td>\n");
+			print("\t\t\t</tr>\n");
 
 			$alt = 2 - $alt + 1;
 		}
-		print("</table>\n");
-		print("<input type=\"submit\" value=\"Update\" /></form>\n");
+		print("\t\t</table>\n");
+		print("\t\t<input type=\"submit\" value=\"Update\" />\n\t</form>");
 	}
 }
 admin_footer();

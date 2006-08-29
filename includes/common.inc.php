@@ -269,14 +269,14 @@ function create_select_box ($name, $array, $selected)
 	{
 		if($key == $selected)
 		{
-			$result .= "<option value=\"$key\" selected=\"selected\">$val</option>";
+			$result .= "\t\t\t\t\t<option value=\"$key\" selected=\"selected\">$val</option>\n";
 		}
 		else
 		{
-			$result .= "<option value=\"$key\">$val</option>";
+			$result .= "\t\t\t\t\t<option value=\"$key\">$val</option>\n";
 		};
 	}
-	$result .= '</select>';
+	$result .= "\t\t\t\t</select>";
 
 	return $result;
 }

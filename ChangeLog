@@ -1,3 +1,10 @@
+2006-08-29  Thomas Wood  <thos@gnome.org>
+
+	* admin/show_submitted_backgrounds.php:
+	* admin/show_submitted_themes.php:
+	* includes/common.inc.php:
+	Admin html formatting patch from Lucas
+
 2006-08-27  Thomas Wood  <thos@gnome.org>
 
 	* default.css:

@@ -28,19 +28,19 @@ if(is_array($mark_background))
 		if ($new_category != '_error')
 			mysql_query("UPDATE incoming_background SET category='$new_category' WHERE backgroundID='$markID'");
 		if (mysql_affected_rows())
-			print("<p class=\"info\">Marked background $markID category as &quot;$new_category&quot;.</p>");
+			print("\t<p class=\"info\">Marked background $markID category as &quot;$new_category&quot;.</p>\n");
 
 		/* update name of item */
 		$new_name = escape_string ($new_background_name_array[$markID]);
 		mysql_query("UPDATE incoming_background SET name='$new_name' WHERE backgroundID='$markID'");
 		if (mysql_affected_rows())
-			print("<p class=\"info\">Updated name of background $markID as &quot;$new_name&quot;.</p>");
+			print("\t<p class=\"info\">Updated name of background $markID as &quot;$new_name&quot;.</p>\n");
 
 		/* update description of item */
 		$new_description = escape_string ($new_background_description_array[$markID]);
 		mysql_query("UPDATE incoming_background SET description='$new_description' WHERE backgroundID='$markID'");
 		if (mysql_affected_rows())
-			print("<p class=\"info\">Updated description of background $markID.</p>");
+			print("\t<p class=\"info\">Updated description of background $markID.</p>\n");
 
 
 
@@ -48,45 +48,45 @@ if(is_array($mark_background))
 		$rej_arr = explode("rejected|",$new_status);
 		if (!$new_status)
 		{
-			print("<p class=\"error\">Invalid Status for $markID</p>");
-			print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Click here</a> to return to incoming backgrounds list.");
+			print("\t<p class=\"error\">Invalid Status for $markID</p>\n");
+			print("\t<p><a href=\"{$_SERVER["PHP_SELF"]}\">Click here</a> to return to incoming backgrounds list.\n");
 		}elseif (count($rej_arr) > 1)
 		{
 			$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='rejected', comment='{$rej_arr[1]}' WHERE backgroundID='$markID'");
-			print("<p class=\"info\">Rejected background $markID with \"{$reject_array[$new_status]}\".</p>");
+			print("\t<p class=\"info\">Rejected background $markID with \"{$reject_array[$new_status]}\".</p>\n");
 		}elseif ($new_status != 'new' || $admin_level > 1)
 		{
 			$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='$new_status' WHERE backgroundID='$markID'");
 			// Only print message if status has actually changed
 			if (mysql_affected_rows())
-				print("<p class=\"info\">Marked background $markID as \"{$new_status}\".</p>");
+				print("\t<p class=\"info\">Marked background $markID as \"{$new_status}\".</p>\n");
 		}
 	}
-	print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Return to incoming backgrounds list</a>.</p>");
+	print("\t<p><a href=\"{$_SERVER["PHP_SELF"]}\">Return to incoming backgrounds list</a>.</p>\n");
 }
 else
 {
 	$incoming_background_select_result = mysql_query("SELECT incoming_background.*, user.username FROM incoming_background, user WHERE (status='new' OR status='approved') AND user.userID = incoming_background.userID ORDER BY date ASC");
 	if(mysql_num_rows($incoming_background_select_result)==0)
 	{
-		print("There are no background submissions.");
+		print("\tThere are no background submissions.\n");
 	}
 	else
 	{
 		if ($admin_level > 1)
 		{
 			$approved_list_select = mysql_query("SELECT backgroundID, name FROM incoming_background WHERE status='approved'");
-			print("<form action=\"add_background.php\" method=\"post\">");
-			print("Approved items: <select name=\"submitID\">");
+			print("\t<form action=\"add_background.php\" method=\"post\">\n");
+			print("\t\tApproved items: <select name=\"submitID\">\n");
 			while ($row = mysql_fetch_row($approved_list_select))
-				print("<option value={$row[0]}>{$row[1]}</option>");
-			print("</select><input type=\"submit\" value=\"Add\" />");
-			print("</form><hr/>");
+				print("\t\t\t<option value={$row[0]}>{$row[1]}</option>\n");
+			print("\t\t</select><input type=\"submit\" value=\"Add\" />\n");
+			print("\t</form>\n\t<hr/>\n");
 		}
-		print("<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\"><div>");
-		print("<input type=\"submit\" value=\"Update\" />");
-		print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\" >");
-		print("<tr><th>ID</th><th>Name</th><th>Category</th><th>Author</th><th>Date</th><th>Description</th><th>Download</th><th>Status</th></tr>\n");
+		print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\"><div>\n");
+		print("\t\t<input type=\"submit\" value=\"Update\" />\n");
+		print("\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\" >\n");
+		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Name</th>\n\t\t\t\t<th>Category</th>\n\t\t\t\t<th>Author</th>\n\t\t\t\t<th>Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Status</th>\n\t\t\t</tr>\n");
 
 		$alt = 1;
 		while($incoming_background_select_row = mysql_fetch_array($incoming_background_select_result))
@@ -99,27 +99,27 @@ else
 			{
 				$screenshot_link = "<a href=\"$background_screenshot_url\">Screenshot</a>";
 			}
-			print("<tr $colour>");
-			print("<td>$backgroundID</td>");
-			print("<td><input name=\"background_name[$backgroundID]\" value=\"".$background_name."\"/></td>");
-			print('<td>');print_select_box("category[$backgroundID]", array_combine($background_category_list, $background_category_list), $category);print('</td>');
-			print("<td><a href=\"/users/$userID\">$username</a></td>");
-			print("<td>$date</td>");
-			print('<td><textarea name="background_description['.$backgroundID.']" cols="20" rows="3">'.$background_description.'</textarea></td>');
+			print("\t\t\t<tr $colour>\n");
+			print("\t\t\t\t<td>$backgroundID</td>\n");
+			print("\t\t\t\t<td><input name=\"background_name[$backgroundID]\" value=\"".$background_name."\"/></td>\n");
+			print("\t\t\t\t<td>");print_select_box("category[$backgroundID]", array_combine($background_category_list, $background_category_list), $category);print("</td>\n");
+			print("\t\t\t\t<td><a href=\"/users/$userID\">$username</a></td>\n");
+			print("\t\t\t\t<td>$date</td>\n");
+			print("\t\t\t\t<td><textarea name=\"background_description[".$backgroundID."]\" cols=\"20\" rows=\"3\">".$background_description."</textarea></td>\n");
 			$background_res_select_result = mysql_query("SELECT resolution,filename FROM incoming_background_resolution WHERE backgroundID=$backgroundID");
-			print("<td>");
+			print("\t\t\t\t<td>");
 			while (list($res, $url) = mysql_fetch_row($background_res_select_result))
 			{
 				print("<a href=\"$url\">$res</a>&nbsp; ");
 			}
-			print("</td>");
-			print("<td>");print_select_box("mark_background[$backgroundID]",$new_status_array,$status);print("</td>");
-			print("</tr>\n");
+			print("</td>\n");
+			print("\t\t\t\t<td>");print_select_box("mark_background[$backgroundID]",$new_status_array,$status);print("</td>\n");
+			print("\t\t\t</tr>\n");
 
 			$alt = 2 - $alt + 1;
 		}
-		print("</table>");
-		print("<input type=\"submit\" value=\"Update\" /></form>\n");
+		print("\t\t</table>\n");
+		print("\t\t<input type=\"submit\" value=\"Update\" />\n\t</form>");
 	}
 }
 admin_footer();
