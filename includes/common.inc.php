@@ -345,6 +345,7 @@ function user_rating_bar($rating)
 			$star = $inactive_star;
 		$result .= '<a href="?rating='.$i.'">'.$star.'</a>';
 	}
+	if ($rating > 0) $result .= ' (<a href="?rating=0">Remove my vote</a>)';
 	return $result;
 }
 

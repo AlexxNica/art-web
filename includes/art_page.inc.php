@@ -30,7 +30,6 @@ default:
 	art_file_not_found();
 }
 
-$new_rating = validate_input_regexp_default ($_POST["rating"], "^[1-5]$", -1);
 $format = validate_input_array_default($_GET['format'], array('rss', 'atom', 'html'), 'html');
 if ($format != 'html') /* XXX: just hope that noone gets the idea to access format=atom on pages */
 	$prevent_session = TRUE;
@@ -112,7 +111,7 @@ else
 
 		if (array_key_exists ('rating', $_GET))
 		{
-			$rating = $_GET['rating'];
+			$rating = validate_input_regexp_default ($_GET['rating'], "^[0-5]$", -1);
 			if (is_numeric ($rating))
 				add_vote ($artID, $rating, $_SESSION['userID'], $type, $header);
 		}

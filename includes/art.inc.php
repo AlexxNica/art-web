@@ -26,9 +26,13 @@ function add_vote($artID, $rating, $userID, $type, $header)
 	$checkvote_result = mysql_query("SELECT `voteID` FROM `vote` WHERE `userID`='$userID' AND `artID`='$artID' AND type='$type'");
 	if (mysql_num_rows($checkvote_result) >= 1)
 	{
-		mysql_query("UPDATE vote SET rating='$rating' WHERE userID='$userID' AND artID='$artID' AND type='$type'");
+		if ($rating == 0)
+			mysql_query("DELETE FROM vote WHERE userID='$userID' AND artID='$artID' AND type='$type' LIMIT 1");
+		else
+			mysql_query("UPDATE vote SET rating='$rating' WHERE userID='$userID' AND artID='$artID' AND type='$type' LIMIT 1");
 	} else {
-		mysql_query("INSERT INTO `vote` (`voteID`, `userID`, `artID`, `rating`, `type`) VALUES ('', '$userID', '$artID', '$rating', '$type')");
+		if ($rating != 0)
+			mysql_query("INSERT INTO `vote` (`voteID`, `userID`, `artID`, `rating`, `type`) VALUES ('', '$userID', '$artID', '$rating', '$type')");
 	}
 	
 	// Update cached version of rating in theme/contest/background table
