@@ -208,9 +208,9 @@ function is_logged_in($header = FALSE)
 
 		print("<form action=\"$url\" method=\"post\">\n");
 		print("<table>\n");
-		print("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
-		print("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
-		print("<tr><td><input type=\"submit\" value=\"Login\" name=\"login\" /></td><td><a href=\"/account.php\" style=\"font-size:0.8em;\">(Register)</a></td></tr>\n");
+		print("<tr><td><label for=\"musername\">Username</label>:</td><td><input tabindex=\"21\" name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
+		print("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input tabindex=\"22\" name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
+		print("<tr><td><input tabindex=\"23\" type=\"submit\" value=\"Login\" name=\"login\" /></td><td><a href=\"/account.php\" style=\"font-size:0.8em;\">(Register)</a></td></tr>\n");
 		print("<tr><td>");
 		foreach($_POST as $k => $v)
 		{

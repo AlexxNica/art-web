@@ -3,10 +3,10 @@
 		<div class="subtitle">Posted {post-date}</div>
 		<form action="{SELF}#comment" method="post">
 			<div>
-				<textarea cols="60" rows="10" name="comment">{show-comment}</textarea><br />
+				<textarea tabindex="51" cols="60" rows="10" name="comment">{show-comment}</textarea><br />
 				<br />
 				<input type="hidden" name="commendID" value="{commentID}" />
-				<input type="submit" name="edit" value="Add Comment" />
+				<input tabindex="52" type="submit" name="edit" value="Add Comment" />
 			</div>
 		</form>
 		<div class="comment_status">{status}</div>

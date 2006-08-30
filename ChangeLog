@@ -1,5 +1,16 @@
 2006-08-31  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* includes/common.inc.php:
+	* templates/en/comments/add.html:
+	* templates/en/comments/edit.html:
+	* templates/en/edit_comment.html:
+	* templates/en/main.html:
+	* templates/en/main/login.html:
+	- Fix up the tab order. No duplicate tabindex values on the same page
+	anymore. Patch from Lukáš Lommer.
+
+2006-08-31  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* admin/edit_art.php:
 	- Also remove comments and votes of deleted items. Patch from Lucas.
 
