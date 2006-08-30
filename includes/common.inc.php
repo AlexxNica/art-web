@@ -534,7 +534,7 @@ function validate_login ($username, $password, $session = true)
 			$_SESSION['username'] = $username;
 			$_SESSION['userID'] = $userID;
 			$_SESSION['realname'] = $realname;
-			mysql_query ("UPDATE user SET lastlog=NOW () WHERE userid=$userID;");
+			mysql_query ("UPDATE user SET lastlog=NOW() WHERE userid=$userID;");
 		}
 		return true; /* user validated! */
 	}

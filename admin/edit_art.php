@@ -406,38 +406,46 @@ elseif ($action == 'delete')
 	{
 		/* XXX: should we only mark things as deleted? */
 		$ID = validate_input_regexp_error ($ID, '^[0-9]+$');
-		$sql = 'DELETE FROM '. $type. " WHERE {$type}ID=$ID";
+		$sql = "DELETE FROM $type WHERE {$type}ID=$ID LIMIT 1";
 		$result = mysql_query($sql);
-		
-		if ($type == 'background' && $result)
+
+		if ($result)
 		{
-			$result = mysql_query('DELETE FROM background_resolution WHERE backgroundID='. $ID);
-			if ($result)
-				print('<p class="info">Item deleted.</p>');
-			else
-				print('<p class="error">Error deleting the resolution (background itself is deleted).</p>');
-		}
-		else
-		{
-			if ($result)
+			$result_votes = mysql_query('DELETE FROM vote WHERE artID='.$ID.' AND type=\''.$type."'");
+			if ($result_votes)
 			{
-				print('<p class="info">Item deleted.</p>');
-				print('<p><ul>');
-				print('<li><a href="/admin/">Return to admin panel</a></li>');
-				print('<li><a href="'.$_SERVER["PHP_SELF"].'?action=edit&type='.$type.'">Return to edit another '.$item_name.'</a></li>');
-				print('</ul></p>');
+				$result_comments = mysql_query('DELETE FROM comment WHERE artID='.$ID.' AND type=\''.$type."'");
+				if ($result_comments)
+				{
+					if ($type == 'background')
+					{
+						$result = mysql_query("DELETE FROM background_resolution WHERE backgroundID=$ID");
+						if ($result)
+							print("\t<p class=\"info\">Item deleted.</p>\n");
+						else
+							print("\t<p class=\"error\">Error deleting the resolution (background itself is deleted).</p>\n");
+					}
+					else
+						print("\t<p class=\"info\">Item deleted.</p>\n");
+					print("\t<p><ul>\n");
+					print("\t\t<li><a href=\"/admin/\">Return to admin panel</a></li>\n");
+					print("\t\t<li><a href=\"".$_SERVER["PHP_SELF"]."?action=edit&type=".$type."\">Return to edit another ".$item_name."</a></li>\n");
+					print("\t</ul></p>\n");
+				}
+				else print("\t<p class=\"error\">Error deleting item comments (item itself is deleted).</p>\n");
 			}
 			else
-				print('<p class="error">Error deleting the item.</p>');
+				print("\t<p class=\"error\">Error deleting item votes (item itself is deleted).</p>\n");
 		}
+		else
+			print("\t<p class=\"error\">Error deleting item.</p>\n");
+
 	}
 	else
-	{
-		print('<p class="info">You need to check the checkbox.</p>');
-	}
+		print("\t<p class=\"info\">You need to check the checkbox.</p>\n");
 }
 else
-	print('<p class="error">You just did the impossible :-).</p>');
+	print("\t<p class=\"error\">You just did the impossible :-).</p>\n");
 
 admin_footer();
 ?>

@@ -1,3 +1,11 @@
+2006-08-31  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/edit_art.php:
+	- Also remove comments and votes of deleted items. Patch from Lucas.
+
+	* includes/common.inc.php:
+	- Fixed the login time update bug. It didn't like the "NOW ()" ...
+
 2006-08-29  Thomas Wood  <thos@gnome.org>
 
 	* includes/art.inc.php:
