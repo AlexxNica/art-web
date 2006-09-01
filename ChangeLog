@@ -1,5 +1,14 @@
 2006-09-01  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	Patches from Lukáš Lommer:
+	* account.php:
+	- Add a second password entry when creating new users.
+
+	* templates/en/screenshots/detail.html:
+	- Do not display the "Popularity"
+
+2006-09-01  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* templates/en/backgrounds/detail.html:
 	* templates/en/screenshots/detail.html:
 	* templates/en/themes/detail.html:

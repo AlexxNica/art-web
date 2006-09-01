@@ -149,31 +149,39 @@ elseif (array_key_exists("register", $_POST))
 	$realname = escape_string ($_POST['realname']);
 	$email = escape_string ($_POST['email']);
 	$password = md5(escape_string($_POST['password']));
+	$passwordre = md5(escape_string($_POST['passwordre']));
 
 	if ($username && $realname && $email && $password)
 	{
-		$new_user_result = mysql_query("INSERT INTO user (username,realname,password,email) VALUES ('$username','$realname','$password','$email')");
-		if (!$new_user_result)
+		if ($password == $passwordre)
 		{
-			if (mysql_errno() == 1062)
+			$new_user_result = mysql_query("INSERT INTO user (username,realname,password,email) VALUES ('$username','$realname','$password','$email')");
+			if (!$new_user_result)
 			{
-				print("<p class=\"error\">A user already exists with that username. Please <a href=\"{$_SERVER["PHP_SELF"]}\">choose another.</a></p>");
+				if (mysql_errno() == 1062)
+				{
+					print("<p class=\"error\">A user already exists with that username. Please <a href=\"{$_SERVER["PHP_SELF"]}\">choose another.</a></p>");
+				}
+				else
+				{
+					print("<p class=\"error\">The following error occured while trying to create a new user:</p>");
+					print("<tt>".mysql_error()."</tt>");
+				}
 			}
 			else
 			{
-				print("<p class=\"error\">The following error occured while trying to create a new user:</p>");
-				print("<tt>".mysql_error()."</tt>");
+				print("<p class=\"info\">New user ($username) created. You may now login with this username and your password.</p>");
+				print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Back</a></p>");
 			}
 		}
 		else
 		{
-			print("<p class=\"info\">New user ($username) created. You may now login with this username and your password.</p>");
-			print("<p><a href=\"{$_SERVER["PHP_SELF"]}\">Back</a></p>");
+			print("<p class=\"error\">Error, passwords don't match. Please <a href=\"/account.php\">go back and try again</a>.</p>");
 		}
 	}
 	else
 	{
-		print("<p class=\"error\">Error, you must fill out all of the previous form fields, please go back and try again.</p>");
+		print("<p class=\"error\">Error, you must fill out all of the previous form fields, please <a href=\"/account.php\">go back and try again</a>.</p>");
 	}
 }
 elseif (array_key_exists('username', $_SESSION))
@@ -255,25 +263,26 @@ else
 
 	art_header("Account");
 	create_title("Please log in","Log in to access your account");
-	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
-	print("<table>\n");
-	print("<tr><td><label for=\"musername\">Username</label>:</td><td><input name=\"username\" class=\"username\" id=\"musername\" /></td></tr>\n");
-	print("<tr><td><label for=\"mpassword\">Password</label>:</td><td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td></tr>\n");
-	print("<tr><td colspan=\"1\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td><td><a href=\"/account.php?mode=lostpassword\" style=\"font-size:0.8em;\">(Lost your password?)</a></td></tr>\n");
-	print("</table>\n");
-	print("</form>\n");
+	print("\t<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\">\n");
+	print("\t\t<table>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td><label for=\"musername\">Username</label>:</td>\n\t\t\t\t<td><input name=\"username\" class=\"username\" id=\"musername\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td><label for=\"mpassword\">Password</label>:</td>\n\t\t\t\t<td><input name=\"password\" type=\"password\" class=\"password\" id=\"mpassword\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td colspan=\"1\"><input type=\"submit\" value=\"Login\" name=\"login\" /></td>\n\t\t\t\t<td><a href=\"/account.php?mode=lostpassword\" style=\"font-size:0.8em;\">(Lost your password?)</a></td>\n\t\t\t</tr>\n");
+	print("\t\t</table>\n");
+	print("\t</form>\n");
 
 
 	create_title("Register","Register as a new user for art.gnome.org");
-	print("<form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">");
-	print("<table>");
-	print("<tr><td><label for=\"nusername\">Username</label>:</td><td><input name=\"username\" id=\"nusername\" /></td></tr>");
-	print("<tr><td><label for=\"npassword\">Password</label>:</td><td><input name=\"password\" id=\"npassword\" type=\"password\" /></td></tr>");
-	print("<tr><td><label for=\"realname\">Realname</label>:</td><td><input name=\"realname\" id=\"realname\" /></td></tr>");
-	print("<tr><td><label for=\"email\">E-mail</label>:</td><td><input name=\"email\" id=\"email\" /></td></tr>");
-	print("<tr><td colspan=\"2\"><input type=\"submit\" name=\"register\" value=\"Register\" /></td></tr>");
-	print("</table>");
-	print("</form>");
+	print("\t<form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">\n");
+	print("\t\t<table>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td><label for=\"nusername\">Username</label>:</td>\n\t\t\t\t<td><input name=\"username\" id=\"nusername\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td><label for=\"npassword\">Password</label>:</td>\n\t\t\t\t<td><input name=\"password\" id=\"npassword\" type=\"password\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td><label for=\"npasswordre\">Password again</label>:</td>\n\t\t\t\t<td><input name=\"passwordre\" id=\"npasswordre\" type=\"password\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td><label for=\"realname\">Realname</label>:</td>\n\t\t\t\t<td><input name=\"realname\" id=\"realname\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td><label for=\"email\">E-mail</label>:</td>\n\t\t\t\t<td><input name=\"email\" id=\"email\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td colspan=\"2\"><input type=\"submit\" name=\"register\" value=\"Register\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t</table>\n");
+	print("\t</form>");
 
 
 }
