@@ -1,3 +1,11 @@
+2006-09-01  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* templates/en/backgrounds/detail.html:
+	* templates/en/screenshots/detail.html:
+	* templates/en/themes/detail.html:
+	- Put the rating user rating in a seperat columne with colspan.
+	Patch from Lukáš Lommer.
+
 2006-08-31  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/common.inc.php:
