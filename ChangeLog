@@ -1,5 +1,11 @@
 2006-09-01  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* account.php:
+	- Add a second passwort entry to the profile edit page for changing
+	the password. Patch from Lukáš Lommer.
+
+2006-09-01  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	Patches from Lukáš Lommer:
 	* account.php:
 	- Add a second password entry when creating new users.

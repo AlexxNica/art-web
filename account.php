@@ -115,6 +115,7 @@ elseif (array_key_exists('change_profile', $_POST))
 	art_header("Account");
 
 	$new_pass = escape_string ($_POST['password']);
+	$new_pass_re = escape_string ($_POST['passwordre']);
 	$info = escape_string ($_POST['info']);
 	$realname = escape_string ($_POST['realname']);
 	$email = escape_string ($_POST['email']);
@@ -123,21 +124,38 @@ elseif (array_key_exists('change_profile', $_POST))
 	$location = escape_string ($_POST['location']);
 
 	$pass_sql = "";
-	if ($new_pass != "")
+	$pass_typing_error = false;
+	if (($new_pass != "") and ($new_pass_re != ""))
 	{
-		$pass_sql = " password='".md5($new_pass)."', ";
+		if ($new_pass == $new_pass_re)
+		{
+			$pass_sql = " password='".md5($new_pass)."', ";
+		}
+		else
+		{
+			$pass_typing_error = true;
+		}
 	}
-	$query_result = mysql_query("UPDATE user SET $pass_sql realname='$realname', info='$info', email='$email', homepage='$homepage', timezone='$timezone', location='$location' WHERE userID = {$_SESSION['userID']}");
-	if ($query_result !== FALSE)
+	if (!$pass_typing_error)
 	{
-		create_title("Profile updated.","");
-		print("<a href=\"{$_SERVER['PHP_SELF']}\">Continue...</a>");
-		art_footer(); die();
+		$query_result = mysql_query("UPDATE user SET $pass_sql realname='$realname', info='$info', email='$email', homepage='$homepage', timezone='$timezone', location='$location' WHERE userID = {$_SESSION['userID']}");
+		if ($query_result !== FALSE)
+		{
+			create_title("Profile updated.","");
+			print("<a href=\"{$_SERVER['PHP_SELF']}\">Continue...</a>");
+			art_footer(); die();
+		}
+		else
+		{
+			create_title("Profile update failed","");
+			print("<p class=\"warning\">Please contact the administrator.</p>");
+			print(mysql_error());
+		}
 	}
 	else
 	{
 		create_title("Profile update failed","");
-		print("<p class=\"warning\">Please contact the administrator.</p>");
+		print("<p class=\"error\">Error, passwords don't match. Profile not updated.</p>");
 		print(mysql_error());
 	}
 }
@@ -188,7 +206,7 @@ elseif (array_key_exists('username', $_SESSION))
 {
 	art_header("Account");
 	create_title("My Profile","Logged in as <a href=\"/users/{$_SESSION['userID']}/\" name=\"Public Profile Page\">{$_SESSION['username']}</a>");
-	print("<ul><li><a href=\"/users/{$_SESSION['username']}/\">Public Profile Page</a></li></ul>");
+	print("\t<ul>\n\t\t<li><a href=\"/users/{$_SESSION['username']}/\">Public Profile Page</a></li>\n\t</ul>\n");
 	$query_result = mysql_query("SELECT realname,email,homepage,info,timezone,location FROM user WHERE userID = '{$_SESSION['userID']}'");
 	extract(mysql_fetch_array($query_result));	
 	$realname = htmlspecialchars ($realname, ENT_QUOTES);
@@ -201,19 +219,20 @@ elseif (array_key_exists('username', $_SESSION))
 	if ($timezone < -12 || $timezone > 12)
 		$timezone = 0;
 
-	print("<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\" />");
-	print("<table>\n");
-	print("<tr><th><label for=\"password\">Password</label></th><td><input value=\"\" type=\"password\" name=\"password\" id=\"password\" size=\"20\" maxlength=\"12\" /> (leave blank to remain unchanged)</td></tr>\n");
-	print("<tr><th><label for=\"realname\">Name</label></th><td><input value=\"$realname\" name=\"realname\" id=\"realname\" size=\"20\" maxlength=\"50\" /></td></tr>\n");
-	print("<tr><th><label for=\"email\">E-mail</label></th><td><input value=\"$email\" name=\"email\" id=\"email\" size=\"20\" maxlength=\"50\" /></td></tr>\n");
-	print("<tr><th><label for=\"homepage\">Homepage</label></th><td><input value=\"$homepage\" name=\"homepage\" id=\"homepage\" size=\"20\" maxlength=\"100\" /></td></tr>\n");
-	print("<tr><th><label for=\"location\">Location</label></th><td><input value=\"$location\" name=\"location\" id=\"location\" size=\"20\" maxlength=\"50\" /></td></tr>\n");
-	print("<tr><th><label for=\"timezone\">Timezone</label></th><td>");print_select_box("timezone",$timezone_array,$timezone);print(" (Current adjusted time: ".date("h:i a", mktime()+(($timezone) *3600)).")</td></tr>\n");
-	print("<tr><th><label for=\"info\">Info</label></th><td><textarea name=\"info\" rows=\"2\" cols=\"20\" id=\"info\">$info</textarea></td></tr>\n");
-	print("<tr><td colspan=\"2\"><br /><input type=\"submit\" value=\"Change\" name=\"change_profile\" /></td></tr>");
-	print("<tr><td colspan=\"2\"><input type=\"submit\" value=\"Logout\" name=\"logout\" /></td></tr>");
-	print("</table>\n");
-	print("</form>");
+	print("\t<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\" />");
+	print("\t\t<table>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"password\">Password</label></th>\n\t\t\t\t<td><input value=\"\" type=\"password\" name=\"password\" id=\"password\" size=\"20\" maxlength=\"12\" /> (leave blank to remain unchanged)</td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"passwordre\">Password again</label></th>\n\t\t\t\t<td><input value=\"\" type=\"password\" name=\"passwordre\" id=\"passwordre\" size=\"20\" maxlength=\"12\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"realname\">Name</label></th>\n\t\t\t\t<td><input value=\"$realname\" name=\"realname\" id=\"realname\" size=\"20\" maxlength=\"50\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"email\">E-mail</label></th>\n\t\t\t\t<td><input value=\"$email\" name=\"email\" id=\"email\" size=\"20\" maxlength=\"50\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"homepage\">Homepage</label></th>\n\t\t\t\t<td><input value=\"$homepage\" name=\"homepage\" id=\"homepage\" size=\"20\" maxlength=\"100\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"location\">Location</label></th>\n\t\t\t\t<td><input value=\"$location\" name=\"location\" id=\"location\" size=\"20\" maxlength=\"50\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"timezone\">Timezone</label></th>\n\t\t\t\t<td>");print_select_box("timezone",$timezone_array,$timezone);print(" (Current adjusted time: ".date("h:i a", mktime()+(($timezone) *3600)).")</td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"info\">Info</label></th>\n\t\t\t\t<td><textarea name=\"info\" rows=\"2\" cols=\"20\" id=\"info\">$info</textarea></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td colspan=\"2\"><br /><input type=\"submit\" value=\"Change\" name=\"change_profile\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t\t<tr>\n\t\t\t\t<td colspan=\"2\"><input type=\"submit\" value=\"Logout\" name=\"logout\" /></td>\n\t\t\t</tr>\n");
+	print("\t\t</table>\n");
+	print("\t</form>\n");
 
 	create_title("Submissions","");
 	print("<ul>");
