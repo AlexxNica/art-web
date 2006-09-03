@@ -35,7 +35,7 @@ if (!$prevent_session)
 ?>
 	<h1>Login failed</h1>
 	<p class="warning">Incorrect username and password. Please try again.  To reset your password, click <a href="/account.php?mode=lostpassword">here</a></p>
-	<form action="{<?php echo $_SERVER['PHP_SELF']; ?>}" method="post">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<table>
 			<tr>
 				<td><label for="musername">Username</label>:</td>
