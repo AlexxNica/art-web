@@ -1,3 +1,11 @@
+2006-09-05  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* admin/edit_art.php:
+	Patch from Lukáš Lommer:
+	- xhtml output reformating and correction
+	- allow setting parentID to arbitrary values
+	- check for duplicate item names when renaming
+
 2006-09-03  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/art_headers.inc.php:

@@ -139,109 +139,115 @@ elseif ($action == 'edit')
 	{
 		$row = mysql_fetch_assoc($result);
 		
-		print('<form action="'. $_SERVER["PHP_SELF"]. '" method="post">');
-		print('<table border="0">');
-		print('<tr><td><strong><label for="name">'. $item_name. ' Name</label>:</strong></td><td><input type="text" name="name" id="name" size="40" value="'. htmlentities($row['name']). '" /></td></tr>');
-		print('<tr><td><strong><label for="category">'. $item_name.' Category</label>:</strong></td><td><select name="category" id="category">');
+		print("\t<form action=\"".$_SERVER["PHP_SELF"]."\" method=\"post\">\n");
+		print("\t\t<input type=\"hidden\" name=\"originalname\" value=\"".htmlentities($row['name'])."\" />\n");
+		print("\t\t<table style=\"border: none;\">\n");
+		print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"name\">".$item_name." Name</label>:</strong></td>\n\t\t\t\t<td><input type=\"text\" name=\"name\" id=\"name\" size=\"40\" value=\"".htmlentities($row['name'])."\" /></td>\n\t\t\t</tr>\n");
+		print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"category\">".$item_name." Category</label>:</strong></td>\n\t\t\t\t<td>\n\t\t\t\t\t<select name=\"category\" id=\"category\">\n");
 		foreach ($config_array as $cat => $value)
 		{
-			print('<option value="'. $cat. '"');
+			print("\t\t\t\t\t\t<option value=\"".$cat."\"");
 			if ($cat == $row['category'])
 				print(' selected="true"');
-			print('>'. $value['name']. "</option>\n");
+			print(">".$value['name']."</option>\n");
 		}
-		
-		print('<tr><td><strong><label for="userID">UserID</label>:</strong></td><td><input id="userID" name="userID" value="'. $row['userID']. '"></td></tr>');
+		print("\t\t\t\t\t</select>\n\t\t\t\t</td>\n\t\t\t</tr>\n");
+		print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"userID\">UserID</label>:</strong></td>\n\t\t\t\t<td><input id=\"userID\" name=\"userID\" value=\"".$row['userID']."\"></td>\n\t\t\t</tr>\n");
 		if ($type == 'theme' || $type == 'background')
 		{
-			print('<tr><td><strong><label for="license">License</label>:</strong></td><td>');
+			print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"license\">License</label>:</strong></td>\n\t\t\t\t<td>\n\t\t\t\t");
 			print_select_box('license',array_merge($license_config_array, array('' => 'Archived - unknown license')), $row['license']);
-			print('</td></tr>');
+			print("\n\t\t\t\t</td>\n\t\t\t</tr>\n");
 		}
 		if ($type == 'theme' || $type == 'background' || $type == 'contest')
 		{
-			print('<tr><td><strong><label for="version">Version</label></strong></td><td><input type="text" name="version" id="version" value="'. $row['version']. '" /></td></tr>');
-			print('<tr><td><strong><label for="variation">Variation of</label> </strong></td><td><select name="parentID" id="variation"><option value="0">N/A</option>');
+			print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"version\">Version</label></strong></td>\n\t\t\t\t<td><input type=\"text\" name=\"version\" id=\"version\" value=\"".$row['version']."\" /></td>\n\t\t\t</tr>\n");
+			print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"variation\">Variation of</label> </strong></td>\n\t\t\t\t<td>\n\t\t\t\t\t<select name=\"parentID\" id=\"variation\">\n\t\t\t\t\t\t<option value=\"0\">N/A</option>\n");
 			
-			$result = mysql_query("SELECT {$type}ID,name,category FROM $type WHERE userID=".$row['userID']." AND parent=0 AND {$type}ID!=$ID ORDER BY category");
+			$result = mysql_query("SELECT {$type}ID,name,category FROM $type WHERE userID=".$row['userID']." AND parent=0 AND {$type}ID!=$ID ORDER BY category ASC, name ASC");
+			$is_in_selection = false;
 			while($sub_row = mysql_fetch_assoc($result))
 			{
-				print('<option value="'. $sub_row[$type.'ID']. '"');
+				print("\t\t\t\t\t\t<option value=\"".$sub_row[$type.'ID']."\"");
 				if ($sub_row[$type.'ID'] == $row['parent'])
+				{
 					print(' selected="true"');
-				print('>'. html_parse_text($sub_row['name']).' ('.$sub_row['category']. ')</option>');
+					$is_in_selection = true;
+				}
+				print(">".html_parse_text($sub_row['name'])." (".$sub_row['category'].")</option>\n");
 			}
-			print('</select></td></tr>');
+			print("\t\t\t\t\t</select>\n\t\t\t\t</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td><br /></td>\n\t\t\t\t<td>(or <label for=\"manualparentID\">set parent manually</label>: <input type=\"text\" id=\"manualparentID\" name=\"manualparentID\" size=\"3\" maxlength=\"6\"");
+			if ((!$is_in_selection) and ($row['parent'] != 0)) print(" value=\"".$row['parent']."\"");
+			print(" />)</td>\n\t\t\t</tr>\n");
 
 			list($year,$month,$day) = explode("-",$row['release_date']);
-			print('<tr><td><strong><label for="month">Release Date</label>:</strong></td>');
-			print('<td><input type="text" id="month" name="month" value="'. $month. '" size="2" maxlength="2" />/');
-			print('<input type="text" name="day" value="'. $day. '" size="2" maxlength="2" />/');
-			print('<input type="text" name="year" value="'. $year. '" size="4" maxlength="4" /></td></tr>');
+			print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"month\">Release Date</label>:</strong></td>\n");
+			print("\t\t\t\t<td>\n\t\t\t\t\t<input type=\"text\" id=\"month\" name=\"month\" value=\"".$month."\" size=\"2\" maxlength=\"2\" />/\n");
+			print("\t\t\t\t\t<input type=\"text\" name=\"day\" value=\"".$day."\" size=\"2\" maxlength=\"2\" />/\n");
+			print("\t\t\t\t\t<input type=\"text\" name=\"year\" value=\"".$year."\" size=\"4\" maxlength=\"4\" />\n\t\t\t\t</td>\n\t\t\t</tr>\n");
 		}
-		print('<tr><td><strong><label for="description">Description</label>:</strong></td><td><textarea name="description" id="description" cols="40" rows="5" wrap>'. htmlentities($row['description']). '</textarea></td></tr>');
+		print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"description\">Description</label>:</strong></td>\n\t\t\t\t<td>\n\t\t\t\t\t<textarea name=\"description\" id=\"description\" cols=\"40\" rows=\"5\" style=\"white-space: pre;\">".htmlentities($row['description'])."</textarea>\n\t\t\t\t</td>\n\t\t\t</tr>\n");
 		
 		if ($type == 'theme')
 		{
-			print('<tr><td><strong><label for="preview_filename">Preview Filename</label>:</strong></td><td><input type="text" name="preview_filename" id="preview_filename" size="40" value="'. $row['preview_filename']. '" /></td></tr>');
+			print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"preview_filename\">Preview Filename</label>:</strong></td>\n\t\t\t\t<td><input type=\"text\" name=\"preview_filename\" id=\"preview_filename\" size=\"40\" value=\"".$row['preview_filename']."\" /></td>\n\t\t\t</tr>\n");
 		}
 		
-		print('<tr><td><strong><label for="thumbnail_filename">Thumbnail Filename</label>:</strong></td><td><input type="text" name="thumbnail_filename" id="thumbnail_filename" size="40" value="'. $row['thumbnail_filename']. '" /></td></tr>');
+		print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"thumbnail_filename\">Thumbnail Filename</label>:</strong></td>\n\t\t\t\t<td><input type=\"text\" name=\"thumbnail_filename\" id=\"thumbnail_filename\" size=\"40\" value=\"".$row['thumbnail_filename']."\" /></td>\n\t\t\t</tr>\n");
 		if ($type != 'background')
 		{
-			print('<tr><td><strong><label for="download_filename">Download Filename</label>:</strong></td><td><input type="text" name="download_filename" id="download_filename" size="40" value="'. $row['download_filename']. '" /></td></tr>');
+			print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"download_filename\">Download Filename</label>:</strong></td><td><input type=\"text\" name=\"download_filename\" id=\"download_filename\" size=\"40\" value=\"".$row['download_filename']."\" /></td>\n\t\t\t</tr>\n");
 		}
 		else
 		{
-			$background_resolution_result = mysql_query("SELECT background_resolutionID,resolution,filename,type FROM background_resolution WHERE backgroundID=$ID");
+			$background_resolution_result = mysql_query("SELECT background_resolutionID,resolution,filename,type FROM background_resolution WHERE backgroundID=$ID ORDER BY type ASC, resolution ASC");
 			$i = 0;
 			while($resolution_row = mysql_fetch_assoc($background_resolution_result)) {
-				print('<tr><td><strong><label for="resolution['.$i.']">Resolution #'.$i.'</label>:</strong></td>');
-				print('<td>');print_select_box("resolution[$i]", array_merge($resolution_array, array('delete' => 'Delete')), $resolution_row['resolution']);
-				print('&nbsp;');print_select_box("resolution_type[$i]", array_combine($background_image_types, $background_image_types), $resolution_row['type']);
-				print('&nbsp;<input type="text" name="filename['.$i.']" size="40" value="'.$resolution_row['filename'].'" />');
-				print('<input type="hidden" name="background_resolutionID['.$i.']" value="'.$resolution_row['background_resolutionID']."\" /></td></tr>\n");
+				print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"resolution[".$i."]\">Resolution #".$i."</label>:</strong></td>\n");
+				print("\t\t\t\t<td>\n\t\t\t\t");print_select_box("resolution[$i]", array_merge($resolution_array, array('delete' => 'Delete')), $resolution_row['resolution']);
+				print("&nbsp;\n\t\t\t\t");print_select_box("resolution_type[$i]", array_combine($background_image_types, $background_image_types), $resolution_row['type']);
+				print("&nbsp;\n\t\t\t\t<input type=\"text\" name=\"filename[".$i."]\" size=\"40\" value=\"".$resolution_row['filename']."\" />\n");
+				print("\t\t\t\t<input type=\"hidden\" name=\"background_resolutionID[".$i."]\" value=\"".$resolution_row['background_resolutionID']."\" />\n\t\t\t\t</td>\n\t\t\t</tr>\n");
 				$i++;
 			}
 			
-			print('<tr><td><strong><label for="new_res_resolution">Add resolution</lable>:</strong></td><td>');
+			print("\t\t\t<tr>\n\t\t\t\t<td><strong><label for=\"new_res_resolution\">Add resolution</label>:</strong></td>\n\t\t\t\t<td>\n\t\t\t\t");
 			print_select_box("new_res_resolution", $resolution_array, '');
-			print('&nbsp;');
+			print("&nbsp;\n\t\t\t\t");
 			print_select_box("new_res_type", array_combine($background_image_types, $background_image_types), '');
-			print('&nbsp;');
-			print('<input type="text" name="new_res_file"/><input type="submit" name="add_resolution" value="Add Resolution" />');
-			print('</td></tr>');
+			print("&nbsp;\n\t\t\t\t");
+			print("<input type=\"text\" name=\"new_res_file\"/>\n\t\t\t\t<input type=\"submit\" name=\"add_resolution\" value=\"Add Resolution\"/>\n");
+			print("\t\t\t\t</td>\n\t\t\t</tr>\n");
 		}
 		
-		print('<tr><td><input type="checkbox" name="update_timestamp_toggle" id="update_timestamp_toggle" /><label for="update_timestamp_toggle">Update Timestamp</label>');
-		print('<input type="hidden" name="action" value="write" />');
-		print('<input type="hidden" name="type" value="'. $type. '" />');
-		print('<input type="hidden" name="ID" value="'.$ID.'" />');
-		print('</td></tr>');
+		print("\t\t\t<tr>\n\t\t\t\t<td>\n\t\t\t\t\t<input type=\"checkbox\" name=\"update_timestamp_toggle\" id=\"update_timestamp_toggle\" /> <label for=\"update_timestamp_toggle\">Update Timestamp</label>\n");
+		print("\t\t\t\t\t<input type=\"hidden\" name=\"action\" value=\"write\" />\n");
+		print("\t\t\t\t\t<input type=\"hidden\" name=\"type\" value=\"".$type."\" />\n");
+		print("\t\t\t\t\t<input type=\"hidden\" name=\"ID\" value=\"".$ID."\" />\n");
+		print("\t\t\t\t</td>\n\t\t\t</tr>\n");
 		
-		print('<tr><td><input type="submit" value="Update '. $item_name. '" /></td></tr>');
-		print('</table>');
-		print('</form>');
+		print("\t\t\t<tr>\n\t\t\t\t<td><input type=\"submit\" value=\"Update ".$item_name."\" /></td>\n\t\t\t</tr>\n");
+		print("\t\t</table>\n");
+		print("\t</form>\n");
 		
 		/* delete form */
-		print('<hr/>');
-		print('<form action="'. $_SERVER["PHP_SELF"]. '" method="post">');
-		print('<input type="hidden" name="action" value="delete" />');
-		print('<input type="hidden" name="type" value="'. $type. '" />');
-		print('<input type="hidden" name="ID" value="'.$ID.'" />');
-		print('<input type="checkbox" name="sure" id="sure" /><label for="sure">Check to delete this work.</label><br/>');
-		print('<input type="submit" value="Delete '. $item_name. '" />');
-		print('</table>');
-		print('</form>');
+		print("\t<hr/>\n");
+		print("\t<form action=\"".$_SERVER["PHP_SELF"]."\" method=\"post\">\n");
+		print("\t\t<input type=\"hidden\" name=\"action\" value=\"delete\" />\n");
+		print("\t\t<input type=\"hidden\" name=\"type\" value=\"".$type."\" />\n");
+		print("\t\t<input type=\"hidden\" name=\"ID\" value=\"".$ID."\" />\n");
+		print("\t\t<input type=\"checkbox\" name=\"sure\" id=\"sure\" /> <label for=\"sure\">Check to delete this work.</label><br/>\n");
+		print("\t\t<input type=\"submit\" value=\"Delete ".$item_name."\" />\n");
+		print("\t</form>");
 	}
 	else
 	{
 		if (!$result)
-			print('<p class="error">SQL query was not successfull</p>');
+			print("\t<p class=\"error\">SQL query was not successfull</p>\n");
 		elseif (mysql_num_rows($result) == 0)
-			print('<p class="info">No such '.$item_name.'.');
+			print("\t<p class=\"info\">No such ".$item_name.".\n");
 		else
-			print('<p class="error">Something just went really, really wrong. There are '.mysql_num_rows($result).' Items with the same ID!</p>');
+			print("<p class=\"error\">Something just went really, really wrong. There are ".mysql_num_rows($result)." Items with the same ID!</p>\n");
 	}
 }
 elseif ($action == 'add_resolution')
@@ -307,7 +313,22 @@ elseif ($action == 'write')
 	if (!ereg('^[0-9]+$', $ID)) input_error('ID', TRUE);
 	$sql  = 'UPDATE '. $type. ' SET ';
 	/* check that name is unique?? */
-	$sql .= 'name="'. escape_string($_POST['name']). '", ';
+	if ($_POST['name'] != $_POST['originalname'])
+	{
+		$result = mysql_result(mysql_query("SELECT COUNT(*) FROM $type WHERE name='".escape_string($_POST['name'])."' LIMIT 1"), 0);
+	}
+	else
+	{
+		$result = 0;
+	}
+	if ($result == 0)
+	{
+		$sql .= 'name="'. escape_string($_POST['name']). '", ';
+	}
+	else
+	{
+		input_error('Item name ('.escape_string($_POST['name']).') already used. Name field', FALSE);
+	}
 	
 	if (!array_key_exists($_POST['category'], $config_array)) input_error('Category', TRUE);
 	$sql .= "category='". $_POST['category']. "', ";
@@ -322,8 +343,43 @@ elseif ($action == 'write')
 	{
 		if (!ereg('^[0-9\.]*$', $_POST['version'])) input_error('Version');
 		$sql .= "version='". $_POST['version']. "', ";
-		if (!ereg('^[0-9]+$', $_POST['parentID'])) input_error('Variation of', TRUE);
-		$sql .= 'parent='. $_POST['parentID'].', ';
+		if (!ereg('^[0-9]+$', $_POST['parentID'])) 
+		{
+			input_error('Variation of', TRUE);
+		}
+		else
+		{
+			if ($_POST['parentID'] != 0)
+			{
+				$sql .= 'parent='. $_POST['parentID'].', ';
+			}
+			else
+			{
+				if ((!ereg('^[0-9]+$', $_POST['manualparentID'])) and ($_POST['manualparentID']))
+				{
+					input_error('The field "Manual variation"');
+				}
+				else
+				{
+					if ($_POST['manualparentID'] != 0)
+					{
+						$result = mysql_result(mysql_query("SELECT COUNT(*) FROM $type WHERE parent=0 AND {$type}ID=".$_POST['manualparentID']." LIMIT 1"), 0);
+						if (($result != 0) and ($_POST['manualparentID'] != $ID))
+						{
+							$sql .= 'parent='. $_POST['manualparentID'].', ';
+						}
+						else
+						{
+							input_error('The choosen item ('.$_POST['manualparentID'].') does not exist or is a variation itself. The field "Manual variation"');
+						}
+					}
+					else
+					{
+						$sql .= 'parent=0, ';
+					}
+				}
+			}
+		}
 		
 		if (!ereg('^[0-9]+$', $_POST['day']) || !ereg('^[0-9]+$', $_POST['month']) || !ereg('^[0-9]+$', $_POST['year'])) input_error('Release Date');
 		$sql .= 'release_date=\''.$_POST['year'].'-'.$_POST['month'].'-'.$_POST['day'].'\', ';
@@ -396,7 +452,7 @@ elseif ($action == 'write')
 	}
 	else
 	{
-		print('Please fix the above errors, and then submit again.');
+		print('Please fix the above errors, and then submit again. <a href="'.$_SERVER["PHP_SELF"].'?action=edit&amp;type='.escape_string($type).'&ID='.escape_string($ID).'">Click here if you want to go back.</a>');
 	}
 
 }
