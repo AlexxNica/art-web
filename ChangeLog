@@ -1,5 +1,10 @@
 2006-09-05  Benjamin Berg  <benjamin@sipsolutions.net>
 
+	* updates.php:
+	- Add page numbers to the bottom of updates.php. (Lukáš Lommer)
+
+2006-09-05  Benjamin Berg  <benjamin@sipsolutions.net>
+
 	* admin/edit_art.php:
 	Patch from Lukáš Lommer:
 	- xhtml output reformating and correction

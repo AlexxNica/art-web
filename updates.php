@@ -23,6 +23,7 @@ if ($format == 'html')
 	print('<hr />');
 	$latest->print_page_numbers();
 	$latest->print_listing();
+	$latest->print_page_numbers();
 
 	art_footer();
 }
