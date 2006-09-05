@@ -1,3 +1,10 @@
+2006-09-05  Thomas Wood  <thos@gnome.org>
+
+	* admin/index.php: Clean up output, and add link to Recent Comments
+	page
+	* admin/show_recent_comments.php: New page to display recently added
+	comments
+
 2006-09-05  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* updates.php:
