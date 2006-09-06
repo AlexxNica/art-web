@@ -165,7 +165,9 @@ else
 
 		if (in_array ($category, array('gtk2', 'icon', 'metacity')))
 			$install_instructions = 'Drag and drop this theme into the theme manager to install';
-		else
+		elseif ($category == 'gdm_greeter')
+			$install_instructions = 'Drag and drop this theme into the gdmsetup tool to install';
+		else 
 			$install_instructions = '';
 
 		if (($type == 'background' || $type == 'theme') && $artID < 1000)

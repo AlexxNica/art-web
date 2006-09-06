@@ -86,7 +86,7 @@ else
 		print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\"><div>\n");
 		print("\t\t<input type=\"submit\" value=\"Update\" />\n");
 		print("\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\" >\n");
-		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Name</th>\n\t\t\t\t<th>Category</th>\n\t\t\t\t<th>Author</th>\n\t\t\t\t<th>Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Status</th>\n\t\t\t</tr>\n");
+		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Name, Category</th>\n\t\t\t\t<th>Author, Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Status</th>\n\t\t\t</tr>\n");
 
 		$alt = 1;
 		while($incoming_background_select_row = mysql_fetch_array($incoming_background_select_result))
@@ -101,10 +101,8 @@ else
 			}
 			print("\t\t\t<tr $colour>\n");
 			print("\t\t\t\t<td>$backgroundID</td>\n");
-			print("\t\t\t\t<td><input name=\"background_name[$backgroundID]\" value=\"".$background_name."\"/></td>\n");
-			print("\t\t\t\t<td>");print_select_box("category[$backgroundID]", array_combine($background_category_list, $background_category_list), $category);print("</td>\n");
-			print("\t\t\t\t<td><a href=\"/users/$userID\">$username</a></td>\n");
-			print("\t\t\t\t<td>$date</td>\n");
+			print("\t\t\t\t<td>\n\t\t\t\t\t<input name=\"background_name[$backgroundID]\" value=\"".$background_name."\" size=\"15\"/><br />\n\t\t\t\t\t");print_select_box("category[$backgroundID]", array_combine($background_category_list, $background_category_list), $category);print("\n\t\t\t\t\t</td>\n");
+			print("\t\t\t\t<td>\n\t\t\t\t\t<a href=\"/users/$userID\">$username</a><br />\n\t\t\t\t\t$date\n\t\t\t\t\t</td>\n");
 			print("\t\t\t\t<td><textarea name=\"background_description[".$backgroundID."]\" cols=\"20\" rows=\"3\">".$background_description."</textarea></td>\n");
 			$background_res_select_result = mysql_query("SELECT resolution,filename FROM incoming_background_resolution WHERE backgroundID=$backgroundID");
 			print("\t\t\t\t<td>");

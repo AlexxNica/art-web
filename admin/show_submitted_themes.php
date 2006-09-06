@@ -81,7 +81,7 @@ else
 		print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
 		print("\t\t<input type=\"submit\" value=\"Update\" />\n");
 		print("\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\">\n");
-		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Theme Name</th>\n\t\t\t\t<th>Category</th>\n\t\t\t\t<th>Author</th>\n\t\t\t\t<th>Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Action</th>\n\t\t\t</tr>\n");
+		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Theme Name,Category</th>\n\t\t\t\t<th>Author, Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Action</th>\n\t\t\t</tr>\n");
 
 		$alt = 1;
 		while($incoming_theme_select_row = mysql_fetch_array($incoming_theme_select_result))
@@ -90,10 +90,8 @@ else
 			extract($incoming_theme_select_row);
 			$theme_description = htmlspecialchars($incoming_theme_select_row["description"]);
 			print("\t\t\t<tr $colour><td>$themeID</td>\n");
-			print("\t\t\t\t<td>".html_parse_text($name)."</td>\n");
-			print ("\t\t\t\t<td>");print_select_box ("category[$themeID]", $theme_type_select_array, $category);print ("</td>\n");
-			print("\t\t\t\t<td><a href=\"/users/$userID\">$username</a></td>\n");
-			print("\t\t\t\t<td>$date</td>\n");
+			print("\t\t\t\t<td>\n\t\t\t\t\t".html_parse_text($name)."<br />\n\t\t\t\t\t");print_select_box ("category[$themeID]", $theme_type_select_array, $category);print("\n\t\t\t\t</td>\n");
+			print("\t\t\t\t<td>\n\t\t\t\t\t<a href=\"/users/$userID\">$username</a><br />\n\t\t\t\t\t$date\n\t\t\t\t</td>\n");
 			print("\t\t\t\t<td>".$theme_description."</td>\n");
 			print("\t\t\t\t<td><a href=\"".htmlentities($theme_url)."\">Download</a></td>\n");
 			print("\t\t\t\t<td>");print_select_box("mark_theme[$themeID]",$new_status_array,$status);print("</td>\n");
