@@ -15,10 +15,11 @@ if (POST ('report_comment'))
 admin_header ('Recent Comments', '20 Most Recent Comments');
 ?>
 
-See also:
-<a href="/admin/comments.php">Moderate Comments</a>;
-<a href="/admin/">Administration Menu</a>
-<hr/>
+	See also:
+	<a href="/admin/comments.php">Moderate Comments</a>;
+	<a href="/admin/">Administration Menu</a>
+	<hr/>
+
 <?php
 
 $result = mysql_query ("SELECT commentID, comment, timestamp, username, type, artID, status FROM comment INNER JOIN user ON comment.userID = user.userID ORDER BY timestamp DESC LIMIT 20");

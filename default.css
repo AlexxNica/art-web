@@ -305,7 +305,21 @@ div.icon_view {
 /*	background-image: url('/images/site/commentbd.png'); */
 	background-repeat: no-repeat;
 	padding-left: 28px;
+	padding-bottom: 20px;
 }
+
+.comment_table {
+	width: 100%;
+	margin: auto;
+	border: none;
+	border-collapse: collapse;
+}
+
+.comment_head {
+	background: #dedede;
+	padding: 2px;
+	}
+
 
 div.comment_status {
 	text-align: right;

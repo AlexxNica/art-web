@@ -1,3 +1,17 @@
+2006-09-06 Lucas Lommer <drom@kdyne.net>
+	* default.css:
+	- Some CSS changes (.comment class)
+	- Add .comment_table class for comment administration table
+	- Add .comment_head class for comment administration table head
+
+	* admin/comments.php:
+	- XHTML output cleanup and new code
+	- Allow to work with more than one comment at once (checkboxes)
+	- Link to Recent Comments section on top
+
+	* admin/show_recent_comments.php:
+	- XHTML output cleanup
+
 2006-09-07  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/config.inc.php:
