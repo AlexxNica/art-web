@@ -1,3 +1,11 @@
+2006-09-08  Thomas Wood  <thos@gnome.org>
+
+	* default.css:
+	* templates/en/main.html:
+
+	Remove big ugly search icon and make the search box a bit more
+	friendly...
+
 2006-09-08 Lucas Lommer <drom@kdyne.net>
 	* includes/art_page.inc.php:
 	- Sort links to wallpaper download by file type and resolution
@@ -39,6 +47,20 @@
 
 	* includes/config.inc.php:
 	- Add a gnome216 section to screenshots.
+
+2006-09-06 Lucas Lommer <drom@kdyne.net>
+	* default.css:
+	- Some CSS changes (.comment class)
+	- Add .comment_table class for comment administration table
+	- Add .comment_head class for comment administration table head
+
+	* admin/comments.php:
+	- XHTML output cleanup and new code
+	- Allow to work with more than one comment at once (checkboxes)
+	- Link to Recent Comments section on top
+
+	* admin/show_recent_comments.php:
+	- XHTML output cleanup
 
 2006-09-06 Lucas Lommer <drom@kdyne.net>
 

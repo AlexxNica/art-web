@@ -249,6 +249,13 @@ th {
 	cursor: pointer;
 }
 
+#search_input {
+	padding-left: 3px;
+	width: 70%;
+	vertical-align: middle;
+	color: #555555;
+}
+
 .page_shortcut {
 	text-decoration: underline;
 }
