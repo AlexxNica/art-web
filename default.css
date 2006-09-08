@@ -339,6 +339,13 @@ table.theme_info {
 	margin-top:1em;
 }
 
+.table_topic {
+	background: black;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+}
+
 #footnote {
 	clear: both;
 	text-align: center;

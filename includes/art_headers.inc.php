@@ -20,21 +20,27 @@ if (!$prevent_session)
 	session_set_cookie_params (86400); // Set cookie lifetime to 48 hours
 	session_start ();
 
+	/* is the user trying to log in? */
 	if (array_key_exists ("login", $_POST))
 	{
-		/* is the user trying to log in? */
-		if (array_key_exists ('login', $_POST)) {
-			$username = escape_string ($_POST['username']);
-			$password = escape_string ($_POST['password']);
-			$query_result = mysql_query ("SELECT userID, realname, password FROM user WHERE username = '$username'");
-			
-			list ($userID, $realname, $cryptpass ) = mysql_fetch_row ($query_result);
-			if (!validate_login ($username, $password))
-			{
-				art_header ("Login error");
+		$username = escape_string ($_POST['username']);
+		$password = escape_string ($_POST['password']);
+
+		// Check if user is active or blocked
+		$query_result = mysql_query ("SELECT active FROM user WHERE username = '$username' LIMIT 1");
+		list ($active) = mysql_fetch_row ($query_result);
+
+		if (!validate_login ($username, $password)) // Also returns FALSE if user is blocked
+		{
+			art_header ("Login error");
+
+			print("\t<h1>Login failed</h1>\n");
+			if ($active == 1) // User is active, that means login or password is bad
+				print("\t<p class=\"warning\">Incorrect username and password. Please try again. To reset your password, click <a href=\"/account.php?mode=lostpassword\">here</a></p>");
+			else // User is blocked
+				print("\t<p class=\"error\">Your account ($username) has been blocked. Please <a href=\"/contact.php\" title=\"Contact page\">contact system administrators</a>.</p>\n");
 ?>
-	<h1>Login failed</h1>
-	<p class="warning">Incorrect username and password. Please try again.  To reset your password, click <a href="/account.php?mode=lostpassword">here</a></p>
+
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<table>
 			<tr>
@@ -52,9 +58,8 @@ if (!$prevent_session)
 		</table>
 	</form>
 <?php
-				art_footer ();
-				exit ();
-			}
+			art_footer ();
+			exit ();
 		}
 	}
 }

@@ -524,22 +524,25 @@ function validate_login ($username, $password, $session = true)
 {
 	/* validate login and set up user's session if required */
 
-	$query_result = mysql_query ("SELECT userID, realname, password FROM user WHERE username = '$username'");
-	list ($userID, $realname, $cryptpass) = mysql_fetch_row ($query_result);
+	$query_result = mysql_query ("SELECT userID, realname, password, active FROM user WHERE username = '$username' LIMIT 1");
+	list ($userID, $realname, $cryptpass, $active) = mysql_fetch_row ($query_result);
 
-	if ( md5 ($password) == $cryptpass )
+	if ($active == 1)
 	{
-		if ($session)
+		if ( md5 ($password) == $cryptpass )
 		{
-			$_SESSION['username'] = $username;
-			$_SESSION['userID'] = $userID;
-			$_SESSION['realname'] = $realname;
-			mysql_query ("UPDATE user SET lastlog=NOW() WHERE userid=$userID;");
+			if ($session)
+			{
+				$_SESSION['username'] = $username;
+				$_SESSION['userID'] = $userID;
+				$_SESSION['realname'] = $realname;
+				mysql_query ("UPDATE user SET lastlog=NOW() WHERE userid=$userID; LIMIT 1");
+			}
+			return true; /* user validated! */
 		}
-		return true; /* user validated! */
+		return false; /* user didn't validate */
 	}
-
-	return false; /* user didn't validate */
+	return false; // User is blocked
 }
 
 /* escape_gpc_array() - ensures special characters are escaped in gpc variables */
