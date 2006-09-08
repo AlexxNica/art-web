@@ -1,3 +1,14 @@
+2006-09-07 Lucas Lommer <drom@kdyne.net>
+	* admin/comments.php:
+	- XHTML output fix (do not wrap comment head but source theme name)
+
+	* admin/show_recent_comments.php:
+	- Allow listing comments into history (by 20 comments)
+	- Unreport comment function (mark as new)
+	- Delete comment function (mark as deleted)
+	- Undelete comment function (mark as reviewed)
+	- Deleted comments are gray and striked through
+
 2006-09-06 Lucas Lommer <drom@kdyne.net>
 	* default.css:
 	- Some CSS changes (.comment class)

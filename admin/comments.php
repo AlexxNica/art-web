@@ -106,15 +106,15 @@ if($badcomment_count > 0)
 		// display comment header
 ?>
 			<tr>
-				<td class="comment_head">
+				<td class="comment_head" style="white-space: nowrap">
 					&nbsp;<input type="checkbox" name="g_remove_item[<?php echo $count; ?>]" /> <?php echo $count; ?>
 
 					<input type="hidden" name="g_comment_ID[<?php echo $count; ?>]" value="<?php echo $commentID; ?>" />
 				</td>
-				<td class="comment_head">
+				<td class="comment_head" style="white-space: nowrap">
 					<strong>By:</strong> <a href="/users/<?php echo $username; ?>"><?php echo $username; ?></a>
 				</td>
-				<td class="comment_head">
+				<td class="comment_head" style="white-space: nowrap">
 					<strong>Posted:</strong> <?php echo date("Y-m-d - H:i", ($comment_time + (3600 * ($timezone + 5)))); ?>
 
 				</td>
