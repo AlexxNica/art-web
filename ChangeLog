@@ -1,3 +1,15 @@
+2006-09-08 Lucas Lommer <drom@kdyne.net>
+	* includes/art_page.inc.php:
+	- Sort links to wallpaper download by file type and resolution
+
+	* admin/edit_user.php:
+	- List of moderators and administrators (ID, login, name, level)
+	- Allow level change for multiple moderators and administrators
+	- XHTML output formating
+
+	* AUTHORS:
+	- Add Lucas Lommer
+
 2006-09-07 Lucas Lommer <drom@kdyne.net>
 	* admin/comments.php:
 	- XHTML output fix (do not wrap comment head but source theme name)
