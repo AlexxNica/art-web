@@ -20,8 +20,12 @@ $list = validate_input_array_default ($unvalidated_list, array('themes', 'backgr
 /* print out the list of authors */
 if ($unvalidated_author == "")
 {
+	
 	art_header("Users");
 	create_title("Users", "The people creating the artwork");
+	print ("<p type=\"info\">Sorry, currently disabled.</p>");
+	art_footer ();
+	die();
 	$author_list_result = mysql_query("SELECT user.userID,user.username FROM user,theme,background WHERE active = 1 AND (user.userID = theme.userID OR user.userID = background.userID) GROUP BY user.userID ORDER BY username ASC");
 	print("<ul>\n");
 	while (list($userID, $username) = mysql_fetch_row($author_list_result))

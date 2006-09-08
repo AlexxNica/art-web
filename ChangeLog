@@ -1,3 +1,9 @@
+2006-09-08  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* users:
+	- Disable the artists list, because it is way to slow. Need to look
+	into fixing this.
+
 2006-09-08  Thomas Wood  <thos@gnome.org>
 
 	* default.css:
