@@ -13,7 +13,12 @@ $submitID = validate_input_regexp_default ($_POST["submitID"], "^[0-9]+$", "0");
 if($_POST["add_theme"])
 {
 	$userID = validate_input_regexp_default ($_POST["userID"], "^[0-9]+$", "0");
+
+	// Parent hack...
 	$parentID = validate_input_regexp_default ($_POST["parentID"], "^[0-9]+$", "0");
+	if ($parentID == 0)
+		$parentID = validate_input_regexp_default ($_POST["manualparentID"], "^[0-9]+$", "0");	// is set or returns 0
+
 	$month = validate_input_regexp_default ($_POST["month"], "^[0-9]+$", "0");
 	$day = validate_input_regexp_default ($_POST["day"], "^[0-9]+$", "0");
 	$year = validate_input_regexp_default ($_POST["year"], "^[0-9]+$", "0");
@@ -34,7 +39,7 @@ if($_POST["add_theme"])
 
 		if (file_exists ($thumbnail_filename) || file_exists ($preview_filename))
 		{
-			print ('<p class="error">One or more of the screenshot files already exist!</p>');
+			print ("\t<p class=\"error\">One or more of the screenshot files already exist!</p>\n");
 		}
 		else
 		{
@@ -58,29 +63,29 @@ if($_POST["add_theme"])
 				$themeID = mysql_insert_id();
 				if($theme_insert_result)
 				{
-					print('<p class="info</p>Successed added theme to the database.</p>');
+					print("\t<p class=\"info\">Successed added theme to the database.</p>\n");
 					if($submitID)
 					{
 						$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='added' WHERE themeID='$submitID'");
-						print('<p class="info">Successfully marked submitted theme as added in incoming themes list.</p>');
+						print("\t<p class=\"info\">Successfully marked submitted theme as added in incoming themes list.</p>\n");
 					}
-					print("<p><a href=\"/admin/show_submitted_themes.php\">Return</a> to incoming themes list.</p>");
+					print("\t<p><a href=\"/admin/show_submitted_themes.php\">Return</a> to incoming themes list.</p>\n");
 					art_footer ();
 					exit ();
 				}
 				else
 				{
-					print("<p>There were database errors adding theme into database.</p><hr/>");
-					print("<tt>".mysql_error()."</tt><hr/>");
+					print("\t<p class=\"error\">There were database errors adding theme into database.</p>\n\t<hr/>\n");
+					print("\t<tt>".mysql_error()."</tt>\n\t<hr/>\n");
 				}
 			}
 			else
-				print ('<p class="error">There was an error uploading the screenshots</p><hr/>');
+				print ("\t<p class=\"error\">There was an error uploading the screenshots</p>\n\t<hr/>\n");
 		}
 	}
 	else
 	{
-		print('<p class="error">Error, all of the form fields are not filled in.</p>');
+		print("\t<p class=\"error\">Error, all of the form fields are not filled in.</p>\n");
 	}
 }
 
@@ -98,84 +103,96 @@ list($month,$day,$year) = explode("/",$date);
 
 ?>
 
-<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post"  enctype="multipart/form-data" >
-<table border="0">
-<tr>
-	<td><strong>Theme Name:</strong></td>
-	<td><input type="text" name="theme_name" size="40" value="<?php echo $theme_name; ?>"></td>
-</tr>
-<tr>
-	<td><strong>Category</strong></td>
-	<td><input type="hidden" name="category" value="<?php echo $theme_category; ?>" /><?php echo $theme_config_array[$theme_category]['name'].' '.$theme_category; ?>)</td>
-</tr>
-<tr>
-	<td><strong>UserID:</strong></td>
-	<td><input type="text" name="userID" size="40" value="<?php echo $userID; ?>"></td>
-</tr>
-<tr>
-	<td><strong>Release Date:</strong></td>
-	<td><input type="text" name="month" value="<?php echo $month; ?>" size="2" maxlenght="2">/<input type="text" name="day" value="<?php echo $day; ?>" size="2" maxlenght="2">/<input type="text" name="year" value="<?php echo $year; ?>" size="4" maxlenght="4"></td>
-</tr>
-<tr>
-	<td><strong>License</strong></td>
-	<td><?php print_select_box("license",$license_config_array, $license); ?></td>
-</tr>
-<tr>
-	<td><strong>Version:</strong></td>
-	<td><input type="text" name="version" size="40" value="<?php echo $version; ?>"></td>
-</tr>
-<tr>
-	<td><strong>Depends:</strong></td>
-	<td><input type="text" name="depends" size="40" value="<?php echo $depends; ?>"></td>
-</tr>
+	<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post"  enctype="multipart/form-data" >
+		<table border="0">
+			<tr>
+				<td><strong>Theme Name:</strong></td>
+				<td><input type="text" name="theme_name" size="40" value="<?php echo $theme_name; ?>"></td>
+			</tr>
+			<tr>
+				<td><strong>Category</strong></td>
+				<td>
+					<input type="hidden" name="category" value="<?php echo $theme_category; ?>" />
+					<?php echo $theme_config_array[$theme_category]['name'].' ('.$theme_category; ?>)
+				</td>
+			</tr>
+			<tr>
+				<td><strong>UserID:</strong></td>
+				<td><input type="text" name="userID" size="40" value="<?php echo $userID; ?>"></td>
+			</tr>
+			<tr>
+				<td><strong>Release Date:</strong></td>
+				<td>
+					<input type="text" name="month" value="<?php echo $month; ?>" size="2" maxlenght="2">/
+					<input type="text" name="day" value="<?php echo $day; ?>" size="2" maxlenght="2">/
+					<input type="text" name="year" value="<?php echo $year; ?>" size="4" maxlenght="4">
+				</td>
+			</tr>
+			<tr>
+				<td><strong>License</strong></td>
+				<td><?php print_select_box("license",$license_config_array, $license); ?></td>
+			</tr>
+			<tr>
+				<td><strong>Version:</strong></td>
+				<td><input type="text" name="version" size="40" value="<?php echo $version; ?>"></td>
+			</tr>
+			<tr>
+				<td><strong>Depends:</strong></td>
+				<td><input type="text" name="depends" size="40" value="<?php echo $depends; ?>"></td>
+			</tr>
 
-<tr>
-	<td><strong>Variation of</strong></td>
-	<td><select name="parentID"><option value="0">N/A</option>
-	<?php
-	$background_select_result = mysql_query("SELECT themeID,name,category FROM theme WHERE userID=$userID ORDER BY category");
+			<tr>
+				<td><strong>Variation of</strong></td>
+				<td>
+					<select name="parentID">
+						<option value="0">N/A</option>
+<?php
+	$background_select_result = mysql_query("SELECT themeID,name,category FROM theme WHERE userID=$userID ORDER BY category ASC, name ASC");
 	while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($background_select_result))
 	{
 		if ($var_themeID == $parentID)
 			$selected = 'selected="true"';
 		else
 			$selected = '';
-		print("<option $selected value=\"$var_themeID\">$var_theme_name ($var_category)</option>");
+		print("\t\t\t\t\t\t<option $selected value=\"$var_themeID\">$var_theme_name ($var_category)</option>\n");
 	}
-	?>
-		</td>
-</tr>
-
-<tr>
-	<td><strong>Description:</strong></td>
-	<td><textarea name="description" cols="40" rows="5" wrap><?php echo $description; ?></textarea></td>
-</tr>
-<tr>
-	<td><strong>Large Preview Filename:</strong></td>
-	<td><input type="file" name="preview_filename" /></td>
-</tr>
-<tr>
-	<td><strong>Small Thumbnail Filename:</strong></td>
-	<td><input type="file" name="thumbnail_filename" /></td>
-</tr>
-<tr>
-	<td><strong>Download Filename:</strong></td>
-	<td>
-	<?php
+?>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><br /></td>
+				<td>
+					(or <label for=\"manualparentID\">set parent manually</label>: 
+					<input type=\"text\" id=\"manualparentID\" name=\"manualparentID\" size=\"3\" maxlength=\"6\" />)
+				</td>
+			<tr>
+				<td><strong>Description:</strong></td>
+				<td><textarea name="description" cols="40" rows="5" wrap><?php echo $description; ?></textarea></td>
+			</tr>
+			<tr>
+				<td><strong>Large Preview Filename:</strong></td>
+				<td><input type="file" name="preview_filename" /></td>
+			</tr>
+			<tr>
+				<td><strong>Small Thumbnail Filename:</strong></td>
+				<td><input type="file" name="thumbnail_filename" /></td>
+			</tr>
+			<tr>
+				<td><strong>Download Filename:</strong></td>
+				<td>
+<?php
 	if (isset($theme_category))
 		file_chooser("download_filename", "$sys_ftp_dir/themes/$theme_category/");
 	else
-		print ('<p class="error">Error: No theme category set!</p>');
-	?>
-	</td>
-</tr>
-
-</table>
-
-<input type="hidden" name="submitID" value="<?php echo $submitID;?>">
-<input type="submit" value="Add Theme" name="add_theme" />
-
-</form>
+		print ("\t\t\t\t\t<p class=\"error\">Error: No theme category set!</p>\n");
+?>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="submitID" value="<?php echo $submitID;?>">
+		<input type="submit" value="Add Theme" name="add_theme" />
+	</form>
 <?php
 admin_footer();
 ?>

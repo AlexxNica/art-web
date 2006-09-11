@@ -1,3 +1,37 @@
+2006-09-11 Lucas Lommer <drom@kdyne.net>
+
+	* admin/add_theme.php:
+	- XHTML output formating
+	- XHTML and output corrections
+	- Allow to set parentID manually
+	- Sort variation dropdown selection by category, name
+
+	* includes/common.inc.php:
+	- file_chooser() sorts file names by name
+	- XHTML output formating
+	- XHTML corrections
+
+	* includes/art_headers.inc.php:
+	- Do not report a missing username as blocked (bugfix)
+
+	* account.php:
+	- XHTML output formating
+	- Use CSS classes for submitted items tables instead of inline CSS
+
+	* default.css:
+	- Add comment_main CSS class
+
+	* admin/edit_user.php:
+	- Use CSS classes for admins and blocked users tables instead of inline CSS
+
+	* admin/show_submitted_backgrounds.php:
+	- Allow to set own reason for rejected wallpapers (based on benzea's code)
+	- Add LIMIT 1 to update sql queries (you'll like it if db broken :))
+
+	* admin/show_submitted_themes.php:
+	- Allow to set own reason for rejected wallpapers (based on benzea's code)
+	- Add LIMIT 1 to update sql queries
+
 2006-09-08  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* users:

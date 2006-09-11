@@ -219,7 +219,7 @@ elseif (array_key_exists('username', $_SESSION))
 	if ($timezone < -12 || $timezone > 12)
 		$timezone = 0;
 
-	print("\t<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\" />");
+	print("\t<form action=\"{$_SERVER['PHP_SELF']}\" method=\"post\" />\n");
 	print("\t\t<table>\n");
 	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"password\">Password</label></th>\n\t\t\t\t<td><input value=\"\" type=\"password\" name=\"password\" id=\"password\" size=\"20\" maxlength=\"12\" /> (leave blank to remain unchanged)</td>\n\t\t\t</tr>\n");
 	print("\t\t\t<tr>\n\t\t\t\t<th><label for=\"passwordre\">Password again</label></th>\n\t\t\t\t<td><input value=\"\" type=\"password\" name=\"passwordre\" id=\"passwordre\" size=\"20\" maxlength=\"12\" /></td>\n\t\t\t</tr>\n");
@@ -235,46 +235,46 @@ elseif (array_key_exists('username', $_SESSION))
 	print("\t</form>\n");
 
 	create_title("Submissions","");
-	print("<ul>");
-	print("<li><a href=\"/submit_theme.php\">Submit a theme</a></li>");
-	print("<li><a href=\"/submit_background.php\">Submit a background</a></li>");
-	print("<li><a href=\"/submit_screenshot.php\">Submit a screenshot</a></li>");
-	print("</ul>");
-	print("<div class=\"h2\">Theme submissions</div><div class=\"subtitle\">Status of submitted themes</div>");
+	print("\t<ul>\n");
+	print("\t\t<li><a href=\"/submit_theme.php\">Submit a theme</a></li>\n");
+	print("\t\t<li><a href=\"/submit_background.php\">Submit a background</a></li>\n");
+	print("\t\t<li><a href=\"/submit_screenshot.php\">Submit a screenshot</a></li>\n");
+	print("\t</ul>\n");
+	print("\n\t<div class=\"h2\">Theme submissions</div>\n\t<div class=\"subtitle\">Status of submitted themes</div>\n");
 	$submissions_select_result = mysql_query("SELECT themeID,name,category,status,comment FROM incoming_theme WHERE userID = '{$_SESSION['userID']}' ");
 	if (mysql_num_rows($submissions_select_result) < 1 )
 	{
-		print("<p>(None)</p>");
+		print("\t<p>(None)</p>\n");
 	}
 	else
 	{
-		print("<table><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
+		print("\t<table class=\"comment_table\">\n\t\t<tr>\n\t\t\t<th class=\"comment_head\">Name</th>\n\t\t\t<th class=\"comment_head\">Category</th>\n\t\t\t<th class=\"comment_head\">Status</th>\n\t\t</tr>\n");
 		while (list($themeID,$theme_name,$category,$status,$comment) = mysql_fetch_row($submissions_select_result) )
 		{
 			$status = get_status_comment($status, $comment);
-			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$theme_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td>");
+			print ("\t\t<tr>\n\t\t\t<td class=\"comment_main\">$theme_name</td>\n\t\t\t<td class=\"comment_main\">$category</td>\n\t\t\t<td class=\"comment_main\">$status</td>\n");
 			if ($status == "added")
-				print ("<td><form action=\"/submit_theme.php\" method=\"post\"><div><input type=\"hidden\" name=\"update\" value=\"$themeID\" /><input type=\"submit\" value=\"Update\"/></div></form></td>");
-			print ("</tr>");
+				print ("\t\t\t<td>\n\t\t\t\t<form action=\"/submit_theme.php\" method=\"post\">\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<input type=\"hidden\" name=\"update\" value=\"$themeID\" />\n\t\t\t\t\t\t<input type=\"submit\" value=\"Update\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</td>\n");
+			print ("\t\t</tr>\n");
 		}
-		print("</table>");
+		print("\t</table>\n");
 	}
-	print("<br />");
-	print("<div class=\"h2\">Background submissions</div><div class=\"subtitle\">Status of submitted backgrounds</div>");
+	print("\t<br />\n");
+	print("\n\t<div class=\"h2\">Background submissions</div>\n\t<div class=\"subtitle\">Status of submitted backgrounds</div>\n");
 	$submissions_select_result = mysql_query("SELECT backgroundID,name,category,status,comment FROM incoming_background WHERE userID = '{$_SESSION['userID']}' ");
 	if (mysql_num_rows($submissions_select_result) < 1 )
 	{
-		print("<p>(None)</p>");
+		print("\t<p>(None)</p>");
 	}
 	else
 	{
-		print("<table><tr><th>Name</th><th>Category</th><th>Status</th></tr>");
+		print("\t<table class=\"comment_table\">\n\t\t<tr>\n\t\t\t<th class=\"comment_head\">Name</th>\n\t\t\t<th class=\"comment_head\">Category</th>\n\t\t\t<th class=\"comment_head\">Status</th>\n\t\t</tr>\n");
 		while (list($backgroundID,$background_name,$category,$status,$comment) = mysql_fetch_row($submissions_select_result) )
 		{
 			$status = get_status_comment($status, $comment);
-			print ("<tr><td style=\"border-bottom: 1px gray dashed\">$background_name</td><td style=\"border-bottom: 1px gray dashed\">$category</td><td style=\"border-bottom: 1px gray dashed\">$status</td></tr>");
+			print ("\t\t<tr>\n\t\t\t<td class=\"comment_main\">$background_name</td>\n\t\t\t<td class=\"comment_main\">$category</td>\n\t\t\t<td class=\"comment_main\">$status</td>\n\t\t</tr>\n");
 		}
-		print("</table>");
+		print("\t</table>");
 	}
 }
 else

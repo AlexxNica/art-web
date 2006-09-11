@@ -152,12 +152,12 @@ if (mysql_num_rows($result) > 0)
 
 while(list($userID, $username, $realname, $level) = mysql_fetch_row($result))
 {
-	print("\t\t\t<tr>\n\t\t\t\t<td style=\"border-bottom: 1px dotted gray;\">$userID</td>\n\t\t\t\t<td style=\"border-bottom: 1px dotted gray;\">$username</td>\n\t\t\t\t<td style=\"border-bottom: 1px dotted gray;\">$realname</td>\n\t\t\t\t<td style=\"border-bottom: 1px dotted gray;\">");
+	print("\t\t\t<tr>\n\t\t\t\t<td class=\"comment_main\">$userID</td>\n\t\t\t\t<td class=\"comment_main\">$username</td>\n\t\t\t\t<td class=\"comment_main\">$realname</td>\n\t\t\t\t<td class=\"comment_main\">");
 	if ($level == 0) print("Normal user"); // Not listed, but for sure...
 	elseif ($level == 1) print("Moderator");
 	elseif ($level == 2) print("Administrator");
 	else  print("<p class=\"error\" style=\"margin: 0px;\">Error (level: $level)</p>");
-	print("</td>\n\t\t\t\t<td style=\"border-bottom: 1px dotted gray;\">\n\t\t\t\t\t<select name=\"level[$userID]\">\n");
+	print("</td>\n\t\t\t\t<td class=\"comment_main\">\n\t\t\t\t\t<select name=\"level[$userID]\">\n");
 	print("\t\t\t\t\t\t<option value=\"0\">Normal</option>\n");
 	print("\t\t\t\t\t\t<option value=\"1\"");
 	if ($level == 1)

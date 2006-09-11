@@ -327,6 +327,11 @@ div.icon_view {
 	padding: 2px;
 	}
 
+.comment_main {
+	border-bottom: 1px dashed gray;
+	padding: 2px;
+	}
+
 
 div.comment_status {
 	text-align: right;

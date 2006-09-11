@@ -35,7 +35,7 @@ if (!$prevent_session)
 			art_header ("Login error");
 
 			print("\t<h1>Login failed</h1>\n");
-			if ($active == 1) // User is active, that means login or password is bad
+			if (($active == 1) or (mysql_num_rows($query_result) == 0)) // User is active or no results, that means login or password is bad
 				print("\t<p class=\"warning\">Incorrect username and password. Please try again. To reset your password, click <a href=\"/account.php?mode=lostpassword\">here</a></p>");
 			else // User is blocked
 				print("\t<p class=\"error\">Your account ($username) has been blocked. Please <a href=\"/contact.php\" title=\"Contact page\">contact system administrators</a>.</p>\n");

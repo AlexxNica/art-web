@@ -570,16 +570,26 @@ function file_chooser($var_name, $dir, $filter="")
 	{
 		if ($dh = opendir($dir))
 		{
-			print("<select name=$var_name><option></option>");
+			print("\t\t\t\t\t<select name=\"$var_name\">\n\t\t\t\t\t\t<option></option>\n");
+			$dir_array = false;
+			$item_no = 0;
 			while (($file = readdir($dh)) !== false)
 			{
 				if ($filter != '')
 					if (stristr($file, $filter) === FALSE)
 						continue;
 				if (($file != ".") and ($file != ".."))
-					echo "<option>$file</option>";
+				{
+					// Insert file into array
+					$dir_array[$item_no] = $file;
+					$item_no++;
+				}
 			}
-			print("</select>");
+			// Sort files array...
+			if (Count($dir_array) > 0) sort($dir_array);
+			// ...and print it out
+			for ($p = 0; $p < Count($dir_array); $p++) echo "\t\t\t\t\t\t<option value=\"$dir_array[$p]\">$dir_array[$p]</option>\n";
+			print("\t\t\t\t\t</select>\n");
 			closedir($dh);
 		}
 	}

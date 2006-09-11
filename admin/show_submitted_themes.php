@@ -13,9 +13,11 @@ $mark_theme = $_POST['mark_theme'];
 $new_status = validate_input_array_default($_POST["new_status"], array_keys($status_array), "");
 $new_category_array = $_POST['category'];
 
-$reject_array = Array("rejected|not_rel" => "Not relevent", "rejected|bad_url" => "Invalid URL", "rejected|distro" => "Distro Specific", "rejected|low_quality" => "Low Quality","rejected|copyright" => "Copyright","rejected|duplicate" => "Duplicate","rejected|badform" => "Badly Formed");
+$reject_array = Array("rejected|not_rel" => "Not relevent", "rejected|bad_url" => "Invalid URL", "rejected|distro" => "Distro Specific", "rejected|low_quality" => "Low Quality","rejected|copyright" => "Copyright","rejected|duplicate" => "Duplicate","rejected|badform" => "Badly Formed", "rejected|other" => "Reject with reason");
 $new_status_array = array_merge($status_array,$reject_array);
 unset($new_status_array["rejected"]);
+
+$reject_comment = $_POST['other_reason']; /* XXX: could be insecure!!!! */
 
 if(is_array($mark_theme))
 {
@@ -28,11 +30,30 @@ if(is_array($mark_theme))
 			print("\t<p><a href=\"{$_SERVER["PHP_SELF"]}\">Click here</a> to return to incoming themes list.\n");
 		}elseif (count($rej_arr) > 1)
 		{
-			$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='rejected', comment='{$rej_arr[1]}' WHERE themeID='$markID'");
-			print("\t<p class=\"info\">Rejected theme $markID with \"{$reject_array[$new_status]}\".</p>\n");
+ 			$reason = $rej_arr[1];
+			// Allows you to add your own reject comment
+ 			if ($reason == "other")
+ 			{
+ 				$reason = escape_string ($reject_comment[$markID]);
+ 				$long = $reason;
+ 			}
+ 			else
+ 			{
+ 				$long = $reject_array[$new_status];
+ 			}
+ 			
+ 			if ($reason != "")
+ 			{
+ 				$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='rejected', comment='$reason' WHERE backgroundID='$markID' LIMIT 1");
+ 				print("\t<p class=\"info\">Rejected background $markID with \"$long\".</p>\n");
+ 			}
+ 			else
+ 			{
+ 				print("\t<p class=\"error\">Please enter a reject comment for $markID.</p>\n");
+ 			}
 		}elseif ($new_status != 'new' || $admin_level > 1)
 		{
-			$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='$new_status' WHERE themeID='$markID'");
+			$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='$new_status' WHERE themeID='$markID' LIMIT 1");
 			// Only print message if status has actually changed
 			if (mysql_affected_rows())
 				print("\t<p class=\"info\">Marked theme $markID as \"{$new_status}\".</p>\n");
@@ -42,7 +63,7 @@ if(is_array($mark_theme))
 		$new_category = validate_input_array_default ($new_category_array[$markID], $theme_category_list, '_error');
 		if ($new_category != '_error')
 		{
-			mysql_query("UPDATE incoming_theme SET category='$new_category' WHERE themeID='$markID'");
+			mysql_query("UPDATE incoming_theme SET category='$new_category' WHERE themeID='$markID' LIMIT 1");
 			if (mysql_affected_rows())
 				print("\t<p class=\"info\">Marked theme $markID category as &quot;$new_category&quot;.</p>\n");
 		}
@@ -81,7 +102,7 @@ else
 		print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
 		print("\t\t<input type=\"submit\" value=\"Update\" />\n");
 		print("\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\">\n");
-		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Theme Name,Category</th>\n\t\t\t\t<th>Author, Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Action</th>\n\t\t\t</tr>\n");
+		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Theme Name,Category</th>\n\t\t\t\t<th>Author, Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Status, Reason</th>\n\t\t\t</tr>\n");
 
 		$alt = 1;
 		while($incoming_theme_select_row = mysql_fetch_array($incoming_theme_select_result))
@@ -94,7 +115,7 @@ else
 			print("\t\t\t\t<td>\n\t\t\t\t\t<a href=\"/users/$userID\">$username</a><br />\n\t\t\t\t\t$date\n\t\t\t\t</td>\n");
 			print("\t\t\t\t<td>".$theme_description."</td>\n");
 			print("\t\t\t\t<td><a href=\"".htmlentities($theme_url)."\">Download</a></td>\n");
-			print("\t\t\t\t<td>");print_select_box("mark_theme[$themeID]",$new_status_array,$status);print("</td>\n");
+			print("\t\t\t\t<td>");print_select_box("mark_theme[$themeID]",$new_status_array,$status);print("<br />\n\t\t\t\t\t<input size=\"16\" name=\"other_reason[$themeID]\" id=\"other_reason[$themeID]\"/>\n\t\t\t\t</td>\n");
 			print("\t\t\t</tr>\n");
 
 			$alt = 2 - $alt + 1;

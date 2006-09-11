@@ -15,9 +15,11 @@ admin_header("Submitted Backgrounds");
 $admin_level = admin_auth(1);
 
 $background_category_list = array_keys($background_config_array);
-$reject_array = Array("rejected|not_rel" => "Not relevent", "rejected|bad_url" => "Invalid URL", "rejected|distro" => "Distro Specific", "rejected|low_quality" => "Low Quality","rejected|copyright" => "Copyright", "rejected|duplicate" => "Duplicate");
+$reject_array = Array("rejected|not_rel" => "Not relevent", "rejected|bad_url" => "Invalid URL", "rejected|distro" => "Distro Specific", "rejected|low_quality" => "Low Quality","rejected|copyright" => "Copyright", "rejected|duplicate" => "Duplicate", "rejected|other" => "Reject with reason");
 $new_status_array = array_merge($status_array,$reject_array);
 unset($new_status_array["rejected"]);
+
+$reject_comment = $_POST['other_reason']; /* XXX: could be insecure!!!! */
 
 if(is_array($mark_background))
 {
@@ -26,19 +28,19 @@ if(is_array($mark_background))
 		/* update category of item */
 		$new_category = validate_input_array_default ($new_category_array[$markID], $background_category_list, '_error');
 		if ($new_category != '_error')
-			mysql_query("UPDATE incoming_background SET category='$new_category' WHERE backgroundID='$markID'");
+			mysql_query("UPDATE incoming_background SET category='$new_category' WHERE backgroundID='$markID' LIMIT 1");
 		if (mysql_affected_rows())
 			print("\t<p class=\"info\">Marked background $markID category as &quot;$new_category&quot;.</p>\n");
 
 		/* update name of item */
 		$new_name = escape_string ($new_background_name_array[$markID]);
-		mysql_query("UPDATE incoming_background SET name='$new_name' WHERE backgroundID='$markID'");
+		mysql_query("UPDATE incoming_background SET name='$new_name' WHERE backgroundID='$markID' LIMIT 1");
 		if (mysql_affected_rows())
 			print("\t<p class=\"info\">Updated name of background $markID as &quot;$new_name&quot;.</p>\n");
 
 		/* update description of item */
 		$new_description = escape_string ($new_background_description_array[$markID]);
-		mysql_query("UPDATE incoming_background SET description='$new_description' WHERE backgroundID='$markID'");
+		mysql_query("UPDATE incoming_background SET description='$new_description' WHERE backgroundID='$markID' LIMIT 1");
 		if (mysql_affected_rows())
 			print("\t<p class=\"info\">Updated description of background $markID.</p>\n");
 
@@ -52,11 +54,30 @@ if(is_array($mark_background))
 			print("\t<p><a href=\"{$_SERVER["PHP_SELF"]}\">Click here</a> to return to incoming backgrounds list.\n");
 		}elseif (count($rej_arr) > 1)
 		{
-			$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='rejected', comment='{$rej_arr[1]}' WHERE backgroundID='$markID'");
-			print("\t<p class=\"info\">Rejected background $markID with \"{$reject_array[$new_status]}\".</p>\n");
+ 			$reason = $rej_arr[1];
+			// Allows you to add your own reject comment
+ 			if ($reason == "other")
+ 			{
+ 				$reason = escape_string ($reject_comment[$markID]);
+ 				$long = $reason;
+ 			}
+ 			else
+ 			{
+ 				$long = $reject_array[$new_status];
+ 			}
+ 			
+ 			if ($reason != "")
+ 			{
+ 				$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='rejected', comment='$reason' WHERE backgroundID='$markID' LIMIT 1");
+ 				print("\t<p class=\"info\">Rejected background $markID with \"$long\".</p>\n");
+ 			}
+ 			else
+ 			{
+ 				print("\t<p class=\"error\">Please enter a reject comment for $markID.</p>\n");
+ 			}
 		}elseif ($new_status != 'new' || $admin_level > 1)
 		{
-			$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='$new_status' WHERE backgroundID='$markID'");
+			$incoming_background_update_result = mysql_query("UPDATE incoming_background SET status='$new_status' WHERE backgroundID='$markID' LIMIT 1");
 			// Only print message if status has actually changed
 			if (mysql_affected_rows())
 				print("\t<p class=\"info\">Marked background $markID as \"{$new_status}\".</p>\n");
@@ -86,7 +107,7 @@ else
 		print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\"><div>\n");
 		print("\t\t<input type=\"submit\" value=\"Update\" />\n");
 		print("\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\" >\n");
-		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Name, Category</th>\n\t\t\t\t<th>Author, Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Status</th>\n\t\t\t</tr>\n");
+		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Name, Category</th>\n\t\t\t\t<th>Author, Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Status, Reason</th>\n\t\t\t</tr>\n");
 
 		$alt = 1;
 		while($incoming_background_select_row = mysql_fetch_array($incoming_background_select_result))
@@ -111,7 +132,7 @@ else
 				print("<a href=\"$url\">$res</a>&nbsp; ");
 			}
 			print("</td>\n");
-			print("\t\t\t\t<td>");print_select_box("mark_background[$backgroundID]",$new_status_array,$status);print("</td>\n");
+			print("\t\t\t\t<td>\n\t\t\t\t\t");print_select_box("mark_background[$backgroundID]",$new_status_array,$status);print("<br />\n\t\t\t\t\t<input size=\"16\" name=\"other_reason[$backgroundID]\" id=\"other_reason[$backgroundID]\"/>\n\t\t\t\t</td>\n");
 			print("\t\t\t</tr>\n");
 
 			$alt = 2 - $alt + 1;
