@@ -79,7 +79,8 @@ else
 	{
 		$query_extra = "AND category='$theme_type'";
 	}
-	$query = "SELECT incoming_theme.*, user.username FROM incoming_theme,user WHERE (status='new' OR status='approved') $query_extra AND user.userID = incoming_theme.userID ORDER BY date ASC";
+	if ($admin_level < 2) $sql_exception = " AND incoming_background.userID <> '{$_SESSION['userID']}'";
+	$query = "SELECT incoming_theme.*, user.username FROM incoming_theme,user WHERE (status='new' OR status='approved') $query_extra AND user.userID = incoming_theme.userID".$sql_exception." ORDER BY date ASC";
 	$incoming_theme_select_result = mysql_query($query);
 	print("\t<hr />\n");
 	if(mysql_num_rows($incoming_theme_select_result)==0)

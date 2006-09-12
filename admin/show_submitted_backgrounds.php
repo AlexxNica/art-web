@@ -87,13 +87,15 @@ if(is_array($mark_background))
 }
 else
 {
-	$incoming_background_select_result = mysql_query("SELECT incoming_background.*, user.username FROM incoming_background, user WHERE (status='new' OR status='approved') AND user.userID = incoming_background.userID ORDER BY date ASC");
+	if ($admin_level < 2) $sql_exception = " AND incoming_background.userID <> '{$_SESSION['userID']}'";
+	$incoming_background_select_result = mysql_query("SELECT incoming_background.*, user.username FROM incoming_background, user WHERE (status='new' OR status='approved') AND user.userID = incoming_background.userID".$sql_exception." ORDER BY date ASC");
 	if(mysql_num_rows($incoming_background_select_result)==0)
 	{
 		print("\tThere are no background submissions.\n");
 	}
 	else
 	{
+
 		if ($admin_level > 1)
 		{
 			$approved_list_select = mysql_query("SELECT backgroundID, name FROM incoming_background WHERE status='approved'");
