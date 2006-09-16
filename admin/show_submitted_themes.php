@@ -44,7 +44,7 @@ if(is_array($mark_theme))
  			
  			if ($reason != "")
  			{
- 				$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='rejected', comment='$reason' WHERE backgroundID='$markID' LIMIT 1");
+ 				$incoming_theme_update_result = mysql_query("UPDATE incoming_theme SET status='rejected', comment='$reason' WHERE themeID='$markID' LIMIT 1");
  				print("\t<p class=\"info\">Rejected background $markID with \"$long\".</p>\n");
  			}
  			else

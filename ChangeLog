@@ -1,3 +1,19 @@
+2006-09-15 Lucas Lommer <drom@kdyne.net>
+
+	reviewed by: Thomas Wood <thos@gnome.org>
+
+	* default.css:
+	- New download_box style
+
+	* admin/show_submitted_themes.php:
+	- Rejecting themes bugfix (error in sql query)
+
+	* templates/en/backgrounds/detail.html:
+	* templates/en/screenshots/detail.html:
+	* templates/en/themes/detail.html:
+	- New info table for item
+	- Layout is ok for 1024x768 now
+
 2006-09-12 Lucas Lommer <drom@kdyne.net>
 
 	reviewed by: Thomas Wood <thos@gnome.org>

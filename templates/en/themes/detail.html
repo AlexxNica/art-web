@@ -1,39 +1,48 @@
 	<h1>{name} By <a href="/users/{username}">{username}</a></h1>
 	<div class="subtitle">{category-name}</div>
-	<a href="/preview.php?image={archive}thumbnails/{category}/{preview_filename}" onClick="window.open('/preview.php?image={archive}thumbnails/{category}/{preview_filename}', 'Art Preview', 'width=640,height=640,resizable=yes,scrollbars=yes,status=no'); return false;" rel="external">
-		<img src="/images/{archive}thumbnails/{category}/{thumbnail_filename}" alt="Preview" class="{thumbnail-class}" />
-	</a>
-	<div class="download_box">
-		<strong style="line-height:2em;">Download</strong> <br/>
-		<a href="/download/themes/{category}/{themeID}/{download_filename}" class="tar">{name} ({file-size})</a>
-		<p class="info" style="line-height:1em;font-size:small;">
-			{install-instructions}
-		</p>
-	</div>
-	{description}
-	<br />
-	<table style="margin-top: 1em;">
-		<tr>
-			<th>Release</th>
-			<td>{release-date}</td>
-			<th>Version</th>
-			<td>{version}</td>
+	<table class="comment_table">
+		<tr style="border-bottom: 1px dotted gray;">
+			<td colspan="2" style="width: 66%; padding-bottom: 10px;">
+				<a href="/preview.php?image={archive}thumbnails/{category}/{preview_filename}" onClick="window.open('/preview.php?image={archive}thumbnails/{category}/{preview_filename}', 'Art Preview', 'width=640,height=640,resizable=yes,scrollbars=yes,status=no'); return false;" rel="external">
+					<img src="/images/{archive}thumbnails/{category}/{thumbnail_filename}" alt="Preview" class="{thumbnail-class}" />
+				</a>
+				{description}
+			</td>
+			<td style="width: 33%; padding-bottom: 10px;">
+				<div class="download_box">
+					<strong style="line-height:2em;">Download</strong> <br/>
+					<a href="/download/themes/{category}/{themeID}/{download_filename}" class="tar">{name} ({file-size})</a>
+					<p class="info" style="line-height:1em;font-size:small;">
+						{install-instructions}
+					</p>
+				</div>
+			</td>
 		</tr>
 		<tr>
-			<th>Last Updated</th>
-			<td>{update-date}</td>
-			<th>License</th>
-			<td>{license-link}</td>
+			<th style="width: 33%; font-weight: bold; padding-top: 10px;">Release</th>
+			<th colspan="2" style="width: 66%; font-weight: bold; padding-top: 10px;">License</th>
 		</tr>
 		<tr>
-			<th>Rating</th>
-			<td style="white-space:nowrap;">{rating-bar}</td>
-			<th>Popularity</th>
-			<td>{download_count} downloads</td>
+			<td style="width: 33%; padding-bottom: 10px;">{release-date}</td>
+			<td colspan="2" style="width: 66%; padding-bottom: 10px;">{license-link}</td>
 		</tr>
 		<tr>
-			<td><br /></td>
-			<td colspan="3" style="white-space:nowrap;"><small>My rating: {user-rating}</small></td>
+			<th style="width: 33%; font-weight: bold;">Last Updated</th>
+			<th colspan="2" style="width: 66%; font-weight: bold;">Version</th>
+		</tr>
+		<tr>
+			<td style="width: 33%; padding-bottom: 10px;">{update-date}</td>
+			<td colspan="2" style="width: 66%; padding-bottom: 10px;">{version}</td>
+		</tr>
+		<tr>
+			<th style="width: 33%; font-weight: bold;">Rating</th>
+			<th style="width: 33%; font-weight: bold;">My rating</th>
+			<th style="width: 33%; font-weight: bold;">Popularity</th>
+		</tr>
+		<tr style="border-bottom: 1px dotted gray;">
+			<td style="white-space:nowrap; width: 33%; padding-bottom: 10px;">{rating-bar}</td>
+			<td style="white-space:nowrap; width: 33%; padding-bottom: 10px;"><small>{user-rating}</small></td>
+			<td style="width: 33%; padding-bottom: 10px;">{download_count} downloads</td>
 		</tr>
 	</table>
 	{edit-link}
