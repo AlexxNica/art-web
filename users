@@ -54,8 +54,11 @@ else
 		if(mysql_num_rows($author_result) == 1)
 		{
 			extract(mysql_fetch_array($author_result));
-			$email = spam_proof_email ($email);
+			$email = htmlentities (spam_proof_email ($email));
 			$realname = htmlentities ($realname);
+			$location = htmlentities ($location);
+			$homepage = htmlentities ($homepage);
+			$info = htmlentities ($info);
 			
 			art_header($realname);
 			if ($userID == $_SESSION['userID'])
@@ -63,34 +66,27 @@ else
 			else
 				create_title ($realname, "");
 			if($info)
-				print ("<p>$info</p>\n");
+				print ("\t<p>\n\t\t$info\n\t</p>\n");
 			if($email || $homepage || $location)
-				$table = 1;
-			if ($table)
-				print("<table>\n");
-			if($email) {
-				print("\t<tr><td><img src=\"/images/site/stock_mail.png\" alt=\"e-mail\" /></td>\n");
-				print("\t\t<td><a href=\"mailto:$email\">$email</a></td></tr>\n");
-			}	
-			if($homepage) {
-				if (!preg_match ('/^http:\/\/.*$/', $homepage))
-					$homepage = 'http://'.$homepage;
-				print("\t<tr><td><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /></td>\n");
-				print("\t\t<td><a href=\"$homepage\">$homepage</a></td></tr>\n");
+			{
+				if($email)
+					print("\t<a href=\"mailto:$email\" style=\"text-decoration: none;\"><img src=\"/images/site/stock_mail.png\" alt=\"e-mail\" /> $email</a><br />\n");
+				if($homepage)
+				{
+					if (!preg_match ('/^http:\/\/.*$/', $homepage))
+						$homepage = 'http://'.$homepage;
+					print("\t<a href=\"$homepage\" style=\"text-decoration: none;\"><img src=\"/images/site/stock_home.png\" alt=\"homepage\" /> $homepage</a><br />\n");
+				}
+				if($location)
+					print("\t<img src=\"/images/site/stock_home.png\" alt=\"location\" /> $location<br />\n");
 			}
-			if($location) {
-				print("\t<tr><td><img src=\"/images/site/stock_home.png\" alt=\"location\" /></td>\n");
-				print("\t\t<td>$location</td></tr>\n");
-			}
-			if($table)
-				print("</table>\n");
 
-			$links = '<div style="text-align:center; margin:1em;">'
-				.'<a href="/users/'.$username.'/">Info</a> &middot; '
-				.'<a href="/users/'.$username.'/themes/">Themes</a> &middot; '
-				.'<a href="/users/'.$username.'/backgrounds/">Backgrounds</a> &middot; '
-				.'<a href="/users/'.$username.'/contests/">Contests</a> &middot; '
-				.'<a href="/users/'.$username.'/screenshots/">Screenshots</a></div>';
+			$links = "\t<div style=\"text-align:center; margin: 1em; \">\n"
+				."\t\t<a href=\"/users/".$username."/\">Info</a> &middot; \n"
+				."\t\t<a href=\"/users/".$username."/themes/\">Themes</a> &middot; \n"
+				."\t\t<a href=\"/users/".$username."/backgrounds/\">Backgrounds</a> &middot; \n"
+				."\t\t<a href=\"/users/".$username."/contests/\">Contests</a> &middot; \n"
+				."\t\t<a href=\"/users/".$username."/screenshots/\">Screenshots</a>\n\t</div>";
 
 			$page_title = ucfirst ($list);
 			if ($page_title == '')
