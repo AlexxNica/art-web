@@ -1,3 +1,43 @@
+2006-11-23 Lucas Lommer <llommer@cvs.gnome.org>
+
+	* default.css:
+	- new CSS class for administration tables (list of submitted items)
+
+	* admin/add_tip.php:
+	- Added admin_auth() to prevent unauthorized executing and using SQL
+	- Added admin_header() and removed some html code
+	- This file looks like a separated tool or some old stuff
+
+	* admin/comments.php:
+	- Removed second argument in admin_header() calling (will be added by
+	  function itself)
+
+	* admin/edit_tip.php:
+	- Added admin_auth() to prevent unauthorized executing and using SQL
+	- Added admin_header() and removed some html code
+	- This file looks like a separated tool or some old stuff
+
+	* admin/fix_emails.php:
+	- Added admin_auth() to prevent unauthorized executing and using SQL
+	- Added admin_header() and removed some html code
+	- This file looks like a separated tool or some old stuff
+
+	* admin/incoming_urls.php:
+	- Added admin_auth() to prevent unauthorized executing and using SQL
+	- Added admin_header() and removed some html code
+	- This file looks like a separated tool or some old stuff
+
+	* admin/show_recent_comments.php:
+	- Remove subtopic (will be added default link by admin_header())
+	- Remove extra link to admin menu
+
+	* admin/show_submitted_backgrounds.php:
+	- Table with submitted stuff is using submitted_table CSS class
+	- Description editing textarea width is now 100%
+
+	* admin/show_submitted_themes.php:
+	- Table with submitted stuff is using submitted_table CSS class
+
 2006-09-17 Lucas Lommer <drom@kdyne.net>
 
 	* users:

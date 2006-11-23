@@ -102,7 +102,7 @@ else
 
 		print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n");
 		print("\t\t<input type=\"submit\" value=\"Update\" />\n");
-		print("\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\">\n");
+		print("\t\t<table class=\"submitted_table\" cellspacing=\"0\" cellpadding=\"4px\">\n");
 		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Theme Name,Category</th>\n\t\t\t\t<th>Author, Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Status, Reason</th>\n\t\t\t</tr>\n");
 
 		$alt = 1;

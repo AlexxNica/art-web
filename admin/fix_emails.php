@@ -1,6 +1,11 @@
 <?php
 require("mysql.inc.php");
-print("<html>\n<head></head>\n<body>\n");
+require("common.inc.php");
+require("includes/headers.inc.php");
+
+admin_header("Fix e-mail addresses");
+admin_auth(2);
+
 print("<b>backgrounds</b>\n<p>\n");
 
 $background_select_result = mysql_query("SELECT backgroundID,author_email FROM background");
@@ -27,6 +32,4 @@ while(list($themeID,$nospam_email)=mysql_fetch_row($theme_select_result))
 }
 print("</table>\n");
 
-
-print("</body>\n</html>\n");
 ?>

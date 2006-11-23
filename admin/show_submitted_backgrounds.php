@@ -108,7 +108,7 @@ else
 		}
 		print("\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\"><div>\n");
 		print("\t\t<input type=\"submit\" value=\"Update\" />\n");
-		print("\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"4px\" >\n");
+		print("\t\t<table class=\"submitted_table\" cellspacing=\"0\" cellpadding=\"4px\" >\n");
 		print("\t\t\t<tr>\n\t\t\t\t<th>ID</th>\n\t\t\t\t<th>Name, Category</th>\n\t\t\t\t<th>Author, Date</th>\n\t\t\t\t<th>Description</th>\n\t\t\t\t<th>Download</th>\n\t\t\t\t<th>Status, Reason</th>\n\t\t\t</tr>\n");
 
 		$alt = 1;
@@ -126,7 +126,7 @@ else
 			print("\t\t\t\t<td>$backgroundID</td>\n");
 			print("\t\t\t\t<td>\n\t\t\t\t\t<input name=\"background_name[$backgroundID]\" value=\"".$background_name."\" size=\"15\"/><br />\n\t\t\t\t\t");print_select_box("category[$backgroundID]", array_combine($background_category_list, $background_category_list), $category);print("\n\t\t\t\t\t</td>\n");
 			print("\t\t\t\t<td>\n\t\t\t\t\t<a href=\"/users/$userID\">$username</a><br />\n\t\t\t\t\t$date\n\t\t\t\t\t</td>\n");
-			print("\t\t\t\t<td><textarea name=\"background_description[".$backgroundID."]\" cols=\"20\" rows=\"3\">".$background_description."</textarea></td>\n");
+			print("\t\t\t\t<td><textarea style=\"width: 100%\" name=\"background_description[".$backgroundID."]\" rows=\"3\">".$background_description."</textarea></td>\n");
 			$background_res_select_result = mysql_query("SELECT resolution,filename FROM incoming_background_resolution WHERE backgroundID=$backgroundID");
 			print("\t\t\t\t<td>");
 			while (list($res, $url) = mysql_fetch_row($background_res_select_result))

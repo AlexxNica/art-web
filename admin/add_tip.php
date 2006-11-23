@@ -1,6 +1,10 @@
 <?php
 require("mysql.inc.php");
+require("includes/headers.inc.php");
 require("common.inc.php");
+
+admin_header("Add a new Tip &amp; Tricks");
+admin_auth(2);
 
 // ensure POST special characters are escaped, regardless of magic_quotes_gpc setting
 escape_gpc_array ($_POST);
@@ -9,7 +13,6 @@ escape_gpc_array ($_POST);
 // Not ideal solution, but easiest
 extract($_POST, EXTR_SKIP);
 
-print("<html>\n<head><title>Edit a Tip</title></head>\n<body>\n");
 print("<div align=\"center\">");
 print("<font size=\"+2\">Add a Tip &amp Trick</font>\n<p>\n");
 if($HTTP_POST_VARS)
@@ -42,5 +45,5 @@ else
    print("<p><input type=\"submit\" value=\"Add Tip\">\n");
    print("</form>\n");
 }
-print("</div>\n</body>\n</html>\n");
+print("</div>");
 ?>

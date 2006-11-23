@@ -1,6 +1,10 @@
 <?php
 require("mysql.inc.php");
-print("<html>\n<head><title>Edit a Tip</title></head>\n<body>\n");
+require("common.inc.php");
+require("includes/headers.inc.php");
+admin_header("Edit Tip &amp; Tricks");
+admin_auth(2);
+
 print("<div align=\"center\">");
 print("<font size=\"+2\">Edit a Tip &amp; Trick Entry</font>\n<p>\n");
 print("</div>\n");
@@ -68,5 +72,4 @@ else
 	}
 }
 
-print("</body>\n</html>\n");
 ?>

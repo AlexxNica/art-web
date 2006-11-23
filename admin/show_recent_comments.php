@@ -30,12 +30,11 @@ if (POST ('undelete_comment'))
 }
 
 // OUTPUT /////////////////////////////////////////////////////////////////////
-admin_header ('Recent Comments', 'Recent Comments listing');
+admin_header ('Recent Comments listing');
 ?>
 
 	See also:
-	<a href="/admin/comments.php">Moderate Comments</a>;
-	<a href="/admin/">Administration Menu</a>
+	<a href="/admin/comments.php">Moderate Comments</a>
 	<hr/>
 
 <?php
