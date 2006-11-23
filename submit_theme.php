@@ -5,10 +5,13 @@ require("common.inc.php");
 require("art_headers.inc.php");
 
 // superglobal stuff
-$theme_name = strip_string ($_POST["theme_name"]);
-$theme_author = strip_string ($_POST["theme_author"]);
-$theme_url = strip_string ($_POST["theme_url"]);
-$theme_description = strip_string ($_POST["theme_description"]);
+// escape_string() will also call mysql_real_escape_string() so we don't need to check it again
+$theme_name = escape_string($_POST["theme_name"]);
+$theme_author = escape_string($_POST["theme_author"]);
+$theme_url = escape_string($_POST["theme_url"]);
+$theme_description = escape_string($_POST["theme_description"]);
+$theme_status = escape_string($_POST["status"]);
+
 $category = validate_input_array_default($_POST["category"], array_keys($theme_config_array), "");
 $license = validate_input_array_default($_POST["license"], array_keys($license_config_array), "");
 $version = validate_input_regexp_default($_POST["version"], "^[0-9\.]+$", "0");
@@ -32,15 +35,11 @@ if($_POST['submit'])
 		print("<p class=\"error\">Error, &quot;$theme_url&quot; is not a valid submission url.<br/>");
 		print("URLs must start with http or ftp, and end in .png, .jpg, .tar.gz, .tar.bz2 or .tgz.</p>");
 	}
-	elseif($theme_name && $category && $theme_url && $theme_description && $license)
+	elseif($theme_name && $category && $theme_url && $theme_description && $license && $theme_status)
 	{
 		$date = date("Y-m-d");
-		$theme_name = mysql_real_escape_string ($theme_name);
-		$theme_author = mysql_real_escape_string ($theme_author);
-		$theme_url = mysql_real_escape_string ($theme_url);
-		$theme_description = mysql_real_escape_string ($theme_description);
 		$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,userID,status,date,name,version,license,parentID,category,theme_url,description,updateID) ";
-		$incoming_theme_insert_query .= "VALUES('','{$_SESSION['userID']}','new','$date','$theme_name','$version','$license','$parentID','$category','$theme_url','$theme_description','$update')";
+		$incoming_theme_insert_query .= "VALUES('','{$_SESSION['userID']}','$theme_status','$date','$theme_name','$version','$license','$parentID','$category','$theme_url','$theme_description','$update')";
 		$incoming_theme_insert_result = mysql_query("$incoming_theme_insert_query");
 		if(mysql_affected_rows()==1)
 		{
@@ -77,25 +76,26 @@ else
 	}
 	
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
-	print("<table border=\"0\">");
-	print("<tr><td><strong><label for=\"theme_name\">Theme Name</label>:</strong></td><td><input type=\"text\" name=\"theme_name\" value=\"$theme_name\" id=\"theme_name\" size=\"40\" /></td></tr>\n");
-	print("<tr><td><strong><label for=\"category\">Category</label></strong></td><td>"); print_select_box("category", Array(""=>"Choose", "gtk2"=>"Applications (gtk+)", "desktop"=>"Desktop Theme", "gtk_engines"=>"GTK+ Engines", "icon"=>"Icon", "gdm_greeter" => "Login Manager (gdm)", "splash_screens"=>"Splash Screens", "metacity"=>"Window Borders (metacity)"), $category); print("</td></tr>\n");
-	print("<tr><td><strong><label for=\"variation\">Variation of</label>:</strong></td><td><select name=\"parentID\" id=\"variation\"><option value=\"0\">N/A</option>\n");
+	print("\t<table border=\"0\">\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<strong><label for=\"theme_name\">Theme Name</label>:</strong>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t\t<input type=\"text\" name=\"theme_name\" value=\"$theme_name\" id=\"theme_name\" size=\"40\" />\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<strong><label for=\"category\">Category</label></strong>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t\t"); print_select_box("category", Array(""=>"Choose", "gtk2"=>"Applications (gtk+)", "desktop"=>"Desktop Theme", "gtk_engines"=>"GTK+ Engines", "icon"=>"Icon", "gdm_greeter" => "Login Manager (gdm)", "splash_screens"=>"Splash Screens", "metacity"=>"Window Borders (metacity)"), $category); print("\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<strong><label for=\"variation\">Variation of</label>:</strong>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t\t<select name=\"parentID\" id=\"variation\">\n\t\t\t\t\t<option value=\"0\">N/A</option>\n");
 	$theme_select_result = mysql_query("SELECT themeID,name,category FROM theme WHERE userID = {$_SESSION['userID']}");
 	while(list($var_themeID,$var_theme_name, $var_category)=mysql_fetch_row($theme_select_result))
 	{
 		if ($var_themeID == $parentID) $selected = "selected=\"true\""; else $selected = "";
-		print("<option value=\"$var_themeID\" $selected>$var_theme_name ($var_category)</option>");
+		print("\t\t\t\t\t<option value=\"$var_themeID\" $selected>$var_theme_name ($var_category)</option>\n");
 	}
-	print("</select></td></tr>");
-	print("<tr><td><strong><label for=\"license\">License</label></strong></td><td>");print_select_box("license", $license_config_array, $license); print("</td></tr>\n");
-	print("<tr><td><strong><label for=\"version\">Version</label></strong></td><td><input type=\"text\" name=\"version\" size=\"40\" value=\"$version\" id=\"version\" /></td></tr>\n");
-	print("<tr><td><strong><label for=\"author\">Theme Author</label>:</strong></td><td><input type=\"hidden\" name=\"userID\" id=\"author\" value=\"{$_SESSION['userID']}\" />{$_SESSION['realname']}</td></tr>\n");
-	print("<tr><td><strong><label for=\"theme_url\">URL of Theme</label>:</strong></td><td><input type=\"text\" name=\"theme_url\" id=\"theme_url\" size=\"40\" value=\"$theme_url\" /></td></tr>\n");
-	print("<tr><td><strong><label for=\"theme_description\">Description</label>:</strong></td><td><textarea name=\"theme_description\" id=\"theme_description\" cols=\"40\" rows=\"5\" wrap>$theme_description</textarea></td></tr>\n");
-	print("<tr><td><input type=\"hidden\" name=\"update\" value=\"$update\" />\n");
-	print("<input type=\"submit\" name=\"submit\" value=\"Submit Theme\" /></td></tr>\n");
-	print("</table>\n");
+	print("\t\t\t\t</select>\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<strong><label for=\"license\">License</label></strong>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t\t");print_select_box("license", $license_config_array, $license); print("\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<strong><label for=\"version\">Version</label></strong>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t\t<input type=\"text\" name=\"version\" size=\"40\" value=\"$version\" id=\"version\" />\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<strong><label for=\"author\">Theme Author</label>:</strong>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t\t<input type=\"hidden\" name=\"userID\" id=\"author\" value=\"{$_SESSION['userID']}\" />{$_SESSION['realname']}\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<strong><label for=\"theme_url\">URL of Theme</label>:</strong>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t\t<input type=\"text\" name=\"theme_url\" id=\"theme_url\" size=\"40\" value=\"$theme_url\" />\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<strong><label for=\"theme_description\">Description</label>:</strong>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t\t<textarea name=\"theme_description\" id=\"theme_description\" cols=\"40\" rows=\"5\" wrap>$theme_description</textarea>\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<strong><label for=\"status\">Status</label></strong>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t\t");print_select_box("status", $submit_type_config_array, $theme_status); print("\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<input type=\"hidden\" name=\"update\" value=\"$update\" />\n");
+	print("\t\t\t\t<input type=\"submit\" name=\"submit\" value=\"Submit Theme\" />\n\t\t\t</td>\n\t\t</tr>\n");
+	print("\t</table>\n");
 	print("</form>\n");
 
 

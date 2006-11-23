@@ -1,5 +1,30 @@
 2006-11-23 Lucas Lommer <llommer@cvs.gnome.org>
 
+	* submit_background.php:
+	- New option for submitted themes - status (New or Update)
+	- Implementation of update feature ($background_status) into php
+
+	* submit_theme.php:
+	- Use escape_string() instead of strip_string()
+	- We don't need mysql_real_escape_string(), its called by escape_string()
+	- XHTML cleanup
+	- Implementation of update feature ($theme_status) into php
+
+	* admin/show_submitted_backgrounds.php:
+	- Show backgrounds with status Update in the list of new stuff
+
+	* admin/show_submitted_themes.php:
+	- Show themes with status Update in the list of new stuff
+
+	* includes/config.inc.php:
+	- Added $submit_type_config_array array for update feature (New, Update)
+	- Added update status into $status_array
+
+	* templates/en/submit_background.html:
+	- Added new status selection (New, Update) into template
+
+2006-11-23 Lucas Lommer <llommer@cvs.gnome.org>
+
 	* default.css:
 	- new CSS class for administration tables (list of submitted items)
 

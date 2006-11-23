@@ -10,6 +10,7 @@ $background_category_list = array_keys($background_config_array);
 $background_name = escape_string($_POST["background_name"]);
 $background_url = escape_string($_POST["background_url"]);
 $background_description = escape_string($_POST["background_description"]);
+$background_status = escape_string($_POST["status"]);
 
 $category = validate_input_array_default($_POST["category"], $background_category_list, "");
 $license = validate_input_array_default($_POST["license"], array_keys($license_config_array), "");
@@ -31,7 +32,7 @@ if (!array_key_exists('username', $_SESSION))
 
 if(array_key_exists("submit",$_POST))
 {
-	if($background_name && $category && $background_description && (count($background_toggles)>0))
+	if($background_name && $category && $background_description && (count($background_toggles)>0 && $background_status))
 	{
 		$valid_urls = True;
 		foreach ($background_toggles as $key => $val)
@@ -44,7 +45,7 @@ if(array_key_exists("submit",$_POST))
 		{
 			$date = date("Y-m-d");
 			$incoming_background_insert_query = "INSERT INTO incoming_background(backgroundID,status,date,version,license,name,category,userID,parentID,description) ";
-			$incoming_background_insert_query .= "VALUES('','new','$date','$version','$license','$background_name','$category','{$_SESSION['userID']}','$parentID','$background_description')";
+			$incoming_background_insert_query .= "VALUES('','$background_status','$date','$version','$license','$background_name','$category','{$_SESSION['userID']}','$parentID','$background_description')";
 			$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
 			$backgroundID = mysql_insert_id();
 			foreach ($background_toggles as $key => $val)
@@ -105,6 +106,7 @@ $template->add_var ('version', $version);
 $template->add_var ('license-list', create_select_box("license", $license_config_array, $license));
 $template->add_var ('realname', $_SESSION['realname']);
 $template->add_var ('background-description', $background_description);
+$template->add_var ('type-list', create_select_box("status", $submit_type_config_array, $background_status));
 $template->write();
 
 art_footer();

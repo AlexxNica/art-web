@@ -198,6 +198,9 @@ $license_config_link_array = array (
 		'pub-dom' => '<a href="http://web.resource.org/cc/PublicDomain/">Public Domain</a>',
 		'free-art' => '<a href="http://artlibre.org/licence/lal/en/">Free Art License</a>');
 
+$submit_type_config_array = array (
+		'new' => 'New submission',
+		'update' => 'Update');
 
 $mirror_url = 'http://ftp.gnome.org/pub/GNOME/teams/art.gnome.org';
 $site_url = 'http://' . $_SERVER['SERVER_NAME'];
@@ -215,7 +218,7 @@ $sort_by_array = array("name" => "Name", "date" => "Date", "popularity" => "Popu
 /* XXX: add_timestamp and downloads_per_day kept for compatibility. Please remove at some point. */
 $sort_by_convert = array("name" => "name", "date" => "add_timestamp", "popularity" => "downloads_per_day", "rating" => "rating", "add_timestamp" => "add_timestamp", "downloads_per_day" => "downloads_per_day");
 $view_array = array("icons" => "Icon", "list" => "List");
-$status_array = Array("new" => "New", "approved" => "Approved", "added" => "Added", "rejected" => "Rejected");
+$status_array = Array("new" => "New", "update" => "Update", "approved" => "Approved", "added" => "Added", "rejected" => "Rejected");
 
 $resolution_array = Array("all" => "All", "1024x768" => "1024x768", "1280x1024" => "1280x1024", "1600x1200" => "1600x1200", "1400x1050" => "1400x1050", "1680x1050" => "1680x1050", "1920x1200" => "1920x1200", "scalable" => "Scalable (SVG)");
 
