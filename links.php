@@ -5,7 +5,9 @@ require("common.inc.php");
 require("art_headers.inc.php");
 
 art_header("LINKS");
-create_middle_box_top("links");
+create_title("Related links","List of Art.Gnome.org related links");
+// Uncomment this when function has been finished
+//create_middle_box_top("links");
 
 print("<table border=\"0\">\n");
 print("<tr><td><img src=\"images/site/gnome-icon.png\"></td><td><font size=\"+1\" class=\"bold-text\">GNOME Links</a></td></tr>\n");
@@ -64,6 +66,7 @@ print("</td></tr>\n");
 print("</table>\n<p>\n");
 
 
-create_middle_box_bottom();
+// Uncomment this when function has been finished
+//create_middle_box_bottom();
 art_footer();
 ?>

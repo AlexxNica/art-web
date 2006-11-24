@@ -99,6 +99,38 @@ function art_footer ()
 	$template->add_var ('content', $content);
 	$template->add_var ('page-title', $page_title);
 	$template->add_var ('user-menu', $usermenu);
+
+	// Specific feeds
+	$headFeed[rss] = '	<link rel="alternate" href="'.$_SERVER["PHP_SELF"].'?format=rss" type="application/rss+xml" title="Specific RSS Feed for this page" />';
+	$headFeed[atom] = '	<link rel="alternate" href="'.$_SERVER["PHP_SELF"].'?format=atom" type="application/rss+xml" title="Specific Atom Feed for this page" />';
+	switch ($_SERVER["PHP_SELF"])
+	{
+		// These parts have no specific feed
+		case '/account.php':
+		case '/contact.php':
+		case '/copyright.php':
+		case '/edit_background.php':
+		case '/edit_comment.php':
+		case '/edit_theme.php':
+		case '/links.php':
+		case '/faq.php':
+		case '/index.php':
+		case '/news.php':
+		case '/search.php':
+		case '/submit.php':
+		case '/submit_background.php':
+		case '/submit_contest_entry.php':
+		case '/submit_screenshot.php':
+		case '/submit_theme.php':
+						$template->add_var ('atom-current', '	<!-- Atom feed is not available for this page -->');
+						$template->add_var ('rss-current', '	<!-- RSS feed is not available for this page -->');
+						break;
+		default:
+						$template->add_var ('atom-current', $headFeed[atom]);
+						$template->add_var ('rss-current', $headFeed[rss]);
+						break;
+	}
+
 	$template->write ();
 
 

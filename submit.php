@@ -5,11 +5,14 @@ require("common.inc.php");
 require("art_headers.inc.php");
 
 art_header("SUBMIT");
-create_middle_box_top("submit");
+create_title("Submit an Artwork","Please select a type of artwork you want to submit");
+// Uncomment this when function has been finished
+//create_middle_box_top("submit");
 
 print("If you would like to submit your background or theme to art.gnome.org, please use the links below.  If you are submitting a background, please make sure that it is a GNOME related background.");
 print("<p><ul>\n<li><a class=\"bold-text\" href=\"submit_background.php\">Background submission form</a>\n<li><a class=\"bold-text\" href=\"submit_theme.php\">Theme submission form</a>\n</ul>\n");
 
-create_middle_box_bottom();
+// Uncomment this when function has been finished
+//create_middle_box_bottom();
 art_footer();
 ?>

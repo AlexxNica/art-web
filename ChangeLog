@@ -1,3 +1,27 @@
+2006-11-24 Lucas Lommer <llommer@cvs.gnome.org>
+
+	* export_new_releases.php:
+	- SQL queries fixes
+
+	* faq.php:
+	- PHP source cleanup
+	- XHTML output cleanup
+
+	* links.php:
+	- Added create_title()
+	- Source fixes (works now, no non-existing functions)
+
+	* submit.php:
+	- Added create_title()
+	- Source fixes (works now, no non-existing functions)
+
+	* includes/art_headers.inc.php:
+	- Adds specific feed link to main template (XHTML head) if exists
+
+	* templates/en/main.html:
+	- {rss-current} and {atom-current} will be replaced by specific feed link
+	- Main /backend.php feed renamed (Art.Gnome.org latest update feed)
+
 2006-11-23 Lucas Lommer <llommer@cvs.gnome.org>
 
 	* submit_background.php:
