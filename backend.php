@@ -1,17 +1,6 @@
 <?php
-require("templates.inc.php");
-require("common.inc.php");
-require("art_listings.inc.php");
+/* Redirect to updates.php now that it can do exactly the same as this page */
 
-
-$style = validate_input_array_default ($_GET['style'], Array('icons','list'), 'list');
-
-$list = new latest_updates_list;
-$list->per_page  = 12;
-$list->view      = $style;
-$list->format    = 'rss';
-$list->select();
-
-generate_feed($list, 'rss');
-
+if ($_SERVER['HTTPS']) $protocol = 'https'; else $protocol = 'http';
+header ("Location: $protocol://{$_SERVER['SERVER_NAME']}/updates.php?format=rss");
 ?>

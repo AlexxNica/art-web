@@ -1,5 +1,10 @@
 2006-11-26  Thomas Wood  <thos@gnome.org>
 
+	* backend.php: Redirect to updates.php?format=rss
+	* new_layout.css: Removed file
+
+2006-11-26  Thomas Wood  <thos@gnome.org>
+
 	* export_new_releases.php:
 	* submit.php:
 	- Remove some old files
