@@ -117,7 +117,6 @@ function art_footer ()
 		case '/index.php':
 		case '/news.php':
 		case '/search.php':
-		case '/submit.php':
 		case '/submit_background.php':
 		case '/submit_contest_entry.php':
 		case '/submit_screenshot.php':

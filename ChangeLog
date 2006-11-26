@@ -1,3 +1,11 @@
+2006-11-26  Thomas Wood  <thos@gnome.org>
+
+	* export_new_releases.php:
+	* submit.php:
+	- Remove some old files
+	
+	* includes/art_headers.inc.php: Removed submit.php
+
 2006-11-24 Lucas Lommer <llommer@cvs.gnome.org>
 
 	* export_new_releases.php:
