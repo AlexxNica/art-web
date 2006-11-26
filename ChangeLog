@@ -1,3 +1,18 @@
+2006-11-26 Lucas Lommer <llommer@cvs.gnome.org>
+
+	* AUTHORS:
+	- Changed e-mail address for Lucas Lommer
+
+	* submit_background.php:
+	* submit_theme.php:
+	* templates/en/submit_background.html:
+	- Added support for update ID
+	- You can set which background you want to update now
+	- NOTE: Database change!
+		You have to update your SQL databased running:
+		alter table incoming_theme add column update_of int(6);
+		alter table incoming_background add column update_of int(6);
+
 2006-11-26  Thomas Wood  <thos@gnome.org>
 
 	* backend.php: Redirect to updates.php?format=rss

@@ -16,6 +16,7 @@ $category = validate_input_array_default($_POST["category"], $background_categor
 $license = validate_input_array_default($_POST["license"], array_keys($license_config_array), "");
 $parentID = validate_input_regexp_default ($_POST["parentID"], "^[0-9]+$", "0");
 $version = validate_input_regexp_default($_POST["version"], "^[0-9\.]+$", "0");
+$background_updateID = validate_input_regexp_default($_POST["updateID"], "^[0-9\.]+$", "0");
 $background_toggles = $_POST['background_toggles']; // This is an array, which is validated later
 $backgrounds = $_POST['backgrounds']; // This is an array, which is validated later
 
@@ -43,32 +44,43 @@ if(array_key_exists("submit",$_POST))
 		}
 		if ($valid_urls)
 		{
-			$date = date("Y-m-d");
-			$incoming_background_insert_query = "INSERT INTO incoming_background(backgroundID,status,date,version,license,name,category,userID,parentID,description) ";
-			$incoming_background_insert_query .= "VALUES('','$background_status','$date','$version','$license','$background_name','$category','{$_SESSION['userID']}','$parentID','$background_description')";
-			$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
-			$backgroundID = mysql_insert_id();
-			foreach ($background_toggles as $key => $val)
+			// Background status must be new -or- update and update ID must be > 0 (N/A = 0 and invalid input = 0)
+			if (($background_status == 'update' && $background_updateID > 0) or ($background_status != 'update'))
 			{
-				list($type,$resolution)=explode("|",$key);
-				$type = addslashes($type);
-				$resolution = addslashes($resolution);
-				$background = addslashes($backgrounds[$key]);
-				$incoming_background_resolution_insert_query  = "INSERT INTO incoming_background_resolution(background_resolutionID,backgroundID,type,resolution,filename) ";
-				$incoming_background_resolution_insert_query .= "VALUES('','$backgroundID','$type','$resolution','$background')";
-				$incoming_background_resolution_insert_result = mysql_query($incoming_background_resolution_insert_query);
-			}
-			if($incoming_background_insert_result && $incoming_background_resolution_insert_result)
-			{
-				print("<p class=\"info\">Thank you, your background will be considered for inclusion in art.gnome.org.</p>");
-				print("<ul>");
-				print("<li><a href=\"{$_SERVER['PHP_SELF']}\">Submit another background</a></li>");
-				print("<li><a href=\"/account.php\">Back to account page</a></li>");
-				print("</ul>");
+				// NULL or update ID?
+				if ($background_status == 'update') $update_data = "'$background_updateID'";
+										 else $update_data = "NULL";
+				$date = date("Y-m-d");
+				$incoming_background_insert_query = "INSERT INTO incoming_background(backgroundID,status,date,version,license,name,category,userID,parentID,description,update_of) ";
+				$incoming_background_insert_query .= "VALUES('','$background_status','$date','$version','$license','$background_name','$category','{$_SESSION['userID']}','$parentID','$background_description',$update_data)";
+				$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");
+				$backgroundID = mysql_insert_id();
+				foreach ($background_toggles as $key => $val)
+				{
+					list($type,$resolution)=explode("|",$key);
+					$type = addslashes($type);
+					$resolution = addslashes($resolution);
+					$background = addslashes($backgrounds[$key]);
+					$incoming_background_resolution_insert_query  = "INSERT INTO incoming_background_resolution(background_resolutionID,backgroundID,type,resolution,filename) ";
+					$incoming_background_resolution_insert_query .= "VALUES('','$backgroundID','$type','$resolution','$background')";
+					$incoming_background_resolution_insert_result = mysql_query($incoming_background_resolution_insert_query);
+				}
+				if($incoming_background_insert_result && $incoming_background_resolution_insert_result)
+				{
+					print("<p class=\"info\">Thank you, your background will be considered for inclusion in art.gnome.org.</p>");
+					print("<ul>");
+					print("<li><a href=\"{$_SERVER['PHP_SELF']}\">Submit another background</a></li>");
+					print("<li><a href=\"/account.php\">Back to account page</a></li>");
+					print("</ul>");
+				}
+				else
+				{
+					print("<p class=\"error\">There were form submission errors, please try again.</p>");
+				}
 			}
 			else
 			{
-				print("<p class=\"error\">There were form submission errors, please try again.</p>");
+				print("<p class=\"error\">If you want to do an update, you have to select background you want to update.</p>");
 			}
 			art_footer();
 			die();
@@ -91,22 +103,24 @@ $template->add_var ('message', $message);
 $template->add_var ('background-name', $background_name);
 $template->add_var ('category-list', create_select_box("category", array_combine($background_category_list, $background_category_list), $category));
 $variation_list = '<select name="parentID" id="variation"><option value="0">N/A</option>';
+$update_list = '<select name="updateID" id="variation"><option value="0">N/A</option>';
 $background_select_result = mysql_query("SELECT backgroundID,name,category FROM background WHERE userID = {$_SESSION['userID']} AND parent=0");
 while(list($backID,$back_name) = mysql_fetch_row($background_select_result))
 {
-	if ($backID == $parentID)
-		$selected = "selected=\"true\"";
-	else
-		$selected = "";
+	if ($backID == $parentID) $selected = "selected=\"true\""; else $selected = "";
 	$variation_list .= ("<option value=\"$backID\" $selected>$back_name ($category)</option>");
+	if ($backID == $background_updateID) $selected = "selected=\"true\""; else $selected = "";
+	$update_list .= ("<option value=\"$backID\" $selected>$back_name ($category)</option>");
 }
 $variation_list .= '</select>';
+$update_list .= '</select>';
 $template->add_var ('variation-list', $variation_list);
 $template->add_var ('version', $version);
 $template->add_var ('license-list', create_select_box("license", $license_config_array, $license));
 $template->add_var ('realname', $_SESSION['realname']);
 $template->add_var ('background-description', $background_description);
 $template->add_var ('type-list', create_select_box("status", $submit_type_config_array, $background_status));
+$template->add_var ('update-list', $update_list);
 $template->write();
 
 art_footer();
