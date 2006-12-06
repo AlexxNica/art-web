@@ -1,3 +1,48 @@
+2006-15-05 Lucas Lommer <llommer@cvs.gnome.org>
+
+	* default.css:
+	- Added some CSS classes used in forms
+
+	* edit_background.php:
+	* edit_theme.php:
+	- We can set selectbox tabindex as new attribute
+
+	* delete_comment.php:
+	- Newly added file
+	- Allows users to delete their own comments
+	- Based on code in edit_comment.php
+
+	* submit_background.php:
+	- Check if new background name already exists in db
+	- If name already exists, add 'Another ' prefix to background name
+
+	* submit_theme.php:
+	- Check if new theme name already exists in db
+	- If name already exists, add 'Another ' prefix to theme name
+
+	* includes/comments.inc.php:
+	- Added 'Delete' link next to 'Edit' under user's comments
+	- Users can delete own comments now using this link
+
+	*includes/common.inc.php:
+	- Function create_select_box() has new attribute $tabindex
+	- Function create_select_box() allows you to set selectbox tabindex now
+
+	* templates/en/delete_comment.html:
+	- Newly added file
+	- Template for comments deleting page
+	- Based on code in templates/en/edit_comment.html
+
+	* templates/en/edit_background.html:
+	* templates/en/edit_comment.html:
+	* templates/en/edit_theme.html:
+	- Added missing tabindexes
+	- New form look with icon using new CSS classes
+	- Gnome HIG compliant buttons order
+
+	* templates/en/submit_screenshot.html:
+	- XHTML validity fix (there's no wrap="true" attribute)
+
 2006-11-26 Lucas Lommer <llommer@cvs.gnome.org>
 
 	* AUTHORS:

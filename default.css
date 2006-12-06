@@ -376,3 +376,36 @@ table.theme_info {
 	border: none;
 	width: 100%;
 }
+
+.message_box_delete {
+	margin: 10px;
+	background-image: url('images/site/msg_delete.png');
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	}
+.message_box_edit {
+	margin: 10px;
+	background-image: url('images/site/msg_edit.png');
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	}
+.message_box_cite {
+	color: gray;
+	}
+.message_box_ask {
+	text-align: right;
+	margin-top: 5px;
+	margin-left: 60px;
+	margin-right: auto;
+	width: 400px;
+	}
+.message_box_buttons {
+	border-top: 1px solid #eaeaea;
+	text-align: right;
+	padding: 3px;
+	width: 330px;
+	margin-top: 3px;
+	margin-left: 60px;
+	margin-right: auto;
+	width: 400px;
+	}

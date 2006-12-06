@@ -1,14 +1,19 @@
 
 	<h1>Edit Comment</h1>
 	<div class="subtitle">Editing comment from <a href="{art_link}">{art_name}</a></div>
-	<form action="{SELF}" method="post">
+	<form class="message_box_edit" action="{SELF}" method="post">
 		<textarea tabindex="41" rows="5" cols="50" name="comment_text">{comment_text}</textarea><br/>
+		<div class="message_box_ask">
+			Do you want to save this updated comment?
+		</div>
+		<div class="message_box_buttons">
+			<input tabindex="42" type="submit" name="cancel" value="Cancel" />
+			<input tabindex="43" type="submit" name="save" value="Save"/>
+		</div>
 		<input type="hidden" name="commentID" value="{commentID}"/>
 		<input type="hidden" name="artID" value="{comment_artID}"/>
 		<input type="hidden" name="type" value="{comment_type}"/>
 		<input type="hidden" name="category" value="{art_category}"/>
-		<input tabindex="42" type="submit" name="save" value="Save"/>
-		<input tabindex="43" type="submit" name="cancel" value="Cancel"/>
 	</form>
 	<br/>
 	<br/>

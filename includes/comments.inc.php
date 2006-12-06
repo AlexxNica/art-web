@@ -57,6 +57,7 @@ function get_comments ($artID, $type)
 				$form  = "\t<form action=\"{$_SERVER["PHP_SELF"]}\" method=\"post\">\n";
 				$form .= "\t<div style=\"text-align:right;\" class=\"abuse\">\n";
 				if ($_SESSION['userID'] == $userID) $form .= '	<a href="/edit_comment.php?commentID='.$commentID.'">Edit</a>';
+				if ($_SESSION['userID'] == $userID) $form .= '	<a href="/delete_comment.php?commentID='.$commentID.'">Delete</a>';
 				$form .= "\t<input type=\"hidden\" name=\"commentID\" value=\"$commentID\" />\n";
 				$form .= "\t<input type=\"submit\" name=\"report\" value=\"(Report Abuse)\" class=\"link_button\" style=\"font-size: 0.8em;\" />\n";
 				$form .= "\t</div>\n";

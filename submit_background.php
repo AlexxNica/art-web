@@ -49,8 +49,15 @@ if(array_key_exists("submit",$_POST))
 			{
 				// NULL or update ID?
 				if ($background_status == 'update') $update_data = "'$background_updateID'";
-										 else $update_data = "NULL";
+										 else {
+												$update_data = "NULL";
+												// If there already exists background with same name, add 'Another ' prefix to background name
+												$count_with_same_name_query = "SELECT COUNT(*) FROM background WHERE name = '$background_name'";
+												$count_with_same_name = mysql_result(mysql_query($count_with_same_name_query), 0);
+												if ($count_with_same_name > 0) $background_name = 'Another '.$background_name;
+												}
 				$date = date("Y-m-d");
+
 				$incoming_background_insert_query = "INSERT INTO incoming_background(backgroundID,status,date,version,license,name,category,userID,parentID,description,update_of) ";
 				$incoming_background_insert_query .= "VALUES('','$background_status','$date','$version','$license','$background_name','$category','{$_SESSION['userID']}','$parentID','$background_description',$update_data)";
 				$incoming_background_insert_result = mysql_query("$incoming_background_insert_query");

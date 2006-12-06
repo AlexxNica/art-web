@@ -43,7 +43,13 @@ if($_POST['submit'])
 		{
 			// NULL or update ID?
 			if ($theme_status == 'update') $update_data = "'$theme_updateID'";
-								 else $update_data = "NULL";
+								 else {
+										$update_data = "NULL";
+										// If there already exists theme with same name, add 'Another ' prefix to theme name
+										$count_with_same_name_query = "SELECT COUNT(*) FROM theme WHERE name = '$theme_name' AND category = '$category'";
+										$count_with_same_name = mysql_result(mysql_query($count_with_same_name_query), 0);
+										if ($count_with_same_name > 0) $theme_name = 'Another '.$theme_name;
+										}
 			$date = date("Y-m-d");
 			$incoming_theme_insert_query  = "INSERT INTO incoming_theme(themeID,userID,status,date,name,version,license,parentID,category,theme_url,description,updateID,update_of) ";
 			$incoming_theme_insert_query .= "VALUES('','{$_SESSION['userID']}','$theme_status','$date','$theme_name','$version','$license','$parentID','$category','$theme_url','$theme_description','$update',$update_data)";

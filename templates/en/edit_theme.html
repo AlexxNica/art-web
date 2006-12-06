@@ -1,21 +1,21 @@
 
 
 	<h1>Edit Theme</h1>
-	<form action="{SELF}" method="post">
+	<form class="message_box_edit" action="{SELF}" method="post">
 		<input type="hidden" name="themeID" value="{theme_themeID}"/>
 		<input type="hidden" name="theme_category" value="{theme_category}"/>
 		<table>
 			<tr>
 				<td>Name:</td>
-				<td><input type="text" name="theme_name" value="{theme_name}"/></td>
+				<td><input tabindex="40" type="text" name="theme_name" value="{theme_name}"/></td>
 			</tr>
 			<tr>
 				<td>Version:</td>
-				<td><input type="text" name="theme_version" value="{theme_version}"/></td>
+				<td><input tabindex="41" type="text" name="theme_version" value="{theme_version}"/></td>
 			</tr>
 			<tr>
 				<td>Description:</td>
-				<td><textarea rows="5" cols="50" name="theme_description">{theme_description}</textarea></td>
+				<td><textarea tabindex="42" rows="5" cols="50" name="theme_description">{theme_description}</textarea></td>
 			</tr>
 			<tr>
 				<td>License:</td>
@@ -27,9 +27,13 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<br/>
-					<input type="submit" name="save" value="Save"/>
-					<input type="submit" name="cancel" value="Cancel"/>
+					<div class="message_box_ask">
+						Do you want to save this updated theme data?
+					</div>
+					<div class="message_box_buttons">
+						<input tabindex="45" type="submit" name="cancel" value="Cancel" />
+						<input tabindex="46" type="submit" name="save" value="Save" />
+					</div>
 				</td>
 			</tr>
 		</table>

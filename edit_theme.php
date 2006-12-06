@@ -73,8 +73,8 @@ $template->add_var ('theme_parent');
 $template->add_var ('theme_version');
 $template->add_var ('theme_description');
 $template->add_var ('theme_category');
-$template->add_var ('license_box', create_select_box('theme_license', $license_config_array, $theme_license));
-$template->add_var ('variation_box', create_select_box('theme_parentID', $variation_array, $theme_parent));
+$template->add_var ('license_box', create_select_box('theme_license', $license_config_array, $theme_license, 43));
+$template->add_var ('variation_box', create_select_box('theme_parentID', $variation_array, $theme_parent, 44));
 $template->write ();
 
 art_footer ();

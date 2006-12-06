@@ -73,8 +73,8 @@ $template->add_var ('background_parent');
 $template->add_var ('background_version');
 $template->add_var ('background_description');
 $template->add_var ('background_category');
-$template->add_var ('license_box', create_select_box('background_license', $license_config_array, $background_license));
-$template->add_var ('variation_box', create_select_box('background_parentID', $variation_array, $background_parent));
+$template->add_var ('license_box', create_select_box('background_license', $license_config_array, $background_license, 43));
+$template->add_var ('variation_box', create_select_box('background_parentID', $variation_array, $background_parent, 44));
 $template->write ();
 
 art_footer ();

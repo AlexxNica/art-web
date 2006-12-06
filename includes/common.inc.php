@@ -262,9 +262,11 @@ function art_fatal_error($header, $title, $message)
 }
 
 
-function create_select_box ($name, $array, $selected)
+function create_select_box ($name, $array, $selected, $tabindex = false)
 {
-	$result = "<select name=\"$name\" id=\"$name\">\n";
+	$tabindex = validate_input_regexp_default ($tabindex, "^[0-9]+$", false);
+	if ($tabindex) $tabindex = ' tabindex="'.$tabindex.'"';
+	$result = "<select name=\"$name\" id=\"$name\"$tabindex>\n";
 	while(list($key,$val) = each($array))
 	{
 		if($key == $selected)
