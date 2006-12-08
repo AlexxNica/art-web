@@ -82,7 +82,8 @@ else
 		if ($format == "html")
 		{
 			art_header($header);
-			create_title($header);
+			
+			create_title($header, create_breadcrumb ());
 			
 			$list->print_search_form();
 			print('<hr />');
@@ -180,7 +181,8 @@ else
 		else
 			$template->add_var ('thumbnail-class', 'thumbnail');
 
-		$template->add_var ('category-name', $config_array[$category]['name']);
+		$breadcrumb = create_breadcrumb (array ($artID => $info['name']));
+		$template->add_var ('breadcrumb', $breadcrumb);
 		$template->add_var ('install-instructions', $install_instructions);
 
 		$template->add_var ('license-link', $license_config_link_array [$info['license']]);

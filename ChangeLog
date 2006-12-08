@@ -1,3 +1,14 @@
+2006-12-08  Thomas Wood  <thos@gnome.org>
+
+	* includes/art_page.inc.php:
+	* includes/common.inc.php:
+	* templates/en/backgrounds/detail.html:
+	* templates/en/contests/detail.html:
+	* templates/en/screenshots/detail.html:
+	* templates/en/themes/detail.html:
+
+	Add 'breadcrumb' feature
+
 2006-15-05 Lucas Lommer <llommer@cvs.gnome.org>
 
 	* default.css:

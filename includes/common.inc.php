@@ -1,6 +1,6 @@
 <?php
 
-require ('config.inc.php');
+require_once ('config.inc.php');
 
 if (!function_exists('array_combine'))
 {
@@ -40,9 +40,35 @@ function create_filename($name, $category, $filename, $extra = '')
 
 }
 
+function create_breadcrumb ($replace_array = null)
+{
+	global $theme_config_array, $background_config_array;
+	$path = trim ($_SERVER['PHP_SELF'], '/');
+	$path_array = explode("/", $path);
+	$path_array = array_reverse ($path_array);
+	$current_path = '/';
+	$result = '<a href="/">Home</a> ';
+	while ($foo = array_pop ($path_array))
+	{
+		if (array_key_exists ($foo, $theme_config_array))
+			$name = $theme_config_array[$foo]['name'];
+		elseif (array_key_exists ($foo, $background_config_array))
+			$name = $background_config_array[$foo]['name'];
+		elseif ($replace_array && array_key_exists ($foo, $replace_array))
+			$name = $replace_array[$foo];
+		else
 
+			$name = ucwords ($foo);
+			
+		$current_path .= $foo .'/';
+		if ($path_array[0] == '') 
+			return $result . ' &gt; '.$name;
+		$result .= ' &gt; <a href="'.$current_path.'">'.$name.'</a>';
+	}
+	return $result;
+}
 
-function create_title($title, $subtitle="")
+function create_title($title, $subtitle=null)
 {
 	print("\t<h1>$title</h1>\n");
 	if ($subtitle)
