@@ -1,3 +1,88 @@
+2006-12-05 Lucas Lommer <llommer@cvs.gnome.org>
+
+	* ChangeLog:
+	- My last entry date corrected
+
+	* default.css:
+	- Added comment_preview CSS class for comments preview
+	- Added phpBB_box CSS class, a phpBB preview box
+	- Some other new CSS related to previews
+
+	* edit_background.php:
+	- Added background description preview support
+	- Added LIMIT 1 for SQL SELECT/UPDATE
+	- Using strip_string() on strings going to preview
+	- Using escape_string() on strings going to db
+	- Partially done by Thomas Wood <thos@gnome.org>
+
+	* edit_comment.php:
+	- Added comment preview support
+	- Added LIMIT 1 for SQL SELECT/UPDATE, do no use "SELECT *"
+	- Using strip_string() on strings going to preview
+	- Using escape_string() on strings going to db
+
+	* edit_theme.php:
+	- Added theme description preview support
+	- Added LIMIT 1 for SQL SELECT/UPDATE
+	- Using strip_string() on strings going to preview
+	- Using escape_string() on strings going to db
+
+	* submit_screenshot.php:
+	- Using escape_string() on strings going to db
+
+	* users:
+	- Changed subtopic
+	- We want to apply html_parse_text() on users' latest comments
+
+	* admin/add_faq.php:
+	- Added new FAQ preview support
+	- Some HTML code is out of PHP now (faster)
+	- Form look changes (to be same as on other sites)
+	- Using escape_string() on strings going to db
+
+	* admin/delete_faq.php:
+	- Added width: 95%; inline CSS for select box (was too wide by default)
+
+	* admin/edit_faq.php:
+	- Added FAQ preview support
+	- Some HTML code is out of PHP now (faster)
+	- Has been rewritten for a bit :)
+	- More changes in branch later (needs to be done differently)
+
+	* includes/art_page.inc.php:
+	- Added preview support for new comments
+	- Code for adding comment into db came from includes/comments.inc.php
+
+	* includes/comments.inc.php:
+	- Added new comments preview support
+	- get_comment_form() has two new attributes:
+		$preview (false by default) - if true, function shows comment preview
+		$error_fallback (false by default) - indicates if comment saving
+									  produced an error, for fallback
+	- get_comment_form() is using strip_string() on strings going to preview
+	- add_comment() is using escape_string() on strings going to db
+	- report_comment() is newly validating $commentID
+	- Code for adding comment into db moved to includes/art_page.inc.php
+	- Error messages are using global CSS styles
+
+	* includes/common.inc.php:
+	- Removed an empty line (I was going to do something there or what)
+
+	* templates/en/edit_background.html:
+	* templates/en/edit_comment.html:
+	* templates/en/edit_theme.html:
+	* templates/en/comments/add.html:
+	- Textareas have own CSS class now
+	- No save button, just preview (you have to see preview before saving)
+	- Tabindexes should be finally done I hope
+
+	* templates/en/edit_background_preview.html:
+	* templates/en/edit_comment_preview.html:
+	* templates/en/edit_theme_preview.html:
+	* templates/en/comments/preview.html:
+	- Newly added templates
+	- Needed for preview support
+
 2006-12-08  Thomas Wood  <thos@gnome.org>
 
 	* includes/art_page.inc.php:
@@ -9,7 +94,7 @@
 
 	Add 'breadcrumb' feature
 
-2006-15-05 Lucas Lommer <llommer@cvs.gnome.org>
+2006-12-05 Lucas Lommer <llommer@cvs.gnome.org>
 
 	* default.css:
 	- Added some CSS classes used in forms

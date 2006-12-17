@@ -36,11 +36,6 @@ if ($format != 'html') /* XXX: just hope that noone gets the idea to access form
 
 require_once("art_headers.inc.php");
 
-if  (get_magic_quotes_gpc() == 1)
-	$comment = stripslashes($_POST["comment"]); // This is validated later
-else
-	$comment = $_POST["comment"];
-
 $commentID = validate_input_regexp_default ($_POST["commentID"], "^[0-9]+$", -1);
 $report = $_POST["report"];
 
@@ -187,8 +182,35 @@ else
 
 		$template->add_var ('license-link', $license_config_link_array [$info['license']]);
 		$template->add_var ('comments', get_comments ($artID, $type));
-		$template->add_var ('comment-form', get_comment_form ($comment));
-		$template->add_var ('comment-message', $comment_message);
+
+		// Add Comment
+		$error_fallback = false;
+
+		// Will be validated by get_comment_form() or add_comment()
+		$comment = $_POST["comment"];
+
+		list ($foo, $type, $category, $item) = explode ('/', $_SERVER['PHP_SELF']);
+		$type = substr ($type, 0, strlen ($type) -1 ); // Remove plural 's'
+
+		// We want to save new comment
+		if (POST ('send'))
+		{
+			$comment_message = add_comment($item, $type, $comment, $header);
+			// If new comment already added by add_comment(), redirect will be used inside add_comment();
+			$error_fallback = true;
+		}
+
+		// New comment preview...
+		if ((POST ('preview')) or ($error_fallback))
+			{
+			$template->add_var ('comment-form', get_comment_form ($comment, true, $error_fallback));
+			$template->add_var ('comment-message', $comment_message);
+			}
+		// ...or just empty form
+		else {
+			$template->add_var ('comment-form', get_comment_form ($comment));
+			$template->add_var ('comment-message', $comment_message);
+			}
 
 		if ($type == 'background')
 		{
@@ -209,7 +231,6 @@ else
 				$template->add_var ('download-url',"/download/$download_filename");
 			$template->add_var ('release-date', FormatRelativeDate (time(), $info ['add_timestamp'], true));
 		}
-
 
 		$variations = new variations_list ($artID, $type);
 		$template->add_var ('variations', $variations->return_listing ());

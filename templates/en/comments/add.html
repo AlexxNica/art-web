@@ -2,11 +2,13 @@
 	<h2>Add a new comment</h2>
 	<a name="comment"></a>
 	{comment-message}
-	<form action="{SELF}#comment" method="post">
-		<div>
-			<textarea tabindex="51" cols="60" rows="10" name="comment">{show-comment}</textarea><br />
+	<form class="message_box_add" action="{SELF}#comment" method="post">
+		<textarea id="phpBB_box" tabindex="51" cols="50" rows="10" name="comment">{show-comment}</textarea><br />
+		<div class="message_box_ask">
 			<br />
-			<input tabindex="52" type="submit" name="send" value="Add Comment" />
+		</div>
+		<div class="message_box_buttons">
+			<input tabindex="53" type="submit" name="preview" value="Preview" />
 		</div>
 	</form>
 

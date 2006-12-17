@@ -1,0 +1,27 @@
+
+	<h2>Add a new comment - Preview</h2>
+	<a name="comment"></a>
+	{comment-message}
+	{error_log}
+	Comment preview:
+	<div class="message_box_phpBB">
+		<div class="comment_preview">
+			<div class="h2">From <a href="/users/{user_name}">{user-name}</a></div>
+			<div class="subtitle">Posted {post_time}</div>
+			<p>
+				{comment-preview}
+			</p>
+		</div>
+	</div>
+	<form class="message_box_add" action="{SELF}#comment" method="post">
+		Do more changes:<br />
+		<textarea id="phpBB_box" tabindex="51" cols="50" rows="10" name="comment">{show-comment}</textarea><br />
+		<div class="message_box_ask">
+			Do you want to add this comment?
+		</div>
+		<div class="message_box_buttons">
+			<input tabindex="53" type="submit" name="preview" value="Preview" />
+			<input tabindex="54" type="submit" name="send" value="Add" />
+		</div>
+	</form>
+

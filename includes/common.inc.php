@@ -287,7 +287,6 @@ function art_fatal_error($header, $title, $message)
 	exit();
 }
 
-
 function create_select_box ($name, $array, $selected, $tabindex = false)
 {
 	$tabindex = validate_input_regexp_default ($tabindex, "^[0-9]+$", false);

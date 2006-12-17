@@ -74,6 +74,9 @@ function get_comments ($artID, $type)
 
 function report_comment($report, $commentID) 
 {
+	// First, validate comment ID
+	$commentID = validate_input_regexp_default ($commentID, '^[0-9]+$', -1);
+
 	if ($report && $commentID > -1) 
 	{
 		mysql_query("UPDATE comment SET status='reported' where commentID='$commentID' AND status!='deleted'");
@@ -81,17 +84,34 @@ function report_comment($report, $commentID)
 	}
 }
 
-function get_comment_form ($comment)
-{
-	$show_comment = "";
-	if (strlen($comment) < 10 && strlen($comment) != 0) 
-	{
-		$comment_msg = "Your comment is too short!<br />\n";
-		$show_comment = $comment;
-	}
+function get_comment_form ($comment, $preview = false, $error_fallback = false)
+{	
+	$show_comment = strip_string($comment);
 
-	$template = new template ('comments/add.html');
-	$template->add_var ('show-comment', $show_comment);
+	/*
+		If we want preview and it's not fallback (it shows own error on saving) and comment length < 10
+		-or-
+		Not preview but (0 < comment length < 10) - means do not show warning before we start writing the comment
+	*/
+	if ((($preview && !$error_fallback) and (strlen($show_comment) < 10)) or ((strlen($show_comment) < 10 && strlen($show_comment) != 0) and (!$preview)))
+	{
+		$error_message_length = "<p class=\"warning\">Warning, your comment is too short. Comments must be more than 10 letters long.</p>\n";
+		$preview = true;
+	}
+	if ($preview)
+	{
+		$template = new template ('comments/preview.html');
+		$template->add_var ('show-comment', htmlspecialchars($show_comment));
+		$template->add_var ('comment-preview', html_parse_text($show_comment));
+		$template->add_var ('error_log', $error_message_length);
+		$template->add_var ('post-time', Date("j F Y - H:i:s"));
+		$template->add_var ('user-name', $_SESSION['username']);
+	}
+	else
+	{
+		$template = new template ('comments/add.html');
+		$template->add_var ('show-comment', $show_comment);
+	}
 	return $template->parse ();
 }
 
@@ -102,15 +122,17 @@ function print_comment_form ($comment)
 
 function add_comment($artID, $type, $comment, $header)
 {
-	if ($comment)
+	$comment = escape_string($comment);
+	$artID = validate_input_regexp_default ($artID, '^[0-9]+$', -1);
+	$type = escape_string($type); // Just prevet SQL injections, validated before calling this function
+	if ($artID != -1)
 	{
 		if(strlen($comment) < 10)
 		{
-			return ("<p class=\"warning\">Comments must be more than 10 letters long!</p>");
+			return ("<p class=\"error\">Error, your comment is too short! Comments must be more than 10 letters long!</p>\n");
 		}
 		elseif(is_logged_in($header))
 		{
-			$comment = escape_string ($comment); // make sure it is safe for mysql
 			$comment_result = mysql_query("INSERT INTO comment(`artID`, `userID`, `type`, `timestamp`, `comment`) VALUES('$artID', '" . $_SESSION['userID'] . "', '$type', '" . time() . "', '" . $comment . "')");
 			if ($comment_result === False)
 			{
@@ -127,6 +149,10 @@ function add_comment($artID, $type, $comment, $header)
 			}
 		}
 	}
+	else
+	{
+			return ("<p class=\"error\">Error, Art ID is not valid!</p>\n");
+	}
 }
 
 
@@ -140,15 +166,4 @@ $commentID = POST ('commentID');
 
 if ($report && is_numeric ($commentID))
 	report_comment($report, $commentID);
-
-// Add Comment
-$comment = POST ('comment'); // this is made safe later
-list ($foo, $type, $category, $item) = explode ('/', $_SERVER['PHP_SELF']);
-$type = substr ($type, 0, strlen ($type) -1 ); // Remove plural 's'
-
-if ($comment)
-	$comment_message = add_comment($item, $type, $comment, $header);
-
-
-
 ?>

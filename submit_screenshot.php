@@ -40,8 +40,8 @@ function upload_entry ($unvalidated_item_name, $unvalidated_description)
 	if ($remote_filename == '')
 		return "Please select a file to upload";
 
-	$item_name = mysql_escape_string ($unvalidated_item_name);
-	$description = mysql_escape_string ($unvalidated_description);
+	$item_name = escape_string ($unvalidated_item_name);
+	$description = escape_string ($unvalidated_description);
 
 
 	/* make sure user is logged in */

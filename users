@@ -62,9 +62,9 @@ else
 			
 			art_header($realname);
 			if ($userID == $_SESSION['userID'])
-				create_title ($realname, "<a href=\"/account.php\">Edit</a> your profile.");
+				create_title ($realname, "Your public profile. <a href=\"/account.php\">Edit</a> details.");
 			else
-				create_title ($realname, "");
+				create_title ($realname, "User public profile");
 			if($info)
 				print ("\t<p>\n\t\t$info\n\t</p>\n");
 			if($email || $homepage || $location)
@@ -128,7 +128,7 @@ else
 					list ($comment_art_category, $comment_art_name) = mysql_fetch_row ($result);
 					print ("<strong>Comment for <a href=\"/{$comment_type}s/$comment_art_category/$comment_artID\">$comment_art_name</a></strong><br/>");
 					print ('<span class="subtitle">'.FormatRelativeDate (time (), $comment_time) .'</span>');
-					print ('<p style="margin:0px 0px 1em 0px;">'.$comment.'</p>');
+					print ('<p style="margin:0px 0px 1em 0px;">'.html_parse_text($comment).'</p>');
 				}
 			}
 			art_footer();

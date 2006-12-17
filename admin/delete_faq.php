@@ -44,7 +44,7 @@ else
 	$faq_select_result = mysql_query("SELECT faqID,question FROM faq ORDER by faqID");
 	print("<form action=\"" . $_SERVER["PHP_SELF"] . "\" method=\"post\">\n");
 	print("<div><label for=\"faq\"><strong>Delete FAQ</strong></label><br />");
-	print("<select name=\"faqID\" size=\"5\" id=\"faq\">\n");
+	print("<select style=\"width: 95%;\" name=\"faqID\" size=\"5\" id=\"faq\">\n");
 	while(list($faqID,$question) = mysql_fetch_row($faq_select_result))
 	{
 		print("<option value=\"$faqID\">$faqID - $question</option>\n");

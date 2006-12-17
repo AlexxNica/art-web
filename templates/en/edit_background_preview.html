@@ -1,6 +1,10 @@
 
 
-	<h1>Edit Background</h1>
+	<h1>Edit Background - Preview</h1>
+	Description preview:
+	<p class="message_box_phpBB">
+		{background_description_preview}
+	</p>
 	<form class="message_box_edit" action="{SELF}" method="post">
 		<input type="hidden" name="backgroundID" value="{background_backgroundID}" />
 		<input type="hidden" name="background_category" value="{background_category}" />
@@ -31,8 +35,9 @@
 						Do you want to save this updated background data?
 					</div>
 					<div class="message_box_buttons">
-						<input tabindex="45" type="submit" name="cancel" value="Cancel" />
-						<input tabindex="46" type="submit" name="preview" value="Preview"/>
+						<input tabindex="45" type="submit" name="preview" value="Preview"/>
+						<input tabindex="46" type="submit" name="cancel" value="Cancel" />
+						<input tabindex="47" type="submit" name="save" value="Save"/>
 					</div>
 				</td>
 			</tr>

@@ -1,6 +1,10 @@
 
 
-	<h1>Edit Theme</h1>
+	<h1>Edit Theme - Preview</h1>
+	Description preview:
+	<p class="message_box_phpBB">
+		{theme_description_preview}
+	</p>
 	<form class="message_box_edit" action="{SELF}" method="post">
 		<input type="hidden" name="themeID" value="{theme_themeID}"/>
 		<input type="hidden" name="theme_category" value="{theme_category}"/>
@@ -31,8 +35,9 @@
 						Do you want to save this updated theme data?
 					</div>
 					<div class="message_box_buttons">
-						<input tabindex="45" type="submit" name="cancel" value="Cancel" />
-						<input tabindex="46" type="submit" name="preview" value="Preview"/>
+						<input tabindex="45" type="submit" name="preview" value="Preview"/>
+						<input tabindex="46" type="submit" name="cancel" value="Cancel" />
+						<input tabindex="47" type="submit" name="save" value="Save"/>
 					</div>
 				</td>
 			</tr>

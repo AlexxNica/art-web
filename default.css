@@ -307,12 +307,18 @@ div.icon_view {
 	height: 100px;
 }
 
-.comment {
+.comment, .comment_preview {
 	background-image: url('/images/site/stock_draw-callouts.png');
 /*	background-image: url('/images/site/commentbd.png'); */
 	background-repeat: no-repeat;
 	padding-left: 28px;
 	padding-bottom: 20px;
+}
+
+.comment_preview {
+	padding-bottom: 5px;
+	margin-bottom: 0px;
+	margin-top: 10px;
 }
 
 .comment_table {
@@ -377,6 +383,17 @@ table.theme_info {
 	width: 100%;
 }
 
+#phpBB_box, .phpBB_box {
+/*	background-image: url('images/site/use_phpBB.png');
+	background-repeat: repeat-y;
+	background-position: top left;
+	padding-left: 28px;*/
+	width: 400px;
+	}
+.bold_text {
+	font-weight: bold;
+	}
+
 .message_box_delete {
 	margin: 10px;
 	background-image: url('images/site/msg_delete.png');
@@ -389,8 +406,22 @@ table.theme_info {
 	background-repeat: no-repeat;
 	background-position: bottom left;
 	}
+.message_box_add {
+	margin: 10px;
+	background-image: url('images/site/msg_edit.png');
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	}
 .message_box_cite {
 	color: gray;
+	margin-top: 3px;
+	border-top: 1px solid gray;
+	}
+.message_box_phpBB {
+	padding: 2px;
+	margin-top: 3px;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
 	}
 .message_box_ask {
 	text-align: right;
@@ -403,7 +434,6 @@ table.theme_info {
 	border-top: 1px solid #eaeaea;
 	text-align: right;
 	padding: 3px;
-	width: 330px;
 	margin-top: 3px;
 	margin-left: 60px;
 	margin-right: auto;
