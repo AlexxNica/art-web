@@ -848,6 +848,11 @@ class variations_list extends general_listing
 	
 	function select($parentID)
 	{
+		$ppID=-1; /* parent's parent ID */
+		$r = mysql_query ("SELECT parent FROM {$this->type} WHERE {$this->type}ID=$parentID");
+		echo mysql_error();
+		list($ppID) = mysql_fetch_row ($r);
+
 		if ($this->type == 'theme') {
 			$sql = 'SELECT themeID AS ID, \'theme\' AS type, name, rating, category, add_timestamp, thumbnail_filename FROM theme';
 		} elseif ($this->type == 'contest') {
@@ -858,8 +863,8 @@ class variations_list extends general_listing
 		if ($sql == '')
 			$this->select_result = null;
 		else
-			$this->select_result = mysql_query($sql." WHERE parent=$parentID AND status='active'".
-		                                        ' ORDER BY add_timestamp DESC');
+			$this->select_result = mysql_query($sql." WHERE parent=$parentID OR {$this->type}ID=$ppID AND status='active'
+		                                        ORDER BY add_timestamp DESC");
 	}
 }
 ?>
