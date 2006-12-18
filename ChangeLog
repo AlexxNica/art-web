@@ -1,9 +1,19 @@
+2006-12-18 Lucas Lommer <llommer@cvs.gnome.org>
+
+	* default.css:
+	- little CSS fix
+
+	* includes/comments.inc.php:
+	* templates/en/comments/preview.php:
+	- comment preview time fix (mixed with edit preview)
+	
+
 2006-12-17  Thomas Wood  <thos@gnome.org>
 
 	* includes/art_listings.inc.php: Include original parent item in
 	variation listing
 
-2006-12-05 Lucas Lommer <llommer@cvs.gnome.org>
+2006-12-17 Lucas Lommer <llommer@cvs.gnome.org>
 
 	* ChangeLog:
 	- My last entry date corrected

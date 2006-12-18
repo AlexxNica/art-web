@@ -103,7 +103,7 @@ function get_comment_form ($comment, $preview = false, $error_fallback = false)
 		$template = new template ('comments/preview.html');
 		$template->add_var ('show-comment', htmlspecialchars($show_comment));
 		$template->add_var ('comment-preview', html_parse_text($show_comment));
-		$template->add_var ('error_log', $error_message_length);
+		$template->add_var ('error-log', $error_message_length);
 		$template->add_var ('post-time', Date("j F Y - H:i:s"));
 		$template->add_var ('user-name', $_SESSION['username']);
 	}
