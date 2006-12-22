@@ -88,7 +88,7 @@ while (list ($comment_id, $comment, $comment_time, $comment_username, $comment_t
 	print("\t\t<p style=\"margin:0px 0px 1em 0px;");
 	if ($comment_status == 'deleted')
 		print(" text-decoration: line-through;");
-	print("\">\n\t\t\t".$comment."\n\t\t</p>\n");
+	print("\">\n\t\t\t".html_parse_text($comment)."\n\t\t</p>\n");
 	print("\t</form>\n");
 	print("\t<hr />\n");
 	$output_exists = true;

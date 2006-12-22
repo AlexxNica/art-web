@@ -12,6 +12,8 @@ $theme_type_select_array = array_combine ($theme_category_list, $theme_category_
 $mark_theme = $_POST['mark_theme'];
 $new_status = validate_input_array_default($_POST["new_status"], array_keys($status_array), "");
 $new_category_array = $_POST['category'];
+$new_theme_name_array = $_POST['theme_name'];
+$new_theme_description_array = $_POST['theme_description'];
 
 $reject_array = Array("rejected|not_rel" => "Not relevent", "rejected|bad_url" => "Invalid URL", "rejected|distro" => "Distro Specific", "rejected|low_quality" => "Low Quality","rejected|copyright" => "Copyright","rejected|duplicate" => "Duplicate","rejected|badform" => "Badly Formed", "rejected|other" => "Reject with reason");
 $new_status_array = array_merge($status_array,$reject_array);
@@ -68,6 +70,18 @@ if(is_array($mark_theme))
 				print("\t<p class=\"info\">Marked theme $markID category as &quot;$new_category&quot;.</p>\n");
 		}
 
+		/* update name of item */
+		$new_name = escape_string ($new_theme_name_array[$markID]);
+		mysql_query("UPDATE incoming_theme SET name='$new_name' WHERE themeID='$markID' LIMIT 1");
+		if (mysql_affected_rows())
+			print("\t<p class=\"info\">Updated name of theme $markID as &quot;$new_name&quot;.</p>\n");
+
+		/* update description of item */
+		$new_description = escape_string ($new_theme_description_array[$markID]);
+		mysql_query("UPDATE incoming_theme SET description='$new_description' WHERE themeID='$markID' LIMIT 1");
+		if (mysql_affected_rows())
+			print("\t<p class=\"info\">Updated description of theme $markID.</p>\n");
+
 
 	}
 	print("\t<p><a href=\"{$_SERVER["PHP_SELF"]}\">Return to incoming themes list</a></p>\n");
@@ -111,10 +125,11 @@ else
 			if ($alt == 1) $colour = "style=\"background: #dedede\""; else $colour = "";
 			extract($incoming_theme_select_row);
 			$theme_description = htmlspecialchars($incoming_theme_select_row["description"]);
+			$theme_name = htmlspecialchars($name);
 			print("\t\t\t<tr $colour><td>$themeID</td>\n");
-			print("\t\t\t\t<td>\n\t\t\t\t\t".html_parse_text($name)."<br />\n\t\t\t\t\t");print_select_box ("category[$themeID]", $theme_type_select_array, $category);print("\n\t\t\t\t</td>\n");
+			print("\t\t\t\t<td>\n\t\t\t\t\t<input name=\"theme_name[$themeID]\" value=\"".$theme_name."\" size=\"15\"/><br />\n\t\t\t\t\t");print_select_box ("category[$themeID]", $theme_type_select_array, $category);print("\n\t\t\t\t</td>\n");
 			print("\t\t\t\t<td>\n\t\t\t\t\t<a href=\"/users/$userID\">$username</a><br />\n\t\t\t\t\t$date\n\t\t\t\t</td>\n");
-			print("\t\t\t\t<td>".$theme_description."</td>\n");
+			print("\t\t\t\t<td><textarea style=\"width: 100%\" name=\"theme_description[".$themeID."]\" rows=\"3\">".$theme_description."</textarea></td>\n");
 			print("\t\t\t\t<td><a href=\"".htmlentities($theme_url)."\">Download</a></td>\n");
 			print("\t\t\t\t<td>");print_select_box("mark_theme[$themeID]",$new_status_array,$status);print("<br />\n\t\t\t\t\t<input size=\"16\" name=\"other_reason[$themeID]\" id=\"other_reason[$themeID]\"/>\n\t\t\t\t</td>\n");
 			print("\t\t\t</tr>\n");
