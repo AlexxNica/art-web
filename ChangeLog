@@ -1,3 +1,17 @@
+2006-12-25 Lucas Lommer <llommer@cvs.gnome.org>
+
+	* submit_screenshot.php:
+	- new submission SQL query
+	- missing screenshot date in db fixed
+	- name and description quotes fix (no strip_string())
+
+	* includes/art_headers.inc.php:
+	- feed links removed from HTML head (no feeds for screenshots)
+
+	* includes/art_page.inc.php:
+	- screenshot release date output fixed (different column name in db)
+	- do not create variations_list for screenshots, no parent column
+
 2006-12-22 Lucas Lommer <llommer@cvs.gnome.org>
 
 	* admin/show_submitted_themes.php:

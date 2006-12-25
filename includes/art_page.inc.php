@@ -132,8 +132,16 @@ else
 		$info['description'] = html_parse_text ($info['description']);
 		$template->add_vars ($info);
 		
-		$template->add_var ('release-date', FormatRelativeDate (time(), strtotime ($info ['release_date']), true));
-		$template->add_var ('update-date', FormatRelativeDate (time(), $info ['add_timestamp'], true));
+		// There is no update-date for screenshots and release_date column is called just date for screenshots
+		if ($type != 'screenshot')
+		{
+			$template->add_var ('release-date', FormatRelativeDate (time(), strtotime ($info ['release_date']), true));
+			$template->add_var ('update-date', FormatRelativeDate (time(), $info ['add_timestamp'], true));
+		}
+		else
+		{
+			$template->add_var ('release-date', FormatRelativeDate (time(), strtotime ($info ['date']), true));
+		}
 
 		$rate_count_result = mysql_query ("SELECT COUNT(voteID) FROM vote WHERE artID = $artID AND type='{$type}'");
 		list ($rate_count) = mysql_fetch_row ($rate_count_result);
@@ -232,8 +240,12 @@ else
 			$template->add_var ('release-date', FormatRelativeDate (time(), $info ['add_timestamp'], true));
 		}
 
-		$variations = new variations_list ($artID, $type);
-		$template->add_var ('variations', $variations->return_listing ());
+		// No variations for screenshots
+		if ($type != 'screenshot')
+		{
+			$variations = new variations_list ($artID, $type);
+			$template->add_var ('variations', $variations->return_listing ());
+		}
 
 		$template->write ();
 		art_footer ();

@@ -103,7 +103,12 @@ function art_footer ()
 	// Specific feeds
 	$headFeed[rss] = '	<link rel="alternate" href="'.$_SERVER["PHP_SELF"].'?format=rss" type="application/rss+xml" title="Specific RSS Feed for this page" />';
 	$headFeed[atom] = '	<link rel="alternate" href="'.$_SERVER["PHP_SELF"].'?format=atom" type="application/rss+xml" title="Specific Atom Feed for this page" />';
-	switch ($_SERVER["PHP_SELF"])
+
+	// Because of /screenshots section, no feeds in there
+	$php_self_path = $_SERVER["PHP_SELF"];
+	if (SubStr($php_self_path, 0, 12) == '/screenshots') $php_self_path = '/screenshots';
+
+	switch ($php_self_path)
 	{
 		// These parts have no specific feed
 		case '/account.php':
@@ -121,6 +126,7 @@ function art_footer ()
 		case '/submit_contest_entry.php':
 		case '/submit_screenshot.php':
 		case '/submit_theme.php':
+		case '/screenshots':
 						$template->add_var ('atom-current', '	<!-- Atom feed is not available for this page -->');
 						$template->add_var ('rss-current', '	<!-- RSS feed is not available for this page -->');
 						break;

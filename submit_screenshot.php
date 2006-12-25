@@ -97,7 +97,6 @@ function upload_entry ($unvalidated_item_name, $unvalidated_description)
 		return 'There are already files with the same file name. Please change the name of your theme, so that there is no collision';
 	}
 
-
 	if (!move_uploaded_file ($file['tmp_name'], $file_path))
 	{
 		art_fatal_error ('Submit Screenshot', 'Screenshot Submission', 'An error occured, while saving the uploaded file.');
@@ -117,15 +116,17 @@ function upload_entry ($unvalidated_item_name, $unvalidated_description)
 
 	/* FILES DONE, now insert it into the DB */
 	$time = time ();
-	$sql  = "INSERT INTO screenshot (status,name,category,userID,add_timestamp,description,thumbnail_filename, download_start_timestamp, download_filename) ";
-	$sql .= "VALUES ('active','$item_name','$category','{$_SESSION['userID']}','$time','$description','$thumb_filename','$time','$file_name')";
+	$date = Date("Y-m-d");
+
+	$sql  = "INSERT INTO `screenshot` (`userID`, `status`, `category`, `thumbnail_filename`, `download_start_timestamp`, `add_timestamp`, `date`, `description`, `name`, `rating`, `download_count`, `download_filename`)";
+	$sql .= "VALUES ('{$_SESSION['userID']}', 'active', '$category', '$thumb_filename', '$time', '$time', '$date', '$description', '$item_name', NULL , '0', '$file_name');";
 
 	$sql_result = mysql_query ($sql);
 	if (!$sql_result)
 	{
 		unlink ($file_path);
 		unlink ($thumb_path);
-		art_fatal_error ('Submit Screenshot Entry', 'Screenshot Submission', 'Error inserting data into the database: '.mysql_error ().'<br/>Removing the files again.');
+		art_fatal_error ('Submit Screenshot Entry', 'Screenshot Submission', 'Error inserting data into the database: '.mysql_error ().'<br />'.$sql.'<br/>Removing the files again.');
 	}
 
 	/* Upload was successful! */
@@ -144,8 +145,8 @@ $description = '';
 
 if (array_key_exists ('category', $_POST))
 {
-	$unvalidated_item_name = stripslashes ($_POST['item_name']);
-	$unvalidated_description = stripslashes ($_POST['description']);
+	$unvalidated_item_name = $_POST['item_name'];
+	$unvalidated_description = $_POST['description'];
 	$error_message = upload_entry ($unvalidated_item_name, $unvalidated_description);
 	if (!$error_message)
 		exit (); /* no error in upload - no need to continue */
