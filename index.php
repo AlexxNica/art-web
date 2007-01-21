@@ -1,6 +1,6 @@
 <?php
 
-/* $Id$ */
+/* $Id: index.php,v 1.38 2006/08/23 08:21:24 thos Exp $ */
 
 require("mysql.inc.php");
 require("common.inc.php");

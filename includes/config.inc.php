@@ -1,6 +1,6 @@
 <?php
 
-/* $Id$ */
+/* $Id: config.inc.php,v 1.63 2006/11/23 15:03:26 llommer Exp $ */
 /* site configuration for art.gnome.org */
 
 /* backgrounds */
