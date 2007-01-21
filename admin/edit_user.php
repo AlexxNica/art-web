@@ -94,6 +94,14 @@ if (array_key_exists ('pass_reset', $_POST))
 			
 	}
 	print ("\t<p class=\"info\">$changes_ok users unblocked, $changes_skipped times skipped (keep user blocked) and $changes_error times an error occured.</p>\n");
+} elseif (array_key_exists ('delete_user', $_POST))
+{
+	$username = escape_string ($_POST['username']);
+	$sql = "UPDATE user SET active=-1 WHERE username = '$username' LIMIT 1";
+	if (mysql_query ($sql))
+		print ("\t<p class=\"info\">Username '$username' deleted.</p>");
+	else
+		print ("\t<p class=\"error\">There was an error deleting user '$username'</p>");
 }
 
 ?>
@@ -179,10 +187,11 @@ if (mysql_num_rows($result) > 0)
 }
 ?>
 
-	<h2>Block user account</h2>
+	<h2>Block or delete a user account</h2>
 	<form method="post" action="edit_user.php">
 		<label>Username: <input name="username" /></label>
 		<input type="submit" value="Block user" name="set_block" />
+		<input type="submit" value="Delete user" name="delete_user" />
 	</form>
 	<br />
 

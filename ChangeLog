@@ -1,3 +1,10 @@
+2007-01-21  Thomas Wood  <thos@gnome.org>
+
+	* users:
+	* admin/edit_user.php
+
+	Add a delete user function
+
 2006-12-25 Lucas Lommer <llommer@cvs.gnome.org>
 
 	* submit_screenshot.php:
