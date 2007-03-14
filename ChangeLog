@@ -1,3 +1,7 @@
+2007-03-14  Thomas Wood  <thos@gnome.org>
+
+	* includes/config.inc.php: Add GNOME 2.18 category to screenshots
+
 2007-01-21  Thomas Wood  <thos@gnome.org>
 
 	* users:

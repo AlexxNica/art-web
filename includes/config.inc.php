@@ -36,6 +36,13 @@ $background_config_array = array (
 /* screenshots */
 
 $screenshot_config_array = array (
+	"gnome218" => array (
+		"name" => "GNOME 2.18",
+		"url" => "/screenshots/gnome218/",
+		"active" => "1",
+		"description" => "Screenshots of GNOME 2.18"
+		),
+
 	"gnome216" => array (
 		"name" => "GNOME 2.16",
 		"url" => "/screenshots/gnome216/",
