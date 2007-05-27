@@ -1,8 +1,0 @@
-<?php
-
-/* $Id$ */
-
-$type = 'theme';
-include("art_page.inc.php");
-
-?>
