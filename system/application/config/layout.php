@@ -55,9 +55,9 @@ $config['layout_elements'] = array(
 |  Note: in order to work all properties must have the 'app_' prefix.
 | -------------------------------------------------------------------
 */
-$config['app_title']	   = "YATS &ndash; The Layout Library Demo";
-$config['app_keywords']    = "some meta key words for the spiders";
-$config['app_description'] = "a nice description goes here";
-$config['app_copyright']   = "(c) 2006 Mario  Mariani All Rights Reserved.";
+$config['app_title']	   = "art.gnome.org";
+$config['app_keywords']    = "ago art gnome artwork wallpaper";
+$config['app_description'] = "Gnome artwork community";
+$config['app_copyright']   = "";
 
 ?>

@@ -1,0 +1,20 @@
+AGO V3 - Installation Notes
+
+1 - Copy system/application/config/config.php_template to system/application/config/config.php
+2 - Configure config.php to the local configuration
+3 - Copy system/application/config/database.php_template to system/application/config/database.php
+4 - Configure database.php to the local configuration
+5 - Create .htaccess in the root dir (the same of this file) with add the following lines:
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    ErrorDocument 404 /index.php
+</IfModule>
+
