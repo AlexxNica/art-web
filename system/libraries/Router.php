@@ -395,7 +395,8 @@ class CI_Router {
 	// --------------------------------------------------------------------
 	
 	/**
-	 * Filter segments for malicious characters
+	 * Decode URL entities, remove GET requests from the URI, and filter 
+	 * segments for malicious characters
 	 *
 	 * @access	private
 	 * @param	string
@@ -403,6 +404,17 @@ class CI_Router {
 	 */	
 	function _filter_uri($str)
 	{
+		$str = rawurldecode($str);
+		
+		if ($this->config->item('enable_get_requests')) 
+		{
+			$qmark = strpos($str, '?');
+			if ($qmark !== FALSE)
+			{
+				$str = substr($str, 0, $qmark);
+			}
+		}
+		
 		if ($this->config->item('permitted_uri_chars') != '')
 		{
 			if ( ! preg_match("|^[".preg_quote($this->config->item('permitted_uri_chars'))."]+$|i", $str))
@@ -428,12 +440,13 @@ class CI_Router {
 	function _parse_routes()
 	{
 		// Do we even have any custom routing to deal with?
-		if (count($this->routes) == 0)
+		// There is a default scaffolding trigger, so we'll look just for 1
+		if (count($this->routes) == 1)
 		{
 			$this->_compile_segments($this->segments);
 			return;
 		}
-	
+
 		// Turn the segment array into a URI string
 		$uri = implode('/', $this->segments);
 		$num = count($this->segments);

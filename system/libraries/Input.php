@@ -46,7 +46,8 @@ class CI_Input {
 	
 		$CFG =& load_class('Config');
 		$this->use_xss_clean	= ($CFG->item('global_xss_filtering') === TRUE) ? TRUE : FALSE;
-		$this->allow_get_array	= ($CFG->item('enable_query_strings') === TRUE) ? TRUE : FALSE;		
+		$this->allow_get_array	= ($CFG->item('enable_query_strings') === TRUE
+								OR $CFG->item('enable_get_requests')  === TRUE) ? TRUE : FALSE;
 		$this->_sanitize_globals();
 	}
 	
@@ -106,18 +107,18 @@ class CI_Input {
 		if (is_array($_POST) AND count($_POST) > 0)
 		{
 			foreach($_POST as $key => $val)
-			{				
+			{
 				$_POST[$this->_clean_input_keys($key)] = $this->_clean_input_data($val);
-			}			
+			}
 		}
 	
 		// Clean $_COOKIE Data
 		if (is_array($_COOKIE) AND count($_COOKIE) > 0)
 		{
 			foreach($_COOKIE as $key => $val)
-			{			
+			{
 				$_COOKIE[$this->_clean_input_keys($key)] = $this->_clean_input_data($val);
-			}	
+			}
 		}
 		
 		log_message('debug', "Global POST and COOKIE data sanitized");
@@ -206,7 +207,7 @@ class CI_Input {
 			if (is_array($_GET[$index]))
 			{
 				foreach($_GET[$index] as $key => $val)
-				{					
+				{
 					$_GET[$index][$key] = $this->xss_clean($val);
 				}
 			}
