@@ -6,10 +6,11 @@ class User_model extends Model
 		parent::Model();
 	}
 	
-	function exists_user($username){
-		$query = $this->db->query(" Select count(1) as count
+	
+	function exists($username){
+		$query = $this->db->query(' Select count(1) as count
 									From `user`
-									Where username = '$username'");
+									Where username = '.$this->db->escape($username));
 		$count = $query->row();
 		if ($count->count > 0) return true;
 		else return false;
@@ -39,10 +40,47 @@ class User_model extends Model
 	 * $username - user's username to get
 	 * returns user info
 	 */
-	function get_user_by_username($username){
-		$this->db->where("username LIKE '$username'");
+	function find_by_username($username){
+		$this->db->where('username LIKE '.$this->db->escape($username));
 		$query = $this->db->get('user',1,0);
-		return $query->row();
+		if ($query->num_rows()>0)
+			return $query->row();
+		else
+			return false;
+	}
+	
+	/**
+	 * get_user
+	 * 
+	 * $uid - user's uid to get
+	 * returns user info
+	 */
+	function find($uid){
+		$this->db->where('uid',$uid);
+		$query = $this->db->get('user',1,0);
+		
+		if ($query->num_rows()>0)
+			return $query->row();
+		else
+			return false;
+	}
+	
+	function update($uid,$fields){
+		$this->db->set($fields);
+		$this->db->where('uid',$uid);
+		$this->db->update('user');
+	}
+	
+	function validate_token($user,$token){
+		
+		$user = $this->find_by_username($user);
+		
+		if (!$user) return false;
+		
+		if ($user->token != '_' && $user->token == $token)
+			return $user;
+		
+		return false;
 	}
 	
 }

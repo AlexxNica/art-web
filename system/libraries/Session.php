@@ -34,7 +34,7 @@ class CI_Session {
 	var $sess_length	= 7200;
 	var $sess_cookie	= 'ci_session';
 	var $userdata		= array();
-	var $gc_probability	= 5;
+	var $gc_probability	= 10;
 
 
 	/**

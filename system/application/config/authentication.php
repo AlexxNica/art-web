@@ -2,6 +2,9 @@
 
 if (!defined('DEBUG')) define("DEBUG", false);
 
+/**
+ *  ACL Constants
+ */
 
 if (!defined('ADD_ARTWORK')) define("ADD_ARTWORK", 0);
 if (!defined('EDIT_ARTWORK')) define("EDIT_ARTWORK", 1);
@@ -28,8 +31,15 @@ $config['regular'] = array(
 							EDIT_ARTWORK 		=> true,
 							DEL_ARTWORK			=> true,
 							COMMENT_ARTWORK		=> true,
+							CREATE_COLLECTION 	=> false,
+							EDIT_COLLECTION		=> false,
 							DEL_COLLECTION		=> true,
+							ADMIN_MODERATE_ARTWORK	=> false
 							);
 
+/**
+ *  Misc Options
+ */
+$config['login_page'] = '/account/login/'
 
 ?>

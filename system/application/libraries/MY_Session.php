@@ -7,6 +7,12 @@ class MY_Session extends CI_Session{
 		parent::CI_Session();
 	}
 
+	/**
+		*  DB Sessions Patch by Kelvin Luck
+		* 
+		* 	CI doesn't save all session info into the DB.
+		* 	This patch allows to do that.
+		*/
 
 	/**
 		* Fetch a specific item from the serverside session data
@@ -16,6 +22,7 @@ class MY_Session extends CI_Session{
 		* @paramstring
 		* @returnstring
 		*/
+
 	function serverdata($item)
 	{
 		if ($this->_readserverdata() ) {
@@ -23,7 +30,7 @@ class MY_Session extends CI_Session{
 		} else {
 			return FALSE;
 		}
-	} // END serverdata
+	}
 
 	/**
 		* Add or change data in the serverside database session data
@@ -48,7 +55,7 @@ class MY_Session extends CI_Session{
 
 			$this->_writeserverdata();
 		}
-	} // END set_serverdata
+	} 
 
 	/**
 		* Internal function to read and unserialize the data from the database
@@ -83,7 +90,7 @@ class MY_Session extends CI_Session{
 			log_message('error', 'You cannot access session->serverdata unless you are using databases for your session!');
 			return FALSE;
 		}
-	} // END _readserverdata
+	} 
 
 	/**
 		* Internal function to serialize and write the serverdata to the database
@@ -95,7 +102,10 @@ class MY_Session extends CI_Session{
 	function _writeserverdata()
 	{
 		$server_data_serialized = serialize($this->serverdata);
-		$this->CI->db->query($this->CI->db->update_string($this->session_table, array('session_data' => $server_data_serialized), array('session_id' => $this->userdata['session_id'])));
+		$this->CI->db->query($this->CI->db->update_string(	$this->session_table,
+															array('session_data' => $server_data_serialized),
+															array('session_id' => $this->userdata['session_id'])
+														));
 	}
 
 }

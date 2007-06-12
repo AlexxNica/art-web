@@ -14,26 +14,58 @@ class Account extends Controller{
 	function index(){
 		$data['null'] = null;
 		
-		if ($this->authentication->authenticate())
+		if ($this->authentication->is_logged_in())
 			$data['auth'] = "Logged In!";
 		else 
 			$data['auth'] = "Not Logged In!";
-			
+		
 		$this->layout->buildPage('account/index', $data);
 	}
 	
+	
+	/**
+	 * login form and user login process
+	 */
 	function login(){
-		$user = $_POST['username'];
+		$post = $this->input->post('login',TRUE);
 		
-		if ($this->User->exists_user($user)){
-			$user = $this->User->get_user_by_username($user);
-			$this->authentication->login($user->uid);
-			$this->authentication->set_permissions($this->authentication->settings['regular_user']);
+		if ($post){
+			$remember = $this->input->post('remember',TRUE)?true:false;
+			$user = $this->input->post('username',TRUE);
+			$refer = $this->input->post('refer',TRUE);
+			
+			if ($this->User->exists($user)){
+				$user = $this->User->find_by_username($user);
+				$this->authentication->login($user->uid,$remember);
+				$this->authentication->set_permissions($this->authentication->settings['regular_user']);
+			}
+			
+			if (!$refer)
+				redirect("/account",'refresh');
+			else
+				redirect($refer,'refresh');  // -> validate and filter
+			
+		} else {
+			
+			$data['refer'] = $this->input->get('refer',TRUE);
+			$this->layout->buildPage('account/login', $data);
+			
 		}
-		
-		redirect('/account','refresh');
 	}
 	
+	/**
+	 * Debug funcion
+	 */
+	function test(){
+		$this->authentication->authenticate();
+		
+		echo "congrats! You're logged in!";
+	}
+	
+	
+	/**
+	 * err... user is going to be logged out! duh!
+	 */
 	function logout(){
 		$this->authentication->authenticate();
 		$this->authentication->logout();
