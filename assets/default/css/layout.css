@@ -1,54 +1,113 @@
-body {
-	font : normal 12px/15px "Lucida Grande, Verdana, Sans-serif";
-	color : #4f5155;
+#universe {}
+
+#top_bar { height: 5px; background: #515151; }
+
+#top { 
+	background: url("../images/bg_top.gif") repeat-x left bottom;
+	height: 30px; 
+	position: relative;
+	right: 0;
+	left: 0;
+	top: 0px;
+}
+
+	/*#top .logo { 
+		height: 47px;
+		margin: 0 0 0 15px;
+		width: 300px; 
+	}*/
+	/*#top .login_wrapper { 
+		background:  url("../images/bg_top.gif") no-repeat -8px -8px; 
+		height: 29px;
+		left: 300px;
+		padding-left: 15px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		min-width: 400px;
+	}*/
+	#top .login {
+		/*background: url("../images/bg_top.gif") repeat-x left bottom ;*/
+		color: #fff;
+		height: 100%;
+		float: right;
+		margin-right: 70px;
 	}
+
+/** Forms */
+input, textarea { border: 1px solid #ccc;}
+
+#top .login .label {
+	text-align:right;
+	width:70px;
+	float:left;
+	padding:0.2em;
+}
+
+#top .login fieldset {
+	border: 0;
+	padding-top: 3px;
+}
+
+#top .login input.inputter {
+	background: transparent url('../images/bg_top.gif') no-repeat -10px -47px fixed;
+	border: solid 0 #fff;
+	width: 139px;
+	height: 17px;
 	
-h1 {
-	color : #444;
-	border-bottom : 1px solid #d0d0d0;
-	font-size : 16px;
-	font-weight : bold;
-	margin : 10px;
-	padding : 5px 0 6px 0;
-	}
-	
-code {
-	display : block;
-	margin : 14px 0 14px 0;
-	padding : 12px 10px 12px 10px;
-	font : normal 12px/14px "Monaco, Verdana, Sans-serif";
-	color : #002166;
-	border : 1px solid #d0d0d0;
-	background-color : #f9f9f9;
-	}
-	
-#container {
-	width : 760px;
-	margin : 0 auto;
-	}
-	
-#header {
-	width : 100%;
-	background : #cdcdcd;
-	margin-bottom : 20px;
-	border-top : 1px solid #d0d0d0;
-	border-bottom : 1px solid #d0d0d0;
-	}
-	
+	padding-top:2px;
+	position:relative;
+	top:2px;
+	z-index:39;
+}
+
+#top .login fieldset>input.inputter {
+	background: transparent url('../images/bg_top.gif') no-repeat -10px -47px; 
+}
+
+#top .login .submitter {
+	background: url('../images/buttons.gif') no-repeat -6px -3px;
+	height:0px;
+	margin: 3px;
+	margin-left: 5px;
+	overflow:hidden;
+	padding-top: 17px;
+	position:absolute;
+	top:2px;
+	width:56px;
+	-moz-outline:none;
+}
+
+#top .login a.submitter:hover {
+	background-position: -6px -23px;
+}
+
+/*#top .login input {
+	background: transparent;
+	height: 17px;
+	width: 139px;
+	padding: 2px 2px 3px 1px;
+	position: relative;
+	border: 0;
+	z-index:40;
+	top:2px;
+}*/
+
 #content {
 	display : inline;
 	float : left;
 	width : 510px;
-	padding : 10px 20px 10px 10px;
+	padding : 30px 20px 10px 10px;
 	border-right : 1px dotted #d0d0d0;
 	margin-bottom : 20px;
 	}
 	
 #column {
-	float : left;
-	width : 190px;
+	float : right;
+	width : 250px;
 	padding : 10px;
 	margin-bottom : 20px;
+	background: #f4f4f4;
 	}
 	
 #footer {
@@ -57,3 +116,41 @@ code {
 	height : 40px;
 	border-top : 1px solid #d0d0d0;
 	}
+	
+	
+/** Misc */
+
+.lb {
+	position: absolute;
+	left: -1px;
+	bottom: -1px;
+	height: 2px;
+	width: 2px;
+	background: url('../images/bg.gif') no-repeat 0 -2px;
+}
+
+.rb {
+	position: absolute;
+	right: -1px;
+	bottom: -1px;
+	height: 2px;
+	width: 2px;
+	background: url('../img/bg.gif') no-repeat -2px -2px;
+}
+
+.rt {
+	position: absolute;
+	right: -1px;
+	top: -1px;
+	height: 2px;
+	width: 2px;
+	background: url('../img/bg.gif') no-repeat -2px 0px;
+}
+.lt {
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	height: 2px;
+	width: 2px;
+	background: url('../img/bg.gif') no-repeat 0px 0px;
+}

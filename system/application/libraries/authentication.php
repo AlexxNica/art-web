@@ -57,6 +57,7 @@ class Authentication
 	function authenticate(){
 		if ($this->CI->session->serverdata('auth') == 'yes'){
 			$this->uid = $this->CI->session->serverdata('uid');
+			$this->settings['username'] = $this->CI->session->serverdata('username');
 			$this->acl = $this->CI->User->get_acl($this->uid);
 			if ($this->acl!=NULL)
 				return true;
@@ -72,9 +73,12 @@ class Authentication
 		* return false if current user session is not authenticated
 		*/
 	function is_logged_in(){
-		if ($this->CI->session->serverdata('auth') == 'yes')
+		if ($this->CI->session->serverdata('auth') == 'yes'){
+			$this->settings['username'] = $this->CI->session->serverdata('username');
+			$this->acl = $this->CI->User->get_acl($this->uid);
+			$this->uid = $this->CI->session->serverdata('uid');
 			return true;
-		else
+		} else
 			return false;
 	}
 
@@ -112,12 +116,13 @@ class Authentication
 			* sets the user (to who $uid belongs to) as authenticated
 			*/
 		function login($uid,$remember=false){
-			$this->CI->session->set_serverdata(array('uid' => $uid, 'auth' => 'yes'));
+			$user = $this->CI->User->find($uid);
+			if (!$user) return false;
 			
+			$this->CI->session->set_serverdata(array('uid' => $uid, 'auth' => 'yes', 'username' => $user->username));
 			// if remember flag is set and remember cookie is not set
 			if ($remember && !get_cookie('agov3_remember_cookie')){
-				$user = $this->CI->User->find($uid);
-				if (!$user) return false;
+				
 				$username = $user->username;
 				
 				//generate random token
@@ -223,6 +228,10 @@ class Authentication
 			if ($this->uid == null || $this->acl == null) return false;
 			return (($this->acl & pow(2,$role)) !=0) ? true: false;
 		}
+		
+		function get_username(){
+			return $this->settings['username'];
+		}
 
 		/**
 			* toBitmask($permissions)
@@ -261,6 +270,7 @@ class Authentication
 			}
 			return base_convert($x,2,10);
 		}
+		
 	}
 
 	?>
