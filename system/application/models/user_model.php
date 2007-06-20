@@ -35,13 +35,28 @@ class User_model extends Model
 	}
 	
 	/**
-	 * get_user_by_username
+	 * find_by_username
 	 * 
 	 * $username - user's username to get
 	 * returns user info
 	 */
 	function find_by_username($username){
 		$this->db->where('username LIKE '.$this->db->escape($username));
+		$query = $this->db->get('user',1,0);
+		if ($query->num_rows()>0)
+			return $query->row();
+		else
+			return false;
+	}
+	
+	/**
+	 * find_by_openid($identifier)
+	 * 
+	 * $identifier - user's openid to find
+	 * returns user info
+	 */
+	function find_by_openid($identifier){
+		$this->db->where('openid LIKE '.$this->db->escape($identifier));
 		$query = $this->db->get('user',1,0);
 		if ($query->num_rows()>0)
 			return $query->row();
@@ -69,6 +84,10 @@ class User_model extends Model
 		$this->db->set($fields);
 		$this->db->where('uid',$uid);
 		$this->db->update('user');
+	}
+	
+	function create($fields){
+		$this->db->insert('user',$fields);
 	}
 	
 	function validate_token($user,$token){

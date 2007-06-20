@@ -3,8 +3,8 @@
 #top_bar { height: 5px; background: #515151; }
 
 #top { 
-	background: url("../images/bg_top.gif") repeat-x left bottom;
-	height: 30px; 
+	background: #515151 url("../images/bg_top.gif") repeat-x left bottom;
+	height: 120px; 
 	position: relative;
 	right: 0;
 	left: 0;
@@ -29,8 +29,9 @@
 	#top .login {
 		/*background: url("../images/bg_top.gif") repeat-x left bottom ;*/
 		color: #fff;
-		height: 100%;
-		float: right;
+		position: absolute;
+		right: 0;
+		bottom: 10px;
 		margin-right: 70px;
 	}
 
@@ -96,7 +97,7 @@ input, textarea { border: 1px solid #ccc;}
 #content {
 	display : inline;
 	float : left;
-	width : 510px;
+	width : 75%;
 	padding : 30px 20px 10px 10px;
 	border-right : 1px dotted #d0d0d0;
 	margin-bottom : 20px;
@@ -118,7 +119,28 @@ input, textarea { border: 1px solid #ccc;}
 	}
 	
 	
+/* Register View */
+
+#openid_notice {
+	background: #515151;
+	border: 0;
+	float: right;
+	margin-left: 300px;
+	padding: 10px;
+	position: relative;
+}
+
+#openid_notice .openid {
+	background-color: #fff;
+}
+	
+	
 /** Misc */
+
+.openid {
+background:transparent url(../images/openid_login.gif) no-repeat scroll 0pt 50%;
+padding-left:18px;
+}
 
 .lb {
 	position: absolute;
@@ -135,7 +157,7 @@ input, textarea { border: 1px solid #ccc;}
 	bottom: -1px;
 	height: 2px;
 	width: 2px;
-	background: url('../img/bg.gif') no-repeat -2px -2px;
+	background: url('../images/bg.gif') no-repeat -2px -2px;
 }
 
 .rt {
@@ -144,7 +166,7 @@ input, textarea { border: 1px solid #ccc;}
 	top: -1px;
 	height: 2px;
 	width: 2px;
-	background: url('../img/bg.gif') no-repeat -2px 0px;
+	background: url('../images/bg.gif') no-repeat -2px 0px;
 }
 .lt {
 	position: absolute;
@@ -152,5 +174,5 @@ input, textarea { border: 1px solid #ccc;}
 	top: -1px;
 	height: 2px;
 	width: 2px;
-	background: url('../img/bg.gif') no-repeat 0px 0px;
+	background: url('../images/bg.gif') no-repeat 0px 0px;
 }

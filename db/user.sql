@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.0.24)
 # Database: artweb
-# Generation Time: 2007-06-13 20:52:46 +0100
+# Generation Time: 2007-06-19 11:52:56 +0100
 # ************************************************************
 
 # Dump of table user
@@ -21,8 +21,8 @@ CREATE TABLE `user` (
   `email` varchar(255) default NULL,
   `homepage` varchar(255) default NULL,
   `info` text,
-  `timezone` int(11) default NULL,
-  `location` varchar(11) default NULL,
+  `timezone` varchar(255) default NULL,
+  `country` varchar(255) default NULL,
   `acl` int(11) unsigned default '0',
   `status` int(4) default NULL,
   `token` varchar(255) default NULL,

@@ -111,6 +111,18 @@ if ( ! defined('E_STRICT'))
 	define('E_STRICT', 2048);
 }
 
+
+/*
+|---------------------------------------------------------------
+| INCLUDE VENDORS IN INCLUDE_PATH
+|---------------------------------------------------------------
+| Includes the directory application/vendors
+| change the ':'  on ';' to use in WINDOWS environment.
+|
+*/
+ini_set('include_path', ini_get('include_path').':'.APPPATH.'vendors/');
+
+
 /*
 |---------------------------------------------------------------
 | LOAD THE FRONT CONTROLLER

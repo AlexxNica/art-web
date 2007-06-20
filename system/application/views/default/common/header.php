@@ -13,6 +13,7 @@
 	<title><?=property('app_title')?></title>
 	<?=style('reset.css')?>
 	<?=style('type.css')?>
+	<?=style('forms.css')?>
 	<?=style('layout.css')?>
 	<?=script('mootools.js')?>
 	<?=script('init.js')?>
@@ -24,6 +25,7 @@
 	<div id="universe">
 		<div id="top_bar">&nbsp;</div>
 		<div id="top">
+				<div id="logo">&nbsp;</div>
 				<div id="login" class="login">
 				<? if (!$this->authentication->is_logged_in()): ?>
 				<?= form_open('/account/login',array('id' => 'mini_login','name' => 'mini'))?>
@@ -40,7 +42,6 @@
 				<? else: ?>
 				<p><?= $this->authentication->get_username() ?> | <?= anchor('/account/logout','logout') ?></p>
 				<? endif;?>
-				<i class="lb">&nbsp;</i>
 				</div>
 		</div>
 	<div id="content">

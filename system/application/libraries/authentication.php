@@ -232,6 +232,11 @@ class Authentication
 		function get_username(){
 			return $this->settings['username'];
 		}
+		
+		function exists_openid_user($OpenID_identifier){
+			$openid_user = $this->CI->User->find_by_openid($OpenID_identifier);
+			return $openid_user;
+		}
 
 		/**
 			* toBitmask($permissions)

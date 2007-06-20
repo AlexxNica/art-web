@@ -33,3 +33,16 @@ code {
 }
 
 #top .login a { color: #C2A95D;}
+
+
+/** Register View */
+#openid_notice {}
+	#openid_notice h3{
+		color: #CEE12F;
+		font-family: "Lucida Grande", Verdana,serif;
+		font-size: 1.2em;
+	}
+
+	#openid_notice p,#openid_notice label {
+		color: #ccc;
+	}
