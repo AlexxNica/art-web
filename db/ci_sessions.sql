@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.0.24)
 # Database: artweb
-# Generation Time: 2007-06-13 20:52:54 +0100
+# Generation Time: 2007-06-28 20:49:53 +0100
 # ************************************************************
 
 # Dump of table ci_sessions

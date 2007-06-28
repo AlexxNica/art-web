@@ -23,9 +23,21 @@
 </head>
 <body id="agov3">
 	<div id="universe">
-		<div id="top_bar">&nbsp;</div>
 		<div id="top">
-				<div id="logo">&nbsp;</div>
+				<div id="top-bar">
+					<div id="gnome-menu">About GNOME · Download · Users · Art & Themes · Developers · Foundation</div>
+					<div class="logo">art.gnome.org</div>
+					<div id="ago-menu">
+						<ul>
+							<li class="marked"><a href="#">Browse</a></li>
+							<li><a href="#">News</a></li>
+							<li><a href="#">FAQ</a></li>
+							<li><a href="#">Forum</a></li>
+							<li><a href="#">About</a></li>
+						</ul>
+					</div>
+				</div>
+				<div id="sub-bar">
 				<div id="login" class="login">
 				<? if (!$this->authentication->is_logged_in()): ?>
 				<?= form_open('/account/login',array('id' => 'mini_login','name' => 'mini'))?>
@@ -43,5 +55,36 @@
 				<p><?= $this->authentication->get_username() ?> | <?= anchor('/account/logout','logout') ?></p>
 				<? endif;?>
 				</div>
+				</div>
 		</div>
+		<? if (@$show_middle_bar): ?>
+		<div id="middle-bar" class="clearfix">
+			<div id="initial_notice">
+				<h2>Welcome to AGO</h2>
+				<p>a place for high quality artwork and themes for the GNOME desktop.</p>
+
+				<p>All themes and artwork on art.gnome.org are tested and 
+				moderated (see the to ensure a high standard of quality and to make certain they work with your GNOME desktop.</p>
+			</div>
+			
+			<div id="news">
+				<h2>Latest News</h2>
+				<ul>
+					<li>Help us with future Art.Gnome.org version.</li>
+					<li>We need your GNOME 2.15 screenshots!</li>
+					<li>Long Overdue Features.</li>
+					<li>GUADEC Logo & Web Theme Contest</li>
+					<li>art.gnome.org button</li>
+				</ul>
+			</div>
+			
+			<div id="featured_work">
+				<div class="thumb"><span><img src="<?= base_url() ?>/repository/Magnifica_by_clxrr.jpg"/></span></div>
+			</div>
+		</div>
+		<? endif;?>
+		<?=$menu?>
 	<div id="content">
+		<div id="notice">
+			<?= flashget('notice'); ?>
+		</div>

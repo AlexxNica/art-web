@@ -64,6 +64,15 @@ class User_model extends Model
 			return false;
 	}
 	
+	function find_by_activation_code($code){
+		$this->db->where('activation_code LIKE \''.$this->db->escape_str($code).'\'');
+		$query = $this->db->get('user',1,0);
+		if ($query->num_rows()>0)
+			return $query->row();
+		else
+			return false;
+	}
+	
 	/**
 	 * get_user
 	 * 
@@ -80,16 +89,43 @@ class User_model extends Model
 			return false;
 	}
 	
+	/**
+	 * update($uid,$fields) - update users info
+	 * 
+	 * $uid - user id
+	 * $fields - array with fields to update
+	 */
 	function update($uid,$fields){
 		$this->db->set($fields);
 		$this->db->where('uid',$uid);
 		$this->db->update('user');
 	}
 	
-	function create($fields){
+	/**
+	 * create($fields) - creates a new user
+	 * 
+	 * $fields - array with new users info
+	 */
+	function create($info){
+		$fields = $info;
+		$fields['activation_code'] = $this->make_activation_code();
+		
 		$this->db->insert('user',$fields);
 	}
 	
+	function activate($uid){
+		$fields = array(
+			'activation_code'	=> null,
+			'activated_at'		=> date('Y-m-d H-i-s',time()));
+		$this->update($uid,$fields);
+		return true;
+	}
+
+	/**
+	 * validate_token($user,$token)
+	 * 
+	 * checks if the session token provided belongs to the user provided
+	 */
 	function validate_token($user,$token){
 		
 		$user = $this->find_by_username($user);
@@ -100,6 +136,18 @@ class User_model extends Model
 			return $user;
 		
 		return false;
+	}
+	
+	/**
+	 * make_activation_code
+	 * 
+	 * generates an activation code for user validation after registration process
+	 * 
+	 */
+	protected function make_activation_code(){
+		$code = explode('-',date('Y-m-day-H-i-s',time()));
+		shuffle($code);
+		return sha1(join('_',$code));
 	}
 	
 }

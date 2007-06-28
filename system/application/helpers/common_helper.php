@@ -782,3 +782,5 @@ function select_timezone($name,$selected=null,$js=null){
 	
 	echo form_dropdown('timezone',$tz_options,$selected,$js);
 }
+
+?>

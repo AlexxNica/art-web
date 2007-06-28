@@ -13,6 +13,12 @@ h1 {
 	padding : 5px 0 6px 0;
 	}
 	
+h1,h2,h3{
+	font-family: "Century Gothic", "Tahoma", Arial, serif;
+	font-weight: normal;
+	margin-bottom: 10px;
+}
+	
 code {
 	display : block;
 	margin : 14px 0 14px 0;
@@ -23,9 +29,15 @@ code {
 	background-color : #f9f9f9;
 	}
 	
+
+/** Ago menu */
+#ago-menu ul li a {
+	font-family: "Century Gothic", "Tahoma", Arial, serif;
+	font-size: 18px;
+	color: #fdfdfd;
+}
 	
-	
-/** Top */
+/** Login */
 #top .login label{
 	font-family: Verdana,sans-serif;
 	position: relative;
@@ -33,6 +45,14 @@ code {
 }
 
 #top .login a { color: #C2A95D;}
+
+
+
+/** Sidebar Elements */
+
+#resources_menu ul li a {
+	color: #B5B58A;
+}
 
 
 /** Register View */

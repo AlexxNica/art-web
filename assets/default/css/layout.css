@@ -1,39 +1,138 @@
-#universe {}
+#universe {
+	min-width: 1024px;
+}
 
 #top_bar { height: 5px; background: #515151; }
 
-#top { 
-	background: #515151 url("../images/bg_top.gif") repeat-x left bottom;
-	height: 120px; 
+#top-bar { 
+	background: #515151 url("../images/bgs.gif") repeat-x left bottom;
+	height: 106px; 
 	position: relative;
 	right: 0;
 	left: 0;
 	top: 0px;
 }
 
-	/*#top .logo { 
-		height: 47px;
-		margin: 0 0 0 15px;
-		width: 300px; 
-	}*/
-	/*#top .login_wrapper { 
-		background:  url("../images/bg_top.gif") no-repeat -8px -8px; 
-		height: 29px;
-		left: 300px;
-		padding-left: 15px;
+	#top-bar .logo {
+		background: url("../images/bgs.gif") no-repeat left -68px;
+		bottom: 0;
+		height: 103px;
+		overflow: hidden;
+		font-size: 0px;
 		position: absolute;
-		right: 0;
+		width: 310px;
+		z-index: 0;
+	}
+	
+	#top-bar #gnome-menu {
+		background: #777;
+		display: inline;
+		overflow: hidden;
+		height: 15px;
+		position: absolute;
+		left: 50%;
 		top: 0;
-		min-width: 400px;
-	}*/
+		z-index: 2;
+	}
+	
+	#top-bar #ago-menu {
+		position: absolute;
+		right: 50px;
+		bottom: 12px;
+	}
+	
+	#ago-menu ul {
+		position: relative;
+		list-style: none;
+		z-index: 3;
+	}
+		#ago-menu ul li {
+			display: inline;
+			margin: 5px 10px 0px 10px;
+			padding-bottom: 15px;
+		}
+		
+		#ago-menu ul li.marked,
+		#ago-menu ul li:hover {
+			background: url("../images/marker.gif") no-repeat center 17px;
+		}
+
+#sub-bar {
+	background: #464646;
+	height: 40px;
+	position: relative;
+	right: 0;
+	left: 0;
+	top:0;
+}
+
 	#top .login {
-		/*background: url("../images/bg_top.gif") repeat-x left bottom ;*/
 		color: #fff;
 		position: absolute;
-		right: 0;
+		left: 0;
 		bottom: 10px;
-		margin-right: 70px;
+		margin-left: 20px;
 	}
+	
+#middle-bar {
+	background: #b5b58a url("../images/middle_bar_bg.gif") repeat-x left top;
+	height: auto;
+	border-bottom: 1px solid #fff;
+	padding: 20px 5px 10px 5px;
+	position: relative;
+}
+	#middle-bar #initial_notice{
+		position: relative;
+		background: #c1c19d;
+		padding: 10px;
+		margin-right: 5px;
+		width: 275px;
+	}
+	
+	#middle-bar h2{
+		color: #000;
+	}
+	
+	#middle-bar #initial_notice,
+	#middle-bar #news {
+		float: left;
+		padding: 10px;
+	}
+	
+	#middle-bar #news {
+		border-left: 1px solid #c1c19d;
+		padding-left: 20px;
+	}
+	
+	#middle-bar p,#middle-bar li {
+		color: #555;
+	}
+	
+	#featured_work{
+		background: #999978 url("../images/featured.gif") no-repeat left top;
+		float: right;
+		height: 150px;
+		width: 220px;
+		margin-top: -5px;
+		margin-right: 10px;
+		padding-left: 30px;
+		position: relative;
+		display: table;
+	}
+	
+	#featured_work .thumb{
+		overflow: hidden;
+		display: table-cell; 
+		vertical-align: middle;
+		text-align: center;
+		#position: absolute;
+		#top: 50%;
+	}
+	#featured_work .thumb span {
+		#position: relative;
+		#top: -50%;
+	}
+
 
 /** Forms */
 input, textarea { border: 1px solid #ccc;}
@@ -95,11 +194,9 @@ input, textarea { border: 1px solid #ccc;}
 }*/
 
 #content {
-	display : inline;
-	float : left;
-	width : 75%;
+	position: relative;
+	margin-right: 300px;
 	padding : 30px 20px 10px 10px;
-	border-right : 1px dotted #d0d0d0;
 	margin-bottom : 20px;
 	}
 	
@@ -108,8 +205,29 @@ input, textarea { border: 1px solid #ccc;}
 	width : 250px;
 	padding : 10px;
 	margin-bottom : 20px;
-	background: #f4f4f4;
+	background: none;
 	}
+	
+/** sidebar elements*/
+
+#resources_menu {
+	position: relative;
+	background: #333;
+	padding: 10px;
+}
+
+	#resources_menu h2 {
+		color: #565656;
+		margin-bottom: 7px;
+	}
+	
+	#resources_menu ul {
+		list-style: none;
+	}
+
+
+
+
 	
 #footer {
 	clear : both;
@@ -117,6 +235,7 @@ input, textarea { border: 1px solid #ccc;}
 	height : 40px;
 	border-top : 1px solid #d0d0d0;
 	}
+	
 	
 	
 /* Register View */
@@ -175,4 +294,12 @@ padding-left:18px;
 	height: 2px;
 	width: 2px;
 	background: url('../images/bg.gif') no-repeat 0px 0px;
+}
+
+.clearfix:after {	
+	content: ".";	
+	display: block;	
+	height: 0;	
+	clear: both;	
+	visibility: hidden;
 }

@@ -31,15 +31,17 @@ class Account extends Controller{
 		
 		if ($post){
 			$remember = $this->input->post('remember',TRUE)?true:false;
-			$user = $this->input->post('username',TRUE);
+			$username = $this->input->post('username',TRUE);
 			$refer = $this->input->post('refer',TRUE);
 			
-			if ($this->User->exists($user)){
-				$user = $this->User->find_by_username($user);
+			$user = $this->User->find_by_username($username);
+			
+			if ($user && $user->activated_at != null){
 				$pass = $this->input->post('password',TRUE);
-				if (md5($pass) == $user->password)
+				if (md5($pass) == $user->password){
 					$this->authentication->login($user->uid,$remember);
-				else {
+					flashset('notice','Successful authentication!');
+				} else {
 					
 				}
 			}
@@ -104,7 +106,7 @@ class Account extends Controller{
 		                      preg_replace("|http://|", "", site_url('')));
 		
 		
-		$openid_user = $this->authentication->exists_openid_user($openid);
+		$openid_user = $this->authentication->exists_openid_user('http://'.(preg_replace("|http://|", "", $openid)).'/');
 		if (!$openid_user){
 		$extensions = array(
 				array('sreg','required', 'email'),
@@ -133,17 +135,14 @@ class Account extends Controller{
 		$msg = null;
 		if ($response->status == Auth_OpenID_CANCEL) {
 		    // This means the authentication was cancelled.
-		    $msg = 'Verification cancelled.';
+			flashset('error','Verification cancelled.');
 		} else if ($response->status == Auth_OpenID_FAILURE) {
-		    $msg = "OpenID authentication failed: " . $response->message;
+			flashset('error','OpenID authentication failed!');
+		 //   $msg = "OpenID authentication failed: " . $response->message;
 		} else if ($response->status == Auth_OpenID_SUCCESS) {
 		    // This means the authentication succeeded.
 		    $openid = $response->identity_url;
 		    $esc_identity = htmlspecialchars($openid, ENT_QUOTES);
-		    $success = sprintf('You have successfully verified ' .
-		                       '<a href="%s">%s</a> as your identity.',
-		                       $esc_identity, $esc_identity);
-		
 			
 			$openid_user = $this->authentication->exists_openid_user($esc_identity);
 			if (!$openid_user){
@@ -174,6 +173,7 @@ class Account extends Controller{
 				$this->layout->buildPage('account/register', $data);
 				return false;
 			} else {
+				flashset('notice','OpenId authentication successful!');
 				$this->authentication->login($openid_user->uid,FALSE);
 				redirect('','refresh');
 			}
@@ -216,7 +216,6 @@ class Account extends Controller{
 			$fields['email'] = 'Email Address';
 
 			$this->validation->set_fields($fields);
-
 			$this->validation->set_rules($rules);
 			
 			
@@ -242,6 +241,15 @@ class Account extends Controller{
 		}
 		
 		$this->layout->buildPage('account/register', $data);
+	}
+	
+	function activate($id=null){
+		if ($id==null) exit(0);
+		$user = $this->User->find_by_activation_code($id);
+		if ($user && $this->User->activate($user->uid)){
+			flashset('notice','Account activation successful!<br/> You may login now.');
+			redirect('/account','refresh');
+		}
 	}
 	
 	function exists_username($str){
