@@ -59,7 +59,7 @@
 		
 		<div id="top">
 				<div id="top-bar">
-					<a href="<?= base_url() ?>"><div class="logo">art.gnome.org</div></a>
+					<div class="logo"><a href="<?= base_url() ?>">art.gnome.org</a></div>
 					<div id="ago-menu">
 						<ul>
 							<li class="marked"><a href="#">Browse</a></li>
@@ -107,13 +107,13 @@
 					<li>Help us with future Art.Gnome.org version.</li>
 					<li>We need your GNOME 2.15 screenshots!</li>
 					<li>Long Overdue Features.</li>
-					<li>GUADEC Logo & Web Theme Contest</li>
+					<li>GUADEC Logo &amp; Web Theme Contest</li>
 					<li>art.gnome.org button</li>
 				</ul>
 			</div>
 			
 			<div id="featured_work">
-				<div class="thumb"><span><img src="<?= base_url() ?>/repository/sample.jpg"/></span></div>
+				<div class="thumb"><span><img src="<?= base_url() ?>/repository/sample.jpg" alt="Sample Preview" /></span></div>
 			</div>
 		</div>
 		<? endif;?>
