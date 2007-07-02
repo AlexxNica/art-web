@@ -182,16 +182,10 @@ input, textarea { border: 1px solid #ccc;}
 	background-position: -6px -23px;
 }
 
-/*#top .login input {
-	background: transparent;
-	height: 17px;
-	width: 139px;
-	padding: 2px 2px 3px 1px;
-	position: relative;
-	border: 0;
-	z-index:40;
-	top:2px;
-}*/
+#top .login .lostpass {
+	margin-left: 70px;
+}
+
 
 #content {
 	position: relative;
@@ -302,4 +296,96 @@ padding-left:18px;
 	height: 0;	
 	clear: both;	
 	visibility: hidden;
+}
+
+
+/** Containers */
+
+.container_g1 {
+	background: #5c5c5c;
+}
+
+.container_g2 {
+	background: #636363;
+}
+
+.container_g1,
+.container_g2 {
+	position: relative;
+	padding: 10px;
+	margin: 5px;
+	overflow: hidden;
+}
+
+.thumb_list {
+	position: relative;
+	overflow: hidden;
+	height: 120px;
+}
+
+.thumb_list .thumb {
+	position: relative;
+	overflow: hidden;
+	margin: 0px;
+	line-height: 120px;
+	padding: 5px 10px 5px 10px;
+	min-width: 100px;
+}
+
+.thumb_list .thumb img {
+	vertical-align: middle;
+}
+
+/** Warnings & Notices*/
+
+.warning {
+	background: #363636 url("../images/icons/stop.png") no-repeat 5px 5px;
+	padding: 5px 5px 5px 30px;
+	border: 1px solid #777;
+	width: 400px;
+	margin: 10px;
+}
+
+
+
+/** Gnome Bar */
+#general
+{
+list-style: none;
+background: #2E3436 url(http://gnome.jardigrec.eu/general_bg.png) 0 100% repeat-x;
+text-align: right;
+padding: 0 1ex;
+}
+#general li /* */
+{
+display: inline;
+background: url(http://gnome.jardigrec.eu/general_separator.png) 0 0 no-repeat;
+padding-top: 10px;
+padding-bottom: 8px;
+}
+#general li a
+{
+font-weight: bold;
+color: #FFFFFF;
+margin: 0 2ex;
+text-decoration: none;
+line-height: 30px;
+}
+#general li a:hover
+{
+text-decoration: underline;
+}
+#general .home /* */
+{
+float: left;
+background: url(http://gnome.jardigrec.eu/general_separator.png) 100% 0 no-repeat;
+padding-top: 0;
+padding-bottom: 0;
+}
+#general .home a
+{
+float: left; /* */
+background: url(http://gnome.jardigrec.eu/foot.png) 7px 50% no-repeat;
+margin-left: 0;
+padding-left: 27px;
 }

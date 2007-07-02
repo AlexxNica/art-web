@@ -64,6 +64,12 @@ class User_model extends Model
 			return false;
 	}
 	
+	/**
+	 * find_by_activation_code($code)
+	 * 
+	 * $code - activation code to find
+	 * returns user info or false
+	 */
 	function find_by_activation_code($code){
 		$this->db->where('activation_code LIKE \''.$this->db->escape_str($code).'\'');
 		$query = $this->db->get('user',1,0);
@@ -72,6 +78,22 @@ class User_model extends Model
 		else
 			return false;
 	}
+	
+	/**
+	 * find_by_email($email)
+	 * 
+	 * $email - email address to find
+	 * returns user info or false
+	 */
+	function find_by_email($email){
+		$this->db->where('email LIKE \''.$this->db->escape_str($email).'\'');
+		$query = $this->db->get('user',1,0);
+		if ($query->num_rows()>0)
+			return $query->row();
+		else
+			return false;
+	}
+	
 	
 	/**
 	 * get_user
@@ -111,6 +133,19 @@ class User_model extends Model
 		$fields['activation_code'] = $this->make_activation_code();
 		
 		$this->db->insert('user',$fields);
+		$templates = $this->config->item('email_template');
+		$activation_info = $templates['activation'];
+		
+		/* Send activation email */
+		$this->load->library('Email');
+		$this->email->to($fields['email']);
+		$this->email->from('noreply@art.gnome.org');
+		$this->email->subject($activation_info['subject']);
+		$this->email->message(sprintf($activation_info['body'],$fields['username'],base_url().'account/activate/'.$fields['activation_code']));
+		
+		if (!$this->email->send()){
+			show_error('A problem occurred during registration process. Please contact a website administrator.');
+		}
 	}
 	
 	function activate($uid){
@@ -119,6 +154,71 @@ class User_model extends Model
 			'activated_at'		=> date('Y-m-d H-i-s',time()));
 		$this->update($uid,$fields);
 		return true;
+	}
+	
+	/**
+	 * lost_password($user_id) - creates a temporary license to reset a user's password
+	 * 
+	 * $user_id - user id having password reset
+	 */
+	function lost_password($username){
+		$user = $this->find_by_username($username);
+		
+		if (!$user) return false;
+		
+		$fields['user_id'] = $user->uid;
+		$fields['requested_at'] = date('Y-m-d H-i-s',time());
+		$fields['reset_key'] = $this->make_activation_code();
+		
+		$this->db->insert('lost_password',$fields);
+		
+		/* Send lost password email */
+		$templates = $this->config->item('email_template');
+		$reset_info = $templates['lost_password'];
+		$this->load->library('Email');
+		$this->email->to($user->email);
+		$this->email->from('noreply@art.gnome.org');
+		$this->email->subject($reset_info['subject']);
+		$this->email->message(sprintf($reset_info['body'],
+															$user->username,
+															base_url().'account/resetpwd/'.$fields['reset_key'],
+															base_url().'help/contact'
+									));
+		
+		if (!$this->email->send()){
+			show_error('A problem occurred while sending the lost password mail. Please contact a website administrator.');
+		}
+		return true;
+	}
+	
+	function valid_reset_key($reset_key){
+		$this->db->where('lost_password.reset_key LIKE '.$this->db->escape($reset_key).' AND lost_password.user_id = user.uid');
+		$query = $this->db->get('lost_password,user',1,0);
+		if ($query->num_rows()>0){
+			$user = $query->row();
+			$request_at = strtotime($user->requested_at);
+			$dif = abs(time()-$request_at);
+			if ($dif>3600){ // request timed out!
+				return false;
+			} else {
+				return $user;
+			}
+		} else
+			return false;
+	}
+	
+	function reset_password($reset_key,$new_password){
+		$user = $this->valid_reset_key($reset_key);
+		if (!$user){
+			return false;
+		} else {
+			$this->db->where('reset_key LIKE '.$this->db->escape($reset_key));
+			$this->db->delete('lost_password');
+			
+			$this->db->where('uid',$user->uid);
+			$this->db->update('user',array('password'=>$new_password));
+			return true;
+		}
 	}
 
 	/**

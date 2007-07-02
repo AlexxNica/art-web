@@ -5,6 +5,7 @@ a{text-decoration:none;}
 
 body {
 	background: #565656;
+	color: #fdfdfd;
 }
 
 p {
@@ -14,3 +15,6 @@ p {
 body,p,li,label,h1,h2,h3,legend {
 	color: #fdfdfd;
 }
+
+a { color: #C2A95D; text-decoration: none; }
+a:hover { border-bottom: 1px dotted #C2A95D; }

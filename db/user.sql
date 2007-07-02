@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.0.24)
 # Database: artweb
-# Generation Time: 2007-06-28 20:49:45 +0100
+# Generation Time: 2007-07-02 23:02:14 +0100
 # ************************************************************
 
 # Dump of table user
@@ -29,7 +29,7 @@ CREATE TABLE `user` (
   `activation_code` varchar(255) default NULL,
   `activated_at` datetime default NULL,
   PRIMARY KEY  (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 
 

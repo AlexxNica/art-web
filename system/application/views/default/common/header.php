@@ -23,10 +23,43 @@
 </head>
 <body id="agov3">
 	<div id="universe">
+		<ul id="general">
+
+		   <li id="siteaction-gnome_home" class="home">
+		     <a href="http://www.gnome.org/" accesskey=""
+		        title="Home">Home</a>
+		   </li>
+		   <li id="siteaction-gnome_news">
+		     <a href="http://news.gnome.org" accesskey=""
+		        title="News">News</a>
+		   </li>
+		   <li id="siteaction-gnome_projects">
+
+		     <a href="http://www.gnome.org/projects/" accesskey=""
+		        title="Projects">Projects</a>
+		   </li>
+		   <li id="siteaction-gnome_art">
+		     <a href="http://art.gnome.org" accesskey="" title="Art">Art</a>
+		   </li>
+		   <li id="siteaction-gnome_support">
+		     <a href="http://www.gnome.org/support/" accesskey=""
+		        title="Support">Support</a>
+
+		   </li>
+		   <li id="siteaction-gnome_development">
+		     <a href="http://developer.gnome.org" accesskey=""
+		        title="Development">Development</a>
+		   </li>
+		   <li id="siteaction-gnome_community">
+		     <a href="http://foundation.gnome.org/" accesskey=""
+		        title="Foundation">Foundation</a>
+		   </li>
+		</ul>
+
+		
 		<div id="top">
 				<div id="top-bar">
-					<div id="gnome-menu">About GNOME · Download · Users · Art & Themes · Developers · Foundation</div>
-					<div class="logo">art.gnome.org</div>
+					<a href="<?= base_url() ?>"><div class="logo">art.gnome.org</div></a>
 					<div id="ago-menu">
 						<ul>
 							<li class="marked"><a href="#">Browse</a></li>
@@ -49,6 +82,7 @@
 					<input type="hidden" name="login" value="true" />
 					<span><?= anchor('/account/login/','login',array('class' => 'submitter' ))?></span>
 					<input type="submit" style="display:none"/>
+					<span class="lostpass">| <?= anchor('/account/register','Register')?> or <?= anchor('/account/lost_password','Lost Password')?></span>
 					</fieldset>
 				</form>
 				<? else: ?>
@@ -79,7 +113,7 @@
 			</div>
 			
 			<div id="featured_work">
-				<div class="thumb"><span><img src="<?= base_url() ?>/repository/Magnifica_by_clxrr.jpg"/></span></div>
+				<div class="thumb"><span><img src="<?= base_url() ?>/repository/sample.jpg"/></span></div>
 			</div>
 		</div>
 		<? endif;?>
