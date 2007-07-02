@@ -2,9 +2,16 @@ AGO V3 - Installation Notes
 
 1 - Copy system/application/config/config.php_template to system/application/config/config.php
 2 - Configure config.php to the local configuration
+	
+		* set $config['base_url'] to the local config
+		* set $config['index_page'] = "index.php"; to $config['index_page'] = "";
+		* set $config['uri_protocol'] to "PATH_INFO"
+		* set $config['sess_use_database'] to TRUE
+		
 3 - Copy system/application/config/database.php_template to system/application/config/database.php
 4 - Configure database.php to the local configuration
-5 - Create .htaccess in the root dir (the same of this file) with add the following lines:
+5 - Create database tables with the *.sql files in the /db (after doing this you may delete the /db directory).
+6 - Create .htaccess in the root dir (the same of this file) with add the following lines:
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
