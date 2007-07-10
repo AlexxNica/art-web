@@ -162,7 +162,10 @@ class User_model extends Model
 	 * $user_id - user id having password reset
 	 */
 	function lost_password($username){
+		$user = false;
 		$user = $this->find_by_username($username);
+		if (!$user)
+			$user = $this->find_by_email($username);
 		
 		if (!$user) return false;
 		
@@ -177,7 +180,7 @@ class User_model extends Model
 		$reset_info = $templates['lost_password'];
 		$this->load->library('Email');
 		$this->email->to($user->email);
-		$this->email->from('noreply@art.gnome.org');
+		$this->email->from('noreply@art.gnome.org','noreply');
 		$this->email->subject($reset_info['subject']);
 		$this->email->message(sprintf($reset_info['body'],
 															$user->username,
@@ -188,6 +191,7 @@ class User_model extends Model
 		if (!$this->email->send()){
 			show_error('A problem occurred while sending the lost password mail. Please contact a website administrator.');
 		}
+		
 		return true;
 	}
 	
@@ -198,7 +202,7 @@ class User_model extends Model
 			$user = $query->row();
 			$request_at = strtotime($user->requested_at);
 			$dif = abs(time()-$request_at);
-			if ($dif>3600){ // request timed out!
+			if ($dif>43200){ // request timed out!
 				return false;
 			} else {
 				return $user;
@@ -212,7 +216,8 @@ class User_model extends Model
 		if (!$user){
 			return false;
 		} else {
-			$this->db->where('reset_key LIKE '.$this->db->escape($reset_key));
+			//$this->db->where('reset_key LIKE '.$this->db->escape($reset_key));
+			$this->db->where('user_id',$user->uid);
 			$this->db->delete('lost_password');
 			
 			$this->db->where('uid',$user->uid);

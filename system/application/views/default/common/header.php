@@ -62,7 +62,8 @@
 					<div class="logo"><a href="<?= base_url() ?>">art.gnome.org</a></div>
 					<div id="ago-menu">
 						<ul>
-							<li class="marked"><a href="#">Browse</a></li>
+							<li class="marked"><?= anchor('/','Home')?></li>
+							<li ><a href="#">Browse</a></li>
 							<li><a href="#">News</a></li>
 							<li><a href="#">FAQ</a></li>
 							<li><a href="#">Forum</a></li>
@@ -75,7 +76,7 @@
 				<? if (!$this->authentication->is_logged_in()): ?>
 				<?= form_open('/account/login',array('id' => 'mini_login','name' => 'mini'))?>
 					<fieldset>
-					<label for="username">Username:</label>
+					<label for="username">Email:</label>
 					<input type="text" name="username" class="inputter" />
 					<label for="password">Password:</label>
 					<input type="password" name="password" class="inputter" />
@@ -117,8 +118,13 @@
 			</div>
 		</div>
 		<? endif;?>
-		<?=$menu?>
-	<div id="content">
-		<div id="notice">
-			<?= flashget('notice'); ?>
+		<div id="postboard">
+			<? if (flashget('notice')): ?>
+			<div id="notice">
+				<p><?= flashget('notice'); ?></p>
+			</div>
+			<?endif;?>
 		</div>
+		<?=$menu?>
+		
+	<div id="content">

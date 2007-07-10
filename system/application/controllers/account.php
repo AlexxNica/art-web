@@ -31,10 +31,10 @@ class Account extends Controller{
 
 		if ($post){
 			$remember = $this->input->post('remember',TRUE)?true:false;
-			$username = $this->input->post('username',TRUE);
+			$email = $this->input->post('username',TRUE);
 			$refer = $this->input->post('refer',TRUE);
 
-			$user = $this->User->find_by_username($username);
+			$user = $this->User->find_by_email($email);
 
 			if ($user && $user->activated_at != null){
 				$pass = $this->input->post('password',TRUE);
@@ -234,10 +234,14 @@ class Account extends Controller{
 					'acl' => $this->authentication->toBitmask($this->authentication->settings['regular_user'])
 					);
 				$this->User->create($fields);
-				redirect('/account/login','refresh');
+				//flashset('notice','Registration Successful!<br/> You\'ll receive an activation email in a few minutes.');
+				redirect('/account/register?success','refresh');
 			}
 
-		} else { 
+		} else {
+			if (isset($_GET['success'])){
+				$data['success'] = true;
+			}
 		}
 
 		$this->layout->buildPage('account/register', $data);
@@ -255,7 +259,8 @@ class Account extends Controller{
 	function lost_password(){
 		$data['null'] = null;
 		if ($_POST){
-			$username = $this->input->post('username');
+		 	$username = $this->input->post('username');
+				
 			
 			// if username wasn't empty
 			if ($username){
@@ -273,12 +278,16 @@ class Account extends Controller{
 
 	function resetpwd($id=null){
 		$data['null'] = null;
+		
 		if ($id==null) exit(0);
 		$data['id'] = $id;
-
+		
 		if (!$this->User->valid_reset_key($id)){
-			$data['no_valid_key'] = true;
-
+			if (isset($_GET['success'])){
+				$data['success'] = true;
+			} else {
+				$data['no_valid_key'] = true;
+			}
 		} else {
 
 			if ($_POST){
@@ -298,8 +307,8 @@ class Account extends Controller{
 
 				} else {
 					if ($this->User->reset_password($id,$this->input->post('password'))){
-						flashset('notice','Password reset successful!<br/> You may login with your new password now.');
-						redirect('/account','refresh');
+						//flashset('notice','Password reset successful!<br/> You may login with your new password now.');
+						redirect('/account/resetpwd/'.$id.'?success','refresh');
 					}
 				}
 			}

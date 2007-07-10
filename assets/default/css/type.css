@@ -1,22 +1,23 @@
 body {
 	font : normal 11px/14px Verdana, Sans-serif;
 	font-weight: normal;
-	color : #f4f4f4;
-	}
-	
-h1 {
-	color : #444;
-	border-bottom : 1px solid #d0d0d0;
-	font-size : 16px;
-	font-weight : bold;
-	margin : 10px;
-	padding : 5px 0 6px 0;
+	color : #fff;
 	}
 	
 h1,h2,h3{
 	font-family: "Century Gothic", "Tahoma", Arial, serif;
 	font-weight: normal;
 	margin-bottom: 10px;
+}
+
+h1 {
+	font-size: 200%;
+	margin: 0 0 0.2em 0;
+	line-height: 1;
+	color: #CEE12F;
+	font-family: "Lucida Grande", Verdana,serif;
+	letter-spacing: -0.03em;
+	font-weight: normal;
 }
 	
 code {
@@ -35,6 +36,10 @@ code {
 	font-family: "Century Gothic", "Tahoma", Arial, serif;
 	font-size: 18px;
 	color: #fdfdfd;
+}
+
+#ago-menu ul li a:hover {
+	border: 0;
 }
 	
 /** Login */
@@ -64,5 +69,5 @@ code {
 	}
 
 	#openid_notice p,#openid_notice label {
-		color: #ccc;
+		color: #fff;
 	}

@@ -6,7 +6,7 @@
 
 <?else:?>
 <h2>Lost password assistance</h2>
-<p>Enter your username. We will send you an email with instructions for how to reset your password.</p>
+<p>Enter your username or email. We will send you an email with instructions for how to reset your password.</p>
 <?= form_open('/account/lost_password') ?>
 	<input type="text" name="username" />
 	<input type="hidden" name="lost_password" /><input type="submit" name="send" value="send"/>
@@ -14,7 +14,7 @@
 
 	<? if (@$baduser): ?>
 	<div class="warning">
-		<p>Sorry, but there isn't any account associated to that username.</p>
+		<p>Sorry, but there isn't any account associated to that username/email.</p>
 		<small><?= anchor('/help/contact','Send us a message') ?> if you need further help.</small>
 	</div>
 	<?endif;?>

@@ -1,7 +1,8 @@
 <?php
 
-$config['charset'] = 'iso-8859-1';
+$config['charset'] = 'utf8';
 $config['wordwrap'] = TRUE;
+$config['protocol'] = 'mail';
 
 
 $config['email_template']['activation'] = array(
@@ -37,7 +38,7 @@ Someone has requested a password reset for the art.gnome.org account associated 
 If it was you, you can choose a new password using the link bellow:
 
 User name: %s
-Password reset link for this account (link expires in a hour):
+Password reset link for this account (link expires in 12 hours):
 %s
 
 For support, visit us at:

@@ -39,6 +39,7 @@ function redirect_external($uri = '', $method = 'location')
 
 function country_select($name,$selected=null,$js=null){
 	$country_options = array(
+		'' => '--',
 		'US' => 'United States',
 		 'AF' => 'Afghanistan',
 		 'AX' => 'Aland Islands',

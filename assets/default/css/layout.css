@@ -190,7 +190,7 @@ input, textarea { border: 1px solid #ccc;}
 #content {
 	position: relative;
 	margin-right: 300px;
-	padding : 30px 20px 10px 10px;
+	padding : 10px 20px 10px 10px;
 	margin-bottom : 20px;
 	}
 	
@@ -220,6 +220,23 @@ input, textarea { border: 1px solid #ccc;}
 	}
 
 
+/** Postboard: Warnings, Notices */
+
+#postboard{
+	position:relative;
+}
+
+#notice {
+	background: #85C845 url("../images/notice_bg.gif") no-repeat left center;
+	padding: 5px 10px 5px 20px;
+	color: #666;
+}
+
+#notice p {
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: normal;
+}
 
 
 	
@@ -241,6 +258,11 @@ input, textarea { border: 1px solid #ccc;}
 	margin-left: 300px;
 	padding: 10px;
 	position: relative;
+	border: 1px solid #CEE12F;
+	padding: 10px 12px;
+	background: #3a3a3a;
+	color: #fff;
+	width: 215px;
 }
 
 #openid_notice .openid {

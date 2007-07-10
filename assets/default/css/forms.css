@@ -1,10 +1,15 @@
 /* IDs */
+#verticalForm form{
+	background: #464646;
+	width: 300px;
+}
 #verticalForm fieldset
 {
 	display: block;
 	width: 25em;
-	margin: 0 0 3em 0;
-	padding: 0 1em 1em 1em;
+	margin: 0 0 0em 0em;
+	padding: 1em 1em 1em 1em;
+	border: 0;
 }
 
 #verticalForm fieldset.radio
@@ -28,14 +33,27 @@
 #verticalForm input
 {
 	display: block;
-	width: 15em;
+	width: 200px;
+}
+
+#verticalForm input[type="text"],
+#verticalForm input[type="password"] {
+    background: #fff;
+    line-height: 5em !important;
+	font-size: 1.5em;
+    vertical-align: middle;
+}
+
+#verticalForm input[type="hidden"]{
+	display: none;
 }
 
 #verticalForm label
 {
 	display: block;
 	margin-bottom: 1em;
-	font-weight: bold;
+	font-weight: normal;
+	font-size: 1.2em;
 }
 
 #verticalForm label.first
@@ -47,4 +65,36 @@
 {
 	display: block;
 }
+
+#verticalForm legend{
+	margin: -5px;
+}
+
+#verticalForm .form_help {
+	display: none;
+}
+
+#verticalForm .form_help {
+	display:none;
+	position: absolute;
+	left: 325px;
+	width: 250px;
+	margin-top: -30px;
+	border: 1px solid #CEE12F;
+	padding: 10px 12px;
+	background: #3a3a3a;
+	color: #fff;
+	line-height: 1.7em;
+	font-size: 0.9em;
+}
+
+.hint-pointer {
+    position: absolute;
+    left: -10px;
+    top: 5px;
+    width: 10px;
+    height: 19px;
+    background: url(../images/pointer.gif) left top no-repeat;
+}
+
 
