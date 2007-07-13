@@ -37,6 +37,7 @@ class Authentication
 
 		$settings['permissions'] = $config['permissions'];
 		$settings['regular_user'] = $config['regular'];
+		$settings['admin_user'] = $config['admin'];
 		$settings['login_page'] = $config['login_page'];
 
 		$this->settings = $settings;

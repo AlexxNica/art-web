@@ -62,12 +62,13 @@
 					<div class="logo"><a href="<?= base_url() ?>">art.gnome.org</a></div>
 					<div id="ago-menu">
 						<ul>
-							<li class="marked"><?= anchor('/','Home')?></li>
-							<li ><a href="#">Browse</a></li>
-							<li><a href="#">News</a></li>
-							<li><a href="#">FAQ</a></li>
-							<li><a href="#">Forum</a></li>
-							<li><a href="#">About</a></li>
+							<li></li>
+							<li <?= menu_marker(); ?> ><?= anchor('','Home')?></li>
+							<li <?= menu_marker('artwork'); ?> ><?= anchor('browse','Browse')?></li>
+							<li <?= menu_marker('news'); ?> ><?= anchor('news','News')?></li>
+							<li <?= menu_marker('faq'); ?> ><?= anchor('faq','FAQ')?></li>
+							<li <?= menu_marker('forum'); ?> ><?= anchor('forum','Forum')?></li>
+							<li <?= menu_marker('contact'); ?> ><?= anchor('contact','About')?></li>
 						</ul>
 					</div>
 				</div>

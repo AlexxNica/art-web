@@ -204,10 +204,18 @@ input, textarea { border: 1px solid #ccc;}
 	
 /** sidebar elements*/
 
-#resources_menu {
+.menu_field {
 	position: relative;
 	background: #333;
 	padding: 10px;
+	margin-bottom: 5px;
+}
+
+	.menu_field ul {
+		list-style: none;
+	}
+
+#resources_menu {
 }
 
 	#resources_menu h2 {
@@ -410,4 +418,62 @@ float: left; /* */
 background: url(http://gnome.jardigrec.eu/foot.png) 7px 50% no-repeat;
 margin-left: 0;
 padding-left: 27px;
+}
+
+/** iconset menu*/
+
+.iconset i {
+	width: 16px;
+	height: 16px;
+	display: block;
+	float: left;
+	margin-right: 5px;
+}
+
+.iconset li {
+	line-height: 17px;
+}
+
+.i_users {
+	background: url("../images/icons/user.png") no-repeat top left;
+}
+
+.i_moderate {
+	background: url("../images/icons/package_green.png") no-repeat top left;
+}
+
+.i_news {
+	background: url("../images/icons/newspaper.png") no-repeat top left;
+}
+
+.i_submit {
+	background: url("../images/icons/photo_add.png") no-repeat top left;
+}
+
+/** Submission process */
+
+#steps {
+	height: 30px;
+}
+
+#steps span{
+	border: 1px solid #fff;
+	display: block;
+	font-size: 20px;
+	height: auto;
+	padding: 7px;
+	width: auto;
+	float: left;
+	margin-left: 5px;
+}
+
+#steps span.marked{
+	background: red;
+}
+.artwork_type {
+	position: relative;
+	background: #444;
+	padding: 10px;
+	margin: 5px;
+	width: 400px;
 }

@@ -784,4 +784,11 @@ function select_timezone($name,$selected=null,$js=null){
 	echo form_dropdown('timezone',$tz_options,$selected,$js);
 }
 
+function menu_marker($option=FALSE){
+	$CI =& get_instance();
+	if ($CI->uri->segment(1) == $option){
+		return ' class="marked" ';
+	}
+}
+
 ?>
