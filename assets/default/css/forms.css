@@ -1,9 +1,9 @@
 /* IDs */
-#verticalForm form{
+.stylled_form form{
 	background: #464646;
 	width: 300px;
 }
-#verticalForm fieldset
+.stylled_form fieldset
 {
 	display: block;
 	width: 25em;
@@ -12,43 +12,43 @@
 	border: 0;
 }
 
-#verticalForm fieldset.radio
+.stylled_form fieldset.radio
 {
 	width: 15em;
 	margin: 1em 0 2em 0;
 }
 
-#verticalForm fieldset.radio input
+.stylled_form fieldset.radio input
 {
 	clear: both;
 	float: left;
 	width: auto;
 }
 
-#verticalForm fieldset.radio label
+.stylled_form fieldset.radio label
 {
 	font-weight: normal;
 }
 
-#verticalForm input
+.stylled_form input
 {
 	display: block;
 	width: 200px;
 }
 
-#verticalForm input[type="text"],
-#verticalForm input[type="password"] {
+.stylled_form input[type="text"],
+.stylled_form input[type="password"] {
     background: #fff;
     line-height: 5em !important;
 	font-size: 1.5em;
     vertical-align: middle;
 }
 
-#verticalForm input[type="hidden"]{
+.stylled_form input[type="hidden"]{
 	display: none;
 }
 
-#verticalForm label
+.stylled_form label
 {
 	display: block;
 	margin-bottom: 1em;
@@ -56,25 +56,25 @@
 	font-size: 1.2em;
 }
 
-#verticalForm label.first
+.stylled_form label.first
 {
 	padding-top: 1em;
 }
 
-#verticalForm select
+.stylled_form select
 {
 	display: block;
 }
 
-#verticalForm legend{
+.stylled_form legend{
 	margin: -5px;
 }
 
-#verticalForm .form_help {
+.stylled_form .form_help {
 	display: none;
 }
 
-#verticalForm .form_help {
+.stylled_form .form_help {
 	display:none;
 	position: absolute;
 	left: 325px;

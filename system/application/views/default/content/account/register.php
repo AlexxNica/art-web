@@ -24,7 +24,7 @@
 	</div>
 <? endif; ?>
 	<h1>Register a new account</h1>
-<div id="verticalForm">
+<div class="stylled_form">
 	<?= form_open('/account/register')?>
 	<? if ((@$info['identity']!='')):?>
 	<label for="openid_identity">

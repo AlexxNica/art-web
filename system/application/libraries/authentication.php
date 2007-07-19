@@ -234,6 +234,10 @@ class Authentication
 			return $this->settings['username'];
 		}
 		
+		function get_uid(){
+			return $this->uid;
+		}
+		
 		function exists_openid_user($OpenID_identifier){
 			$openid_user = $this->CI->User->find_by_openid($OpenID_identifier);
 			return $openid_user;
