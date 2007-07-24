@@ -6,6 +6,7 @@ class Resolution_model extends Model{
 	}
 	
 	function get_all(){
+		$this->db->orderby('width desc');
 		$this->db->from('resolution');
 		$query = $this->db->get();
 		

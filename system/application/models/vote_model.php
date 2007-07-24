@@ -40,7 +40,7 @@ class Vote_model extends Model{
 		
 		$tmp = $query->row();
 		return $tmp->count;
-	})
+	}
 	
 	function get_by_kind($artwork_id , $kind = NORMAL){
 		

@@ -17,7 +17,7 @@ class Moderation_model extends Model{
 	/**
 	 * lists artwork in moderation queue
 	 */
-	function list($num=null,$offset=null,$orderby = 'id desc'){
+	function list_queue($num=null,$offset=null,$orderby = 'id desc'){
 		$this->db->from('moderation_queue');
 		$this->db->addJoin('artwork', 'moderation_queue.artwork_id', 'artwork.id');
 		$this->db->orderby($orderby);
@@ -37,11 +37,10 @@ class Moderation_model extends Model{
 	 */
 	function add_to_queue($artwork_id){
 		$fields = array(
-			'artwork_id' => $artwork_id,
-			'date_added' => time()
+			'artwork_id' => $artwork_id
 		);
 		
-		$this->db->insert('moderation_queue',$fields)
+		$this->db->insert('moderation_queue',$fields);
 		return $this->db->insert_id();
 	}
 	

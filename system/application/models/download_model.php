@@ -37,12 +37,12 @@ class Download_model extends Model{
 		);
 		
 		foreach($resolutions as $resolution){
-			$download['file'] = $resolution[2];
+			$download['file'] = $resolution['file_name'];
 			
 			$download_id = $this->add($download);
 			
 			// associate download with a resolution
-			$resolution = $this->Resolution->find_by_resolution($resolution[0],$resolution[1]);
+			$resolution = $this->Resolution->find_by_resolution($resolution['width'],$resolution['height']);
 			
 			if ($resolution)
 				$this->db->insert('download_resolution',array('download_id'=>$download_id,'resolution_id'=>$resolution->id));

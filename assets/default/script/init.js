@@ -35,7 +35,7 @@ var FormHint = {
 	options : {},
 	
 	loadEvents : function(){
-		$$('form input').addEvents({
+		$$('form.show_tips input').addEvents({
 			'focus': function(event){
 				if(this.parentNode.getElementsByTagName('span')[0]){
 					this.parentNode.getElementsByTagName("span")[0].style.display = 'inline';

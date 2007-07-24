@@ -52,10 +52,18 @@ Is this the first version of the artwork?
 	<input type="text" name="keywords" size="15" value="<?= @$this->validation->keywords; ?>"/>
 </label>
 
-<label for="file">
-	File
-	<input type="file" name="userfile" />
+<? $i = 0;?>
+<? if (@$type == 'backgrounds'):?>
+<h3>Available Resolutions</h3>
+<? foreach($resolutions_available as $resolution):?>
+	<span><?=$resolution->width?>x<?=$resolution->height?> <input type="file" name="userfile<?=$i++?>" /></span>
+<? endforeach; ?>
+<? else:?>
+<label for="userfile">
+File
+<input type="file" name="userfile" />
 </label>
+<?endif;?>
 
 <label for="upload">
 	<input type="submit" name="upload" value="submit"/>

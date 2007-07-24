@@ -231,7 +231,7 @@ class Authentication
 		}
 		
 		function get_username(){
-			return $this->settings['username'];
+			return @$this->settings['username'];
 		}
 		
 		function get_uid(){

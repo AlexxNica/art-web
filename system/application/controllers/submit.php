@@ -8,6 +8,9 @@ class Submit extends Controller {
 		$this->load->model('License_model','License');
 		$this->load->model('Category_model','Category');
 		$this->load->model('Download_model','Download');
+		$this->load->model('Moderation_model','Moderation');
+		
+		$this->authentication->authenticate();
 	}
 	
 	function index(){
@@ -23,6 +26,16 @@ class Submit extends Controller {
 	function step2(){
 		$this->load->library('validation');
 		if ($this->input->post('upload')){
+			
+			if ($this->input->post('backgrounds')){
+				$type = "backgrounds";
+			} elseif($this->input->post('themes')){
+				$type = "themes";
+			} elseif($this->input->post('screenshots')){
+				$type = "screenshots";
+			} else {
+				$type = -1;
+			}
 			
 			$info['category'] = $this->input->post('category');
 			$info['license'] = $this->input->post('license');
@@ -48,61 +61,75 @@ class Submit extends Controller {
 			$this->validation->set_fields($fields);
 			$this->validation->set_rules($rules);
 			
+			$this->load->library('Upload');
 			
-			$this->load->library('upload');
-			
-			if ($this->validation->run() && $this->upload->do_upload()){
-				$upload_data = $this->upload->data();
-				$new_filename = time().'_'.$this->validation->name.'_by_'.$this->authentication->get_username().$upload_data['file_ext'];
-				
-				// rename file 
-				rename($upload_data['full_path'],$upload_data['file_path'].$new_filename);
-				
-				//--
-				//	Add artwork to DB
-				//--
-				$fields = array(
-					'user_id' => $this->authentication->get_uid(),
-					'category_id' => $info['category'],
-					'license_id' => $info['license'],
-					'original_id' => $info['original'],
-					'version'	=> $this->validation->version,
-					'name'		=> $this->validation->name,
-					'description'	=> $info['description'],
-					'state'			=> 1,
-					'date_added'	=> time()
-				);
-				
-				$artwork_id = $this->Artwork->add($fields);
-				
-				// process newly added artwork
-				if ($this->input->post('backgrounds')){
-					
-					$config['image_library'] = 'GD';
-					$config['source_image'] = $upload_data['file_path'].$new_filename;
-					$config['create_thumb'] = FALSE;
-					$config['maintain_ratio'] = TRUE;
-
-					$this->load->library('gallery');
-					$resolutions_available = array(
-													array('800','600'),
-													array('1024','768'),
-													array('1280','1024'),
-													array('1440','900')
-												);
-												
-					$file['path'] = $upload_data['file_path'];
-					$file['name'] = $new_filename;
-					$resolutions_created = $this->gallery->create_size_variations($file,$resolutions_available);
-					
-					// next step: add images has downloads
-					$this->Download->create_by_resolution($artwork_id,$resolutions_created);
-					
-				} else {
-					// process the other type of artwork
+			$userfiles = array();
+			foreach($_FILES as $key => $file){
+				if ($file['name'] != null){
+					$userfiles[] = $key;
 				}
+			}
+			
+			if ($this->validation->run() && $this->upload->do_multiple_upload($userfiles)){
+				$upload_data = $this->upload->multiple_data();
+				$failed = FALSE;
+				switch($type){
+					case "backgrounds": 
+							$this->load->library('gallery');
+							$resolutions_available = $this->Resolution->get_all();
+
+							$info['name'] = $this->validation->name;
+							$info['username'] = $this->authentication->get_username();
+
+							if (!$this->gallery->process_images($resolutions_available,$upload_data,$info)){
+								$this->upload->set_error('upload_images_resolution');
+								$failed = TRUE;
+							} else {
+								$artwork_downloads = $this->gallery->data();
+								
+							}
+							break;
+					default:
+							break;
+					}
 				
-				redirect('submit/step3','refresh');
+					if (!$failed){
+					//--
+					//	Add artwork to DB
+					//--
+					$fields = array(
+						'user_id' => $this->authentication->get_uid(),
+						'category_id' => $info['category'],
+						'license_id' => $info['license'],
+						'original_id' => $info['original'],
+						'version'	=> $this->validation->version,
+						'name'		=> $this->validation->name,
+						'description'	=> $info['description'],
+						'state'			=> 1,
+						'date_added'	=> time()
+					);
+				
+					$artwork_id = $this->Artwork->add($fields);
+				
+					// process newly added artwork
+					switch($type){
+						case "backgrounds":
+								
+								$thumb_name = 'thumb_'.$artwork_id;
+								$this->gallery->create_thumbnail($thumb_name,$artwork_downloads[0]);
+								
+								
+								$this->Download->create_by_resolution($artwork_id,$artwork_downloads);
+								break;
+						default:
+								break;
+					}
+					
+					$this->Moderation->add_to_queue($artwork_id);
+					
+					redirect('submit/step3','refresh');
+		
+				}
 			}
 			
 			$data['error'] = $this->upload->display_errors();
@@ -113,6 +140,7 @@ class Submit extends Controller {
 			$data['type'] = "backgrounds";
 			$type = 1;
 			$categories = $this->Category->find_by_parent($type);
+			$data['resolutions_available'] = $this->Resolution->get_all();
 
 		} else if ($this->input->post('themes')){
 			$data['type'] = "themes";
@@ -136,6 +164,7 @@ class Submit extends Controller {
 		// get and prepare the license list 
 		$license_list = $this->License->find_all();
 		$data['licenses'] = $this->prepare_for_listdown($license_list);
+		
 		
 		$this->layout->buildPage("submit/step2", $data);
 	}
