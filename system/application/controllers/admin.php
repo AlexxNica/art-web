@@ -9,6 +9,11 @@ class Admin extends Controller{
 		$this->load->model('Category_model','Category');
 		$this->load->model('Download_model','Download');
 		$this->load->model('Moderation_model','Moderation');
+		
+		before('only',array('moderate'),$this->authentication->authenticate());
+		/*$this->uri->segment(2);
+		
+		$this->authentication->authenticate();*/
 	}
 	
 	function index(){
