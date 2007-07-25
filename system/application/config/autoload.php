@@ -77,7 +77,11 @@ $autoload['plugin'] = array();
 |
 */
 
-$autoload['config'] = array('Email');
+$autoload['config'] = array('email','gallery'=>TRUE);
+
+
+
+$autoload['language'] = array();
 
 
 /*

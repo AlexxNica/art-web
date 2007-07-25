@@ -10,20 +10,34 @@ class Admin extends Controller{
 		$this->load->model('Download_model','Download');
 		$this->load->model('Moderation_model','Moderation');
 		
-		before('only',array('moderate'),$this->authentication->authenticate());
-		/*$this->uri->segment(2);
 		
-		$this->authentication->authenticate();*/
+		//$this->authentication->authenticate();
 	}
 	
 	function index(){
 		
-		$this->layout->buildPage();
+		redirect('','refresh');
 	}
 	
 	function moderate(){
+		// Verify is user is allowed to moderate artwork
+		if (!$this->authentication->is_allowed(MODERATE_ARTWORK)){
+			show_error('Not Allowed!');
+			return false;
+		}
 		
-		$this->layout->buildPage('admin/moderate');
+		// prepare pagination
+		$num_elements = 10;
+		
+		$page = $this->input->get('page');
+		if (!$page) $page = 1;
+		
+		$offset = $num_elements*($page-1);
+		// --
+		
+		$data['moderation_queue'] = $this->Moderation->list_queue($num_elements,$offset);
+			
+		$this->layout->buildPage('admin/moderate',$data);
 	}
 }
 

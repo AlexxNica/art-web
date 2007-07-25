@@ -17,19 +17,22 @@ class Moderation_model extends Model{
 	/**
 	 * lists artwork in moderation queue
 	 */
-	function list_queue($num=null,$offset=null,$orderby = 'id desc'){
+	function list_queue($num=null,$offset=null,$orderby = 'moderation_queue.id desc'){
 		$this->db->from('moderation_queue');
-		$this->db->addJoin('artwork', 'moderation_queue.artwork_id', 'artwork.id');
+		$this->db->join('artwork', 'moderation_queue.artwork_id', 'artwork.id');
+		$this->db->where('artwork.id = moderation_queue.artwork_id');
 		$this->db->orderby($orderby);
+		
 		if ($num !=null && $offset != null)
 			$this->db->limit($num,$offset);
 		
 		$query = $this->db->get();
 		
+		
 		if ($query->num_rows()>0)
 			return $query->result();
 		else 
-			return false;
+			return array();
 	}
 	
 	/**
