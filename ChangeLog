@@ -1,3 +1,8 @@
+2007-07-28  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/art_listings.inc.php:
+	Add a where clause to top_ratings listing to show only active items.
+
 2007-03-14  Thomas Wood  <thos@gnome.org>
 
 	* includes/config.inc.php: Add GNOME 2.18 category to screenshots

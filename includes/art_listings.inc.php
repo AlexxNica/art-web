@@ -291,18 +291,18 @@ class top_rated_list extends general_listing
 	
 	function select($userID = '')
 	{
-		$sql = ('SELECT backgroundID AS ID, \'background\' AS type, name, rating, category, add_timestamp, thumbnail_filename FROM background UNION '.
-		                                   'SELECT themeID AS ID, \'theme\' AS type, name, rating, category, add_timestamp, thumbnail_filename FROM theme '.
+		$sql = ('SELECT backgroundID AS ID, \'background\' AS type, name, rating, category, add_timestamp, thumbnail_filename FROM background  WHERE status=\'active\' UNION '.
+		                                   'SELECT themeID AS ID, \'theme\' AS type, name, rating, category, add_timestamp, thumbnail_filename FROM theme WHERE status=\'active\'  '.
 		                                   'ORDER BY rating DESC '.$this->get_limit());
 
 		if ($userID)
 			$sql = "SELECT backgroundID AS ID, 'background' AS type, name, background.rating AS rating, vote.rating AS userrating, category, add_timestamp, thumbnail_filename
 			FROM background INNER JOIN vote ON vote.artID = background.backgroundID
-			WHERE vote.userID = $userID AND vote.type = 'background'
+			WHERE vote.userID = $userID AND vote.type = 'background' AND status='active'
 			UNION
 			SELECT themeID AS ID, 'theme' AS type, name, theme.rating AS  rating, vote.rating AS userrating, category, add_timestamp, thumbnail_filename
 			FROM theme INNER JOIN vote ON vote.artID = theme.themeID
-			WHERE vote.userID = $userID AND vote.type = 'theme'
+			WHERE vote.userID = $userID AND vote.type = 'theme'  AND status='active'
 			ORDER BY userrating DESC ".$this->get_limit();
 
 		$this->select_result = mysql_query ($sql);
