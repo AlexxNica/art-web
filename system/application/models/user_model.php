@@ -94,7 +94,6 @@ class User_model extends Model
 			return false;
 	}
 	
-	
 	/**
 	 * get_user
 	 * 
@@ -109,6 +108,45 @@ class User_model extends Model
 			return $query->row();
 		else
 			return false;
+	}
+	
+	/**
+	 * search - generic query function
+	 */
+	function search($search_query=null, $num=null,$offset=null,$orderby = 'username asc'){
+		$this->db->from('user');
+		
+		if ($search_query != null) { 
+			$this->db->where($search_query); 
+		}
+		
+		$this->db->orderby($orderby);
+		
+		if ($num !=null && $offset != null)
+			$this->db->limit($num,$offset);
+		
+		$query = $this->db->get();
+		
+		if ($query->num_rows()>0)
+			return $query->result();
+		else 
+			return array();
+	}
+	
+	/**
+	 * list - returns an array with users
+	 */
+	
+	function get_all($num=null,$offset=null,$orderby = 'uid desc'){
+		return $this->search(null,$num,$offset,$orderby);
+	}
+	
+	function search_by_username($username,$num=null,$offset=null,$orderby = 'username asc'){
+		return $this->search(	'username LIKE \'%'.$this->db->escape_str($username).'%\'',
+								$num,
+								$offset,
+								$orderby
+							);
 	}
 	
 	/**

@@ -44,6 +44,16 @@ $route['scaffolding_trigger'] = "";
 
 
 
+/**
+ * User pages routes
+ */
+$route['user/([a-z\-_0-9]+)'] = "user/index/$1";
+$route['user/([a-z\-_0-9]+)/([a-z]+)'] = "user/$2/$1";
 
+/**
+ * Admin pages routes
+ */
+		// User section
+		$route['admin/users/[0-9]+'] = "admin/users/index/$1";
 
 ?>

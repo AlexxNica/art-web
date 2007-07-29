@@ -1,7 +1,7 @@
 <?php
 
-class Admin extends Controller{
-	function Admin(){
+class Moderation extends Controller{
+	function Moderation(){
 		parent::Controller();
 		
 		$this->load->model('Artwork_model','Artwork');
@@ -9,18 +9,18 @@ class Admin extends Controller{
 		$this->load->model('Category_model','Category');
 		$this->load->model('Download_model','Download');
 		$this->load->model('Moderation_model','Moderation');
+		$this->load->model('User_model','User');
 		
 		
-		//$this->authentication->authenticate();
+		$this->authentication->authenticate();
 	}
 	
 	function index(){
-		
-		redirect('','refresh');
+		$this->moderate();
 	}
 	
 	function moderate(){
-		// Verify is user is allowed to moderate artwork
+		// Verify if user is allowed to moderate artwork
 		if (!$this->authentication->is_allowed(MODERATE_ARTWORK)){
 			show_error('Not Allowed!');
 			return false;

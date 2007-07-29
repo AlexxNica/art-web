@@ -105,8 +105,7 @@ class Submit extends Controller {
 						'version'	=> $this->validation->version,
 						'name'		=> $this->validation->name,
 						'description'	=> $info['description'],
-						'state'			=> 1,
-						'date_added'	=> time()
+						'state'			=> 1
 					);
 				
 					$artwork_id = $this->Artwork->add($fields);

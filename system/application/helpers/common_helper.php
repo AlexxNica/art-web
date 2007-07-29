@@ -791,4 +791,9 @@ function menu_marker($option=FALSE){
 	}
 }
 
+function thumb_url($artwork_id){
+	$CI =& get_instance();
+	return base_url().substr($CI->config->config['gallery']['thumb_path'],2).'thumb_'.$artwork_id.'.jpg';
+}
+
 ?>

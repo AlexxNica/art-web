@@ -4,7 +4,7 @@
 					<i class="lt"></i><i class="rt"></i>
 					<ul class="iconset">
 					<? if ($this->authentication->is_allowed(EDIT_USER) || $this->authentication->is_allowed(DEL_USER)): ?>
-						<li><i class="i_users"></i><a href="#">Users</a></li>
+						<li><i class="i_users"></i><?= anchor('admin/users','Users') ?></li>
 					<?endif;?>
 					<? if ($this->authentication->is_allowed(MODERATE_ARTWORK)): ?>
 						<li><i class="i_moderate"></i><?= anchor('admin/moderate','Moderate Artwork')?></li>
