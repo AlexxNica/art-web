@@ -7,7 +7,7 @@
 						<li><i class="i_users"></i><?= anchor('admin/users','Users') ?></li>
 					<?endif;?>
 					<? if ($this->authentication->is_allowed(MODERATE_ARTWORK)): ?>
-						<li><i class="i_moderate"></i><?= anchor('admin/moderate','Moderate Artwork')?></li>
+						<li><i class="i_moderate"></i><?= anchor('admin/moderation','Moderate Artwork')?></li>
 					<?endif;?>
 					<? if ($this->authentication->is_allowed(ADD_NEWS) || $this->authentication->is_allowed(EDIT_NEWS) || $this->authentication->is_allowed(DEL_NEWS)): ?>
 						<li><i class="i_news"></i><a href="#">News</a></li>
