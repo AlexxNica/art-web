@@ -328,6 +328,11 @@ padding-left:18px;
 	visibility: hidden;
 }
 
+.break{
+	clear:both;
+	height: 0;
+}
+
 
 /** Containers */
 
@@ -477,3 +482,51 @@ padding-left: 27px;
 	margin: 5px;
 	width: 400px;
 }
+
+/** Moderation **/
+
+ul#moderation_queue > li{
+	height: 125px;
+}
+
+#moderation_queue > li .thumb {
+	float: left;
+}
+
+.moderation_vote { position: relative;}
+
+	.moderation_vote ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+		
+	.moderation_vote ul li {
+		margin: 2px 0 0px 0;
+		padding: 0;
+		font-weight: bold;
+		line-height: 16px; /* height of icon */
+		background-repeat: no-repeat;
+		background-position: 0 50%;
+		float: left;
+	}
+		
+		.moderation_vote ul li a {
+		  padding-left: 16px; /* width of icon + whitespace */
+		  }
+	
+		.vote_pos {
+			background-image: url('../images/icons/thumb_up.png');
+		}
+		
+		.vote_neg {
+			background-image: url('../images/icons/thumb_down.png');
+		}
+		
+		.vote_neutral {
+			background-image: url('../images/icons/ch.png');
+		}
+		
+		.vote_choose {
+			background-color: #444;
+		}

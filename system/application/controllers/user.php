@@ -46,6 +46,20 @@ class User extends Controller{
 		$data['works'] = $this->Artwork->find_by_user($this->user->uid,10,0,'id desc');
 		$this->layout->buildPage('user/gallery',$data);
 	}
+	
+	/**
+	 * profile section
+	 * 
+	 * user can edit info related to its identity
+	 */
+	function profile(){
+		$this->authentication->authenticate();
+		
+		if ($this->authentication->get_uid() == $this->user->uid)
+			echo "you are the owner";
+		else
+			echo "get lost!!!";
+	}
 }
 
 ?>

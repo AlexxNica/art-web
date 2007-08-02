@@ -18,7 +18,7 @@
 );*/
 $filter['auth'] = array(
 	'exclude', 
-	array('/','account/*','main/*'),
+	array('/','account/*','main/*','user/*'),
 	array()
 );
 ?>

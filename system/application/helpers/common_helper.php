@@ -784,6 +784,11 @@ function select_timezone($name,$selected=null,$js=null){
 	echo form_dropdown('timezone',$tz_options,$selected,$js);
 }
 
+/* 
+	menu_marker
+	Checks if the url class name is the same as the parameter
+	if so, returns marked class
+*/
 function menu_marker($option=FALSE){
 	$CI =& get_instance();
 	if ($CI->uri->segment(1) == $option){
@@ -791,9 +796,116 @@ function menu_marker($option=FALSE){
 	}
 }
 
+/* 
+	thumb_url
+	Constructs the thumbnail url using the artwork id 
+*/
 function thumb_url($artwork_id){
 	$CI =& get_instance();
 	return base_url().substr($CI->config->config['gallery']['thumb_path'],2).'thumb_'.$artwork_id.'.jpg';
+}
+
+/*
+	pagination
+	Constructs the pagination links
+*/
+function pagination($total_rows,$per_page,$cur_page,$base_url,$options=array(
+											 	'full_tag_open' 	=> '<p>',
+											 	'full_tag_close' 	=> '</p>',
+											 	'first_link'	  	=> 'First',
+												'first_link_tag_open' => '<span>',
+												'first_link_tag_close' => '</span>',
+												'last_link'			=> 'Last',
+												'last_link_tag_open'	=> '<span>',
+												'last_link_tag_close'	=> '</span>',
+												'next_link'			=> '&gt;',
+												'next_tag_open'		=> '<span>',
+												'next_tag_close'	=> '</span>',
+												'prev_link'		=> '&lt;',
+												'prev_tag_open'	=> '<span>',
+												'prev_tag_close' => '</span>',
+												'cur_tag_open'	=> '<b>',
+												'cur_tag_close'	=> '<b>',
+												'num_tag_open'		=> '<span>',
+												'num_tag_close'		=> '</span>',
+												'num_links'			=> 2
+											)){
+	
+	$num_pages = ceil($total_rows/$per_page);
+	
+	// if item count our per_page is zero no need to continue
+	if ($total_rows == 0 OR $per_page == 0)
+		return '';
+	
+	// if there is only one page no need to continue
+	if ($num_pages == 1)
+		return '';
+	
+	// if current page number is above the the total number of pages 
+	// if so , show last page
+	if ($cur_page > $num_pages){
+		$cur_page = $num_pages;
+	}
+		
+	// Calculate the start and end numbers. These determine
+	// which number to start and end the digit links with
+	$start = (($cur_page - $options['num_links']) > 0) ? $cur_page - ($options['num_links'] - 1) : 1;
+	$end   = (($cur_page + $options['num_links']) < $num_pages) ? $cur_page + $options['num_links'] : $num_pages;
+	
+	
+	// let the games begin...
+	$output = '';
+	
+	// render the "first" link
+	if  ($cur_page > $options['num_links'])
+	{
+		$output .= $options['first_tag_open'].'<a href="'.$base_url.'?page=1">'.$options['first_link'].'</a>'.$options['first_tag_close'];
+	}
+	
+	// Render the "previous" link
+ 	if  (($cur_page - $options['num_links']) >= 0)
+	{
+		$i = $cur_page - 1;
+		if ($i == 0) $i = '';
+		$output .= $options['prev_tag_open'].'<a href="'.$base_url.'?page='.$i.'">'.$options['prev_link'].'</a>'.$options['prev_tag_close'];
+	}
+	
+	// Write the digit links
+	for ($loop = $start; $loop <= $end; $loop++)
+	{
+		$i = $loop;
+				
+		if ($i >= 0)
+		{
+			if ($cur_page == $loop)
+			{
+				$output .= $options['cur_tag_open'].$loop.$options['cur_tag_close']; // Current page
+			}
+			else
+			{
+				$n = ($i == 0) ? '' : $i;
+				$output .= $options['num_tag_open'].'<a href="'.$base_url.'?page='.$n.'">'.$loop.'</a>'.$options['num_tag_close'];
+			}
+		}
+	}
+
+	// Render the "next" link
+	if ($cur_page < $num_pages)
+	{
+		$output .= $options['next_tag_open'].'<a href="'.$base_url.'?page='.($cur_page +1).'">'.$options['next_link'].'</a>'.$options['next_tag_close'];
+	}
+
+	// Render the "Last" link
+	if (($cur_page + $options['num_links']) < $num_pages)
+	{
+		$i = $num_pages;
+		$output .= $options['last_tag_open'].'<a href="'.$base_url.'?page='.$i.'">'.$options['last_link'].'</a>'.$options['last_tag_close'];
+	}
+	
+	// Add the wrapper HTML if exists
+	$output = $options['full_tag_open'].$output.$options['full_tag_close'];
+	
+	return $output;
 }
 
 ?>

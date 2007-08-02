@@ -157,7 +157,7 @@ class Submit extends Controller {
 		$data['categories'] = $this->prepare_for_listdown($categories);
 		
 		// Get the original artwork names
-		$original_list = $this->Artwork->find_originals();
+		$original_list = $this->Artwork->find_originals($this->authentication->get_uid());
 		$data['originals'] = $this->prepare_for_listdown($original_list,false);
 		
 		// get and prepare the license list 

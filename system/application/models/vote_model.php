@@ -25,9 +25,11 @@ class Vote_model extends Model{
 									From vote
 									Where artwork_id = $artwork_id
 									AND kind = $kind");
-		
 		$tmp = $query->row();
-		return $tmp->score;
+		if ($tmp->score)
+			return $tmp->score;
+		else 
+			return 0;
 	}
 	
 	function count($artwork_id, $kind = NORMAL){
@@ -64,8 +66,9 @@ class Vote_model extends Model{
 			return false;
 	}
 	
-	function get_one($artwork,$id){
-		$this->db->where('user_id',$id);
+	function get_one($artwork_id,$user_id){
+		$this->db->where('user_id',$user_id);
+		$this->db->where('artwork_id',$artwork_id);
 		$query = $this->db->get('vote');
 		
 		if ($query->num_rows()>0)
@@ -76,12 +79,14 @@ class Vote_model extends Model{
 	
 	function add($fields){
 		$vote = $this->get_one($fields['artwork_id'],$fields['user_id']);
-		if (!vote){
-			$vote->vote = $fields['vote'];
-			$this->db->update('vote',$vote);
+		if ($vote){
+			$where = "artwork_id = $vote->artwork_id";
+			$sql = $this->db->update_string('vote', $fields, $where);
+			$this->db->query($sql);
 		} else {
 			$this->db->insert('vote',$fields);
 		}
 	}
+
 }
 ?>

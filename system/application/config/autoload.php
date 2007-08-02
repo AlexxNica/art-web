@@ -77,7 +77,7 @@ $autoload['plugin'] = array();
 |
 */
 
-$autoload['config'] = array('email','gallery'=>TRUE);
+$autoload['config'] = array('email','gallery'=>TRUE,'moderation'=>TRUE);
 
 
 
