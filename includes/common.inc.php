@@ -147,7 +147,7 @@ function get_download_links($type, $category, $itemID, $download_filename, $form
 				$result = "<a class=\"tar\" href=\"/download/themes/$category/$itemID/$download_filename\">$download_filename ($filesize)</a>";
 			break;
 			case 'atom':
-				$result = "<link rel=\"enclosure\" title=\"Download\" theme:relation=\"download\" href=\"$site_url/download/themes/$category/$itemID/$download_filename\" />\n";
+				$result = "<link rel=\"enclosure\" title=\"Download\" theme:relation=\"$category\" href=\"$site_url/download/themes/$category/$itemID/$download_filename\" />\n";
 			break;
 		}
 	break;

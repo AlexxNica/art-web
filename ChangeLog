@@ -1,3 +1,8 @@
+2007-08-04  Benjamin Berg  <benjamin@sipsolutions.net>
+
+	* includes/common.inc.php:
+	Use theme:relation="$category" instead of "download".
+
 2007-07-28  Benjamin Berg  <benjamin@sipsolutions.net>
 
 	* includes/art_listings.inc.php:
