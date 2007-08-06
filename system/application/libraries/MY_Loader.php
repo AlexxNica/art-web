@@ -35,7 +35,7 @@ class MY_Loader extends CI_Loader{
 			foreach ($autoload['config'] as $key => $val)
 			{
 				if ($val == TRUE){
-					$CI->config->load($key,true);
+					$CI->config->load($key,TRUE);
 				} else {
 					$CI->config->load($val);
 				}

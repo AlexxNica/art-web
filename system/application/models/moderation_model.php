@@ -15,28 +15,21 @@ class Moderation_model extends Model{
 		
 	}
 	
+
 	/**
-	 * lists artwork in moderation queue
+	 * Get Moderation Queue
+	 * 
+	 * returns the list of works a user has to moderate
+	 * removes from moderation it's own works
+	 * adds artwork information already
+	 * 
 	 */
-	function list_queue($num=null,$offset=null,$orderby = 'moderation_queue.id desc'){
-		$this->db->from('moderation_queue');
-		$this->db->join('artwork', 'moderation_queue.artwork_id', 'artwork.id');
-		$this->db->where('artwork.id = moderation_queue.artwork_id');
-		$this->db->orderby($orderby);
-		
-		if ($num !=null && $offset != null)
-			$this->db->limit($num,$offset);
-		
-		$query = $this->db->get();
-		
-		
-		if ($query->num_rows()>0)
-			return $query->result();
-		else 
-			return array();
-	}
-	
-	function get_moderation_queue($user_id,$num=null,$offset=null, $orderby = 'moderation_queue.id desc', $count = false){
+	function get_moderation_queue(	$user_id,
+									$num=null,
+									$offset=null, 
+									$orderby = 'moderation_queue.id desc', 
+									$count = false
+									){
 		$this->db->select('moderation_queue.*,artwork.*,user.username as user_username');
 		$this->db->from('moderation_queue,artwork,user');
 		$this->db->where('artwork.id = moderation_queue.artwork_id');
@@ -62,7 +55,7 @@ class Moderation_model extends Model{
 				$score = $this->Vote->score($work->id,VOTE_MODERATION);
 				$total = $this->Vote->count($work->id,VOTE_MODERATION);
 				
-				$own_vote = $this->Vote->get_one($work->id,$user_id);
+				$own_vote = $this->Vote->get_one($work->id,$user_id,VOTE_MODERATION);
 				$work->votes_score = $score;
 				$work->votes_count = $total;
 				if ($own_vote) {
@@ -125,8 +118,8 @@ class Moderation_model extends Model{
 		$score = $this->Vote->score($artwork_id,VOTE_MODERATION);
 		
 		if ($this->config->config['moderation']['threshold_positive'] < $score){
-			
 			$this->Artwork->set_state($artwork_id,STATE_PUBLIC);
+			$this->Artwork->update($artwork_id,array('date_accepted' => date('YmdHis', time())));
 			$this->del_by_artwork($artwork_id);
 			//arwork was accepted
 			/**

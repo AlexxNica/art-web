@@ -11,11 +11,9 @@ class Auth_filter extends Filter {
 		
 		$this->CI->authentication->authenticate();
 		
-    	log_message('debug', 'Before '.$this->controller.' -> '.$this->method);
     }
     
     function after() {
-    	log_message('debug', 'After '.$this->controller.' -> '.$this->method);
     }
 }
 ?>

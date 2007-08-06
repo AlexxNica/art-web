@@ -6,7 +6,28 @@ if (!defined('DEBUG')) define("DEBUG", false);
  *  ACL Constants
  */
 
-if (!defined('EDIT_ARTWORK')) define("EDIT_ARTWORK", 0);
+$config['constants'] = array(	'EDIT_ARTWORK',
+								'DEL_ARTWORK',
+								'EDIT_COLLECTION',
+								'DEL_COLLECTION',
+								'EDIT_USER',
+								'DEL_USER',
+								'CHANGE_USER_PERMISSIONS',
+								'MODERATE_ARTWORK',
+								'ADD_NEWS',
+								'EDIT_NEWS',
+								'DEL_NEWS',
+								'FEATURE_ARTWORK',
+								'ADD_FAQ',
+								'EDIT_FAQ',
+								'DEL_FAQ',
+								'EDIT_PAGE');
+								
+foreach($config['constants'] as $key => $str){
+	if (!defined($str)) define($str,$key);
+}								
+
+/*if (!defined('EDIT_ARTWORK')) define("EDIT_ARTWORK", 0);
 if (!defined('DEL_ARTWORK')) define("DEL_ARTWORK", 1);
 if (!defined('EDIT_COLLECTION')) define("EDIT_COLLECTION", 2);
 if (!defined('DEL_COLLECTION')) define("DEL_COLLECTION", 3);
@@ -21,7 +42,7 @@ if (!defined('FEATURE_ARTWORK')) define("FEATURE_ARTWORK", 11);
 if (!defined('ADD_FAQ')) define("ADD_FAQ", 12);
 if (!defined('EDIT_FAQ')) define("EDIT_FAQ", 13);
 if (!defined('DEL_FAQ')) define("DEL_FAQ", 14);
-if (!defined('EDIT_PAGE')) define("EDIT_PAGE", 15);
+if (!defined('EDIT_PAGE')) define("EDIT_PAGE", 15);*/
 
 $config['permissions'] = array(
 								EDIT_ARTWORK 		=> false,

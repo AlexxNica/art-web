@@ -18,7 +18,13 @@
 );*/
 $filter['auth'] = array(
 	'exclude', 
-	array('/','account/*','main/*','user/*'),
+	array('/','account/*','main/*','user/*','browse/*'),
+	array()
+);
+
+$filter['preload_actions'] = array(
+	'include', 
+	array('*'),
 	array()
 );
 ?>

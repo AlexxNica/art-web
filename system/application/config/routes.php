@@ -51,9 +51,26 @@ $route['user/([a-z\-_0-9]+)'] = "user/index/$1";
 $route['user/([a-z\-_0-9]+)/([a-z]+)'] = "user/$2/$1";
 
 /**
+ * Account pages routes
+ */
+
+
+/**
  * Admin pages routes
  */
-		// User section
-		$route['admin/users/[0-9]+'] = "admin/users/index/$1";
+$route['admin'] = "main";
+	// User section
+	$route['admin/users/([0-9]+)'] = "admin/users/index/$1";
+		
+
+/**
+ * Browser gallery
+ */
+$route['browse/user'] = "browse/user";
+$route['browse/user/([a-z0-9]+)'] = "browse/user/$1";
+$route['browse/([a-z0-9]+)'] = "browse/index/$1";
+$route['browse/([a-z0-9]+)/([a-z0-9]+)'] = "browse/index/$1/$2";
+$route['browse/([a-z0-9]+)/([a-z\-_0-9]+)/([0-9]+)'] = "browse/index/$1/$2/$3";
+$route['browse/([a-z0-9]+)/([a-z\-_0-9]+)/([0-9]+)/([a-z\-_0-9\/]+)'] = "browse/$4/$1/$2/$3";
 
 ?>

@@ -64,7 +64,10 @@ class Moderation extends Controller{
 			redirect('/admin/moderation','refresh');
 		}
 		
-		if ($this->Artwork->find($artwork_id))
+		$artwork = $this->Artwork->find($artwork_id);
+		
+		//  if work exists and doesn't belong to the voting user, let the vote be cast!
+		if ($artwork && $artwork->user_id != $this->authentication->get_uid())
 			$this->Moderation->add_vote($artwork_id,$vote_value,$this->authentication->get_uid());
 			
 		redirect('/admin/moderation','refresh');

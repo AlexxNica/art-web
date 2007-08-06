@@ -177,16 +177,18 @@ class Authentication
 			* 
 			* returns the list of permissions of the current user.
 			*/
-		function load_permissions(){
-			if ($this->acl == null) { 
+		function load_permissions($acl = null){
+			if ($acl == null) $acl = $this->acl;
+			
+			if ($acl == null) { 
 				log_message('error', 'get_permissions called without user\' $acl being loaded');
 				return false;
 			}
 
 			$i=0;
 			foreach($this->settings['permissions'] as $key=>$value){
-				$permissions[$key]= (($this->acl & pow(2,$i)) !=0) ? true: false;
-				if (DEBUG) echo $key . " i= ".strval($i)." power=" . strval(pow(2,$i)). "bitwise & = " . strval($this->acl & pow(2,$i))."<br>";
+				$permissions[$key]= (($acl & pow(2,$i)) !=0) ? true: false;
+				if (DEBUG) echo $key . " i= ".strval($i)." power=" . strval(pow(2,$i)). "bitwise & = " . strval($acl & pow(2,$i))."<br>";
 				$i++;
 			}
 			return $permissions;
@@ -241,6 +243,13 @@ class Authentication
 		function exists_openid_user($OpenID_identifier){
 			$openid_user = $this->CI->User->find_by_openid($OpenID_identifier);
 			return $openid_user;
+		}
+		
+		function is_it_me($user_id){
+			if ($this->get_uid() == $user_id)
+				return TRUE;
+			else
+				return FALSE;
 		}
 
 		/**
