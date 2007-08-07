@@ -28,7 +28,7 @@ Is this the first version of the artwork?
 <label for="version">
 	<?=@$this->validation->version_error; ?>
 	Version 
-	<input type="text" name="version" size="15" value="<?= @$this->validation->version;?>"/>
+	<input type="text" name="version" size="15" value="<?= @$this->validation->version?@$this->validation->version:"1.0" ?>"/>
 </label>
 
 <label for="original">

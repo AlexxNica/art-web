@@ -30,7 +30,7 @@ class Preload_actions_filter extends Filter {
 			} else {
 				$info['parent'] = null;
 			}
-			$info['name'] = $category->name;
+			$info['name'] = $category->breadcrumb;
 			$categories[$category->id] = $info;
 		}
 		

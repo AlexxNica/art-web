@@ -53,14 +53,24 @@ $route['user/([a-z\-_0-9]+)/([a-z]+)'] = "user/$2/$1";
 /**
  * Account pages routes
  */
+$route['account'] = "account";
+$route['account/([a-z\-_0-9\/]+)'] = "account/$1";
 
+/**
+ * Submit section
+ */
+$route['submit'] = "submit";
+$route['submit/([a-z\-_0-9\/]+)'] = "submit/$1";
 
 /**
  * Admin pages routes
  */
 $route['admin'] = "main";
+	
 	// User section
 	$route['admin/users/([0-9]+)'] = "admin/users/index/$1";
+	
+$route['admin/([a-z\-_0-9\/]+)'] = "admin/$1";
 		
 
 /**
@@ -68,9 +78,12 @@ $route['admin'] = "main";
  */
 $route['browse/user'] = "browse/user";
 $route['browse/user/([a-z0-9]+)'] = "browse/user/$1";
-$route['browse/([a-z0-9]+)'] = "browse/index/$1";
-$route['browse/([a-z0-9]+)/([a-z0-9]+)'] = "browse/index/$1/$2";
-$route['browse/([a-z0-9]+)/([a-z\-_0-9]+)/([0-9]+)'] = "browse/index/$1/$2/$3";
-$route['browse/([a-z0-9]+)/([a-z\-_0-9]+)/([0-9]+)/([a-z\-_0-9\/]+)'] = "browse/$4/$1/$2/$3";
+$route['browse/user/([a-z0-9]+)/([a-z\-_0-9\/]+)'] = "browse/user/$1";
+$route['browse'] = "browse/index";
+$route['browse/([a-z\-_0-9\/]+)'] = "browse/index/$1";
+$route['([a-z0-9]+)'] = "browse/index/$1";
+$route['([a-z0-9]+)/([a-z\-_0-9]+)'] = "browse/index/$1/$2";
+$route['([a-z0-9]+)/([a-z\-_0-9]+)/([0-9]+)'] = "browse/index/$1/$2/$3";
+//$route['([a-z0-9]+)/([a-z\-_0-9]+)/([0-9]+)/([a-z\-_0-9\/]+)'] = "browse/$4/$1/$2/$3";
 
 ?>

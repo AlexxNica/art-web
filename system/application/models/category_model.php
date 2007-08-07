@@ -34,6 +34,14 @@ class Category_model extends Model{
 			return array();
 	}
 	
+	function find($category_id){
+		$res = $this->search('id = '.$category_id);
+		if (@$res[0])
+			return $res[0];
+		else
+			return false;
+	}
+	
 	/**
 	 * Find By Parent
 	 * returns all the categories with the same $parent_id
@@ -46,7 +54,7 @@ class Category_model extends Model{
 	 * Find By Name
 	 */
 	function find_by_name($category_name){
-		$res = $this->search('name LIKE '.$this->db->escape($category_name),1,0);
+		$res = $this->search('breadcrumb LIKE '.$this->db->escape($category_name),1,0);
 		if (@$res)
 			return $res[0];
 		else

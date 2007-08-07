@@ -55,4 +55,58 @@ class MY_Upload extends CI_Upload
 		}
 	}
 	
+	function config_this($array){
+		foreach($array as $key => $val){
+			
+			$method = 'set_'.$key;
+			if (method_exists($this, $method))
+			{
+				$this->$method($array[$key]);
+			}
+			else
+			{
+				$this->$key = $array[$key];
+			}
+		}
+	}
+	
+	// --------------------------------------------------------------------
+	/**
+	 * Verify that the filetype is allowed
+	 *
+	 * @access	public
+	 * @return	bool
+	 */	
+	function is_allowed_filetype()
+	{	
+		if (count($this->allowed_types) == 0 OR ($this->allowed_types[0] == ""))
+		{
+			$this->set_error('upload_no_file_types');
+			return TRUE;
+		}
+			 	
+		foreach ($this->allowed_types as $val)
+		{
+			$mime = $this->mimes_types(strtolower($val));
+		
+			if (is_array($mime))
+			{
+				if (in_array($this->file_type, $mime, TRUE))
+				{
+					return TRUE;
+				}
+			}
+			else
+			{
+				if ($mime == $this->file_type)
+				{
+					return TRUE;
+				}	
+			}		
+		}
+		
+		return FALSE;
+	}
+	// --------------------------------------------------------------------
+	
 }

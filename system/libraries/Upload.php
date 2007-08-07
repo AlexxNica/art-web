@@ -414,7 +414,7 @@ class CI_Upload {
 	 * @return	void
 	 */	
 	function set_allowed_types($types)
-	{
+	{	
 		$this->allowed_types = explode('|', $types);
 	}
 	
@@ -511,7 +511,7 @@ class CI_Upload {
 	 * @return	bool
 	 */	
 	function is_allowed_filetype()
-	{
+	{	
 		if (count($this->allowed_types) == 0)
 		{
 			$this->set_error('upload_no_file_types');

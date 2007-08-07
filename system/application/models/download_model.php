@@ -50,6 +50,22 @@ class Download_model extends Model{
 		}
 	}
 	
+	/**
+	 * Create - Wraps the necessary fields and adds a new download to the DB
+	 */
+	function create($artwork_id, $file){
+		$download = array(
+			'artwork_id' => $artwork_id,
+			'download_count' => 0,
+			'file' => $file['file_name']
+		);
+		
+		return $this->add($download);
+	}
+	
+	/**
+	 *  Adds a new download to the DB
+	 */
 	function add($fields){
 		$this->db->insert('download',$fields);
 		

@@ -6,7 +6,7 @@
 		</div>
 		<div class="info">
 			<ul>
-				<li class="name"><?= $artwork->name ?> <i>by</i> <?= $artwork->user_username?></li>
+				<li class="name"><?= categories_breadcrumb($artwork->category_id,' > ',TRUE)?> <?= $artwork->name ?> <i>by</i> <?= $artwork->user_username?></li>
 				<li>Rating: <?= $artwork->votes_score?$artwork->votes_score:0 ?></li>
 				<li>Votes: <?= $artwork->votes_count?$artwork->votes_count:0 ?></li>
 				<li class="moderation_vote">

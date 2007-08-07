@@ -21,7 +21,6 @@
 	</ul>
 	<span><p>(<? if ($artwork_rating->total_votes<5):?> 5 votes required,<?endif;?> <?= $artwork_rating->total_votes ?> votes total)</p></span>
 	</div>
-	<?= ($artwork_rating->rating*100)/5 ?>
 	<div id="artwork_info_my_rating">
 	My Rating:
 	<?if ($this->authentication->is_logged_in()):?> 

@@ -101,7 +101,7 @@ class Artwork_model extends Model{
 			license.name as licence_name, license.summary as license_summary, license.link as license_link
 			from vote,artwork,user,license
 			where artwork.id = vote.artwork_id
-			AND artwork.id = $artwork_id
+			AND artwork.id = ".$this->db->escape($artwork_id)."
 			AND artwork.user_id = user.uid
 			AND license.id = artwork.license_id
 			";

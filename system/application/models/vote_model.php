@@ -94,10 +94,12 @@ class Vote_model extends Model{
 	}
 	
 	function get_one($artwork_id,$user_id,$kind){
+		
 		$this->db->where('user_id',$user_id);
 		$this->db->where('artwork_id',$artwork_id);
+		$this->db->where('kind',$kind);
 		$query = $this->db->get('vote');
-		
+
 		if ($query->num_rows()>0)
 			return $query->row();
 		else 
@@ -105,6 +107,8 @@ class Vote_model extends Model{
 	}
 	
 	function add($fields){
+		if ($fields['artwork_id'] == null OR $fields['user_id'] == null) return false;
+		
 		$vote = $this->get_one($fields['artwork_id'],$fields['user_id'],$fields['kind']);
 		if ($vote){
 			$where = "artwork_id = $vote->artwork_id AND user_id = $vote->user_id AND kind = $vote->kind";

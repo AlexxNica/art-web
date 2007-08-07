@@ -12,7 +12,7 @@
 class Gallery
 {
 	var $CI;
-	var $images_info;
+	var $file_info;
 	var $config;
 	
 	function Gallery(){
@@ -70,6 +70,7 @@ class Gallery
 		$used_resolutions = array(array());
 		
 		$new_filename = time().'_'.$info['name'].'_by_'.$info['username'];
+		$new_dir = str_replace('/',DIRECTORY_SEPARATOR,(realpath(dirname(FCPATH)).'/'.substr($this->config['artwork_path'],2).'themes/'.$info['category_data']->breadcrumb.'/'));
 		
 		$r_matrix = $this->matrixify_resolutions($resolutions);
 		
@@ -77,13 +78,13 @@ class Gallery
 			$value = $this->validate_image($r_matrix,$image);
 			
 			if ((!$value) OR (isset($used_resolutions[$value['width']][$value['height']]))){
-				$this->delete_images($this->images_info);
+				$this->delete_images($this->file_info);
 				$this->delete_images($upload_data);
 				return false;
 			} else {
 				$fn = $new_filename.'_'.$value['width'].$image['file_ext'];
-				rename($image['full_path'],$this->config['artwork_path'].$fn);
-				$this->images_info[] = array(
+				rename($image['full_path'],$new_dir.$fn);
+				$this->file_info[] = array(
 						'file_name' => $fn,
 						'file_path' => $this->config['artwork_path'],
 						'full_path' => $this->config['artwork_path'].$fn,
@@ -102,7 +103,7 @@ class Gallery
 	}
 	
 	function data(){
-		return $this->images_info;
+		return $this->file_info;
 	}
 	
 	function create_thumbnail($name,$info){
@@ -147,4 +148,37 @@ class Gallery
 		
 		return $matrix;
 	}
+	
+	function process_theme($file,$info){
+		/*find if extension is .tar.gz */
+		if (ereg(".*(\.tar\.gz)$", $file['orig_name'])){
+			$ext = '.tar.gz';
+		} else {
+			$ext = $file['file_ext'];
+		}
+		
+		/* new theme name */
+		$new_filename = strtoupper($info['category_data']->breadcrumb).'-'.ucwords(strtolower($info['name'])).time();
+		/* new theme directory path */
+		$new_dir = str_replace('/',DIRECTORY_SEPARATOR,(realpath(dirname(FCPATH)).'/'.substr($this->config['artwork_path'],2).'themes/'.$info['category_data']->breadcrumb.'/'));
+		
+		/* in case the directory doesn't exists */
+		@mkdir($new_dir,0777,true);
+		
+		/* move it */
+		rename($file['full_path'],$new_dir.$new_filename.$ext);
+		
+		
+		$this->file_info[] = array(
+				'file_name' => $new_filename.$ext,
+				'file_path' => $new_dir,
+				'full_path' => $new_dir.$new_filename.$ext,
+				'file_ext'	=> $ext,
+				'file_size' => $file['file_size'],
+				'file_type' => $file['file_type']
+			);
+		
+		return true;
+	}
+	
 }

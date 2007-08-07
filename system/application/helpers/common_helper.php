@@ -64,6 +64,16 @@ function thumb_url($artwork_id){
  */
 function artwork_url($artwork_id,$category_id){
 	$CI =& get_instance();
+	
+	/*
+	// just in case the gallery is accessed by (ago)/browse/(...)
+	$uri = $CI->uri->segment_array();
+	if ($uri[1]=='browse') {
+		$prefix = 'browse/';
+	} else {*/
+		$prefix = '';
+	//}
+	
 	$categories = $CI->config->config['preload']['categories'];
 	$parent_id = null;
 	$url = $artwork_id;
@@ -75,7 +85,38 @@ function artwork_url($artwork_id,$category_id){
 		$cur_id = $parent_id;
 	} while ($parent_id!=null);
 	
-	return 'browse'.'/'.$url;
+	return base_url().$prefix.$url;
+}
+
+function categories_breadcrumb($category_id,$separator=' > ',$links=FALSE){
+	$CI =& get_instance();
+	
+	$categories = $CI->config->config['preload']['categories'];
+	$parent_id = null;
+	$breadcrumbs = array();
+	$path = '';
+	$cur_id = $category_id;
+	
+	do{
+		$parent_id = $categories[$cur_id]['parent'];
+		$breadcrumbs[] = strtolower($categories[$cur_id]['name']);
+		$path = strtolower($categories[$cur_id]['name']).$separator.$path;
+		$cur_id = $parent_id;
+	} while ($parent_id!=null);
+	
+	$breadcrumbs = array_reverse($breadcrumbs);
+	
+	if ($links){
+		$tmp = '';
+		$url = '';
+		foreach($breadcrumbs as $unit){
+			$tmp .= $unit.'/';
+			$url .= '<a href="'.base_url().$tmp.'">'.$unit.'</a>'.$separator;
+		}
+		return $url;
+	} else {
+		return $path;
+	}
 }
 
 /**

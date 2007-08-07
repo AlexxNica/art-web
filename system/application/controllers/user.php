@@ -42,9 +42,7 @@ class User extends Controller{
 	
 	function gallery(){
 		
-		$data['user'] = $this->user;
-		$data['works'] = $this->Artwork->find_by_user($this->user->uid,10,0,'id desc');
-		$this->layout->buildPage('user/gallery',$data);
+		redirect('browse/user/'.$this->user->username,'refresh');
 	}
 	
 	/**
