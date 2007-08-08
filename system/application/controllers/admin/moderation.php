@@ -20,6 +20,8 @@ class Moderation extends Controller{
 			return false;
 		}
 		
+		$this->_pagination(array('per_page' => 10));
+		
 	}
 	
 	function index(){
@@ -30,16 +32,11 @@ class Moderation extends Controller{
 		
 		// prepare pagination
 		$total_rows = $this->Moderation->get_moderation_queue($this->authentication->get_uid(),null,null,null,true); 
-		$num_elements = 2;
-		
-		$page = $this->input->get('page');
-		if (!$page) $page = 1;
-		
-		$offset = $num_elements*($page-1);
-		$data['pagination'] = pagination($total_rows,$num_elements,$page,base_url().'admin/moderation');
+		$this->_pagination(array('total_rows'=>$total_rows));
+		$data['pagination'] = pagination_helper($this->pagination,base_url().'admin/moderation');
 		// --
 		
-		$data['moderation_queue'] = $this->Moderation->get_moderation_queue($this->authentication->get_uid(),$num_elements,$offset);
+		$data['moderation_queue'] = $this->Moderation->get_moderation_queue($this->authentication->get_uid(),$this->pagination['per_page'],$this->pagination['offset']);
 			
 		$this->layout->buildPage('admin/moderate',$data);
 	}
@@ -56,7 +53,7 @@ class Moderation extends Controller{
 		$this->vote(0);
 	}
 	
-	function vote($vote_value){
+	function _vote($vote_value){
 		$artwork_id = $this->uri->segment(4);
 		
 		if (!$artwork_id){
@@ -72,6 +69,38 @@ class Moderation extends Controller{
 			
 		redirect('/admin/moderation','refresh');
 	}
+	
+	/**
+	 * _pagination - set variables necessary for the pagination
+	 */
+	function _pagination($elems = array()){
+		/* set the number of items per page */
+		if (@$elems['per_page']){
+		$this->pagination['per_page'] = $elems['per_page'];
+		} elseif (!isset($this->pagination['per_page'])){
+			$this->pagination['per_page'] = 10;
+		}
+		
+		/* set the total */
+		if (@$elems['total_rows']){
+		$this->pagination['total_rows'] = $elems['total_rows'];
+		}
+		
+		/* set the order */
+		if (@$elems['orderby']){
+			$this->pagination['orderby'] = $elems['orderby'];
+		} elseif (!isset($this->pagination['orderby'])) {
+			$this->pagination['orderby'] = 'date_accepted desc';
+		}
+		
+		/* calculate the offset */
+		$page = $this->input->get('page');
+		if (!$page) $page = 1;
+		
+		$this->pagination['offset'] = $this->pagination['per_page']*($page-1);
+		$this->pagination['page'] = $page; 
+	}
+	
 }
 
 ?>

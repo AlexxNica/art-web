@@ -122,8 +122,9 @@ class User_model extends Model
 		
 		$this->db->orderby($orderby);
 		
-		if ($num !=null && $offset != null)
+		if ($num !=null){
 			$this->db->limit($num,$offset);
+		}
 		
 		$query = $this->db->get();
 		

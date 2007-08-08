@@ -6,6 +6,7 @@ class Browse extends Controller{
 		
 		$this->load->model('Artwork_model','Artwork');
 		$this->load->model('Category_model','Category');
+		
 	}
 	
 	function index(){
@@ -20,8 +21,7 @@ class Browse extends Controller{
 			$this->artwork_id = $this->uri->segment(3);
 		}
 		
-		/* sets the initial config of pagination with 10 elements per page*/
-		$this->_pagination(10);
+		$this->_pagination(array('per_page' => 10));
 		
 		/* check if there is any GET Variable to be processed */
 		$this->_handle_get_variables();
@@ -42,26 +42,30 @@ class Browse extends Controller{
 			$this->artwork_id = $this->uri->segment(4);
 		}
 		
+		$path = '';
+		
 		if ($this->artwork_id){
-			
 			$this->_show_artwork();
-			
+			return false;
 		} elseif ($this->subcategory){ // if subcategory is set
-			
+			$path = $this->category.'/'.$this->subcategory;
 			$images = $this->_show_subcategory();
 			
 		} elseif ($this->category){ // else if category is set
-			
+			$path = $this->category;
 			$images = $this->_show_category();
 			
 		} else {  // if neither id, subcategory, or category were set
-			$images = $this->Artwork->get_public(	$this->pagination['num_elements'],
+			$total_rows = $this->Artwork->count_public();
+			$this->_pagination(array('total_rows'=>$total_rows));
+			
+			$images = $this->Artwork->get_public(	$this->pagination['per_page'],
 													$this->pagination['offset'],
 													$this->pagination['orderby']);
 		}
 		
+		$data['pagination'] = pagination_helper($this->pagination,base_url().$path);
 		
-	
 		$data['artworks'] = $images;
 		$this->layout->buildPage('browse/browse',$data);
 	}
@@ -98,9 +102,11 @@ class Browse extends Controller{
 			flashset('notice','There isn\'t a category with that name');
 			redirect('browse','refresh');	
 		}
+		$total_rows = $this->Artwork->count_by_category($category->id);
+		$this->_pagination(array('total_rows'=>$total_rows));
 		
 		$images = $this->Artwork->find_by_category(	$category->id,
-													$this->pagination['num_elements'],
+													$this->pagination['per_page'],
 													$this->pagination['offset'],
 													$this->pagination['orderby']);
 													
@@ -131,8 +137,12 @@ class Browse extends Controller{
 				$group[] = $category->id;
 			}
 			
+			$total_rows = $this->Artwork->count_by_category($group);
+			$this->_pagination(array('total_rows'=>$total_rows));
+			
+
 			$images = $this->Artwork->find_by_category(	$group,
-														$this->pagination['num_elements'],
+														$this->pagination['per_page'],
 														$this->pagination['offset'],
 														$this->pagination['orderby']);
 		} else {
@@ -198,16 +208,35 @@ class Browse extends Controller{
 	/**
 	 * _pagination - set variables necessary for the pagination
 	 */
-	function _pagination($num_elements = 10){
-		$this->pagination['num_elements'] = $num_elements;
+	function _pagination($elems = array()){
+		/* set the number of items per page */
+		if (@$elems['per_page']){
+		$this->pagination['per_page'] = $elems['per_page'];
+		} elseif (!isset($this->pagination['per_page'])){
+			$this->pagination['per_page'] = 10;
+		}
 		
+		/* set the total */
+		
+		if (@$elems['total_rows']){
+			$this->pagination['total_rows'] = $elems['total_rows'];
+		} elseif (!isset($this->pagination['total_rows'])){
+			$this->pagination['total_rows'] = 0;
+		}
+		
+		/* set the order */
+		if (@$elems['orderby']){
+			$this->pagination['orderby'] = $elems['orderby'];
+		} elseif (!isset($this->pagination['orderby'])) {
+			$this->pagination['orderby'] = 'date_accepted desc';
+		}
+		
+		/* calculate the offset */
 		$page = $this->input->get('page');
 		if (!$page) $page = 1;
 		
-		$this->pagination['offset'] = $num_elements*($page-1);
-		$this->pagination['page'] = $page;
-		
-		$this->pagination['orderby'] = 'date_accepted desc';
+		$this->pagination['offset'] = $this->pagination['per_page']*($page-1);
+		$this->pagination['page'] = $page; 
 	}
 }
 

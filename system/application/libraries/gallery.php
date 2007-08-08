@@ -32,13 +32,9 @@ class Gallery
 	 * Creates all the lower possible resolutions of the original image.
 	 */
 	function create_size_variations($file,$resolutions){
-		$config['image_library'] = 'ImageMagick';
-		$config['library_path'] = '/opt/local/bin/';
-		$config['create_thumb'] = FALSE;
-		$config['maintain_ratio'] = TRUE;
+		
+		$config = $this->config['image_lib'];
 		$config['source_image'] = $file['path'].$file['name'];
-		$config['maintain_ratio'] = TRUE;
-		$config['quality'] = 100;
 		
 		$image = $this->CI->image_lib->get_image_properties($file['path'].$file['name'],TRUE);
 		$pos = strrpos($file['name'],'.');
@@ -69,7 +65,7 @@ class Gallery
 	function process_images($resolutions, $upload_data, $info){
 		$used_resolutions = array(array());
 		
-		$new_filename = time().'_'.$info['name'].'_by_'.$info['username'];
+		$new_filename = time().'_'.str_replace(' ','',ucwords(strtolower($info['name']))).'_by_'.$info['username'];
 		$new_dir = str_replace('/',DIRECTORY_SEPARATOR,(realpath(dirname(FCPATH)).'/'.substr($this->config['artwork_path'],2).'themes/'.$info['category_data']->breadcrumb.'/'));
 		
 		$r_matrix = $this->matrixify_resolutions($resolutions);
@@ -107,12 +103,17 @@ class Gallery
 	}
 	
 	function create_thumbnail($name,$info){
+		
+		$config = $this->config['image_lib'];
+		$config['source_image'] = $info['full_path'];
+		
 		$config['source_image'] = $info['full_path'];
 		$config['create_thumb'] = FALSE;
 		$config['maintain_ratio'] = TRUE;
 		$config['width'] = $this->config['thumb_width'];
-		$config['height'] = $this->config['thumb_height'];;
-		$config['new_image'] = $this->config['thumb_path'].$name.$info['file_ext'];
+		$config['height'] = $this->config['thumb_height'];
+		$config['new_image'] = $this->config['thumb_path'].$name.'.png';//$info['file_ext'];
+		
 		$this->CI->image_lib->initialize($config);
 		
 		$this->CI->image_lib->resize();
@@ -158,7 +159,7 @@ class Gallery
 		}
 		
 		/* new theme name */
-		$new_filename = strtoupper($info['category_data']->breadcrumb).'-'.ucwords(strtolower($info['name'])).time();
+		$new_filename = strtoupper($info['category_data']->breadcrumb).'-'.str_replace(' ','',ucwords(strtolower($info['name']))).time();
 		/* new theme directory path */
 		$new_dir = str_replace('/',DIRECTORY_SEPARATOR,(realpath(dirname(FCPATH)).'/'.substr($this->config['artwork_path'],2).'themes/'.$info['category_data']->breadcrumb.'/'));
 		
@@ -175,7 +176,39 @@ class Gallery
 				'full_path' => $new_dir.$new_filename.$ext,
 				'file_ext'	=> $ext,
 				'file_size' => $file['file_size'],
-				'file_type' => $file['file_type']
+				'file_type' => $file['file_type'],
+				'is_image' 	=> $file['is_image'],
+				'image_width' => $file['image_width'],
+				'image_height' =>  $file['image_height']
+			);
+		
+		return true;
+	}
+	
+	function process_screenshot($file,$info){
+
+		/* new screenshot name */
+		$new_filename = strtoupper($info['category_data']->breadcrumb).'-'.str_replace(' ','',ucwords(strtolower($info['name']))).time();
+		/* new screenshot directory path */
+		$new_dir = str_replace('/',DIRECTORY_SEPARATOR,(realpath(dirname(FCPATH)).'/'.substr($this->config['artwork_path'],2).'themes/'.$info['category_data']->breadcrumb.'/'));
+		
+		/* in case the directory doesn't exists */
+		@mkdir($new_dir,0777,true);
+		
+		/* move it */
+		rename($file['full_path'],$new_dir.$new_filename.$file['file_ext']);
+		
+		
+		$this->file_info[] = array(
+				'file_name' => $new_filename.$file['file_ext'],
+				'file_path' => $new_dir,
+				'full_path' => $new_dir.$new_filename.$file['file_ext'],
+				'file_ext'	=> $file['file_ext'],
+				'file_size' => $file['file_size'],
+				'file_type' => $file['file_type'],
+				'is_image' 	=> $file['is_image'],
+				'image_width' => $file['image_width'],
+				'image_height' =>  $file['image_height']
 			);
 		
 		return true;

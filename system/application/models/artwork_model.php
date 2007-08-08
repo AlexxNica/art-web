@@ -31,7 +31,11 @@ class Artwork_model extends Model{
 	/**
 	 * search - generic query function
 	 */
-	function search($search_query=null, $num=null,$offset=null,$orderby = 'id desc'){
+	function search($search_query=null, $num=null,$offset=null,$orderby = 'id desc',$count = FALSE){
+		if ($count){
+			$this->db->select('count(*) as count');
+		}
+		
 		$this->db->from('artwork');
 		
 		if ($search_query != null) { 
@@ -40,12 +44,17 @@ class Artwork_model extends Model{
 		
 		$this->db->orderby($orderby);
 		
-		if ($num !=null && $offset != null)
+		if ($num !=null){
 			$this->db->limit($num,$offset);
+		}
 		
 		$query = $this->db->get();
-		
-		if ($query->num_rows()>0)
+
+		if ($count){
+			$row = $query->row();
+			return (int)$row->count;
+			
+		} elseif ($query->num_rows()>0)
 			return $query->result();
 		else 
 			return array();
@@ -56,6 +65,13 @@ class Artwork_model extends Model{
 	 */
 	function get_public($num=null,$offset=null,$orderby='date_accepted desc'){
 		return $this->search('state = '.STATE_PUBLIC,$num,$offset,$orderby);
+	}
+	
+	/**
+	 * returns the number of rows of the query
+	 */
+	function count_public(){
+		return $this->search('state = '.STATE_PUBLIC,null,null,'id desc',TRUE);
 	}
 	
 	/**
@@ -73,7 +89,7 @@ class Artwork_model extends Model{
 		return $this->search('user_id = '.$user_id,$num,$offset,$orderby);
 	}
 	
-	function find_by_category($categories,$num=null,$offset=null,$orderby='date_accepted desc'){
+	function find_by_category($categories,$num=null,$offset=null,$orderby='date_accepted desc',$count=FALSE){
 		if (is_array($categories)){
 			$sql = 'state = '.STATE_PUBLIC.' AND (';
 			foreach($categories as $key => $category){
@@ -87,7 +103,12 @@ class Artwork_model extends Model{
 			$sql = 'state = '.STATE_PUBLIC.' AND ( category_id = '.$categories.')';
 		}
 		
-		return $this->search($sql,$num,$offset,$orderby);
+		return $this->search($sql,$num,$offset,$orderby,$count);
+	}
+	
+	function count_by_category($categories,$num=null,$offset=null,$orderby='date_accepted desc'){
+		return $this->find_by_category($categories,$num,$offset,$orderby,TRUE);
+		
 	}
 	
 	

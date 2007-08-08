@@ -14,5 +14,6 @@ $lang['upload_bad_filename'] = "The file name you submitted already exists on th
 $lang['upload_not_writable'] = "The upload destination folder does not appear to be writable.";
 $lang['upload_images_resolution'] = "One of the images doesn't fit the allowed resolutions.";
 $lagn['upload_theme_not_valid'] = "The theme file isn't valid!";
+$lagn['upload_screenshot_not_valid'] = "The theme file isn't valid!";
 
 ?>

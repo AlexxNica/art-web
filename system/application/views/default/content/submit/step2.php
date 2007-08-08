@@ -20,7 +20,7 @@
 </label>
 <?endif;?>
 
-
+<? if (@$type != 'screenshots'):?>
 Is this the first version of the artwork?
 <input type="radio" name="is_original" value="yes" <?= $this->validation->set_radio('is_original', 'yes'); ?> >Yes
 <input type="radio" name="is_original" value="no" <?= $this->validation->set_radio('is_original', 'no'); ?> >No
@@ -40,6 +40,7 @@ Is this the first version of the artwork?
 	License
 	<?= form_dropdown('license',$licenses,@$info['license']) ?>
 </label>
+<?endif;?>
 
 <label for="description">
 	Description

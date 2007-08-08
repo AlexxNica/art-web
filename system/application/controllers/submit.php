@@ -90,7 +90,13 @@ class Submit extends Controller {
 		return $data;
 	}
 	
-	function _handle_themes($info){
+	function _handle_upload($type,$info){
+		switch($type){
+			case 'themes':
+			case 'screenshots': break;
+			default: die('Something went incredibly wrong!');
+		}
+		
 		$data = array();
 		$this->load->library('Upload');
 		
@@ -115,32 +121,41 @@ class Submit extends Controller {
 			$info['category_data'] = $this->Category->find($info['category']); 
 
 			/* validate the file submited ... */
-			if (!$this->gallery->process_theme($upload_data[0],$info)){
+			if ($type == 'themes' AND !$this->gallery->process_theme($upload_data[0],$info)){
 				$this->upload->set_error('upload_theme_not_valid');
 				$failed = TRUE;
+			} elseif ($type == 'screenshots' AND !$this->gallery->process_screenshot($upload_data[0],$info)){
+				$this->upload->set_error('upload_theme_not_valid');
+				$failed = TRUE;	
 			} else {
 				$artwork_downloads = $this->gallery->data();
-			}
-			
-			if (!$failed){
+				
 				//--
 				//	Add artwork to DB
 				//--
 				$fields = array(
 					'user_id' => $this->authentication->get_uid(),
 					'category_id' => $info['category'],
-					'license_id' => $info['license'],
-					'original_id' => $info['original'],
-					'version'	=> $this->validation->version,
 					'name'		=> $this->validation->name,
 					'description'	=> $info['description'],
 					'state'			=> 1
 				);
 				
+				if ($type=='themes'){
+					$fields['license_id'] = $info['license'];
+					$fields['original_id'] = $info['original'];
+					$fields['version']	= $this->validation->version;
+				}
+				
 				/* add artwork to the DB */
 				$artwork_id = $this->Artwork->add($fields);
-			
 				
+				if (in_array($artwork_downloads[0]['file_ext'],array('.jpg','.png','.svg'))){
+					/* process newly added artwork **/
+					$thumb_name = 'thumb_'.$artwork_id;
+					$this->gallery->create_thumbnail($thumb_name,$artwork_downloads[0]);
+				}
+			
 				/* add new entries to the download table */			
 				$this->Download->create($artwork_id,$artwork_downloads[0]);
 				
@@ -156,6 +171,7 @@ class Submit extends Controller {
 	
 		return $data;
 	}
+	
 	
 	// enter all the info related to the artwork
 	function step2(){
@@ -200,14 +216,21 @@ class Submit extends Controller {
 				
 				$type = "themes";
 				
-				$handled_info = $this->_handle_themes($info);
+				$handled_info = $this->_handle_upload($type,$info);
 				
 			} elseif($this->input->post('screenshots')){
+				$this->validation->set_rules($rules);
+				$this->validation->set_fields($fields);
+				
 				$type = "screenshots";
+				
+				$handled_info = $this->_handle_upload($type,$info);
+				
 			} elseif($this->input->post('contest')){
 				$type = "contests";
 			} else {
 				$type = -1;
+				redirect('submit','refresh');
 			}
 			
 			$data = array_merge($handled_info,$data);
@@ -225,8 +248,9 @@ class Submit extends Controller {
 			$categories = $this->Category->find_by_parent($type);
 			
 		} else if ($this->input->post('screenshots')){
-			$type = 3;
 			$data['type'] = "screenshots";
+			$type = 3;
+			$categories = $this->Category->find_by_parent($type,'name desc');
 		} else {
 			redirect('submit/step1','refresh');
 		}

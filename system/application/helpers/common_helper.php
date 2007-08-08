@@ -56,7 +56,7 @@ function menu_marker($option=FALSE){
  */ 
 function thumb_url($artwork_id){
 	$CI =& get_instance();
-	return base_url().substr($CI->config->config['gallery']['thumb_path'],2).'thumb_'.$artwork_id.'.jpg';
+	return base_url().substr($CI->config->config['gallery']['thumb_path'],2).'thumb_'.$artwork_id.'.png';
 }
 
 /**
@@ -120,18 +120,18 @@ function categories_breadcrumb($category_id,$separator=' > ',$links=FALSE){
 }
 
 /**
- * 	Pagination
+ * 	Pagination Helper
  *	Constructs the pagination links
  */
-function pagination($total_rows,$per_page,$cur_page,$base_url,$options=array(
+function pagination_helper($info,$base_url,$options=array(
 											 	'full_tag_open' 	=> '<p>',
 											 	'full_tag_close' 	=> '</p>',
 											 	'first_link'	  	=> 'First',
-												'first_link_tag_open' => '<span>',
-												'first_link_tag_close' => '</span>',
+												'first_tag_open' => '<span>',
+												'first_tag_close' => '</span>',
 												'last_link'			=> 'Last',
-												'last_link_tag_open'	=> '<span>',
-												'last_link_tag_close'	=> '</span>',
+												'last_tag_open'	=> '<span>',
+												'last_tag_close'	=> '</span>',
 												'next_link'			=> '&gt;',
 												'next_tag_open'		=> '<span>',
 												'next_tag_close'	=> '</span>',
@@ -144,6 +144,10 @@ function pagination($total_rows,$per_page,$cur_page,$base_url,$options=array(
 												'num_tag_close'		=> '</span>',
 												'num_links'			=> 2
 											)){
+												
+	$per_page = $info['per_page'];
+	$cur_page = $info['page'];
+	$total_rows = $info['total_rows'];
 	
 	$num_pages = ceil($total_rows/$per_page);
 	
