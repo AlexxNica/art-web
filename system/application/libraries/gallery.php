@@ -66,8 +66,8 @@ class Gallery
 		$used_resolutions = array(array());
 		
 		$new_filename = time().'_'.str_replace(' ','',ucwords(strtolower($info['name']))).'_by_'.$info['username'];
-		$new_dir = str_replace('/',DIRECTORY_SEPARATOR,(realpath(dirname(FCPATH)).'/'.substr($this->config['artwork_path'],2).'themes/'.$info['category_data']->breadcrumb.'/'));
-		
+		$new_dir = str_replace('/',DIRECTORY_SEPARATOR,(realpath(dirname(FCPATH)).'/'.substr($this->config['artwork_path'],2).'backgrounds/'.$info['category_data']->breadcrumb.'/'));
+		@mkdir($new_dir,0777,true);
 		$r_matrix = $this->matrixify_resolutions($resolutions);
 		
 		foreach($upload_data as $image){
@@ -82,8 +82,8 @@ class Gallery
 				rename($image['full_path'],$new_dir.$fn);
 				$this->file_info[] = array(
 						'file_name' => $fn,
-						'file_path' => $this->config['artwork_path'],
-						'full_path' => $this->config['artwork_path'].$fn,
+						'file_path' => $new_dir,
+						'full_path' => $new_dir.$fn,
 						'width' 	=> $value['width'],
 						'height'	=> $value['height'],
 						'file_ext'	=> $image['file_ext'],

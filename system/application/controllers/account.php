@@ -66,6 +66,11 @@ class Account extends Controller{
 		$this->authentication->authenticate();
 
 		echo "congrats! You're logged in!";
+		
+		$this->load->model('Version_model','Version');
+		
+		$this->Version->parents('1.1.2.1.');
+		$this->Version->parents('1.2.2');
 	}
 
 

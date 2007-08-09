@@ -6,6 +6,7 @@ class Browse extends Controller{
 		
 		$this->load->model('Artwork_model','Artwork');
 		$this->load->model('Category_model','Category');
+		$this->load->model('License_model','License');
 		
 	}
 	
@@ -75,9 +76,13 @@ class Browse extends Controller{
 	 * Show Artwork
 	 */
 	function _show_artwork(){
-		
-		$artwork = $this->Artwork->find($this->artwork_id,TRUE);
+		$artwork = $this->Artwork->find($this->artwork_id);
 		$data['artwork'] = $artwork;
+		$data['user'] = $this->User->find($artwork->user_id);
+		if ($artwork->license_id!=0){
+			$data['artwork_license'] = $this->License->find($artwork->license_id);
+		}
+		
 		$data['artwork_rating'] = $this->Vote->rating($this->artwork_id,VOTE_NORMAL);
 		
 		/* if the user is logged in, gets the user rating in the work */

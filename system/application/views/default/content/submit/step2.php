@@ -32,8 +32,9 @@ Is this the first version of the artwork?
 </label>
 
 <label for="original">
-	of
-	<?= form_dropdown('original',$originals,@$info['original']) ?>
+	<?=@$this->validation->original_error; ?>
+	Parent ID
+	<input type="text" name="original" value="<?= @$this->validation->original?>"/>
 </label>
 
 <label for="license">

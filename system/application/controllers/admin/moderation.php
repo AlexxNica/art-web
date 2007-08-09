@@ -42,15 +42,15 @@ class Moderation extends Controller{
 	}
 	
 	function vote_up(){
-		$this->vote(1);
+		$this->_vote(1);
 	}
 	
 	function vote_down(){
-		$this->vote(-1);
+		$this->_vote(-1);
 	}
 	
 	function vote_nil(){
-		$this->vote(0);
+		$this->_vote(0);
 	}
 	
 	function _vote($vote_value){
@@ -82,8 +82,11 @@ class Moderation extends Controller{
 		}
 		
 		/* set the total */
+		
 		if (@$elems['total_rows']){
-		$this->pagination['total_rows'] = $elems['total_rows'];
+			$this->pagination['total_rows'] = $elems['total_rows'];
+		} elseif (!isset($this->pagination['total_rows'])){
+			$this->pagination['total_rows'] = 0;
 		}
 		
 		/* set the order */

@@ -9,6 +9,7 @@ class Submit extends Controller {
 		$this->load->model('Category_model','Category');
 		$this->load->model('Download_model','Download');
 		$this->load->model('Moderation_model','Moderation');
+		$this->load->model('Version_model','Version');
 		
 		$this->authentication->authenticate();
 	}
@@ -43,6 +44,7 @@ class Submit extends Controller {
 
 			$info['name'] = $this->validation->name;
 			$info['username'] = $this->authentication->get_username();
+			$info['category_data'] = $this->Category->find($info['category']); 
 
 			if (!$this->gallery->process_images($resolutions_available,$upload_data,$info)){
 				$this->upload->set_error('upload_images_resolution');
@@ -60,7 +62,6 @@ class Submit extends Controller {
 					'user_id' => $this->authentication->get_uid(),
 					'category_id' => $info['category'],
 					'license_id' => $info['license'],
-					'original_id' => $info['original'],
 					'version'	=> $this->validation->version,
 					'name'		=> $this->validation->name,
 					'description'	=> $info['description'],
@@ -69,6 +70,13 @@ class Submit extends Controller {
 				
 				/* add artwork to the DB */
 				$artwork_id = $this->Artwork->add($fields);
+				
+				if ($info['is_original'] == 'yes'){
+					$this->Version->add('',$artwork_id,$artwork_id);
+				} else {
+					$version = $this->Version->get($this->validation->original);
+					$this->Version->add($version->path,$artwork_id,$version->tree_id);
+				}
 			
 				/* process newly added artwork **/
 				$thumb_name = 'thumb_'.$artwork_id;
@@ -143,12 +151,22 @@ class Submit extends Controller {
 				
 				if ($type=='themes'){
 					$fields['license_id'] = $info['license'];
-					$fields['original_id'] = $info['original'];
 					$fields['version']	= $this->validation->version;
 				}
 				
 				/* add artwork to the DB */
 				$artwork_id = $this->Artwork->add($fields);
+				
+				if ($info['is_original'] == 'yes'){
+					$this->Version->add('',$artwork_id,$artwork_id);
+				} else {
+					$version = $this->Version->get($this->validation->original);
+					if (!$version){
+						show_error('Oopps!! You better warn some admin!');
+						die();
+					}
+					$this->Version->add($version->path,$artwork_id,$version->tree_id);
+				}
 				
 				if (in_array($artwork_downloads[0]['file_ext'],array('.jpg','.png','.svg'))){
 					/* process newly added artwork **/
@@ -181,7 +199,9 @@ class Submit extends Controller {
 			
 			$info['category'] = $this->input->post('category');
 			$info['license'] = $this->input->post('license');
+			
 			$info['original'] = $this->input->post('original');
+			$info['is_original'] = $this->input->post('is_original');
 			$info['description'] = htmlspecialchars($this->input->post('description'));
 			
 			$data['info'] = $info;
@@ -190,9 +210,15 @@ class Submit extends Controller {
 			
 			$rules['name']	= "trim|required|xss_clean";
 			$rules['keywords'] = "trim|required";
-			
+
+			// set the rule of the parent_id validation
+			if ($info['is_original']=='no'){
+				$this->category_id = $info['category'];
+				$rules['original'] = "trim|required|callback_parent_check";
+			}
 			$fields['name'] = 'Title';
 			$fields['keywords'] = 'Keywords';
+			$fields['original'] = 'Parend ID';
 			
 			if ($this->input->post('backgrounds')){
 				
@@ -235,7 +261,6 @@ class Submit extends Controller {
 			
 			$data = array_merge($handled_info,$data);
 		}
-		
 		if ($this->input->post('backgrounds')){
 			$data['type'] = "backgrounds";
 			$type = 1;
@@ -259,8 +284,8 @@ class Submit extends Controller {
 		$data['categories'] = $this->_prepare_for_listdown($categories);
 		
 		// Get the original artwork names
-		$original_list = $this->Artwork->find_originals($this->authentication->get_uid());
-		$data['originals'] = $this->_prepare_for_listdown($original_list,false);
+		/*$original_list = $this->Artwork->find_originals($this->authentication->get_uid(),$type);
+		$data['originals'] = $this->_prepare_for_listdown($original_list,false);*/
 		
 		// get and prepare the license list 
 		$license_list = $this->License->find_all();
@@ -289,6 +314,25 @@ class Submit extends Controller {
 			return $tmp_array;
 		}
 		return $tmp_array;
+	}
+	
+	function parent_check($id){
+		$artwork = $this->Artwork->find($id);
+		if ($artwork->user_id != $this->authentication->get_uid()){
+			$this->validation->set_message('parent_check', 'You can only submit updates of your own artwork!');
+			return FALSE;
+		}
+		
+		if ($artwork->category_id != $this->category_id){
+			$this->validation->set_message('parent_check', 'The parent artwork isn\'t from the same category as the one you want to submit!');
+			return FALSE;
+		}
+		
+		if ($artwork->state != STATE_PUBLIC){
+			$this->validation->set_message('parent_check', 'The parent needs to be already accepted!');
+			return FALSE;
+		}
+		return TRUE;
 	}
 }
 

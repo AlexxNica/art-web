@@ -115,24 +115,8 @@ class Artwork_model extends Model{
 	/**
 	 * find - return on work
 	 */
-	function find($artwork_id,$complete=FALSE){
-		if ($complete){
-			$sql = "
-			Select artwork.*, user.username,
-			license.name as licence_name, license.summary as license_summary, license.link as license_link
-			from vote,artwork,user,license
-			where artwork.id = vote.artwork_id
-			AND artwork.id = ".$this->db->escape($artwork_id)."
-			AND artwork.user_id = user.uid
-			AND license.id = artwork.license_id
-			";
-			$res = $this->db->query($sql);
-			if ($res->num_rows()>0){
-				$res = $res->result();
-			}
-		} else {
-			$res = $this->search('id = '.$artwork_id,1,0);
-		}
+	function find($artwork_id){
+		$res = $this->search('artwork.id = '.$artwork_id,1,0);
 		if (@$res[0])
 			return $res[0];
 		else
@@ -140,23 +124,17 @@ class Artwork_model extends Model{
 	}
 	
 	/**
-	 * find originals
+	 * Get Users
 	 * 
-	 * get the first version of the works of certain user
+	 * Return the works of a user
 	 */
-	function find_originals($user_id=null){
-		$this->db->orderby('name asc');
-		$this->db->where('original_id',NULL);
-		if ($user_id!=null){
-			$this->db->where('user_id',$user_id);
+	function get_users($user_id,$category_id=null, $num=null, $offset=null, $orderby='name asc'){
+		$where = "user_id = $user_id";
+		if ($category_id){
+			$where .=" AND category_id = $category_id";
 		}
-		$this->db->from('artwork');
-		$query = $this->db->get();
 		
-		if ($query->num_rows()>0)
-			return $query->result();
-		else 
-			return false;
+		return $this->search($where,$num,$offset,$orderby);
 	}
 	
 	/**
