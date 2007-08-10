@@ -21,7 +21,7 @@ class Preload_actions_filter extends Filter {
 	function preload_categories(){
 		$this->CI->load->model('Category_model','Category');
 		
-		$catgories = array();
+		$categories = array();
 		$query = $this->CI->Category->get_all();
 		foreach($query as $category){
 			$info = array();

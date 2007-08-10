@@ -172,7 +172,8 @@ class User_model extends Model
 		$fields['activation_code'] = $this->make_activation_code();
 		
 		$this->db->insert('user',$fields);
-		$templates = $this->config->item('email_template');
+		$this->config->load('email',TRUE);
+		$templates = $this->config->item('email_template','email');
 		$activation_info = $templates['activation'];
 		
 		/* Send activation email */
@@ -215,7 +216,8 @@ class User_model extends Model
 		$this->db->insert('lost_password',$fields);
 		
 		/* Send lost password email */
-		$templates = $this->config->item('email_template');
+		$this->config->load('email',TRUE);
+		$templates = $this->config->item('email_template','email');
 		$reset_info = $templates['lost_password'];
 		$this->load->library('Email');
 		$this->email->to($user->email);
