@@ -270,6 +270,20 @@ if (isset($_GET['install'])):
 	
 	do_query($query,"Vote");
 	
+	/**
+	 * Version
+	 */
+	
+	$query = "DROP TABLE IF EXISTS `version`;";
+	do_query($query,"Drop Version Table");
+	
+	$query = "CREATE TABLE `version` (
+	  `artwork_id` int(11) default NULL,
+	  `path` varchar(255) default NULL,
+	  `tree_id` int(11) default NULL
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+	do_query($query,"Version");
+	
 	echo "<br/><br/><h3>Success</h3>";
 else:?>
 	<div id="notice">
