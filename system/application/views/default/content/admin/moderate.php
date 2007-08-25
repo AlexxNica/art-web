@@ -4,6 +4,12 @@
 		<div class="thumb">
 			<img src="<?= thumb_url($artwork->id) ?>" />
 		</div>
+		<div class="options">
+			<ul>
+				<li><?= anchor(categories_breadcrumb($artwork->category_id,'/').$artwork->id.'/edit','Change Theme Screenshot') ?></li>
+				<li><?= anchor(categories_breadcrumb($artwork->category_id,'/').$artwork->id.'/edit','Edit Work') ?></li>
+			</ul>
+		</div>
 		<div class="info">
 			<ul>
 				<li class="name"><?= categories_breadcrumb($artwork->category_id,' > ',TRUE)?> <?= $artwork->name ?> <i>by</i> <?= $artwork->user_username?></li>

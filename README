@@ -1,0 +1,15 @@
+art.gnome.org Version 3
+
+This project's svn repository can be found in http://svn.gnome.org/viewcvs/art-web/branches/art-web-3/
+
+The project derives from CodeIgniter PHP Framework (http://www.codeigniter.com).
+
+The following directories and files contain arg.gnome.org Version 3 code:
+	* /system/application
+	* /assets
+	* /db
+	* /install.php
+	
+
+
+CodeIgniter code is under the /system directory except /system/application directory.

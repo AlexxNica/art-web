@@ -226,6 +226,16 @@ function pagination_helper($info,$base_url,$options=array(
 	return $output;
 }
 
-
+function _prepare_for_listdown($info, $empty=true){
+	$tmp_array = array();
+	if (!$empty) $tmp_array['-1'] = '-- n/a --';
+	if ($info){
+		foreach($info as $unit){
+			$tmp_array[$unit->id] = $unit->name;
+		}
+		return $tmp_array;
+	}
+	return $tmp_array;
+}
 
 ?>

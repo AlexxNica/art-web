@@ -493,6 +493,17 @@ ul#moderation_queue > li{
 	float: left;
 }
 
+ul#moderation_queue li {
+	list-style: none;
+}
+
+#moderation_queue .thumb {
+	min-height: 75px;
+	min-width: 100px;
+	border: 1px solid #fff;
+	margin-right: 5px;
+}
+
 .moderation_vote { position: relative;}
 
 	.moderation_vote ul {
@@ -530,6 +541,12 @@ ul#moderation_queue > li{
 		.vote_choose {
 			background-color: #444;
 		}
+		
+#moderation_queue > li .options {
+	float: right ;
+	border-left: 1px solid #fff;
+	padding-left: 5px;
+}
 
 /**	Star Rating */
 

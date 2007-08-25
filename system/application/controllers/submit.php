@@ -281,15 +281,15 @@ class Submit extends Controller {
 		}
 		
 		// Get the artwork categories
-		$data['categories'] = $this->_prepare_for_listdown($categories);
+		$data['categories'] = _prepare_for_listdown($categories);
 		
 		// Get the original artwork names
 		/*$original_list = $this->Artwork->find_originals($this->authentication->get_uid(),$type);
-		$data['originals'] = $this->_prepare_for_listdown($original_list,false);*/
+		$data['originals'] = _prepare_for_listdown($original_list,false);*/
 		
 		// get and prepare the license list 
 		$license_list = $this->License->find_all();
-		$data['licenses'] = $this->_prepare_for_listdown($license_list);
+		$data['licenses'] = _prepare_for_listdown($license_list);
 		
 		
 		$this->layout->buildPage("submit/step2", $data);
@@ -303,18 +303,6 @@ class Submit extends Controller {
 		$this->layout->buildPage("submit/step3", $data);
 	}
 	
-	
-	function _prepare_for_listdown($info, $empty=true){
-		$tmp_array = array();
-		if (!$empty) $tmp_array['-1'] = '-- n/a --';
-		if ($info){
-			foreach($info as $unit){
-				$tmp_array[$unit->id] = $unit->name;
-			}
-			return $tmp_array;
-		}
-		return $tmp_array;
-	}
 	
 	function parent_check($id){
 		$artwork = $this->Artwork->find($id);

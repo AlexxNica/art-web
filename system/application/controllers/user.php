@@ -53,7 +53,7 @@ class User extends Controller{
 	function profile(){
 		$this->authentication->authenticate();
 		
-		if ($this->authentication->get_uid() == $this->user->uid)
+		if ($this->authentication->is_it_me($this->user->uid))
 			echo "you are the owner";
 		else
 			echo "get lost!!!";

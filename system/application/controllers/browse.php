@@ -171,6 +171,51 @@ class Browse extends Controller{
 	}
 	
 	
+	function edit(){
+		$artwork_id = $this->uri->segment(3);
+		
+		$artwork = $this->Artwork->find($artwork_id);
+		if (!$artwork) show_error('Artwork wasn\'t found!');
+		
+		if (!$this->authentication->is_it_me($artwork->user_id) 
+			AND !$this->authentication->is_allowed(EDIT_USER)){
+				
+			show_error('Not Allowed!');
+		}
+		
+		// get and prepare the license list 
+		$license_list = $this->License->find_all();
+		$data['licenses'] = _prepare_for_listdown($license_list);
+		
+		$this->load->library('validation');
+		
+		if ($this->input->post('upload')){
+
+			$this->validation->set_error_delimiters('<div class="error">', '</div>');
+
+			$rules['name']	= "trim|required|xss_clean";
+			$rules['keywords'] = "trim|required";
+
+			// set the rule of the parent_id validation
+			$fields['name'] = 'Title';
+			$fields['keywords'] = 'Keywords';
+
+			$rules['version'] = "trim|required";
+			$fields['version'] = 'Version';
+
+			$this->validation->set_rules($rules);
+			$this->validation->set_fields($fields);
+		
+		} else {
+			$this->validation->name = $artwork->name;
+			$this->validation->keywords = "";
+		}
+		$data['artwork'] = $artwork;
+		
+		$this->layout->buildPage('browse/edit_artwork',$data);
+	}
+	
+	
 	/**
 	 * handle get variables
 	 * 
