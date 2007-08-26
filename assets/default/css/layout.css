@@ -1,29 +1,18 @@
-#universe {
-	min-width: 1024px;
-}
-
 #top_bar { height: 5px; background: #515151; }
 
 #top-bar { 
 	background: #515151 url("../images/bgs.gif") repeat-x left bottom;
 	height: 106px; 
 	position: relative;
-	right: 0;
-	left: 0;
-	top: 0px;
 }
 
-	#top-bar .logo {
-		background: url("../images/bgs.gif") no-repeat left -68px;
-		bottom: 0;
-		height: 103px;
-		overflow: hidden;
-		font-size: 0px;
-		position: absolute;
-		width: 310px;
-		z-index: 0;
-	}
-	
+#top-bar .logo {
+	background: url("../images/bgs.gif") no-repeat left -68px;
+	height: 103px;
+	width: 310px;
+	font-size: 0pt; /* hides text ... */
+}
+
 	#top-bar #gnome-menu {
 		background: #777;
 		display: inline;
@@ -35,90 +24,80 @@
 		z-index: 2;
 	}
 	
-	#top-bar #ago-menu {
-		position: absolute;
-		right: 50px;
-		bottom: 12px;
-	}
-	
-	#ago-menu ul {
-		position: relative;
-		list-style: none;
-		z-index: 3;
-	}
-		#ago-menu ul li {
-			display: inline;
-			margin: 5px 10px 0px 10px;
-			padding-bottom: 15px;
-		}
-		
-		#ago-menu ul li.marked,
-		#ago-menu ul li:hover {
-			background: url("../images/marker.gif") no-repeat center 17px;
-		}
+#top-bar #ago-menu {
+	position: absolute;
+	right: 50px;
+	bottom: 0px;
+}
+
+#ago-menu ul {
+	position: relative;
+	list-style: none;
+	margin: 10px;
+}
+
+#ago-menu ul li {
+	font-size: 1.6em;
+	display: inline;
+	margin: 5px 10px 0px 10px;
+	padding-bottom: 11px;
+}
+
+#ago-menu ul li.marked,
+#ago-menu ul li:hover {
+	background: url("../images/marker.gif") no-repeat bottom;
+}
 
 #sub-bar {
 	background: #464646;
-	height: 40px;
-	position: relative;
-	right: 0;
-	left: 0;
-	top:0;
 }
 
-	#top .login {
-		color: #fff;
-		position: absolute;
-		left: 0;
-		bottom: 10px;
-		margin-left: 20px;
-	}
-	
+#top .login {
+	margin-left: 20px;
+	line-height: 3em;
+}
+
 #middle-bar {
 	background: #b5b58a url("../images/middle_bar_bg.gif") repeat-x left top;
-	height: auto;
 	border-bottom: 1px solid #fff;
 	padding: 20px 5px 10px 5px;
-	position: relative;
 }
-	#middle-bar #initial_notice{
-		position: relative;
-		background: #c1c19d;
-		padding: 10px;
-		margin-right: 5px;
-		width: 275px;
-	}
-	
-	#middle-bar h2{
-		color: #000;
-	}
-	
-	#middle-bar #initial_notice,
-	#middle-bar #news {
-		float: left;
-		padding: 10px;
-	}
-	
-	#middle-bar #news {
-		border-left: 1px solid #c1c19d;
-		padding-left: 20px;
-	}
-	
-	#middle-bar p,#middle-bar li {
+#middle-bar #initial_notice{
+	position: relative;
+	background: #c1c19d;
+	padding: 10px;
+	width: 275px;
+}
+
+#middle-bar h2{
+	color: #000;
+}
+
+#middle-bar #initial_notice,
+#middle-bar #news {
+	float: left;
+	padding: 1em 1em;
+	margin-right: 1em;
+}
+
+#news ul {
+	padding-left: 2em;
+}
+
+#middle-bar p,#middle-bar li {
 		color: #555;
 	}
-	
-	#featured_work{
-		background: #999978 url("../images/featured.gif") no-repeat left top;
-		float: right;
-		height: 150px;
-		width: 220px;
-		margin-top: -5px;
-		margin-right: 10px;
-		padding-left: 30px;
-		position: relative;
-		display: table;
-	}
+
+#featured_work{
+	background: #999978 url("../images/featured.gif") no-repeat left top;
+	margin-right: 10px;
+	padding-left: 32px;
+	padding-right: 2em;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	position: absolute;
+	right: 1em;
+}
 	
 	#featured_work .thumb{
 		overflow: hidden;
@@ -146,23 +125,15 @@ input, textarea { border: 1px solid #ccc;}
 
 #top .login fieldset {
 	border: 0;
-	padding-top: 3px;
+	padding: 0.2em;
 }
 
 #top .login input.inputter {
-	background: transparent url('../images/bg_top.gif') no-repeat -10px -47px fixed;
+	background: #B5B58A;
 	border: solid 0 #fff;
 	width: 139px;
-	height: 17px;
-	
-	padding-top:2px;
-	position:relative;
-	top:2px;
-	z-index:39;
-}
-
-#top .login fieldset>input.inputter {
-	background: transparent url('../images/bg_top.gif') no-repeat -10px -47px; 
+	padding: 0px 2px;
+	margin-right: 0.5em;
 }
 
 #top .login .submitter {
@@ -173,9 +144,7 @@ input, textarea { border: 1px solid #ccc;}
 	overflow:hidden;
 	padding-top: 17px;
 	position:absolute;
-	top:2px;
 	width:56px;
-	-moz-outline:none;
 }
 
 #top .login a.submitter:hover {
@@ -188,20 +157,16 @@ input, textarea { border: 1px solid #ccc;}
 
 
 #content {
-	position: relative;
 	margin-right: 300px;
 	padding : 10px 20px 10px 10px;
-	margin-bottom : 20px;
-	}
-	
+}
+
 #column {
 	float : right;
 	width : 250px;
 	padding : 10px;
-	margin-bottom : 20px;
-	background: none;
-	}
-	
+}
+
 /** sidebar elements*/
 
 .menu_field {
@@ -218,14 +183,15 @@ input, textarea { border: 1px solid #ccc;}
 #resources_menu {
 }
 
-	#resources_menu h2 {
-		color: #565656;
-		margin-bottom: 7px;
-	}
-	
-	#resources_menu ul {
-		list-style: none;
-	}
+#resources_menu h2 {
+	color: #565656;
+	margin-bottom: 7px;
+}
+
+#resources_menu ul {
+	list-style: none;
+	padding-left: 1em;
+}
 
 
 /** Postboard: Warnings, Notices */
@@ -250,13 +216,11 @@ input, textarea { border: 1px solid #ccc;}
 	
 #footer {
 	clear : both;
-	width : 100%;
-	height : 40px;
 	border-top : 1px solid #d0d0d0;
-	}
-	
-	
-	
+	padding: 1em;
+}
+
+
 /* Register View */
 
 #openid_notice {
@@ -386,10 +350,11 @@ padding-left:18px;
 /** Gnome Bar */
 #general
 {
-list-style: none;
-background: #2E3436 url(http://gnome.jardigrec.eu/general_bg.png) 0 100% repeat-x;
-text-align: right;
-padding: 0 1ex;
+	list-style: none;
+	background: #2E3436 url(http://gnome.jardigrec.eu/general_bg.png) 0 100% repeat-x;
+	text-align: right;
+	padding: 0 1ex;
+	margin: 0;
 }
 #general li /* */
 {
@@ -408,7 +373,8 @@ line-height: 30px;
 }
 #general li a:hover
 {
-text-decoration: underline;
+	text-decoration: underline;
+	border-bottom: none;
 }
 #general .home /* */
 {
@@ -464,7 +430,6 @@ padding-left: 27px;
 #steps span{
 	border: 1px solid #fff;
 	display: block;
-	font-size: 20px;
 	height: auto;
 	padding: 7px;
 	width: auto;

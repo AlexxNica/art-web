@@ -1,25 +1,25 @@
 body {
-	font : normal 11px/14px Verdana, Sans-serif;
-	font-weight: normal;
-	color : #fff;
-	}
-	
+	font-family: Verdana, Sans-serif;
+	background-color : #565656;
+	color: white;
+	margin: 0;
+}
+
 h1,h2,h3{
 	font-family: "Century Gothic", "Tahoma", Arial, serif;
 	font-weight: normal;
-	margin-bottom: 10px;
+	margin-top: 0px;
 }
 
 h1 {
 	font-size: 200%;
 	margin: 0 0 0.2em 0;
-	line-height: 1;
 	color: #CEE12F;
 	font-family: "Lucida Grande", Verdana,serif;
 	letter-spacing: -0.03em;
 	font-weight: normal;
 }
-	
+
 code {
 	display : block;
 	margin : 14px 0 14px 0;
@@ -28,30 +28,27 @@ code {
 	color : #002166;
 	border : 1px solid #d0d0d0;
 	background-color : #f9f9f9;
-	}
-	
+}
+
+a {
+	text-decoration: none;
+	color: #C2A95D;
+}
+
+a:hover {
+	border-bottom: dotted 1px #C2A95D;
+}
+
 
 /** Ago menu */
 #ago-menu ul li a {
 	font-family: "Century Gothic", "Tahoma", Arial, serif;
-	font-size: 18px;
 	color: #fdfdfd;
 }
 
 #ago-menu ul li a:hover {
 	border: 0;
 }
-	
-/** Login */
-#top .login label{
-	font-family: Verdana,sans-serif;
-	position: relative;
-	top: 2px;
-}
-
-#top .login a { color: #C2A95D;}
-
-
 
 /** Sidebar Elements */
 
