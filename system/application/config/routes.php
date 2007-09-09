@@ -81,9 +81,10 @@ $route['browse/user/([a-z0-9]+)'] = "browse/user/$1";
 $route['browse/user/([a-z0-9]+)/([a-z\-_0-9\/]+)'] = "browse/user/$1";
 $route['browse'] = "browse/index";
 $route['browse/([a-z\-_0-9\/]+)'] = "browse/index/$1";
+/*
 $route['([a-z0-9]+)'] = "browse/index/$1";
 $route['([a-z0-9]+)/([a-z\-_0-9]+)'] = "browse/index/$1/$2";
 $route['([a-z0-9]+)/([a-z\-_0-9]+)/([0-9]+)'] = "browse/index/$1/$2/$3";
 $route['([a-z0-9]+)/([a-z\-_0-9]+)/([0-9]+)/([a-z\-_0-9\/]+)'] = "browse/$4/$1/$2/$3";
-
+*/
 ?>
