@@ -5,7 +5,7 @@
 <?php foreach ($news as $news): ?>
 <h2><?php echo $news->title ?></h2>
 <p><?php echo $news->body ?></p>
-<p><?php echo $news->date .' &middot; '. $news->author ?></p>
+<p><?php echo date("d/m/Y H:i",$news->date) .' &middot; '. $news->author ?></p>
 <hr/>
 <?php endforeach; ?>
 

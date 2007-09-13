@@ -6,6 +6,8 @@ class News extends Controller
     {
         parent::Controller();
         $this->load->model('News_model','News');
+
+		$this->load->scaffolding('news');
     }
 
     function index($start = 0)

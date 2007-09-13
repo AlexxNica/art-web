@@ -11,12 +11,18 @@ class News_model extends Model{
 		parent::Model();
 	}
 	
+	
+	
 	/**
 	 * page_list - get news items for a page
 	 */
 	function page_list ($items_per_page, $start) {
 		$this->db->orderby ('date', 'desc');
-		$query = $this->db->get ('news', $items_per_page, $start);
+		$this->db->select('news.*, user.real_name as author');
+		$this->db->from('news,user');
+		$this->db->where('user.uid = news.user_id');
+		$this->db->limit($items_per_page, $start);
+		$query = $this->db->get();
 		return $query->result ();
 	}
 

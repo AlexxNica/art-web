@@ -284,6 +284,23 @@ if (isset($_GET['install'])):
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 	do_query($query,"Version");
 	
+	/**
+	 * News
+	 */
+	$query = "DROP TABLE IF EXISTS `news`;";
+	do_query($query,"Drop News Table");
+	
+	$query = "CREATE TABLE `news` (
+	  `id` int(11) NOT NULL auto_increment,
+	  `date` int(11) default NULL,
+	  `title` varchar(255) default NULL,
+	  `body` text,
+	  `user_id` int(11) default NULL,
+	  PRIMARY KEY  (`id`)
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+	do_query($query,"News");
+	
+	
 	echo "<br/><br/><h3>Success</h3>";
 else:?>
 	<div id="notice">
