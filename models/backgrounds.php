@@ -21,6 +21,20 @@ class Backgrounds
 
     return $table;
   }
+
+  function get_total ($category)
+  {
+    $sql = "SELECT COUNT(name) FROM background
+            WHERE category = '$category'";
+    $r = mysql_query ($sql);
+    if (!$r)
+      printf ("Database error: %s", mysql_error());
+
+
+    $total = mysql_fetch_row ($r);
+
+    return $total[0];
+  }
 }
 
 ?>
