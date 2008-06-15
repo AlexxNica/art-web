@@ -37,7 +37,7 @@ class Paginator
     }
 
     $first = max (1, $cur_page - $context / 2);
-    $last = min ($first + $context, $this->total / $this->limit);
+    $last = min ($first + $context, ceil ($this->total / $this->limit));
 
     if ($last - $first < $context)
       $first = max (1, $last - $context);
