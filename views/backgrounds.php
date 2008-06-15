@@ -24,7 +24,12 @@ if (!$view_data)
   exit;
 }
 
-$p = new Paginator ($total_backgrounds, 10, $_GET['page'] * 10);
+/* get the current page and ensure a default value is set */
+$cur_page = $_GET['page'];
+if (!is_numeric ($cur_page))
+  $cur_page = 1;
+
+$p = new Paginator ($total_backgrounds, 10, $cur_page * 10);
 
 if ($category == "gnome")
   $d_category = "GNOME";
