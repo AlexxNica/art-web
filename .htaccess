@@ -1,4 +1,0 @@
-RewriteEngine on
-RewriteRule themes.* art.html
-RewriteRule backgrounds.* art.html
-RewriteRule faq.* faq.html
