@@ -22,6 +22,8 @@ if ($category)
 else
   $view_data = null;
 
+$total_backgrounds = $bg->get_total ($category);
+
 /* load view */
 require ("views/backgrounds.php");
 

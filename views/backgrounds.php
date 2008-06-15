@@ -24,7 +24,7 @@ if (!$view_data)
   exit;
 }
 
-$p = new Paginator (400, 10, $_GET['page'] * 10);
+$p = new Paginator ($total_backgrounds, 10, $_GET['page'] * 10);
 
 if ($category == "gnome")
   $d_category = "GNOME";
