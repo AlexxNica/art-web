@@ -53,7 +53,7 @@ $display_cat = array (
 <?php foreach ($view_data as $row): ?>
 
 <div style="border: 1px solid #ccc; padding: 4px;">
-<table cellpadding="4" width="100%" border=1>
+<table cellpadding="4" width="100%">
   <tr>
     <td colspan='4'><b><?php echo $row['name']?></b> by
       <a href="mailto:<?php echo $row['email']?>"><?php echo $row['realname']?></a>
