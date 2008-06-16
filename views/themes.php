@@ -7,10 +7,10 @@ $t = new Template ("themes");
 
 $t->print_header();
 
+/* if no data is available, print out a category list */
 if (!$view_data)
 {
-  print ('
-
+  ?>
   <a href="/">GNOME Art</a> &gt; Themes
   <br><br>
   Choose a category:
@@ -20,9 +20,10 @@ if (!$view_data)
   <li><a href="/themes/icon">Icons</a></li>
   <li><a href="/themes/splash_screens">Splash Screens</a></li>
   <li><a href="/themes/gdm_greeter">Login Window</a></li>
-  </ul>');
+  </ul>
+  <?php
   $t->print_footer ();
-  exit;
+  exit (0);
 }
 
 /* get the current page and ensure a default value is set */
@@ -45,25 +46,36 @@ $display_cat = array (
 ?>
 <a href="/">GNOME Art</a> &gt; <a href="/themes">Themes</a>
 &gt; <?php echo $d_category ?>
-<br/><br/>
-<center><?php $p->print_pagination (); ?></center>
-<br/>
-<table>
+<br><br>
+<div style="text-align:center"><?php $p->print_pagination (); ?></div>
+<br>
 
-<?php
-  foreach ($view_data as $row)
-  {
-    print ("<tr><td colspan='3'><b>{$row['name']}</b></td></tr>");
-    print ("<tr><td colspan='3'><a href=\"mailto:{$row['email']}\">{$row['realname']}</a></td></tr>");
-    print ("<tr><td rowspan='2'><img width=96' src='/images/thumbnails/themes/{$row['themeID']}.png'/></td>");
-    print ("<td colspan='2'>{$row['description']}</td></tr>");
-    print ("<tr><td>{$row['release_date']}</td><td width='75%'>{$row['license']}</td></tr>");
-    print ("<tr><td colspan='3'>&nbsp;</td></tr>");
-  }
-?>
+<?php foreach ($view_data as $row): ?>
 
+<div style="border: 1px solid #ccc; padding: 4px;">
+<table cellpadding="4" width="100%" border=1>
+  <tr>
+    <td colspan='4'><b><?php echo $row['name']?></b> by
+      <a href="mailto:<?php echo $row['email']?>"><?php echo $row['realname']?></a>
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="3">
+      <img width="96" alt="Preview" src='/images/thumbnails/themes/<?php echo $row['themeID']?>.png'>
+    </td>
+    <td colspan="3" style="width:100%"><?php echo $row['description']?></td>
+  </tr>
+  <tr>
+    <td><?php $tm = strtotime ($row['release_date']); echo date ("d M Y", $tm); ?></td>
+    <td><span style="color: gray">License:</span> <?php echo $license_config_array[$row['license']]?></td>
+    <td><a href="/download/themes/<?php printf ("%s/%s/%s", $row['category'], $row['themeID'], $row['download_filename'])?>">Download</a></td>
+  </tr>
 </table>
-<br/>
-<center><?php $p->print_pagination (); ?></center>
+</div>
+<br>
+<?php endforeach ?>
+
+<br>
+<div style="text-align:center"><?php $p->print_pagination (); ?></div>
 
 <?php $t->print_footer() ?>
