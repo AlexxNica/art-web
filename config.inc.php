@@ -191,7 +191,8 @@ $license_config_array = array (
 		'gnu-gpl' => 'GNU General Public License',
 		'gnu-lgpl' => 'GNU Lesser General Public License',
 		'pub-dom' => 'Public Domain',
-		'free-art' => 'Free Art License');
+		'free-art' => 'Free Art License',
+		'' => 'Unknown');
 
 $license_config_link_array = array (
 		'cc-atrib' => '<a href="http://creativecommons.org/licenses/by/2.0/">CC Attribution</a>',

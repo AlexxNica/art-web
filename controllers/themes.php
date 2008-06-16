@@ -1,4 +1,7 @@
 <?php
+
+require ("config.inc.php");
+
 /* load model */
 require ("models/themes.php");
 
