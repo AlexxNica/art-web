@@ -8,7 +8,7 @@ class Template
   function Template ($page)
   {
     $this->page = $page;
-    $css = array ();
+    $this->css = array ();
   }
 
   function add_css ($file)
