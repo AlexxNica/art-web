@@ -35,6 +35,23 @@ class Backgrounds
 
     return $total[0];
   }
+
+  function get_resolutions ($backgroundID)
+  {
+    if (!is_numeric ($backgroundID))
+      return;
+
+    $sql = "SELECT * FROM background_resolution
+            WHERE backgroundID = $backgroundID";
+
+    $r = mysql_query ($sql);
+    $res = array ();
+
+    while ($rr = mysql_fetch_assoc ($r))
+      $res[] = $rr;
+
+    return $res;
+  }
 }
 
 ?>

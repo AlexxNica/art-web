@@ -57,14 +57,19 @@ else
     <td rowspan="3">
       <img width="96" alt="Preview" src='/images/thumbnails/backgrounds/<?php echo $row['backgroundID']?>.jpg'>
     </td>
-    <td colspan="5" style="width:100%"><?php echo $row['description']?></td>
+    <td colspan="4" style="width:100%"><?php echo $row['description']?></td>
+    <td rowspan="2">
+     <?php foreach ($bg_res[$row['backgroundID']] as $res):?>
+       <a href="/download/backgrounds/<?php printf ("%s/%s/%s", $row['category'], $res['background_resolutionID'], $res['filename'])?>">
+       <?php echo $res['resolution']?></a><br>
+     <?php endforeach ?>
+    </td>
   </tr>
   <tr>
     <td class="label">Date:</td>
     <td><?php $tm = strtotime ($row['release_date']); echo date ("d M Y", $tm); ?></td>
     <td class="label">License:</td>
     <td><?php echo $license_config_array[$row['license']]?></td>
-    <td><a href="#">Download</a></td>
   </tr>
 </table>
 </div>

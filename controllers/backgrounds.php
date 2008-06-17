@@ -25,6 +25,12 @@ if ($category)
 else
   $view_data = null;
 
+$bg_res = array ();
+foreach ($view_data as $b)
+{
+  $bg_res[$b['backgroundID']] = $bg->get_resolutions ($b['backgroundID']);
+}
+
 $total_backgrounds = $bg->get_total ($category);
 
 /* load view */
