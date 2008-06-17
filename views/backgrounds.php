@@ -4,6 +4,7 @@ require ("lib/pagination.php");
 require ("lib/template.php");
 
 $t = new Template ("backgrounds");
+$t->add_css ("/css/art.css");
 
 $t->print_header();
 
@@ -45,7 +46,7 @@ else
 <br>
 
 <?php foreach ($view_data as $row): ?>
-<div style="border: 1px solid #ccc; padding: 4px;">
+<div class="list-item">
 <table cellpadding="4" width="100%">
   <tr>
     <td colspan='4'><b><?php echo $row['name']?></b> by
