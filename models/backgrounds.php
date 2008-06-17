@@ -1,40 +1,15 @@
 <?php
-require ("mysql.inc.php");
+require ('models/art.php');
 
-class Backgrounds
+class BackgroundsModel extends ArtModel
 {
-  function get_backgrounds ($category, $start, $length, $order)
-  {
-    $sql = "SELECT * FROM background,user
-            WHERE status='active' AND category = '$category'
+  var $get_items_sql = "SELECT * FROM background,user
+            WHERE status='active' AND category = '%s'
             AND background.userID = user.userID
-            ORDER BY $order LIMIT $start,$length ";
+            ORDER BY %s LIMIT %s,%s";
 
-    $bg_select_result = mysql_query ($sql);
-    if (!$bg_select_result)
-      printf ("Database error: %s", mysql_error());
-    $table = Array ();
-    while ($row = mysql_fetch_assoc ($bg_select_result))
-    {
-      $table[] = $row;
-    }
-
-    return $table;
-  }
-
-  function get_total ($category)
-  {
-    $sql = "SELECT COUNT(name) FROM background
-            WHERE category = '$category'";
-    $r = mysql_query ($sql);
-    if (!$r)
-      printf ("Database error: %s", mysql_error());
-
-
-    $total = mysql_fetch_row ($r);
-
-    return $total[0];
-  }
+  var $get_total_sql = "SELECT COUNT(name) FROM background
+            WHERE category = '%s'";
 
   function get_resolutions ($backgroundID)
   {

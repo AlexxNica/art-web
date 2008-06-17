@@ -5,7 +5,7 @@ require ('config.inc.php');
 /* load model */
 require ("models/backgrounds.php");
 
-$bg = new Backgrounds();
+$bg = new BackgroundsModel();
 
 preg_match ('/^\/backgrounds\/(abstract|gnome|nature|other)\/?$/', $_SERVER['PHP_SELF'], $params);
 $category = $params[1];
@@ -21,14 +21,17 @@ if (!is_numeric ($limit))
 $start = ($page - 1) * $limit;
 
 if ($category)
-  $view_data = $bg->get_backgrounds ($category, $start, $limit, "name");
+  $view_data = $bg->get_items ($category, $start, $limit, "name");
 else
   $view_data = null;
 
 $bg_res = array ();
-foreach ($view_data as $b)
+if ($view_data)
 {
-  $bg_res[$b['backgroundID']] = $bg->get_resolutions ($b['backgroundID']);
+  foreach ($view_data as $b)
+  {
+    $bg_res[$b['backgroundID']] = $bg->get_resolutions ($b['backgroundID']);
+  }
 }
 
 $total_backgrounds = $bg->get_total ($category);

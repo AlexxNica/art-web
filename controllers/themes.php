@@ -5,7 +5,7 @@ require ("config.inc.php");
 /* load model */
 require ("models/themes.php");
 
-$themes = new Themes();
+$themes = new ThemesModel();
 
 preg_match ('/^\/themes\/(gtk2|metacity|icon|gdm_greeter|splash_screens|gtk_engines)\/?$/',
             $_SERVER['PHP_SELF'], $params);
@@ -22,7 +22,7 @@ if (!is_numeric ($limit))
 $start = ($page - 1) * $limit;
 
 if ($category)
-  $view_data = $themes->get_themes ($category, $start, $limit, "name");
+  $view_data = $themes->get_items ($category, $start, $limit, "name");
 else
   $view_data = null;
 
