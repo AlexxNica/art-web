@@ -56,7 +56,7 @@ $display_cat = array (
 <div class="list-item">
 <table cellpadding="4" width="100%">
   <tr>
-    <td colspan='4'><b><?php echo $row['name']?></b> by
+    <td colspan='6'><b><?php echo $row['name']?></b> by
       <a href="mailto:<?php echo $row['email']?>"><?php echo $row['realname']?></a>
     </td>
   </tr>
@@ -64,11 +64,13 @@ $display_cat = array (
     <td rowspan="3">
       <img width="96" alt="Preview" src='/images/thumbnails/themes/<?php echo $row['themeID']?>.png'>
     </td>
-    <td colspan="3" style="width:100%"><?php echo $row['description']?></td>
+    <td colspan="5" style="width:100%"><?php echo $row['description']?></td>
   </tr>
   <tr>
+    <td class="label">Date:</td>
     <td><?php $tm = strtotime ($row['release_date']); echo date ("d M Y", $tm); ?></td>
-    <td><span style="color: gray">License:</span> <?php echo $license_config_array[$row['license']]?></td>
+    <td class="label">License:</td>
+    <td><?php echo $license_config_array[$row['license']]?></td>
     <td><a href="/download/themes/<?php printf ("%s/%s/%s", $row['category'], $row['themeID'], $row['download_filename'])?>">Download</a></td>
   </tr>
 </table>

@@ -3,3 +3,8 @@ div.list-item {
   padding: 4px;
   margin: 4px;
 }
+
+td.label {
+  color: gray;
+  font-weight: normal;
+}
