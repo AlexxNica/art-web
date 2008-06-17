@@ -10,6 +10,9 @@ function tab ($tab, $page)
 
   <link href="/css/layout.css" rel="stylesheet" type="text/css" media="screen">
   <link href="/css/style.css" rel="stylesheet" type="text/css" media="all">
+  <?php foreach ($css as $s): ?>
+    <link href="<?php echo $s?>" rel="stylesheet" type="text/css" media="all">
+  <?php endforeach ?>
   <link rel="icon" type="image/png" href="http://www.gnome.org/img/logo/foot-16.png">
   <link rel="SHORTCUT ICON" type="image/png" href="http://www.gnome.org/img/logo/foot-16.png">
   <title>GNOME: The Free Software Desktop Project</title>
