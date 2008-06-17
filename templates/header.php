@@ -51,7 +51,7 @@ function tab ($tab, $page)
           <li<?php tab('art', $page)?>><a href="/"><span>Art</span></a></li>
           <li<?php tab('themes', $page)?>><a href="/themes"><span>Themes</span></a></li>
           <li<?php tab('backgrounds', $page)?>><a href="/backgrounds"><span>Backgrounds</span></a></li>
-          <li<?php tab('faq', $page)?>><a href="/faq"><span>FAQ</span></a></li>
+          <li<?php tab('faq', $page)?>><a href="/faq.php"><span>FAQ</span></a></li>
         </ul>
       </div> <!-- end of #tabs -->
     </div> <!-- end of #header -->
