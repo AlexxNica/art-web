@@ -9,7 +9,7 @@ class ThemesModel extends ArtModel
             ORDER BY %s LIMIT %s,%s";
 
   var $get_total_sql = "SELECT COUNT(name) FROM theme
-            WHERE category = '%s'";
+            WHERE category = '%s' AND status='active'";
 }
 
 ?>

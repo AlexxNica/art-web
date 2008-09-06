@@ -9,7 +9,7 @@ class BackgroundsModel extends ArtModel
             ORDER BY %s LIMIT %s,%s";
 
   var $get_total_sql = "SELECT COUNT(name) FROM background
-            WHERE category = '%s'";
+            WHERE category = '%s' AND status='active'";
 
   function get_resolutions ($backgroundID)
   {
