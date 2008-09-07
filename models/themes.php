@@ -10,6 +10,14 @@ class ThemesModel extends ArtModel
 
   var $get_total_sql = "SELECT COUNT(name) FROM theme
             WHERE category = '%s' AND status='active'";
+
+  var $search_items_sql = "SELECT * FROM theme,user
+            WHERE status='active' AND (%s)
+            AND theme.userID = user.userID
+            ORDER BY %s LIMIT %s,%s";
+
+  var $search_total_sql = "SELECT COUNT(name) FROM theme
+            WHERE (%s) AND status='active'";
 }
 
 ?>

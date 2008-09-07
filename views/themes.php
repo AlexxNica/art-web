@@ -22,6 +22,13 @@ if (!$view_data)
   <li><a href="/themes/splash_screens">Splash Screens</a></li>
   <li><a href="/themes/gdm_greeter">Login Window</a></li>
   </ul>
+  Search for themes:
+  <?php if ($total_themes < 1 && $search_text) echo "<p>No search results for &quot;$search_text&quot;</p>" ?>
+  <ul>
+  <form method="get" action="/themes/search">
+    <input name="text" type="text" value="<?php echo $search_text?>"><input type="submit" value="Search">
+  </form>
+  </ul>
   <?php
   $t->print_footer ();
   exit (0);
@@ -42,7 +49,10 @@ $display_cat = array (
   "splash_screens" => "Splash Screens"
 );
 
-  $d_category = $display_cat [$category];
+  if ($category == 'search')
+    $d_category = 'Search Results';
+  else
+    $d_category = $display_cat [$category];
 
 ?>
 <a href="/">GNOME Art</a> &gt; <a href="/themes">Themes</a>

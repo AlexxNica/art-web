@@ -21,6 +21,13 @@ if (!$view_data)
   <li><a href="/backgrounds/abstract">Abstract</a></li>
   <li><a href="/backgrounds/other">Other</a></li>
   </ul>
+  Search for backgrounds:
+  <?php if ($total_backgrounds < 1 && $search_text) echo "<p>No search results for &quot;$search_text&quot;</p>" ?>
+  <ul>
+  <form method="get" action="/backgrounds/search">
+    <input name="text" type="text" value="<?php echo $search_text?>"><input type="submit" value="Search">
+  </form>
+  </ul>
   <?php
   $t->print_footer ();
   exit (0);
@@ -35,6 +42,8 @@ $p = new Paginator ($total_backgrounds, 10, $cur_page * 10);
 
 if ($category == "gnome")
   $d_category = "GNOME";
+elseif ($category == 'search')
+  $d_category = 'Search Results';
 else
   $d_category = ucwords ($category);
 

@@ -7,7 +7,7 @@ require ("models/themes.php");
 
 $themes = new ThemesModel();
 
-preg_match ('/^\/themes\/(gtk2|metacity|icon|gdm_greeter|splash_screens|gtk_engines)\/?$/',
+preg_match ('/^\/themes\/(gtk2|metacity|icon|gdm_greeter|splash_screens|gtk_engines|search)\/?$/',
             $_SERVER['PHP_SELF'], $params);
 $category = $params[1];
 
@@ -22,11 +22,23 @@ if (!is_numeric ($limit))
 $start = ($page - 1) * $limit;
 
 if ($category)
-  $view_data = $themes->get_items ($category, $start, $limit, "name");
+  if ($category == 'search')
+  {
+    $search = mysql_escape_string ($_GET['text']);
+    $search = "theme.name LIKE '%".$search."%'";
+    $search_text = htmlspecialchars ($_GET['text']);
+
+    $view_data = $themes->search_items ($search, $start, $limit, "name");
+    $total_themes = $themes->search_total ($search);
+  }
+  else
+  {
+    $view_data = $themes->get_items ($category, $start, $limit, "name");
+    $total_themes = $themes->get_total ($category);
+  }
 else
   $view_data = null;
 
-$total_themes = $themes->get_total ($category);
 
 /* load view */
 require ("views/themes.php");
