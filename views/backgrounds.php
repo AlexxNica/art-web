@@ -25,7 +25,8 @@ if (!$view_data)
   <?php if ($total_backgrounds < 1 && $search_text) echo "<p>No search results for &quot;$search_text&quot;</p>" ?>
   <ul>
   <form method="get" action="/backgrounds/search">
-    <input name="text" type="text" value="<?php echo $search_text?>"><input type="submit" value="Search">
+    <input name="text" type="text" value="<?php echo $search_text?>">
+    <input type="submit" value="Search">
   </form>
   </ul>
   <?php
