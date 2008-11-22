@@ -24,19 +24,23 @@ class BackgroundsModel extends ArtModel
   var $get_items_sql = "SELECT * FROM background,user
             WHERE status='active' AND category = '%s'
             AND background.userID = user.userID
+            AND background.backgroundID > 1000
             ORDER BY %s LIMIT %s,%s";
 
   var $get_total_sql = "SELECT COUNT(name) FROM background
-            WHERE category = '%s' AND status='active'";
+            WHERE category = '%s' AND status='active'
+            AND background.backgroundID > 1000";
 
   var $search_items_sql = "SELECT * FROM background,user
             WHERE status='active'
             AND background.userID = user.userID
             AND (%s)
+            AND background.backgroundID > 1000
             ORDER BY %s LIMIT %s,%s";
 
   var $search_total_sql = "SELECT COUNT(*) FROM background
-            WHERE status='active' AND (%s)";
+            WHERE status='active' AND (%s)
+            AND background.backgroundID > 1000";
 
   function get_resolutions ($backgroundID)
   {
