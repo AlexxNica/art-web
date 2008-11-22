@@ -58,6 +58,6 @@ function tab ($tab, $page)
   </div>
 <!-- end site header -->
 
-<div id="body">
+<div<?php if ($options['sidebar']) echo ' id="body"'?>>
 <div id="content">
 

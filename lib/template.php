@@ -22,6 +22,7 @@ class Template
 {
   var $page;
   var $css;
+  var $options = array ();
 
   function Template ($page)
   {
@@ -38,11 +39,13 @@ class Template
   {
     $page = $this->page;
     $css = $this->css;
+    $options = $this->options;
     include ("templates/header.php");
   }
 
   function print_footer ()
   {
+    $options = $this->options;
     include ("templates/footer.php");
   }
 }

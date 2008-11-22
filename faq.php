@@ -21,6 +21,7 @@ include ("lib/template.php");
 
 
 $t = new Template ("faq");
+$t->options['sidebar'] = true;
 $t->print_header ();
 ?>
 
