@@ -83,7 +83,7 @@ else
   </tr>
   <tr>
     <td rowspan="3">
-      <img width="96" alt="Preview" src='/images/thumbnails/backgrounds/<?php echo $row['backgroundID']?>.jpg'>
+      <img width="96" alt="Preview" src='/images/thumbnails/backgrounds/<?php echo $row['thumbnail_filename']?>'>
     </td>
     <td colspan="4" style="width:100%"><?php echo $row['description']?></td>
     <td rowspan="2">

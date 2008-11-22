@@ -91,7 +91,7 @@ $display_cat = array (
   </tr>
   <tr>
     <td rowspan="3">
-      <img width="96" alt="Preview" src='/images/thumbnails/themes/<?php echo $row['themeID']?>.png'>
+      <img width="96" alt="Preview" src='/images/thumbnails/<?php echo $row['category']?>/<?php echo $row['thumbnail_filename']?>'>
     </td>
     <td colspan="5" style="width:100%"><?php echo $row['description']?></td>
   </tr>
