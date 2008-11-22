@@ -39,7 +39,8 @@ class ThemesModel extends ArtModel
 
   var $search_total_sql = "SELECT COUNT(name) FROM theme
             WHERE (%s) AND status='active'
-            ORDER BY %s LIMIT %s,%s";
+            AND theme.themeID > 1000";
+
 }
 
 ?>
