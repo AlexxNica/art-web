@@ -3,7 +3,8 @@
 
   <div id="footer">
     Copyright &copy; 2005-2008 <a href="http://www.gnome.org/">The GNOME Project</a>.<br>
-    <a href="http://validator.w3.org/check/referer">Optimised</a> for <a href="http://www.w3.org/">standards</a>. Hosted by <a href="http://www.redhat.com/">Red Hat</a>.
+    Hosted by <a href="http://www.redhat.com/">Red Hat</a>.
+    Source code is available in <a href="http://svn.gnome.org/svn/art-web/">GNOME SVN</a>.
   </div>
 
   </div> <!-- end of div#body -->
