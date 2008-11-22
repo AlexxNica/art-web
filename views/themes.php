@@ -79,34 +79,19 @@ $display_cat = array (
 <br><br>
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
 <br>
-
 <?php foreach ($view_data as $row): ?>
 
 <div class="list-item">
-<table cellpadding="4" width="100%">
-  <tr>
-    <td colspan='6'><b><?php echo $row['name']?></b> by
-      <a href="mailto:<?php echo $row['email']?>"><?php echo $row['realname']?></a>
-    </td>
-  </tr>
-  <tr>
-    <td rowspan="3">
-      <img width="96" alt="Preview" src='/images/thumbnails/<?php echo $row['category']?>/<?php echo $row['thumbnail_filename']?>'>
-    </td>
-    <td colspan="5" style="width:100%"><?php echo $row['description']?></td>
-  </tr>
-  <tr>
-    <td class="label">Date:</td>
-    <td><?php $tm = strtotime ($row['release_date']); echo date ("d M Y", $tm); ?></td>
-    <td class="label">License:</td>
-    <td><?php echo $license_config_array[$row['license']]?></td>
-    <td><a href="/download/themes/<?php printf ("%s/%s/%s", $row['category'], $row['themeID'], $row['download_filename'])?>">Download</a></td>
-  </tr>
-</table>
+  <b><?php echo $row['name']?></b>
+  <br><span class="item-detail"> by <a href="mailto:<?php echo $row['email']?>"><?php echo $row['realname']?></a></span>
+   <br><span class="item-detail"><?php echo $license_config_link_array[$row['license']]?></span>
+  <br>
+  <img style="margin:0.5em;" width="96" alt="Preview" src='/images/thumbnails/<?php echo $row['category']?>/<?php echo $row['thumbnail_filename']?>'>
+  <br>
+   <a href="/download/themes/<?php printf ("%s/%s/%s", $row['category'], $row['themeID'], $row['download_filename'])?>">Download</a>
 </div>
-<br>
 <?php endforeach ?>
-
+<br clear="both">
 <br>
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
 

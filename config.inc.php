@@ -195,14 +195,14 @@ $license_config_array = array (
 		'' => 'Unknown');
 
 $license_config_link_array = array (
-		'cc-atrib' => '<a href="http://creativecommons.org/licenses/by/2.0/">CC Attribution</a>',
-		'cc-atrib-sharealike' => '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC Attribution-ShareAlike</a>',
-		'cc-atrib-noderivs' => '<a href="http://creativecommons.org/licenses/by-nd/2.0/">CC Attribution-NoDerivs</a>',
-		'cc-attrib-noncom' => '<a href="http://creativecommons.org/licenses/by-nc/2.0/">CC Attribution-NonCommercial</a>',
-		'cc-atrib-noncom-sharealike' => '<a href="http://creativecommons.org/licenses/by-nc-sa/2.0/">CC Attribution-NonCommercial-ShareAlike</a>',
-		'cc-atrib-noncom-noderivs' => '<a href="http://creativecommons.org/licenses/by-nc-nd/2.0/">CC Attribution-NonCommercial-NoDerivs</a>',
-		'gnu-gpl' => '<a href="http://creativecommons.org/licenses/GPL/2.0/">GNU General Public License</a>',
-		'gnu-lgpl' => '<a href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>',
+		'cc-atrib' => '<a href="http://creativecommons.org/licenses/by/2.0/">CC BY</a>',
+		'cc-atrib-sharealike' => '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>',
+		'cc-atrib-noderivs' => '<a href="http://creativecommons.org/licenses/by-nd/2.0/">CC BY-ND</a>',
+		'cc-attrib-noncom' => '<a href="http://creativecommons.org/licenses/by-nc/2.0/">CC BY-NC</a>',
+		'cc-atrib-noncom-sharealike' => '<a href="http://creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA</a>',
+		'cc-atrib-noncom-noderivs' => '<a href="http://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-NC-ND</a>',
+		'gnu-gpl' => '<a href="http://creativecommons.org/licenses/GPL/2.0/">GNU GPL</a>',
+		'gnu-lgpl' => '<a href="http://creativecommons.org/licenses/LGPL/2.1/">GNU LGPL</a>',
 		'pub-dom' => '<a href="http://web.resource.org/cc/PublicDomain/">Public Domain</a>',
 		'free-art' => '<a href="http://artlibre.org/licence/lal/en/">Free Art License</a>');
 

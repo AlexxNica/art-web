@@ -75,36 +75,22 @@ else
 
 <?php foreach ($view_data as $row): ?>
 <div class="list-item">
-<table cellpadding="4" width="100%">
-  <tr>
-    <td colspan='6'><b><?php echo $row['name']?></b> by
-      <a href="mailto:<?php echo $row['email']?>"><?php echo $row['realname']?></a>
-    </td>
-  </tr>
-  <tr>
-    <td rowspan="3">
-      <img width="96" alt="Preview" src='/images/thumbnails/backgrounds/<?php echo $row['thumbnail_filename']?>'>
-    </td>
-    <td colspan="4" style="width:100%"><?php echo $row['description']?></td>
-    <td rowspan="2">
+    <b><?php echo $row['name']?></b>
+    <br>
+    <span class="item-detail">by <a href="mailto:<?php echo $row['email']?>"><?php echo $row['realname']?></a></span>
+    <br><span class="item-detail"><?php echo $license_config_link_array[$row['license']]?></span>
+    <br>
+    <img width="96" alt="Preview" src='/images/thumbnails/backgrounds/<?php echo $row['thumbnail_filename']?>'>
+    <br>
      <?php foreach ($bg_res[$row['backgroundID']] as $res):?>
        <a href="/download/backgrounds/<?php printf ("%s/%s/%s", $row['category'], $res['background_resolutionID'], $res['filename'])?>">
        <?php echo $res['resolution']?></a><br>
      <?php endforeach ?>
-    </td>
-  </tr>
-  <tr>
-    <td class="label">Date:</td>
-    <td><?php $tm = strtotime ($row['release_date']); echo date ("d M Y", $tm); ?></td>
-    <td class="label">License:</td>
-    <td><?php echo $license_config_array[$row['license']]?></td>
-  </tr>
-</table>
 </div>
-<br>
 <?php endforeach ?>
 
 
+<br clear="both">
 <br>
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
 
