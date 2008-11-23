@@ -34,7 +34,7 @@ if (!is_numeric ($page))
 
 $limit = $_GET['limit'];
 if (!is_numeric ($limit))
-  $limit = 10;
+  $limit = 12;
 
 $start = ($page - 1) * $limit;
 
