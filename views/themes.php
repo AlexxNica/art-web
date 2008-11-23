@@ -30,8 +30,7 @@ $t->print_header();
 if (!$view_data)
 {
   ?>
-  <a href="/">GNOME Art</a> &gt; Themes
-  <br><br>
+  <h2>Categories</h2>
   Choose a category:
   <ul>
   <li><a href="/themes/gtk2">Controls</a></li>
@@ -74,9 +73,7 @@ $display_cat = array (
     $d_category = $display_cat [$category];
 
 ?>
-<a href="/">GNOME Art</a> &gt; <a href="/themes">Themes</a>
-&gt; <?php echo $d_category ?>
-<br><br>
+<h2><a href="/themes">Themes</a> / <?php echo $d_category; ?></h2>
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
 <br>
 <?php foreach ($view_data as $row): ?>

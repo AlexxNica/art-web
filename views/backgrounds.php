@@ -30,8 +30,7 @@ $t->print_header();
 if (!$view_data)
 {
   ?>
-  <a href="/">GNOME Art</a> &gt; Backgrounds
-  <br><br>
+  <h2>Categories</h2>
   Choose a category:
   <ul>
   <li><a href="/backgrounds/gnome">GNOME</a></li>
@@ -67,9 +66,8 @@ else
   $d_category = ucwords ($category);
 
 ?>
-<a href="/">GNOME Art</a> &gt; <a href="/backgrounds">Backgrounds</a>
-&gt; <?php echo $d_category ?>
-<br><br>
+<h2><a href="/backgrounds">Backgrounds</a> / <?php echo $d_category?></a></h2>
+
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
 <br>
 
