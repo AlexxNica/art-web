@@ -40,7 +40,8 @@ h1 {
 }
 
 h2 {
-  font-size: 1.2em;
+	border-bottom: 1px solid #99c;
+	font-size: 110%;
 }
 
 h3 {
