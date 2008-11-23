@@ -56,7 +56,7 @@ $cur_page = $_GET['page'];
 if (!is_numeric ($cur_page))
   $cur_page = 1;
 
-$p = new Paginator ($total_backgrounds, 10, $cur_page * 10);
+$p = new Paginator ($total_backgrounds, 12, $cur_page * 12);
 
 if ($category == "gnome")
   $d_category = "GNOME";

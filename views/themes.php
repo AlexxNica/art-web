@@ -57,7 +57,7 @@ $cur_page = $_GET['page'];
 if (!is_numeric ($cur_page))
   $cur_page = 1;
 
-$p = new Paginator ($total_themes, 10, $cur_page * 10);
+$p = new Paginator ($total_themes, 12, $cur_page * 12);
 
 $display_cat = array (
   "gtk2" => "Controls",

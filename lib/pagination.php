@@ -35,7 +35,7 @@ class Paginator
   {
     $context = 8;
     
-    $num_pages = $this->total / $this->limit;
+    $num_pages = ceil ($this->total / $this->limit);
 
     if ($context > $num_pages)
       $context = $num_pages;
