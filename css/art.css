@@ -3,8 +3,10 @@ div.list-item {
   margin: 1em;
   float: left;
   width: 20%;
-  height: 12em;
+  height: 13em;
   text-align: center;
+  overflow: auto;
+  white-space: nowrap;
 }
 
 .list-item img {
