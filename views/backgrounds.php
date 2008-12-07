@@ -80,10 +80,16 @@ else
     <br>
     <img width="96" alt="Preview" src='/images/thumbnails/backgrounds/<?php echo $row['thumbnail_filename']?>'>
     <br>
+    <form method="get" action="/download">
+    <select name="d">
      <?php foreach ($bg_res[$row['backgroundID']] as $res):?>
-       <a href="/download/backgrounds/<?php printf ("%s/%s/%s", $row['category'], $res['background_resolutionID'], $res['filename'])?>">
-       <?php echo $res['resolution']?></a><br>
+       <option value="/backgrounds/<?php printf ("%s/%s/%s", $row['category'], $res['background_resolutionID'], $res['filename'])?>">
+     <?php echo $res['resolution']?>
+       </option>
      <?php endforeach ?>
+    </select>
+    <input type="submit" value="Go">
+    </form>
 </div>
 <?php endforeach ?>
 
