@@ -14,61 +14,42 @@
 	font-size: 100%;
 }
 
-/* three column layout */
-
-#top {
-	text-align: center;
-	margin: 1em;
+#sidebar2 {
+	float: right;
+	width: 300px;
 }
 
-#bottom {
-	padding-top: 1px;
-	clear: both;
+#sidebar2 h3 {
+	margin-top: 0px;
 }
 
-#bottomLeft {
-	width: 66%;
-	float: left;
+#bread {
+	margin-right: 400px;
 }
 
-#bottomLeftLeft {
-	width: 48%;
-	float: left;
+#main {
+	background: yellow;
 }
 
-#bottomLeftRight {
-	margin-left: 48%;
-	padding-left: 10px;
-	padding-left: 2em;
+#art-requests {
+	background: #edd400;
+	padding: 1em;
+	margin-bottom: 20px;
+	-moz-border-radius: 10px;
 }
 
-#bottomRight {
-	margin-left: 66%;
-	padding-left: 2em;
-	/*padding-left: 10px;*/
+#art-docs {
+	background: #d3d7cf;
+	padding: 1em;
+	-moz-border-radius: 10px;
 }
 
-/* what is gnome? box */
-
-#whatisgnome {
-	position: relative;
-	z-index: 10;
-	border: 3px #99c solid;
-	background-color: #eee;
-	/*font-size: 95%;*/
-	line-height: 150%;
+#content ul li {
+	padding: 0.2em;
 }
 
-#whatisgnome h2 {
-	padding: 0px;
-	margin: 0px;
-	padding: 0.3ex;
-	background-color: #ccf;
-	color: #333;
-	border-bottom: 1px #99c solid;
-	text-align: center;
-}
-
-#whatisgnome p {
-	padding: 0px 10px 0px 10px;
+#intro {
+	background: url("/css/art-palette.png") bottom right no-repeat;
+	padding-right: 215px;
+	margin-bottom: 100px;
 }
