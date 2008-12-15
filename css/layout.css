@@ -376,7 +376,7 @@ ul.toc li a:hover {
 }
 
 #tabs {
-	background: url(bar.png) 0 100% repeat-x;
+	background: url(http://www.gnome.org/css/bar.png) 0 100% repeat-x;
 	width: 100%;
 	float: left;
 	margin: 0;
