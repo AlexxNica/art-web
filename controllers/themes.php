@@ -24,9 +24,11 @@ require ("models/themes.php");
 
 $themes = new ThemesModel();
 
-preg_match ('/^\/themes\/(gtk2|metacity|icon|gdm_greeter|splash_screens|gtk_engines|search)\/?$/',
+preg_match ('/^\/themes\/(gtk2|metacity|icon|gdm_greeter|splash_screens|gtk_engines|search)\/?([0-9]+)?$/',
             $_SERVER['PHP_SELF'], $params);
 $category = $params[1];
+
+$theme_id = $params[2];
 
 $page = $_GET['page'];
 if (!is_numeric ($page))
@@ -50,8 +52,16 @@ if ($category)
   }
   else
   {
-    $view_data = $themes->get_items ($category, $start, $limit, "name");
-    $total_themes = $themes->get_total ($category);
+    if ($theme_id)
+    {
+      $view_data = $themes->get_single_item ($category, $theme_id);
+      $total_themes = 1;
+    }
+    else
+    {
+      $view_data = $themes->get_items ($category, $start, $limit, "name");
+      $total_themes = $themes->get_total ($category);
+    }
   }
 else
   $view_data = null;

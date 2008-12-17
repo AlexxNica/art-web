@@ -21,6 +21,11 @@ require ('models/art.php');
 
 class ThemesModel extends ArtModel
 {
+  var $get_single_item_sql = "SELECT * FROM theme,user
+            WHERE status='active' AND category = '%s'
+            AND theme.userID = user.userID
+            AND theme.themeID = %s";
+
   var $get_items_sql = "SELECT * FROM theme,user
             WHERE status='active' AND category = '%s'
             AND theme.userID = user.userID

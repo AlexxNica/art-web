@@ -61,6 +61,29 @@ abstract class ArtModel
     return $total[0];
   }
 
+  function get_single_item ($category, $item_id)
+  {
+    /* check that item_id is numeric */
+    if (!is_numeric ($item_id))
+      return;
+
+    $sql = sprintf ($this->get_single_item_sql, $category, $item_id);
+
+    if ($sql === '')
+      return;
+
+    $bg_select_result = mysql_query ($sql);
+    if (!$bg_select_result)
+      printf ("Database error: %s", mysql_error());
+
+    $table = Array ();
+    while ($row = mysql_fetch_assoc ($bg_select_result))
+    {
+      $table[] = $row;
+    }
+
+    return $table;
+  }
   function get_items ($category, $start, $length, $order)
   {
     /* check that start and length values are numeric */

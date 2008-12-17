@@ -24,8 +24,9 @@ require ("models/backgrounds.php");
 
 $bg = new BackgroundsModel();
 
-preg_match ('/^\/backgrounds\/(abstract|gnome|nature|other|search)\/?$/', $_SERVER['PHP_SELF'], $params);
+preg_match ('/^\/backgrounds\/(abstract|gnome|nature|other|search)\/?([0-9]+)?$/', $_SERVER['PHP_SELF'], $params);
 $category = $params[1];
+$background_id = $params[2];
 
 $page = $_GET['page'];
 if (!is_numeric ($page))
@@ -49,8 +50,16 @@ if ($category)
   }
   else
   {
-    $view_data = $bg->get_items ($category, $start, $limit, "name");
-    $total_backgrounds = $bg->get_total ($category);
+    if ($background_id)
+    {
+      $view_data = $bg->get_single_item ($category, $background_id);
+      $total_backgrounds = 1;
+    }
+    else
+    {
+      $view_data = $bg->get_items ($category, $start, $limit, "name");
+      $total_backgrounds = $bg->get_total ($category);
+    }
   }
 else
   $view_data = null;

@@ -21,6 +21,11 @@ require ('models/art.php');
 
 class BackgroundsModel extends ArtModel
 {
+  var $get_single_item_sql = "SELECT * FROM background,user
+            WHERE status='active' AND category = '%s'
+            AND background.userID = user.userID
+            AND background.backgroundID = %s";
+
   var $get_items_sql = "SELECT * FROM background,user
             WHERE status='active' AND category = '%s'
             AND background.userID = user.userID
