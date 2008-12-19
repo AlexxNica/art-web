@@ -37,6 +37,10 @@ class Paginator
     
     $num_pages = ceil ($this->total / $this->limit);
 
+    /* only one page, no point in printing navigation! */
+    if ($num_pages <= 1)
+      return;
+
     if ($context > $num_pages)
       $context = $num_pages;
 
