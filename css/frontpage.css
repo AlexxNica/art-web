@@ -1,0 +1,55 @@
+/* we don't have a sidebar on the front page */
+
+#body {
+	margin: 90px 10px 0px 10px;
+	line-height: 150%;
+}
+
+#body h2 {
+	border-bottom: 1px solid #99c;
+	font-size: 110%;
+}
+
+#body h3, #body h3 a {
+	font-size: 100%;
+}
+
+#sidebar2 {
+	float: right;
+	width: 300px;
+}
+
+#sidebar2 h3 {
+	margin-top: 0px;
+}
+
+#bread {
+	margin-right: 400px;
+}
+
+#main {
+	background: yellow;
+}
+
+#art-requests {
+	background: #edd400;
+	padding: 1em;
+	margin-bottom: 20px;
+	-moz-border-radius: 10px;
+}
+
+#art-docs {
+	background: #d3d7cf;
+	padding: 1em;
+	-moz-border-radius: 10px;
+}
+
+#content ul li {
+	padding: 0.2em;
+}
+
+#intro {
+	background: url("/css/art-palette.png") bottom right no-repeat;
+	padding-right: 215px;
+	margin-bottom: 100px;
+}
