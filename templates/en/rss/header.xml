@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<rss version="2.0">
-  <channel>
-    <title>{site_name} releases</title>
-    <image><link>{site_url}</link><url>{site_url}/images/site/art-icon.png</url><title>{site_name}</title></image>
-    <link>{site_url}</link>
-    <description>A list of recent backgrounds and themes released on art.gnome.org</description>
-    <webMaster>thos@nospam.gnome.org</webMaster>

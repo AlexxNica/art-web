@@ -1,8 +1,0 @@
-<?php
-
-/* $Id$ */
-
-$type = 'background';
-include("art_page.inc.php");
-
-?>

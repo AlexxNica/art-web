@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:theme="{site_url}">
-  <link rel="self" href="{site_url}{request_uri}" />
-  <updated>{update_time}</updated>
-  <title>{site_name}</title>
-  <id>tag:{site_name},2006:atom-feed</id>
-  <logo>{site_url}/images/site/art-icon.png</logo>
-  <icon>http://www.gnome.org/img/logo/foot-16.png</icon>

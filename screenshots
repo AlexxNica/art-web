@@ -1,8 +1,0 @@
-<?php
-
-/* $Id$ */
-
-$type = 'screenshot';
-include("art_page.inc.php");
-
-?>
