@@ -55,7 +55,7 @@ if (!$view_data)
 }
 
 /* get the current page and ensure a default value is set */
-$cur_page = $_GET['page'];
+$cur_page = GET ('page');
 if (!is_numeric ($cur_page))
   $cur_page = 1;
 
