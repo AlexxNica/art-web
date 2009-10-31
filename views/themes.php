@@ -17,6 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* initialise some vairables */
+$search_text = '';
+$total_themes = 0;
 
 require ("lib/pagination.php");
 require ("lib/template.php");
@@ -53,7 +56,7 @@ if (!$view_data)
 }
 
 /* get the current page and ensure a default value is set */
-$cur_page = $_GET['page'];
+$cur_page = GET ('page');
 if (!is_numeric ($cur_page))
   $cur_page = 1;
 
