@@ -4,7 +4,10 @@ require("mysql.inc.php");
 require("common.inc.php");
 
 // superglobal stuff
-$request = $_SERVER["PATH_INFO"];
+if (array_key_exists ('PATH_INFO', request))
+  $request = $_SERVER['PATH_INFO'];
+else
+  $request = '';
 
 if (array_key_exists ('d', $_GET))
   list($foo,$section,$category,$download_num,$filename) = explode("/", $_GET['d']);
