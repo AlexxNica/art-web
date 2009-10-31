@@ -42,7 +42,7 @@ if (!$view_data)
   <li><a href="/backgrounds/other">Other</a></li>
   </ul>
   Search for backgrounds:
-  <?php if ($total_backgrounds < 1 && isset ($search_text)) echo "<p>No search results for &quot;$search_text&quot;</p>" ?>
+  <?php if ($total_backgrounds < 1 && $search_text) echo "<p>No search results for &quot;$search_text&quot;</p>" ?>
   <ul>
   <form method="get" action="/backgrounds/search">
     <input name="text" type="text" value="<?php echo $search_text?>">
