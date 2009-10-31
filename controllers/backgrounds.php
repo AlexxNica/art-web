@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2008 Thomas Wood <thos@gnome.org>
+ * Copyright (C) 2008, 2009 Thomas Wood <thos@gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -18,6 +18,7 @@
  */
 
 require ('config.inc.php');
+require ("common.inc.php");
 
 /* load model */
 require ("models/backgrounds.php");
@@ -28,11 +29,11 @@ preg_match ('/^\/backgrounds\/(abstract|gnome|nature|other|search)\/?([0-9]+)?$/
 $category = $params[1];
 $background_id = $params[2];
 
-$page = $_GET['page'];
+$page = GET ('page');
 if (!is_numeric ($page))
   $page = 1;
 
-$limit = $_GET['limit'];
+$limit = GET ('limit');
 if (!is_numeric ($limit))
   $limit = 12;
 
@@ -41,9 +42,9 @@ $start = ($page - 1) * $limit;
 if ($category)
   if ($category == "search")
   {
-    $search = mysql_escape_string ($_GET['text']);
+    $search = mysql_escape_string (GET ('text'));
     $search = "background.name LIKE '%".$search."%'";
-    $search_text = htmlspecialchars ($_GET['text']);
+    $search_text = htmlspecialchars (GET ('text'));
 
     $view_data = $bg->search_items ($search, $start, $limit, "name");
     $total_backgrounds = $bg->search_total ($search);

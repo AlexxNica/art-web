@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2008 Thomas Wood <thos@gnome.org>
+ * Copyright (C) 2008, 2009 Thomas Wood <thos@gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -18,6 +18,7 @@
  */
 
 require ("config.inc.php");
+require ("common.inc.php");
 
 /* load model */
 require ("models/themes.php");
@@ -30,11 +31,11 @@ $category = $params[1];
 
 $theme_id = $params[2];
 
-$page = $_GET['page'];
+$page = GET ('page');
 if (!is_numeric ($page))
   $page = 1;
 
-$limit = $_GET['limit'];
+$limit = GET ('limit');
 if (!is_numeric ($limit))
   $limit = 12;
 
@@ -43,9 +44,9 @@ $start = ($page - 1) * $limit;
 if ($category)
   if ($category == 'search')
   {
-    $search = mysql_escape_string ($_GET['text']);
+    $search = mysql_escape_string (GET ('text'));
     $search = "theme.name LIKE '%".$search."%'";
-    $search_text = htmlspecialchars ($_GET['text']);
+    $search_text = htmlspecialchars (GET ('text'));
 
     $view_data = $themes->search_items ($search, $start, $limit, "name");
     $total_themes = $themes->search_total ($search);
