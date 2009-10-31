@@ -28,12 +28,12 @@ $themes = new ThemesModel();
 preg_match ('/^\/themes\/(gtk2|metacity|icon|gdm_greeter|splash_screens|gtk_engines|search)\/?([0-9]+)?$/',
             $_SERVER['PHP_SELF'], $params);
 
-if (array_key_exists (1, $params)
+if (array_key_exists (1, $params))
   $category = $params[1];
 else
   $category = '';
 
-if (array_key_exists (2, $params)
+if (array_key_exists (2, $params))
   $theme_id = $params[2];
 else
   $theme_id = 0;

@@ -27,12 +27,12 @@ $bg = new BackgroundsModel();
 
 preg_match ('/^\/backgrounds\/(abstract|gnome|nature|other|search)\/?([0-9]+)?$/', $_SERVER['PHP_SELF'], $params);
 
-if (array_key_exists (1, $params)
+if (array_key_exists (1, $params))
   $category = $params[1];
 else
   $category = '';
 
-if (array_key_exists (2, $params)
+if (array_key_exists (2, $params))
   $background_id = $params[2];
 else
   $background_id = 0;

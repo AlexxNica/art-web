@@ -4,7 +4,7 @@ require("mysql.inc.php");
 require("common.inc.php");
 
 // superglobal stuff
-if (array_key_exists ('PATH_INFO', request))
+if (array_key_exists ('PATH_INFO', $request))
   $request = $_SERVER['PATH_INFO'];
 else
   $request = '';
