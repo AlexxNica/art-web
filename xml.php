@@ -38,11 +38,11 @@ function list_backgrounds($parent, $category)
 	{
 		$background_id = $row['backgroundID'];
 		$background_name = $row['name'];
-		$background_description = $row['background_description'];
+		$background_description = $row['description'];
 		$background_category = $row['category'];
 		$background_license = $row['license'];
-		$background_vote_sum = $row['vote_sum'];
-		$background_vote_count = $row['vote_count'];
+		$background_vote_sum = 0; // $row['vote_sum'];
+		$background_vote_count = 0; // $row['vote_count'];
 		$background_release_date = $row['release_date'];
 		$background_download_start_timestamp = $row['download_start_timestamp'];
 		$background_download_count = $row['download_count'];
@@ -104,8 +104,8 @@ function list_themes($parent, $category)
 		$theme_category = $row['category'];
 		$username = $row['username'];
 		$theme_license = $row['license'];
-		$theme_vote_sum = $row['vote_sum'];
-		$theme_vote_count = $row['vote_count'];
+		$theme_vote_sum = 0; // $row['vote_sum'];
+		$theme_vote_count = 0; // $row['vote_count'];
 		$theme_download_start_timestamp = $row['download_start_timestamp'];
 		$theme_download_count = $row['download_count'];
 		$theme_release_date = $row['release_date'];
