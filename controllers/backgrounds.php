@@ -26,8 +26,16 @@ require ("models/backgrounds.php");
 $bg = new BackgroundsModel();
 
 preg_match ('/^\/backgrounds\/(abstract|gnome|nature|other|search)\/?([0-9]+)?$/', $_SERVER['PHP_SELF'], $params);
-$category = $params[1];
-$background_id = $params[2];
+
+if (array_key_exists (1, $params)
+  $category = $params[1];
+else
+  $category = '';
+
+if (array_key_exists (2, $params)
+  $background_id = $params[2];
+else
+  $background_id = 0;
 
 $page = GET ('page');
 if (!is_numeric ($page))

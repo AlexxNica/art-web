@@ -27,9 +27,16 @@ $themes = new ThemesModel();
 
 preg_match ('/^\/themes\/(gtk2|metacity|icon|gdm_greeter|splash_screens|gtk_engines|search)\/?([0-9]+)?$/',
             $_SERVER['PHP_SELF'], $params);
-$category = $params[1];
 
-$theme_id = $params[2];
+if (array_key_exists (1, $params)
+  $category = $params[1];
+else
+  $category = '';
+
+if (array_key_exists (2, $params)
+  $theme_id = $params[2];
+else
+  $theme_id = 0;
 
 $page = GET ('page');
 if (!is_numeric ($page))
