@@ -17,10 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* initialise some vairables */
-$search_text = '';
-$total_themes = 0;
-
 require ("lib/pagination.php");
 require ("lib/template.php");
 

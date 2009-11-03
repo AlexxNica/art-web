@@ -23,6 +23,10 @@ require ("common.inc.php");
 /* load model */
 require ("models/backgrounds.php");
 
+/* initialise some variables */
+$search_text = '';
+$total_backgrounds = 0;
+
 $bg = new BackgroundsModel();
 
 preg_match ('/^\/backgrounds\/(abstract|gnome|nature|other|search)\/?([0-9]+)?$/', $_SERVER['PHP_SELF'], $params);
