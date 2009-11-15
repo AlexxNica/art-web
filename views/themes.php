@@ -72,6 +72,15 @@ $display_cat = array (
     $d_category = $display_cat [$category];
 
 ?>
+
+
+<script type='text/javascript'>
+String.prototype.rot13 = rot13 = function(s)
+{
+  return (s ? s : this).replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
+}
+</script>
+
 <h2><a href="/themes">Themes</a> / <?php echo $d_category; ?></h2>
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
 <br>
@@ -79,7 +88,7 @@ $display_cat = array (
 
 <div class="list-item">
   <b><?php echo $row['name']?></b>
-  <br><span class="item-detail"> by <a href="mailto:<?php echo $row['email']?>"><?php echo $row['realname']?></a></span>
+  <br><span class="item-detail"> by <script type='text/javascript'>document.write ('<a href="mailto:' + '<?php echo str_rot13 ($row['email'])?>'.rot13() + '">');</script><?php echo $row['realname']?><script type='text/javascript'>document.write ('</a>');</script></span>
    <br><span class="item-detail"><?php echo $license_config_link_array[$row['license']]?></span>
   <br>
   <img style="margin:0.5em;" width="96" alt="Preview" src='/images/thumbnails/<?php echo $row['category']?>/<?php echo $row['thumbnail_filename']?>'>

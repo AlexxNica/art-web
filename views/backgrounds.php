@@ -70,11 +70,20 @@ else
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
 <br>
 
+<script type='text/javascript'>
+// add a rot13 function to strings.
+// found at: http://stackoverflow.com/questions/617647/where-is-my-one-line-implementation-of-rot13-in-javascript-going-wrong
+String.prototype.rot13 = rot13 = function(s)
+{
+  return (s ? s : this).replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
+}
+</script>
+
 <?php foreach ($view_data as $row): ?>
 <div class="list-item">
     <b><?php echo $row['name']?></b>
     <br>
-    <span class="item-detail">by <a href="mailto:<?php echo $row['email']?>"><?php echo $row['realname']?></a></span>
+    <span class="item-detail">by <script type='text/javascript'>document.write ('<a href="mailto:' + '<?php echo str_rot13 ($row['email'])?>'.rot13() + '">');</script><?php echo $row['realname']?><script type='text/javascript'>document.write ('</a>');</script></span>
     <br><span class="item-detail"><?php echo $license_config_link_array[$row['license']]?></span>
     <br>
     <img width="96" alt="Preview" src='/images/thumbnails/backgrounds/<?php echo $row['thumbnail_filename']?>'>
