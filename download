@@ -35,7 +35,17 @@ if($section == "backgrounds")
 else if($section == "themes")
 {
 	$theme_update_result = mysql_query("UPDATE theme SET download_count=download_count+1 WHERE themeID='$download_num'");
-	header("Location: $mirror_url$archive/themes/$category/$filename");
+
+	$ext = pathinfo ($filename, PATHINFO_EXTENSION);
+
+	if (($category == 'gtk2' || $category == 'metacity' || $category == 'icon') && $ext == 'gz')
+	{
+		header ("Content-type: application/x-gnome-theme-package");
+		header ("Content-Disposition: attachment; filename=\"$filename\"");
+		readfile ("$mirror_url$archive/themes/$category/$filename");
+	}
+	else
+		header ("Location: $mirror_url$archive/themes/$category/$filename");
 	exit();
 }
 else
