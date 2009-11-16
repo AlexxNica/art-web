@@ -49,6 +49,29 @@ $limit = GET ('limit');
 if (!is_numeric ($limit))
   $limit = 12;
 
+$set_sort = GET ('sort');
+if ($set_sort)
+{
+  setcookie ('sort', $set_sort);
+  $sort = $set_sort;
+}
+else
+  $sort = (array_key_exists ('sort', $_COOKIE)) ? $_COOKIE['sort'] : 'name';
+
+if ($sort)
+{
+  if ($sort == 'rating')
+    $sortby = 'background.rating DESC';
+  else if ($sort == 'name')
+    $sortby = 'background.name';
+  else if ($sort == 'popularity')
+    $sortby = 'background.download_count DESC';
+  else
+    $sortby = 'name';
+}
+else
+  $sortby = 'name';
+
 $start = ($page - 1) * $limit;
 
 if ($category)
@@ -58,7 +81,7 @@ if ($category)
     $search = "background.name LIKE '%".$search."%'";
     $search_text = htmlspecialchars (GET ('text'));
 
-    $view_data = $bg->search_items ($search, $start, $limit, "name");
+    $view_data = $bg->search_items ($search, $start, $limit, $sortby);
     $total_backgrounds = $bg->search_total ($search);
   }
   else
@@ -70,7 +93,7 @@ if ($category)
     }
     else
     {
-      $view_data = $bg->get_items ($category, $start, $limit, "name");
+      $view_data = $bg->get_items ($category, $start, $limit, $sortby);
       $total_backgrounds = $bg->get_total ($category);
     }
   }
