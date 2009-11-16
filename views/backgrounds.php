@@ -99,7 +99,7 @@ String.prototype.rot13 = rot13 = function(s)
 <div class="list-item">
     <b><?php echo $row['name']?></b>
     <br>
-    <span class="item-detail">by <script type='text/javascript'>document.write ('<a href="mailto:' + '<?php echo str_rot13 ($row['email'])?>'.rot13() + '">');</script><?php echo $row['realname']?><script type='text/javascript'>document.write ('</a>');</script></span>
+    <span class="item-detail">by <script type='text/javascript'>document.write ('<a href="mailto:' + '<?php echo str_rot13 ($row['email'])?>'.rot13() + '">');</script><?php echo $row['realname']?><script type='text/javascript'>document.write ('<\/a>');</script></span>
     <br><span class="item-detail"><?php echo $license_config_link_array[$row['license']]?></span>
     <br>
     <img width="96" alt="Preview" src='/images/thumbnails/backgrounds/<?php echo $row['thumbnail_filename']?>'>
