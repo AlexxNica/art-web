@@ -64,11 +64,27 @@ elseif ($category == 'search')
 else
   $d_category = ucwords ($category);
 
+function selected ($a, $b)
+{
+  if ($a == $b)
+    echo ' selected="selected"';
+}
+
 ?>
 <h2><a href="/backgrounds">Backgrounds</a> / <?php echo $d_category?></a></h2>
 
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
-<br>
+<form method="get" style="text-align:center; font-size: small;">
+  <label>Sort By:
+  <select name="sort" onchange="this.form.submit()" style="font-size: small">
+    <option value="name"<?php selected ($sort, 'name')?>>Name</option>
+    <option value="popularity"<?php selected ($sort, 'popularity')?>>Popularity</option>
+  </select>
+  <noscript>
+    <input type="submit" value="Go" style="font-size: small;">
+  </noscript>
+  </label>
+</form>
 
 <script type='text/javascript'>
 // add a rot13 function to strings.
@@ -88,6 +104,9 @@ String.prototype.rot13 = rot13 = function(s)
     <br>
     <img width="96" alt="Preview" src='/images/thumbnails/backgrounds/<?php echo $row['thumbnail_filename']?>'>
     <br>
+    <span class="item-detail">
+      <?php echo number_format ($row['download_count']) ?> downloads
+    </span>
     <form method="get" action="/download">
     <select name="d">
      <?php foreach ($bg_res[$row['backgroundID']] as $res):?>
