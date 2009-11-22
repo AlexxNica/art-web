@@ -71,6 +71,12 @@ $display_cat = array (
   else
     $d_category = $display_cat [$category];
 
+function selected ($a, $b)
+{
+  if ($a == $b)
+    echo ' selected="selected"';
+}
+
 ?>
 
 
@@ -83,6 +89,18 @@ String.prototype.rot13 = rot13 = function(s)
 
 <h2><a href="/themes">Themes</a> / <?php echo $d_category; ?></h2>
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
+
+<form method="get" style="text-align:center; font-size: small;">
+  <label>Sort By:
+  <select name="sort" onchange="this.form.submit()" style="font-size: small">
+    <option value="name"<?php selected ($sort, 'name')?>>Name</option>
+    <option value="popularity"<?php selected ($sort, 'popularity')?>>Popularity</option>
+  </select>
+  <noscript>
+    <input type="submit" value="Go" style="font-size: small;">
+  </noscript>
+  </label>
+</form>
 <br>
 <?php foreach ($view_data as $row): ?>
 
@@ -93,6 +111,9 @@ String.prototype.rot13 = rot13 = function(s)
   <br>
   <img style="margin:0.5em;" width="96" alt="Preview" src='/images/thumbnails/<?php echo $row['category']?>/<?php echo $row['thumbnail_filename']?>'>
   <br>
+  <span class="item-detail">
+  <?php echo number_format ($row['download_count']) ?> downloads
+  </span><br>
    <a href="/download/themes/<?php printf ("%s/%s/%s", $row['category'], $row['themeID'], $row['download_filename'])?>">Download</a>
 </div>
 <?php endforeach ?>
