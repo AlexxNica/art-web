@@ -36,9 +36,8 @@ else if($section == "themes")
 {
 	$theme_update_result = mysql_query("UPDATE theme SET download_count=download_count+1 WHERE themeID='$download_num'");
 
-	$ext = pathinfo ($filename, PATHINFO_EXTENSION);
-
-	if (($category == 'gtk2' || $category == 'metacity' || $category == 'icon') && $ext == 'gz')
+	if ($category == 'gtk2' || $category == 'metacity'
+            || $category == 'icon')
 	{
 		header ("Content-type: application/x-gnome-theme-package");
 		header ("Content-Disposition: attachment; filename=\"$filename\"");
