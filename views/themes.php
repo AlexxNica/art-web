@@ -99,6 +99,9 @@ String.prototype.rot13 = rot13 = function(s)
   <noscript>
     <input type="submit" value="Go" style="font-size: small;">
   </noscript>
+  <?php if ($search_text): ?>
+    <input type="hidden" name="text" value="<?php echo $search_text ?>">
+  <?php endif ?>
   </label>
 </form>
 <br>

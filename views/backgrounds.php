@@ -91,6 +91,10 @@ function selected ($a, $b)
   </select>
   </label>
 
+  <?php if ($search_text): ?>
+    <input type="hidden" name="text" value="<?php echo $search_text ?>">
+  <?php endif ?>
+
   <noscript>
     <input type="submit" value="Go" style="font-size: small;">
   </noscript>
