@@ -47,12 +47,10 @@ class Paginator
     $cur_page = ceil ($this->start / $this->limit);
 
     $prev_page = $cur_page - 1;
-    $get_params = '';
-    foreach ($_GET as $key => $value) {if ($key != 'page') $get_params .= "&$key=$value";}
     if ($cur_page > 1)
     {
-      print ("<a href=\"?page=1$get_params\">First</a> &middot; ");
-      print ("<a href=\"?page=$prev_page$get_params\">Previous</a>");
+      print ("<a href=\"?page=1\">First</a> &middot; ");
+      print ("<a href=\"?page=$prev_page\">Previous</a>");
     }
     else
     {
@@ -71,15 +69,15 @@ class Paginator
       if ($i == $cur_page)
         print (" &middot; $i ");
       else
-        print (" &middot; <a href=\"?page=$i$get_params\">$i</a>");
+        print (" &middot; <a href=\"?page=$i\">$i</a>");
     }
 
 
     $next_page = $cur_page + 1;
     if ($cur_page < $num_pages)
     {
-      print (" &middot; <a href=\"?page=${next_page}$get_params\">Next</a>");
-      print (" &middot; <a href=\"?page=${num_pages}$get_params\">Last</a>");
+      print (" &middot; <a href=\"?page=${next_page}\">Next</a>");
+      print (" &middot; <a href=\"?page=${num_pages}\">Last</a>");
     }
     else
     {
