@@ -32,6 +32,23 @@ class BackgroundsModel extends ArtModel
             AND background.backgroundID > 1000
             ORDER BY %s LIMIT %s,%s";
 
+  var $get_filtered_items_sql = "SELECT * FROM background
+            INNER JOIN user ON background.userID = user.userID
+            RIGHT JOIN background_resolution
+            ON background_resolution.backgroundID = background.backgroundID
+            WHERE status='active' AND category = '%s'
+            AND background.backgroundID > 1000
+            AND (%s)
+            ORDER BY %s LIMIT %s,%s";
+
+  var $get_filtered_total_sql = "SELECT COUNT(name) FROM background
+            INNER JOIN user ON background.userID = user.userID
+            RIGHT JOIN background_resolution
+            ON background_resolution.backgroundID = background.backgroundID
+            WHERE status='active' AND category = '%s'
+            AND background.backgroundID > 1000
+            AND (%s)";
+
   var $get_total_sql = "SELECT COUNT(name) FROM background
             WHERE category = '%s' AND status='active'
             AND background.backgroundID > 1000";
@@ -60,6 +77,26 @@ class BackgroundsModel extends ArtModel
 
     while ($rr = mysql_fetch_assoc ($r))
       $res[] = $rr;
+
+    return $res;
+  }
+
+  function get_resolution_list ($category)
+  {
+    $sql = "SELECT resolution FROM background_resolution
+            INNER JOIN background
+            ON background.backgroundID = background_resolution.backgroundID
+            WHERE background.category = '$category'
+            AND background.status = 'active'
+            AND background.backgroundID > 1000
+            GROUP BY resolution
+            ORDER BY resolution";
+    $r = mysql_query ($sql);
+    $res = array ();
+    $res['none'] = 'All';
+
+    while ($rr = mysql_fetch_row ($r))
+      $res[$rr[0]] = $rr[0];
 
     return $res;
   }

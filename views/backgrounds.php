@@ -26,7 +26,7 @@ $t->add_css ("/css/art.css");
 $t->print_header();
 
 /* if no data is available, print out a category list */
-if (!$view_data)
+if (!$view_data && !$category)
 {
   ?>
   <h2>Categories</h2>
@@ -80,10 +80,20 @@ function selected ($a, $b)
     <option value="name"<?php selected ($sort, 'name')?>>Name</option>
     <option value="popularity"<?php selected ($sort, 'popularity')?>>Popularity</option>
   </select>
+  </label>
+
+  <label>Size:
+  <select name="filter" onchange="this.form.submit()" style="font-size: small">
+  <?php foreach ($resolution_filter as $value => $name): ?>
+    <option value=<?php echo $value; selected ($filter, $value) ?>>
+    <?php echo $name ?></option>
+  <?php endforeach ?>
+  </select>
+  </label>
+
   <noscript>
     <input type="submit" value="Go" style="font-size: small;">
   </noscript>
-  </label>
 </form>
 
 <script type='text/javascript'>
@@ -94,6 +104,12 @@ String.prototype.rot13 = rot13 = function(s)
   return (s ? s : this).replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
 }
 </script>
+
+<?php if (!$view_data): ?>
+<div align="center">
+<i>No results, try adjusting the size filter.</i>
+</div>
+<?php endif ?>
 
 <?php foreach ($view_data as $row): ?>
 <div class="list-item">

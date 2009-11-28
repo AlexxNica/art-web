@@ -1,5 +1,5 @@
 <?php
-
+$t_start = microtime (true);
 /*
  * Copyright (C) 2008, 2009 Thomas Wood <thos@gnome.org>
  *
@@ -49,14 +49,21 @@ $limit = GET ('limit');
 if (!is_numeric ($limit))
   $limit = 12;
 
-$set_sort = GET ('sort');
-if ($set_sort)
+function GET_COOKIE ($name, $default)
 {
-  setcookie ('sort', $set_sort);
-  $sort = $set_sort;
+  $set = GET ($name);
+  if ($set)
+  {
+    setcookie ($name, $set);
+    $value = $set;
+  }
+  else
+    $value = (array_key_exists ($name, $_COOKIE)) ? $_COOKIE[$name] : $default;
+
+  return $value;
 }
-else
-  $sort = (array_key_exists ('sort', $_COOKIE)) ? $_COOKIE['sort'] : 'name';
+
+$sort = GET_COOKIE ('sort', 'name');
 
 if ($sort)
 {
@@ -71,6 +78,10 @@ if ($sort)
 }
 else
   $sortby = 'name';
+
+$filter = GET_COOKIE ('filter', null);
+if ($filter == 'none')
+  $filter = null;
 
 $start = ($page - 1) * $limit;
 
@@ -93,8 +104,18 @@ if ($category)
     }
     else
     {
-      $view_data = $bg->get_items ($category, $start, $limit, $sortby);
-      $total_backgrounds = $bg->get_total ($category);
+      if ($filter)
+      {
+        $filter_sql = 'resolution="' . mysql_real_escape_string ($filter) . '"';
+        $view_data = $bg->get_filtered_items ($category, $start, $limit,
+                                              $sortby, $filter_sql);
+        $total_backgrounds = $bg->get_filtered_total ($category, $filter_sql);
+      }
+      else
+      {
+        $view_data = $bg->get_items ($category, $start, $limit, $sortby);
+        $total_backgrounds = $bg->get_total ($category);
+      }
     }
   }
 else
@@ -109,7 +130,15 @@ if ($view_data)
   }
 }
 
+if ($category)
+  $resolution_filter = $bg->get_resolution_list ($category);
+else
+  $resolution_filter = array ();
+
 /* load view */
 require ("views/backgrounds.php");
+
+$t_load = microtime (true) - $t_start;
+print ("<!-- $t_load -->")
 
 ?>
