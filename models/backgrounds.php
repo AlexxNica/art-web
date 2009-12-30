@@ -32,7 +32,12 @@ class BackgroundsModel extends ArtModel
             AND background.backgroundID > 1000
             ORDER BY %s LIMIT %s,%s";
 
-  var $get_filtered_items_sql = "SELECT * FROM background
+  var $get_filtered_items_sql =
+           "SELECT
+             *,
+             (download_count / (UNIX_TIMESTAMP() - download_start_timestamp))
+                AS popularity
+            FROM background
             INNER JOIN user ON background.userID = user.userID
             RIGHT JOIN background_resolution
             ON background_resolution.backgroundID = background.backgroundID

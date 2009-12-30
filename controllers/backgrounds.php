@@ -72,7 +72,7 @@ if ($sort)
   else if ($sort == 'name')
     $sortby = 'background.name';
   else if ($sort == 'popularity')
-    $sortby = 'background.download_count DESC';
+    $sortby = 'popularity DESC';
   else
     $sortby = 'name';
 }

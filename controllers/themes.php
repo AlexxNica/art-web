@@ -66,7 +66,7 @@ if ($sort)
   else if ($sort == 'name')
     $sortby = 'name';
   else if ($sort == 'popularity')
-    $sortby = 'download_count DESC';
+    $sortby = 'popularity DESC';
   else
     $sortby = 'name';
 }

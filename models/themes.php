@@ -26,7 +26,10 @@ class ThemesModel extends ArtModel
             AND theme.userID = user.userID
             AND theme.themeID = %s";
 
-  var $get_items_sql = "SELECT * FROM theme,user
+  var $get_items_sql = "SELECT *,
+             (download_count / (UNIX_TIMESTAMP() - download_start_timestamp))
+                AS popularity
+            FROM theme,user
             WHERE status='active' AND category = '%s'
             AND theme.userID = user.userID
             AND theme.themeID > 1000
