@@ -103,6 +103,19 @@ function selected ($a, $b)
     <?php echo $name ?></option>
   <?php endforeach ?>
   </select>
+  <script type="text/javascript">
+  /* highlight the user's screen resolution */
+  var options = document.forms[0].resolution.options;
+  var screenres = screen.width + 'x' + screen.height;
+  for (var i = 0; i < options.length; i++)
+  {
+    if (options[i].text == screenres)
+    {
+      options[i].text = options[i].text + ' *'
+      break;
+    }
+  }
+  </script>
   </label>
 
   <?php if ($search_text): ?>
