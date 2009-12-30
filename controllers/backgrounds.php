@@ -54,7 +54,7 @@ function GET_COOKIE ($name, $default)
   $set = GET ($name);
   if ($set)
   {
-    setcookie ($name, $set);
+    setcookie ($name, $set, 0, '/');
     $value = $set;
   }
   else
