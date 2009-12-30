@@ -79,47 +79,42 @@ if ($sort)
 else
   $sortby = 'name';
 
-$filter = GET_COOKIE ('filter', null);
-if ($filter == 'none')
-  $filter = null;
+$filter_sql = 'TRUE';
+$resolution = GET_COOKIE ('resolution', null);
+
+if ($resolution && $resolution != 'none')
+  $filter_sql .= ' AND resolution="' . mysql_real_escape_string ($resolution) . '"';
+
+if ($category)
+  $filter_sql .= " AND category='$category'";
 
 $start = ($page - 1) * $limit;
 
-if ($category)
-  if ($category == "search")
-  {
-    $search = mysql_escape_string (GET ('text'));
-    $search = "background.name LIKE '%".$search."%'";
-    $search_text = htmlspecialchars (GET ('text'));
+if ($category == 'search')
+{
+  $search = mysql_escape_string (GET ('text'));
+  $search = "background.name LIKE '%".$search."%'";
+  $search_text = htmlspecialchars (GET ('text'));
 
-    $view_data = $bg->search_items ($search, $start, $limit, $sortby);
-    $total_backgrounds = $bg->search_total ($search);
+  $view_data = $bg->search_items ($search, $start, $limit, $sortby);
+  $total_backgrounds = $bg->search_total ($search);
+}
+else
+{
+  if ($background_id)
+  {
+    $view_data = $bg->get_single_item ($category, $background_id);
+    $total_backgrounds = 1;
   }
   else
   {
-    if ($background_id)
+    if ($filter_sql)
     {
-      $view_data = $bg->get_single_item ($category, $background_id);
-      $total_backgrounds = 1;
-    }
-    else
-    {
-      if ($filter)
-      {
-        $filter_sql = 'resolution="' . mysql_real_escape_string ($filter) . '"';
-        $view_data = $bg->get_filtered_items ($category, $start, $limit,
-                                              $sortby, $filter_sql);
-        $total_backgrounds = $bg->get_filtered_total ($category, $filter_sql);
-      }
-      else
-      {
-        $view_data = $bg->get_items ($category, $start, $limit, $sortby);
-        $total_backgrounds = $bg->get_total ($category);
-      }
+      $view_data = $bg->get_filtered_items ($start, $limit, $sortby, $filter_sql);
+      $total_backgrounds = $bg->get_filtered_total ($filter_sql);
     }
   }
-else
-  $view_data = null;
+}
 
 $bg_res = array ();
 if ($view_data)
@@ -130,10 +125,9 @@ if ($view_data)
   }
 }
 
-if ($category)
-  $resolution_filter = $bg->get_resolution_list ($category);
-else
-  $resolution_filter = array ();
+$resolution_filter = $bg->get_resolution_list ($category);
+
+$category_filter = $bg->get_category_list ();
 
 /* load view */
 require ("views/backgrounds.php");

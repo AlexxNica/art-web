@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2008 Thomas Wood <thos@gnome.org>
+ * Copyright (C) 2008, 2009 Thomas Wood <thos@gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -36,18 +36,22 @@ class BackgroundsModel extends ArtModel
             INNER JOIN user ON background.userID = user.userID
             RIGHT JOIN background_resolution
             ON background_resolution.backgroundID = background.backgroundID
-            WHERE status='active' AND category = '%s'
+            WHERE status='active'
             AND background.backgroundID > 1000
             AND (%s)
+            GROUP BY background.backgroundID
             ORDER BY %s LIMIT %s,%s";
 
-  var $get_filtered_total_sql = "SELECT COUNT(name) FROM background
+  var $get_filtered_total_sql = "
+        SELECT COUNT(*) FROM (
+            SELECT background.backgroundID FROM background
             INNER JOIN user ON background.userID = user.userID
             RIGHT JOIN background_resolution
             ON background_resolution.backgroundID = background.backgroundID
-            WHERE status='active' AND category = '%s'
+            WHERE status='active'
             AND background.backgroundID > 1000
-            AND (%s)";
+            AND (%s)
+            GROUP BY background.backgroundID) AS a";
 
   var $get_total_sql = "SELECT COUNT(name) FROM background
             WHERE category = '%s' AND status='active'
@@ -85,12 +89,14 @@ class BackgroundsModel extends ArtModel
   {
     $sql = "SELECT resolution FROM background_resolution
             INNER JOIN background
-            ON background.backgroundID = background_resolution.backgroundID
-            WHERE background.category = '$category'
-            AND background.status = 'active'
-            AND background.backgroundID > 1000
-            GROUP BY resolution
-            ORDER BY resolution";
+            ON background.backgroundID = background_resolution.backgroundID WHERE ";
+    if ($category)
+      $sql .= "background.category = '$category' AND ";
+    $sql .= "background.status = 'active'
+             AND background.backgroundID > 1000
+             GROUP BY resolution
+             ORDER BY resolution";
+
     $r = mysql_query ($sql);
     $res = array ();
     $res['none'] = 'All';
@@ -99,6 +105,15 @@ class BackgroundsModel extends ArtModel
       $res[$rr[0]] = $rr[0];
 
     return $res;
+  }
+
+  function get_category_list ()
+  {
+    return array (''         => 'All',
+                  'gnome'    => 'GNOME',
+                  'nature'   => 'Nature',
+                  'abstract' => 'Abstract',
+                  'other'    => 'Other');
   }
 }
 

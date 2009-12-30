@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2008 Thomas Wood <thos@gnome.org>
+ * Copyright (C) 2008, 2009 Thomas Wood <thos@gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -71,10 +71,24 @@ function selected ($a, $b)
 }
 
 ?>
-<h2><a href="/backgrounds">Backgrounds</a> / <?php echo $d_category?></a></h2>
+<h2><a href="/backgrounds">Backgrounds</a>
+<?php if ($d_category) echo '/ '.$d_category ?></h2>
 
 <div style="text-align:center"><?php $p->print_pagination (); ?></div>
 <form method="get" style="text-align:center; font-size: small;">
+
+  <label>Category:
+  <select name="category"
+    onchange="this.form.action='/backgrounds/'+this.form.category.value;
+    this.form.submit()"
+    style="font-size: small">
+  <?php foreach ($category_filter as $value => $name): ?>
+    <option value=<?php echo "'$value'"; selected ($category, $value) ?>>
+    <?php echo $name ?></option>
+  <?php endforeach ?>
+  </select>
+  </label>
+
   <label>Sort By:
   <select name="sort" onchange="this.form.submit()" style="font-size: small">
     <option value="name"<?php selected ($sort, 'name')?>>Name</option>
@@ -83,9 +97,9 @@ function selected ($a, $b)
   </label>
 
   <label>Size:
-  <select name="filter" onchange="this.form.submit()" style="font-size: small">
+  <select name="resolution" onchange="this.form.submit()" style="font-size: small">
   <?php foreach ($resolution_filter as $value => $name): ?>
-    <option value=<?php echo $value; selected ($filter, $value) ?>>
+    <option value=<?php echo "'$value'"; selected ($resolution, $value) ?>>
     <?php echo $name ?></option>
   <?php endforeach ?>
   </select>
@@ -113,7 +127,8 @@ String.prototype.rot13 = rot13 = function(s)
 <div align="center">
 <i>No results, try adjusting the size filter.</i>
 </div>
-<?php endif ?>
+
+<?php else: ?>
 
 <?php foreach ($view_data as $row): ?>
 <div class="list-item">
@@ -140,6 +155,7 @@ String.prototype.rot13 = rot13 = function(s)
 </div>
 <?php endforeach ?>
 
+<?php endif /* (!$view_data) */ ?>
 
 <br clear="both">
 <br>

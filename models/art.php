@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2008 Thomas Wood <thos@gnome.org>
+ * Copyright (C) 2008, 2009 Thomas Wood <thos@gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -122,13 +122,13 @@ abstract class ArtModel
     return $total[0];
   }
 
-  function get_filtered_items ($category, $start, $length, $order, $filter)
+  function get_filtered_items ($start, $length, $order, $filter)
   {
     /* check that start and length values are numeric */
     if (!is_numeric ($start) || !is_numeric ($length))
       return;
 
-    $sql = sprintf ($this->get_filtered_items_sql, $category, $filter, $order,
+    $sql = sprintf ($this->get_filtered_items_sql, $filter, $order,
                     $start, $length);
 
     if ($sql === '')
@@ -147,9 +147,9 @@ abstract class ArtModel
     return $table;
   }
 
-  function get_filtered_total ($category, $filter)
+  function get_filtered_total ($filter)
   {
-    $sql = sprintf ($this->get_filtered_total_sql, $category, $filter);
+    $sql = sprintf ($this->get_filtered_total_sql, $filter);
     $r = mysql_query ($sql);
     if (!$r)
       printf ("Database error: %s", mysql_error());
