@@ -238,25 +238,60 @@ else
             FROM background WHERE category='$category' AND backgroundID > 1000";
 
   $res = mysql_query ($sql);
-  print ('<table>');
 
-  $col = 0;
+  print ('<script>var thumbs=new Array(); var names=new Array(); var urls=new Array();');
+  $n = 0;
   while ($row = mysql_fetch_assoc ($res))
   {
-    if ($col == 0)
-      print ("\n<tr>");
     if ($section == 'theme')
-      print ("<td><img alt='thumbnail' src='/images/thumbnails/$category/{$row['thumbnail_filename']}'>");
+      print ("thumbs[$n]='/images/thumbnails/$category/{$row['thumbnail_filename']}';\n");
     else
-      print ("<td><img alt='thumbnail' src='/images/thumbnails/backgrounds/{$row['thumbnail_filename']}'>");
+      print ("thumbs[$n]='/images/thumbnails/backgrounds/{$row['thumbnail_filename']}';\n");
 
-    print ("<td><a href='?edit={$row['artID']}&amp;section=$section'>{$row['name']}</a>");
-    if ($row['status'] != 'active') print ("<br>({$row['status']})");
+    print ("urls[$n]='?edit={$row['artID']}&section=$section';\n");
+    print ("names[$n]='".addslashes ($row['name'])."';\n");
 
-    $col++;
-    if ($col > 2) $col = 0;
+    $n++;
+  }
+  print ("var index=0; var pages=Math.ceil (urls.length / 27);\n");
+  print ('function updateGrid() {
+   offset = index * 27;
+   for (n = 0; n < 27; n++) {
+    if (n + offset >= urls.length)
+    {
+      document.getElementById("img"+n).style.display="none";
+      document.getElementById("id"+n).href="";
+      document.getElementById("id"+n).innerHTML = "";
+    }
+    else
+    {
+      document.getElementById("img"+n).style.display="inline";
+      document.getElementById("img"+n).src=thumbs[n+offset];
+      document.getElementById("id"+n).href=urls[n+offset];
+      document.getElementById("id"+n).innerHTML = names[n+offset];
+    }
+   }
+   document.getElementById ("pageinfo").innerHTML = "Page " + (index + 1) + " of " + pages }');
+  print ('function next () {index++; if (index >= pages) index = pages - 1; updateGrid();}');
+  print ('function previous () {index--; if (index < 0) index = 0; updateGrid();}');
+  print ('</script>');
+  print ('<a href="javascript:previous();">Previous</a> &middot; ');
+  print ('<a href="javascript:next();">Next</a> : <span id="pageinfo"></span>');
+
+  print ('<table>');
+  $n = 0;
+  for ($r = 0; $r < 9; $r++)
+  {
+    print ('<tr>');
+    print ("<td><img id='img$n' alt='thumbnail' src=''><td><a id='id$n' href=''></a>");
+    $n++;
+    print ("<td><img id='img$n' alt='thumbnail' src=''><td><a id='id$n' href=''></a>");
+    $n++;
+    print ("<td><img id='img$n' alt='thumbnail' src=''><td><a id='id$n' href=''></a>");
+    $n++;
   }
   print ('</table>');
+  print ('<script type="text/javascript">updateGrid()</script>');
 }
 
 ?>
