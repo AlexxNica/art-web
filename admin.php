@@ -232,10 +232,10 @@ else
 
   if ($section == 'theme')
     $sql = "SELECT themeID as artID, name, thumbnail_filename, status
-            FROM theme WHERE category='$category' AND themeID > 1000";
+            FROM theme WHERE category='$category' AND themeID > 1000 AND status='active'";
   else
     $sql = "SELECT backgroundID as artID, name, thumbnail_filename, status
-            FROM background WHERE category='$category' AND backgroundID > 1000";
+            FROM background WHERE category='$category' AND backgroundID > 1000 AND status='active'";
 
   $res = mysql_query ($sql);
 
