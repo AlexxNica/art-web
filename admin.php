@@ -209,6 +209,18 @@ if ($edit)
       print ("<input name='$key' value='".htmlspecialchars ($value, ENT_QUOTES)."' size=50>");
   }
   print ('</table><input type="submit" name="save" value="Save"></form>');
+
+  /* print background resolutions */
+  if ($section == 'background')
+  {
+    print ("<b>Resolutions</b><ul>");
+    $res = mysql_query ("SELECT * FROM background_resolution WHERE backgroundID=$edit");
+    while ($row = mysql_fetch_assoc ($res))
+    {
+      print ("<li><a href=http://download.gnome.org/teams/art.gnome.org/backgrounds/{$row['filename']}>{$row['resolution']}</a>");
+    }
+    print ("</ul>");
+  }
 }
 else
 {
