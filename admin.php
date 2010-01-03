@@ -141,7 +141,7 @@ if (array_key_exists ('save', $_POST))
             description='{$val["description"]}',
             preview_filename='{$val["preview_filename"]}',
             thumbnail_filename='{$val["thumbnail_filename"]}',
-            download_filename='{$val["download_filename"]}',
+            download_filename='{$val["download_filename"]}'
             WHERE themeID={$val['themeID']} LIMIT 1";
   else if ($section == "background")
     $sql = "UPDATE background SET
