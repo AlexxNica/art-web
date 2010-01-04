@@ -473,6 +473,21 @@ function GET ($var)
 	else
 		return null;
 }
+
+function GET_COOKIE ($name, $default=null)
+{
+  $set = GET ($name);
+  if ($set)
+  {
+    setcookie ($name, $set, 0, '/');
+    $value = $set;
+  }
+  else
+    $value = (array_key_exists ($name, $_COOKIE)) ? $_COOKIE[$name] : $default;
+
+  return $value;
+}
+
 function validate_input_regexp_default ($input, $regexp, $default)
 {
 	if (ereg ($regexp, $input))

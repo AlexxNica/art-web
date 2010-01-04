@@ -49,21 +49,7 @@ $limit = GET ('limit');
 if (!is_numeric ($limit))
   $limit = 12;
 
-function GET_COOKIE ($name, $default)
-{
-  $set = GET ($name);
-  if ($set)
-  {
-    setcookie ($name, $set, 0, '/');
-    $value = $set;
-  }
-  else
-    $value = (array_key_exists ($name, $_COOKIE)) ? $_COOKIE[$name] : $default;
-
-  return $value;
-}
-
-$sort = GET_COOKIE ('sort', 'name');
+$sort = GET_COOKIE ('sort', 'popularity');
 
 if ($sort)
 {

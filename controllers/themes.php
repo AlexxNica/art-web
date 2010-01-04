@@ -50,14 +50,7 @@ $limit = GET ('limit');
 if (!is_numeric ($limit))
   $limit = 12;
 
-$set_sort = GET ('sort');
-if ($set_sort)
-{
-  setcookie ('sort', $set_sort);
-  $sort = $set_sort;
-}
-else
-  $sort = (array_key_exists ('sort', $_COOKIE)) ? $_COOKIE['sort'] : 'name';
+$sort = GET_COOKIE ('sort', 'popularity');
 
 if ($sort)
 {
