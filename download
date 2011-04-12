@@ -41,7 +41,7 @@ else if($section == "themes")
 	{
 		header ("Content-type: application/x-gnome-theme-package");
 		header ("Content-Disposition: attachment; filename=\"$filename\"");
-		readfile ("$mirror_url$archive/themes/$category/$filename");
+		readfile ("$sys_ftp_dir$archive/themes/$category/$filename");
 	}
 	else
 		header ("Location: $mirror_url$archive/themes/$category/$filename");
